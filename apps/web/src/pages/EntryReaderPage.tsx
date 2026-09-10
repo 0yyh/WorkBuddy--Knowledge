@@ -607,7 +607,8 @@ export function EntryReaderPage({ slug, chapterStart }: EntryReaderPageProps): J
       {veilOpacity > 0 ? <div className="reader-veil" style={{ opacity: veilOpacity }} aria-hidden="true" /> : null}
 
       <header className="reader-top">
-        {/* 顶部按新稿仅保留左侧返回「<」；进度与目录已分别移到底部信息条 / 3 等分导航栏 */}
+        {/* 顶部：左侧返回「<」；右侧竖排「⋮」= 打开章节目录（第 3 轮：用户确认 ⋮ 即目录入口）。
+            进度与目录的常规入口仍在底部信息条 / 常驻 3 等分导航栏。 */}
         <div className="reader-top-bar reader-top-bar-solo">
           <button
             type="button"
@@ -619,11 +620,24 @@ export function EntryReaderPage({ slug, chapterStart }: EntryReaderPageProps): J
               <path d="M15 6l-6 6 6 6" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
           </button>
+          <button
+            type="button"
+            className="reader-circle-btn reader-circle-btn-sm"
+            aria-label="章节目录"
+            onClick={openChapter}
+          >
+            <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
+              <circle cx="12" cy="5" r="1.7" fill="currentColor" />
+              <circle cx="12" cy="12" r="1.7" fill="currentColor" />
+              <circle cx="12" cy="19" r="1.7" fill="currentColor" />
+            </svg>
+          </button>
         </div>
       </header>
 
+      {/* 章节条：随 overlay 显隐（滚隐亦作用于此）；常驻导航栏已抽离为下方 <nav> */}
       <footer className="reader-bottom">
-        {/* 上行：上一章 + 章节进度条（可拖动跳章） + 下一章 */}
+        {/* 上一章 + 章节进度条（可拖动跳章） + 下一章 */}
         <div className="reader-bottom-nav">
           <button
             type="button"
@@ -661,8 +675,12 @@ export function EntryReaderPage({ slug, chapterStart }: EntryReaderPageProps): J
             下一章
           </button>
         </div>
-        {/* 下行：3 等分导航栏（目录 / 夜间 / 设置），图标在上、文字在下，三项等宽 */}
-        <div className="reader-bottom-tabs">
+      </footer>
+
+      {/* 常驻 3 等分导航栏（目录 / 夜间 / 设置），图标在上、文字在下，三项等宽。
+          第 3 轮：从 .reader-bottom 中抽离 —— 不再随 overlay 消隐，始终可见可点；
+          CSS 里位于信息条之上、章节条之下（--reader-nav-h），z-index 高于面板遮罩。 */}
+      <nav className="reader-bottom-tabs">
           <button type="button" className="reader-tab" aria-label="章节目录" onClick={openChapter}>
             <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
               <line x1="4" y1="6" x2="20" y2="6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
@@ -704,8 +722,7 @@ export function EntryReaderPage({ slug, chapterStart }: EntryReaderPageProps): J
             </svg>
             <span className="reader-tab-label">设置</span>
           </button>
-        </div>
-      </footer>
+      </nav>
 
       {/* 底部常驻信息条（不受 overlay 影响）：左下 进度 1/666，右下 时间 + 电量。
           仅 prefs.showProgress 开启时渲染。 */}

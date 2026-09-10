@@ -4,13 +4,15 @@
  *     · 亮度：纯轨道 + 圆滑块；右侧「护眼模式」按钮（在 米黄 #F5F1E6 ⇄ 白 之间切换）
  *     · 字号：A− [当前 px] A+；右侧「字体名 ›」入口 → 字体子层
  *     · 颜色：7 个圆色块（white/sepia/green/blue/pink/gray/dark），选中加黑描边
- *     · 翻页：5 胶囊（仿真/覆盖/平移/上下/无动画），面板内专属白底黑字选中态
+ *     · 翻页：5 胶囊（仿真/覆盖/平移/上下/无动画），选中态 = 白底黑字 + 番茄橙描边（第 3 轮）
  *     · 底部：圆角矩形「间距设置」+ 文字按钮「更多 ›」
  *
  *   子层（复用 .reader-more-layer / .reader-more-sheet + reader-sheet-bg-${bg} 主题类）：
  *     · ReaderFontSheet：字体（宋体/黑体/楷体/等宽）
- *     · ReaderSpacingSheet：行段间距(5 档，含自定义滑块) + 页面边距(5 档，智能匹配默认) + 对齐
- *     · ReaderMoreSheet：单手模式 / 展示进度时间和电量 / 手机状态栏常驻（严格 3 个开关）
+ *     · ReaderSpacingSheet：行段间距(4 档) + 页面边距(4 档) + 对齐 —— 均默认「适中」，
+ *       选中态 = 番茄橙底白字（第 3 轮：删「自定义」滑块与「智能匹配」）
+ *     · ReaderMoreSheet：展示进度时间和电量 / 手机状态栏常驻（严格 2 个开关，
+ *       第 3 轮删「单手模式」）
  *
  *   面板底色：浅色主题（white/sepia/green/blue/pink）统一纯白 #FFFFFF；dark/gray 保持深色面
  *   （白底在深色阅读背景上刺眼，属必要偏离）。全部只作用于阅读区；离开阅读页即销毁。
@@ -56,8 +58,9 @@ const COLOR_SWATCH: Array<{ value: BgColorPref; label: string; color: string }> 
   { value: 'green', label: '护眼', color: '#CFE3D3' },
   { value: 'blue', label: '蓝灰', color: '#DDE6F0' },
   { value: 'pink', label: '浅粉', color: '#F6E4E4' },
-  { value: 'gray', label: '深灰', color: '#333333' },
-  { value: 'dark', label: '深色', color: '#1C1C1C' },
+  // 第 3 轮：深色两档改为「灰底」——gray 中灰 #888888（配深字）、dark 深灰 #555555（配浅字）
+  { value: 'gray', label: '中灰', color: '#888888' },
+  { value: 'dark', label: '深灰', color: '#555555' },
 ];
 
 // 翻页：5 胶囊并排（所有 5 种均有 CSS 支持——见 .reader-doc[data-anim]）
@@ -75,33 +78,28 @@ const ALIGN_OPTIONS: Array<{ value: AlignPref; label: string }> = [
   { value: 'left', label: '左对齐' },
 ];
 
-// 间距设置：行段间距 5 档（含「自定义」滑块）
+// 间距设置：行段间距 4 档（第 3 轮：删「自定义」及其滑块，默认「适中」）
 const PARA_SPACING_OPTIONS: Array<{ value: string; label: string }> = [
   { value: 'xs', label: '小' },
   { value: 'sm', label: '较小' },
   { value: 'md', label: '适中' },
   { value: 'lg', label: '大' },
-  { value: 'custom', label: '自定义' },
 ];
-// 间距设置：页面边距 5 档（默认「智能匹配」）
+// 间距设置：页面边距 4 档（第 3 轮：删「智能匹配」，默认回到「适中」md）
 const PAGE_MARGIN_OPTIONS: Array<{ value: string; label: string }> = [
   { value: 'sm', label: '小' },
   { value: 'md', label: '适中' },
   { value: 'lg', label: '较大' },
   { value: 'xl', label: '大' },
-  { value: 'smart', label: '智能匹配' },
 ];
 
-// 更多设置：严格 3 个开关（单手 / 进度信息 / 状态栏常驻）
-const MORE_TOGGLE_KEYS = ['onehand', 'progress', 'statusbar'] as const;
+// 更多设置：严格 2 个开关（第 3 轮：删「单手模式」，仅保留进度信息 / 状态栏常驻）
+const MORE_TOGGLE_KEYS = ['progress', 'statusbar'] as const;
 type MoreToggleKey = (typeof MORE_TOGGLE_KEYS)[number];
 const MORE_TOGGLE_LABELS: Record<MoreToggleKey, { label: string; hint: string }> = {
-  onehand: { label: '单手模式', hint: '点击左右两侧翻下一页' },
   progress: { label: '展示进度时间和电量', hint: '阅读页底部显示进度 / 时间 / 电量' },
-  statusbar: { label: '手机状态栏常驻', hint: '显示在阅读页面，通知与信息等' },
+  statusbar: { label: '手机状态栏常驻', hint: '显示后台程序、通知、信号等' },
 };
-/** 单手模式的本地存储键（其余两开走 ReaderPrefs）。 */
-const ONHAND_STORAGE = 'pks_pref_read_onehand';
 
 export function ReaderSettingsSheet({
   open,
@@ -226,7 +224,8 @@ export function ReaderSettingsSheet({
           <div className="reader-row">
             <span className="reader-row-label">翻页</span>
             <div className="reader-row-control">
-              <div className="reader-pill-group reader-pill-group-5 reader-pills-tone">
+              {/* 第 3 轮：翻页选中态 = 白底黑字 + 番茄橙描边 */}
+              <div className="reader-pill-group reader-pill-group-5 reader-pills-tone reader-pills-tone-page">
                 {ANIM_OPTIONS.map((o) => (
                   <button
                     key={o.value}
@@ -348,23 +347,15 @@ interface ReaderSpacingSheetProps {
  * 选中状态写 localStorage + 立刻落到 html data-attr → CSS 即时生效。
  */
 function ReaderSpacingSheet({ bg, align, onAlignChange, onClose }: ReaderSpacingSheetProps): JSX.Element {
+  // 第 3 轮：均为 4 档，默认「适中」（页面边距由 smart 改回 md）
   const [paraSpacing, setParaSpacing] = useLocalFlag('pks_pref_read_paraspacing', 'md');
-  const [pageMargin, setPageMargin] = useLocalFlag('pks_pref_read_pagemargin', 'smart');
-  const [paraGap, setParaGap] = useState<number>(() => readParaGap());
+  const [pageMargin, setPageMargin] = useLocalFlag('pks_pref_read_pagemargin', 'md');
 
   // 行段间距 / 页面边距 写到 :root data-attr，CSS 通过 html[data-*] 消费。
   useEffect(() => {
     document.documentElement.setAttribute('data-paraspacing', paraSpacing);
     document.documentElement.setAttribute('data-pagemargin', pageMargin);
   }, [paraSpacing, pageMargin]);
-
-  // 自定义行段间距：写 --rp-para-gap（em），供 html[data-paraspacing='custom'] 消费。
-  useEffect(() => {
-    document.documentElement.style.setProperty('--rp-para-gap', `${paraGap}em`);
-    if (typeof window !== 'undefined') {
-      window.localStorage.setItem('pks_pref_read_paragap', String(paraGap));
-    }
-  }, [paraGap]);
 
   return (
     <div className="reader-more-layer">
@@ -380,10 +371,10 @@ function ReaderSpacingSheet({ bg, align, onAlignChange, onClose }: ReaderSpacing
         </div>
 
         <div className="reader-spacing-body">
-          {/* 行段间距：5 档（含自定义滑块） */}
+          {/* 行段间距：4 档（第 3 轮：删「自定义」及其滑块），选中橙底白字 */}
           <div className="reader-spacing-group">
             <div className="reader-spacing-label">行段间距</div>
-            <div className="reader-pill-group reader-pill-group-5">
+            <div className="reader-pill-group reader-pill-group-4 reader-pills-tone reader-pills-tone-orange">
               {PARA_SPACING_OPTIONS.map((o) => (
                 <button
                   key={o.value}
@@ -395,26 +386,12 @@ function ReaderSpacingSheet({ bg, align, onAlignChange, onClose }: ReaderSpacing
                 </button>
               ))}
             </div>
-            {paraSpacing === 'custom' ? (
-              <div className="reader-spacing-slider">
-                <input
-                  type="range"
-                  min={0.5}
-                  max={2.5}
-                  step={0.1}
-                  value={paraGap}
-                  aria-label="自定义行段间距（em）"
-                  onChange={(e) => setParaGap(Number(e.target.value))}
-                />
-                <span className="reader-spacing-value">{paraGap.toFixed(1)}em</span>
-              </div>
-            ) : null}
           </div>
 
-          {/* 页面边距：5 档（默认智能匹配） */}
+          {/* 页面边距：4 档（第 3 轮：删「智能匹配」，默认「适中」） */}
           <div className="reader-spacing-group">
             <div className="reader-spacing-label">页面边距</div>
-            <div className="reader-pill-group reader-pill-group-5">
+            <div className="reader-pill-group reader-pill-group-4 reader-pills-tone reader-pills-tone-orange">
               {PAGE_MARGIN_OPTIONS.map((o) => (
                 <button
                   key={o.value}
@@ -428,10 +405,10 @@ function ReaderSpacingSheet({ bg, align, onAlignChange, onClose }: ReaderSpacing
             </div>
           </div>
 
-          {/* 对齐：两端对齐 / 左对齐（自第 2 步从主层迁入） */}
+          {/* 对齐：两端对齐 / 左对齐（自第 2 步从主层迁入），选中橙底白字 */}
           <div className="reader-spacing-group">
             <div className="reader-spacing-label">对齐</div>
-            <div className="reader-pill-group">
+            <div className="reader-pill-group reader-pills-tone reader-pills-tone-orange">
               {ALIGN_OPTIONS.map((o) => (
                 <button
                   key={o.value}
@@ -472,7 +449,6 @@ interface ReaderMoreSheetProps {
  */
 function ReaderMoreSheet({ bg, prefs, onChange, onClose }: ReaderMoreSheetProps): JSX.Element {
   const [flags, setFlags] = useState<Record<MoreToggleKey, boolean>>(() => ({
-    onehand: readFlag(ONHAND_STORAGE),
     progress: prefs.showProgress,
     statusbar: prefs.statusbarPermanent,
   }));
@@ -482,10 +458,8 @@ function ReaderMoreSheet({ bg, prefs, onChange, onClose }: ReaderMoreSheetProps)
       const next = !prev[k];
       if (k === 'progress') {
         onChange('showProgress', next);
-      } else if (k === 'statusbar') {
-        onChange('statusbarPermanent', next);
       } else {
-        writeFlag(ONHAND_STORAGE, next);
+        onChange('statusbarPermanent', next);
       }
       return { ...prev, [k]: next };
     });
@@ -510,14 +484,6 @@ function ReaderMoreSheet({ bg, prefs, onChange, onClose }: ReaderMoreSheetProps)
               <div className="reader-more-text">
                 <span className="reader-more-label">{MORE_TOGGLE_LABELS[k].label}</span>
                 <span className="reader-more-hint">{MORE_TOGGLE_LABELS[k].hint}</span>
-                {/* 单手模式补示意图（左右半屏点按区），让用户看懂"点哪里翻页" */}
-                {k === 'onehand' ? (
-                  <div className="reader-onehand-hint">
-                    <span className="reader-onehand-zone">◀ 左半屏</span>
-                    <span className="reader-onehand-zone">右半屏 ▶</span>
-                    <span className="reader-onehand-note">轻点任一侧即翻页</span>
-                  </div>
-                ) : null}
               </div>
               <button
                 type="button"
@@ -537,24 +503,6 @@ function ReaderMoreSheet({ bg, prefs, onChange, onClose }: ReaderMoreSheetProps)
 /* ------------------------------------------------------------------ */
 /*  持久化小工具                                                        */
 /* ------------------------------------------------------------------ */
-
-function readFlag(key: string): boolean {
-  if (typeof window === 'undefined') return false;
-  return window.localStorage.getItem(key) === '1';
-}
-
-function writeFlag(key: string, on: boolean): void {
-  if (typeof window === 'undefined') return;
-  window.localStorage.setItem(key, on ? '1' : '0');
-}
-
-/** 读取自定义行段间距（em）；非法/缺失回退 1.25。 */
-function readParaGap(): number {
-  if (typeof window === 'undefined') return 1.25;
-  const raw = window.localStorage.getItem('pks_pref_read_paragap');
-  const n = raw === null ? NaN : Number(raw);
-  return Number.isFinite(n) ? Math.min(2.5, Math.max(0.5, n)) : 1.25;
-}
 
 /** React state + 同步到 localStorage 的小工具 */
 function useLocalFlag(key: string, fallback: string): [string, (v: string) => void] {

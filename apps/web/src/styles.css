@@ -1461,37 +1461,39 @@ body[data-reading-font='mono'] .prose {
   --rp-heading: #2a1418;
 }
 
-/* gray = 深灰系阅读主题（底 #333），正文浅色、标题近白（非浅灰！） */
+/* gray = 中灰底 #888888 + 深色字（第 3 轮：按用户 App 截图 1.jpg「灰底配深字」落地）。
+   对比度约 6.9:1，远好于 #888 配浅字（仅 ~3.5:1）。 */
 .reading-bg-gray {
-  --reading-bg: #333333;
-  --reading-fg: #e6e6e6;
-  --reader-chrome-bg: rgba(51, 51, 51, 0.92);
+  --reading-bg: #888888;
+  --reading-fg: #1f1f1f;
+  --reader-chrome-bg: rgba(136, 136, 136, 0.94);
   background: var(--reading-bg);
   color: var(--reading-fg);
-  --rp-text: #e6e6e6;
-  --rp-soft: #b3b3b3;
-  --rp-code-bg: #2a2a2a;
-  --rp-quote-bg: #3a3a3a;
-  --rp-pre-bg: #2a2a2a;
-  --rp-border: #4a4a4a;
-  --rp-table-head: #3d3d3d;
-  --rp-heading: #ffffff;
+  --rp-text: #1f1f1f;
+  --rp-soft: #3d3d3d;
+  --rp-code-bg: #7d7d7d;
+  --rp-quote-bg: #828282;
+  --rp-pre-bg: #7d7d7d;
+  --rp-border: #6f6f6f;
+  --rp-table-head: #828282;
+  --rp-heading: #000000;
 }
 
+/* dark = 深灰底 #555555 + 浅色字（第 3 轮：由近黑 #1b1a18 改为灰 #555555）。 */
 .reading-bg-dark {
-  --reading-bg: #1b1a18;
-  --reading-fg: #d4cdb7; /* 暖米白，非纯白，长时间阅读不刺眼 */
-  --reader-chrome-bg: rgba(27, 26, 24, 0.9);
+  --reading-bg: #555555;
+  --reading-fg: #f2f2f2;
+  --reader-chrome-bg: rgba(85, 85, 85, 0.94);
   background: var(--reading-bg);
   color: var(--reading-fg);
-  --rp-text: #d4cdb7;
-  --rp-soft: #9d9683;
-  --rp-code-bg: #26251f;
-  --rp-quote-bg: #24231e;
-  --rp-pre-bg: #24231e;
-  --rp-border: #3a382f;
-  --rp-table-head: #26251f;
-  --rp-heading: #f0e9d6;
+  --rp-text: #f2f2f2;
+  --rp-soft: #d0d0d0;
+  --rp-code-bg: #4c4c4c;
+  --rp-quote-bg: #5c5c5c;
+  --rp-pre-bg: #4c4c4c;
+  --rp-border: #6a6a6a;
+  --rp-table-head: #5c5c5c;
+  --rp-heading: #ffffff;
 }
 
 /* 深色阅读区：正文链接提亮为浅蓝，保证深底对比度（默认 brand 蓝在深底仅 ~4:1） */
@@ -1627,8 +1629,6 @@ html[data-paraspacing='sm']  .reader-doc .prose p { margin-bottom: 0.875em; }
 html[data-paraspacing='md']  .reader-doc .prose p { margin-bottom: 1.25em; }
 html[data-paraspacing='lg']  .reader-doc .prose p { margin-bottom: 1.625em; }
 html[data-paraspacing='xl']  .reader-doc .prose p { margin-bottom: 1.25em; }
-/* 自定义：真实值由间距子层滑块写 --rp-para-gap（em） */
-html[data-paraspacing='custom'] .reader-doc .prose p { margin-bottom: var(--rp-para-gap, 1.25em); }
 
 /* 间距设置：页面边距 5 档（小/适中/较大/大/智能匹配），通过 [data-pagemargin] 驱动 .reader-doc padding */
 html[data-pagemargin='sm'] .reader-doc { padding: 0.5rem max(0.5rem, env(safe-area-inset-left, 0px)) 0.5rem max(0.5rem, env(safe-area-inset-right, 0px)); }
@@ -1636,8 +1636,6 @@ html[data-pagemargin='md'] .reader-doc { padding: 1rem max(1rem, env(safe-area-i
 html[data-pagemargin='lg'] .reader-doc { padding: 1.5rem max(1.5rem, env(safe-area-inset-left, 0px)) 1.5rem max(1.5rem, env(safe-area-inset-right, 0px)); }
 html[data-pagemargin='xl'] .reader-doc { padding: 2rem max(2rem, env(safe-area-inset-left, 0px)) 2rem max(2rem, env(safe-area-inset-right, 0px)); }
 html[data-pagemargin='custom'] .reader-doc { padding: 1.25rem max(1.25rem, env(safe-area-inset-left, 0px)) 1.25rem max(1.25rem, env(safe-area-inset-right, 0px)); }
-/* 智能匹配（默认）：横向内边距随视口自适应（clamp 16–40px），窄屏不局促、宽屏不过散 */
-html[data-pagemargin='smart'] .reader-doc { padding-inline: clamp(16px, 5vw, 40px); }
 
 /* 标题 / 引用 / 代码 / 表格不缩进 */
 .prose h1,
@@ -2455,6 +2453,24 @@ html[data-pagemargin='smart'] .reader-doc { padding-inline: clamp(16px, 5vw, 40p
   color-scheme: dark;
 }
 
+/* 阅读页底部三层结构（第 3 轮，自下而上）：
+     信息条 .reader-statusbar（最底，受 showProgress 控制）
+   → 常驻导航栏 .reader-bottom-tabs（目录 / 夜间 / 设置，**始终可见**）
+   → 章节条 .reader-bottom（上一章 / 滑杆 / 下一章，仅 overlay 唤出时）
+   三层高度用变量表达，避免彼此硬编码错位；面板（.reader-sheet / 子层）也按
+   --reader-nav-h 抬高，保证导航栏不被遮罩盖住且可点。 */
+:root {
+  --reader-statusbar-h: 30px;
+  --reader-tabs-h: 54px;
+  --reader-nav-h: calc(
+    var(--reader-tabs-h) + var(--reader-statusbar-h) + env(safe-area-inset-bottom, 0px)
+  );
+}
+/* 关闭信息条时其高度归 0，导航栏 / 章节条自动下沉贴底 */
+.reader-root.reader-no-statusbar {
+  --reader-statusbar-h: 0px;
+}
+
 .reader-scroll {
   position: absolute;
   inset: 0;
@@ -2465,8 +2481,10 @@ html[data-pagemargin='smart'] .reader-doc { padding-inline: clamp(16px, 5vw, 40p
      沉浸态（状态栏隐藏，data-immersive）时 --reader-inset-top-override=0px 被应用，
      顶部不再预留状态栏高度，正文可真正通顶；退出沉浸回退到 env 真实值。
      +22px 是给顶部浮层(reader-top)的呼吸空间，即使无状态栏也保留以免文字贴边。 */
+  /* 底部留白 = 常驻导航栏 + 信息条（--reader-nav-h 已含 safe-area）+ 16px 呼吸，
+     保证正文最后一行不被常驻导航压住。 */
   padding: calc(var(--reader-inset-top-override, env(safe-area-inset-top, 0px)) + 22px) 24px
-    calc(env(safe-area-inset-bottom, 0px) + 78px);
+    calc(var(--reader-nav-h) + 16px);
   /* 不用 scroll-behavior: smooth —— 与 WebView 原生惯性滚动冲突，且拖滑杆跳转时
      会造成「双重平滑」，反而掉帧。程序化滚动按需在 JS 里显式指定 behavior。 */
 }
@@ -2490,11 +2508,12 @@ html[data-pagemargin='smart'] .reader-doc { padding-inline: clamp(16px, 5vw, 40p
 
 /* 正文标题（番茄风）：去掉 h2 的下边框分割线，改为更大字号 + 更粗字重 + 上下留白，
    h1/h2/h3 逐级递减。 */
-/* 标题字号随阅读字号联动：用绝对 px（--reader-fs）+ 偏移，
-   保证默认（--reader-fs=18px）时 h1=26 / h2=22 / h3=19，且加粗、标题色走 --rp-heading。 */
+/* 标题字号随阅读字号联动：绝对 px（--reader-fs）+ 固定偏移，
+   保证默认（--reader-fs=20px）时 h1=26 / h2=22 / h3=21，且加粗、标题色走 --rp-heading。
+   第 3 轮：偏移量由 +8/+4/+1 改为 +6/+2/+1（配合正文默认 18→20，h2 仍恰好 22px）。 */
 .reader-doc .prose h1 {
   margin: 1.8em 0 0.9em;
-  font-size: calc(var(--reader-fs, 18px) + 8px);
+  font-size: calc(var(--reader-fs, 20px) + 6px);
   font-weight: 700;
   color: var(--rp-heading, #000000);
 }
@@ -2503,14 +2522,14 @@ html[data-pagemargin='smart'] .reader-doc { padding-inline: clamp(16px, 5vw, 40p
   margin: 1.8em 0 0.9em;
   padding-bottom: 0;
   border-bottom: 0;
-  font-size: calc(var(--reader-fs, 18px) + 4px); /* 默认 22px */
+  font-size: calc(var(--reader-fs, 20px) + 2px); /* 默认 22px */
   font-weight: 700;
   color: var(--rp-heading, #000000);
 }
 
 .reader-doc .prose h3 {
   margin: 1.5em 0 0.7em;
-  font-size: calc(var(--reader-fs, 18px) + 1px);
+  font-size: calc(var(--reader-fs, 20px) + 1px);
   font-weight: 700;
   color: var(--rp-heading, #000000);
 }
@@ -2663,7 +2682,9 @@ html[data-pagemargin='smart'] .reader-doc { padding-inline: clamp(16px, 5vw, 40p
   pointer-events: auto;
 }
 
-/* 滚隐：overlay 唤出态下用户滚动时信息栏淡出（停顿后由组件自动淡入恢复） */
+/* 滚隐：overlay 唤出态下用户滚动时顶栏与章节条淡出（停顿后由组件自动淡入恢复）。
+   第 3 轮：只滚隐**顶栏 + 章节条**；常驻导航栏 .reader-bottom-tabs 与
+   信息条 .reader-statusbar 不在选择器内，故不受影响、始终可见。 */
 .reader-root.chrome-dismissed .reader-top,
 .reader-root.chrome-dismissed .reader-bottom {
   opacity: 0;
@@ -2688,21 +2709,16 @@ html[data-pagemargin='smart'] .reader-doc { padding-inline: clamp(16px, 5vw, 40p
   color: var(--reading-fg, #1f2937);
 }
 
-/* 底部：两行（上行 nav 上一章/滑杆/下一章；下行 3 等分导航栏）。
-   整体上移，为底部常驻信息条（高 30px + safe-area）让出空间。 */
+/* 底部：仅「章节条」（上一章 / 章节进度滑杆 / 下一章）。
+   第 3 轮：3 等分导航栏已抽离为常驻的 .reader-bottom-tabs，本章节条
+   随 overlay 显隐，并叠在常驻导航之上（--reader-nav-h）。 */
 .reader-bottom {
-  bottom: calc(var(--reader-statusbar-h, 30px) + env(safe-area-inset-bottom, 0px));
+  bottom: var(--reader-nav-h);
   flex-direction: column;
   gap: 10px;
   padding: 14px 14px 16px;
   background: var(--reader-chrome-bg, rgba(255, 255, 255, 0.92));
   color: var(--reading-fg, #1f2937);
-}
-
-/* 关闭信息条（prefs.showProgress=false）时，底栏贴底并自行处理安全区 */
-.reader-root.reader-no-statusbar .reader-bottom {
-  bottom: 0;
-  padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 16px);
 }
 
 /* 深色阅读区：chrome 文字色由 var(--reading-fg) 决定（深色底自动浅字） */
@@ -2808,16 +2824,23 @@ html[data-pagemargin='smart'] .reader-doc { padding-inline: clamp(16px, 5vw, 40p
 }
 
 /* —— 底部 3 等分导航栏（目录 / 夜间 / 设置）——
-   与 .reader-top 同套 overlay 显隐；白底 + 上边框浅灰；三项 flex:1 等宽、
-   图标在上文字在下。深色系主题改用深色面（必要偏离，避免白底刺眼）。 */
+   第 3 轮：改为**常驻**（不再随 overlay 消隐），叠在信息条之上、章节条之下；
+   z-index 97 高于设置面板遮罩（95/96），保证面板打开时导航仍可见可点。
+   白底 + 上边框浅灰；三项 flex:1 等宽、图标在上文字在下。
+   深色系主题改用深色面（必要偏离，避免白底刺眼）。 */
 .reader-bottom-tabs {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: calc(var(--reader-statusbar-h) + env(safe-area-inset-bottom, 0px));
+  z-index: 97;
   display: flex;
   align-items: stretch;
   width: 100%;
-  flex: 0 0 auto;
+  height: var(--reader-tabs-h);
+  box-sizing: border-box;
   border-top: 1px solid #e0e0e0;
   background: #ffffff;
-  border-radius: 14px;
   overflow: hidden;
 }
 
@@ -2875,13 +2898,14 @@ html[data-pagemargin='smart'] .reader-doc { padding-inline: clamp(16px, 5vw, 40p
 }
 
 /* —— 底部常驻信息条（进度 / 时间 / 电量）：不受 overlay 影响，始终可见 ——
+   第 3 轮：z-index 提到 97（与常驻导航栏同级），保证设置面板打开时仍可见。
    小字、克制、无投影；底部为它预留高度，正文不会被挡（见 .reader-scroll padding）。 */
 .reader-statusbar {
   position: absolute;
   left: 0;
   right: 0;
   bottom: 0;
-  z-index: 87;
+  z-index: 97;
   height: calc(var(--reader-statusbar-h, 30px) + env(safe-area-inset-bottom, 0px));
   box-sizing: border-box;
   display: flex;
@@ -2974,6 +2998,9 @@ html[data-pagemargin='smart'] .reader-doc { padding-inline: clamp(16px, 5vw, 40p
   position: absolute;
   inset: 0;
   background: rgba(10, 14, 22, 0.36);
+  /* 第 3 轮：遮罩微模糊（番茄同款）；WebView 不支持 backdrop-filter 时自然降级为纯半透明，无副作用 */
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
   animation: fade-in 0.2s var(--ease);
 }
 
@@ -2981,7 +3008,8 @@ html[data-pagemargin='smart'] .reader-doc { padding-inline: clamp(16px, 5vw, 40p
   position: absolute;
   left: 0;
   right: 0;
-  bottom: 0;
+  /* 第 3 轮：抬高到常驻导航栏之上，避免面板盖住导航（导航 z-index 97 > 遮罩 95，仍可见可点） */
+  bottom: var(--reader-nav-h);
   background: var(--surface);
   color: var(--text);
   border-radius: 20px 20px 0 0; /* 第 2 步：22px → 20px */
@@ -3234,18 +3262,37 @@ html[data-pagemargin='smart'] .reader-doc { padding-inline: clamp(16px, 5vw, 40p
   line-height: 1;
 }
 
-/* 翻页行专属胶囊配色（第 2 步规范）——只作用于带 .reader-pills-tone 的组，
-   不改全局 .reader-pill 语义。
-   未选中：底 #F0F0F0 / 字 #666666；选中：白底 #FFFFFF + 黑字 #000000 + 1px 边框 #E0E0E0。 */
+/* 面板内胶囊配色（只作用于带 .reader-pills-tone 的组，不改全局 .reader-pill 语义）。
+   未选中统一：底 #F0F0F0 / 字 #666666。 */
 .reader-sheet .reader-pills-tone .reader-pill {
   background: #f0f0f0;
   color: #666666;
   border: 1px solid transparent;
 }
-.reader-sheet .reader-pills-tone .reader-pill.is-on {
+/* 翻页组：选中 = 白底 + 黑字 + 番茄橙描边（第 3 轮） */
+.reader-sheet .reader-pills-tone-page .reader-pill.is-on {
   background: #ffffff;
   color: #000000;
-  border: 1px solid #e0e0e0;
+  border: 1px solid #ff6a00;
+}
+/* 间距 / 对齐组：选中 = 番茄橙底 + 白字（第 3 轮：替换原白底黑字） */
+.reader-sheet .reader-pills-tone-orange .reader-pill.is-on {
+  background: #ff6a00;
+  color: #ffffff;
+  border: 1px solid #ff6a00;
+}
+
+/* 字号 A−/A+ 与「字体 ›」入口：hover/active 用番茄橙（弱强调，不喧宾夺主） */
+.reader-sheet .reader-font-step:hover,
+.reader-sheet .reader-enter-btn:hover {
+  color: #ff6a00;
+}
+.reader-sheet .reader-font-step:active,
+.reader-sheet .reader-enter-btn:active {
+  color: #e05f00;
+}
+.reader-sheet .reader-enter-btn:hover .reader-enter-text {
+  color: #ff6a00;
 }
 
 /* 主层底部：间距设置（主按钮）+ 更多（文本入口） */
@@ -3277,67 +3324,6 @@ html[data-pagemargin='smart'] .reader-doc { padding-inline: clamp(16px, 5vw, 40p
   white-space: nowrap;
 }
 
-/* 行段间距「自定义」滑块（0.5–2.5em） */
-.reader-spacing-slider {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 8px 2px 0;
-}
-.reader-spacing-slider input[type='range'] {
-  -webkit-appearance: none;
-  appearance: none;
-  flex: 1 1 auto;
-  height: 6px;
-  border-radius: 3px;
-  background: var(--bg-soft);
-  margin: 0;
-  cursor: pointer;
-}
-.reader-spacing-slider input[type='range']::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  appearance: none;
-  width: 20px;
-  height: 20px;
-  border-radius: 999px;
-  background: #ffffff;
-  border: 1px solid #cfcfcf;
-}
-.reader-spacing-slider input[type='range']::-moz-range-thumb {
-  width: 20px;
-  height: 20px;
-  border-radius: 999px;
-  background: #ffffff;
-  border: 1px solid #cfcfcf;
-}
-.reader-spacing-value {
-  flex: 0 0 auto;
-  font-size: 0.75rem;
-  color: var(--text-soft);
-  font-variant-numeric: tabular-nums;
-  min-width: 3em;
-  text-align: right;
-}
-
-/* 单手模式示意图（更多子层内，仅说明"点哪里翻页"） */
-.reader-onehand-hint {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 6px;
-  margin-top: 6px;
-}
-.reader-onehand-zone {
-  border: 1px dashed var(--border);
-  border-radius: 6px;
-  padding: 2px 8px;
-  font-size: 0.6875rem;
-  color: var(--text-soft);
-}
-.reader-onehand-note {
-  font-size: 0.6875rem;
-  color: var(--text-dim);
-}
 
 /* 通用胶囊组（用于字体/字号/翻页/其他） */
 .reader-pill-group {
@@ -3517,10 +3503,11 @@ html[data-pagemargin='smart'] .reader-doc { padding-inline: clamp(16px, 5vw, 40p
   background: #555555;
 }
 
-/* 更多设置子层（参考 13.jpg） */
+/* 更多设置子层（参考 13.jpg）。
+   第 3 轮：bottom 抬到 --reader-nav-h，让子层同样不遮挡常驻导航栏。 */
 .reader-more-layer {
   position: absolute;
-  inset: 0;
+  inset: 0 0 var(--reader-nav-h) 0;
   z-index: 96;
   display: flex;
   flex-direction: column;

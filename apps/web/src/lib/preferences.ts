@@ -26,7 +26,7 @@ export interface SysPrefs {
 export interface ReaderPrefs {
   /**
    * 阅读区正文字号（px，12–30 整数）。**区别于**系统字号 `SysPrefs.fontSize`（枚举）。
-   * 数值化后由 `--reading-font-scale = fontSize / 17` 驱动 em 级联（基准 17px → 默认 18px）。
+   * 数值化后由 `--reading-font-scale = fontSize / 17` 驱动 em 级联（基准 17px → 默认 20px）。
    */
   fontSize: number;
   fontFamily: FontFamilyPref;
@@ -82,7 +82,7 @@ export const SYS_DEFAULTS: SysPrefs = {
 };
 
 export const READ_DEFAULTS: ReaderPrefs = {
-  fontSize: 18,
+  fontSize: 20,
   fontFamily: 'serif',
   bgColor: 'sepia',
   animation: 'slide',
@@ -97,7 +97,8 @@ export const READ_DEFAULTS: ReaderPrefs = {
 /** 阅读区字号（px）取值边界与默认值（供 UI 复用）。 */
 export const READ_FONT_MIN = 12;
 export const READ_FONT_MAX = 30;
-export const READ_FONT_DEFAULT = 18;
+/** 正文默认字号（第 3 轮：18 → 20，对齐番茄阅读页观感；范围仍 12–30）。 */
+export const READ_FONT_DEFAULT = 20;
 
 /**
  * 阅读字号「粗档」：供设置页 / 旧面板这类 4 档 UI 复用（数值化的临时兼容层）。
@@ -110,10 +111,14 @@ export const READ_FONT_BUCKETS = [
   { value: 24, label: '特大' },
 ] as const;
 
-/** number(px) → 最近粗档下标：≤16→0 / ≤19→1 / ≤22→2 / 其余→3。 */
+/**
+ * number(px) → 最近粗档下标：≤16→0 / ≤20→1 / ≤22→2 / 其余→3。
+ * 注：第 3 轮把正文默认字号提到 20px，故「默认」档（index 1）的上界由 19 放宽到 20，
+ *     保证设置页在默认值 20px 时高亮的仍是「默认」而不是「大」。
+ */
 export function readFontBucketIndex(px: number): number {
   if (px <= 16) return 0;
-  if (px <= 19) return 1;
+  if (px <= 20) return 1;
   if (px <= 22) return 2;
   return 3;
 }

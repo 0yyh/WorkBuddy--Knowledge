@@ -15,10 +15,11 @@
  *           翻页 5 胶囊配色 / 底部「间距设置+更多」
  *   P13 护眼模式 sepia⇄white 切换
  *   P14 A−/A+ 连续步进 + 12/30 边界 disabled + 复位 18
- *   S1..S7 间距子层三组默认值 / 自定义滑块 / 智能匹配 padding clamp
- *   M1..M4 更多子层 3 开关默认态 [false,true,true] + 开关配色
- *   D1..D5 划词工具条(srgb 51,51,51 / 8px) + 释义卡(12px 12px 0 0 / #333)
+ *   S1..S5 间距子层三组：4+4 档且默认均「适中」+ 选中态橙底白字（第 3 轮删自定义/智能匹配）
+ *   M1..M4 更多子层 2 开关（第 3 轮删单手模式）默认 [true,true] + 开关开/关配色
+ *   D1..D5 划词工具条(#333 / 8px) + 释义卡(12px 12px 0 0 / #333)
  *   S8 源 styles.css ::selection 含 #E8D3A2
+ *   N1 顶栏 ⋮ = 章节目录；N2 常驻导航栏始终可见；N3 面板不遮挡导航；N4 遮罩 backdrop blur
  *   S9 源 styles.css .dict-toast 背景 = #333333；S10 废弃 reader-* 死类已清除
  *   T1 深色主题（dark）渲染：.reading-bg-dark / 背景为深色 / 仍无投影 / 面板非纯白 / 可还原
  *
@@ -218,10 +219,13 @@ try {
   const bgOk = st && st.bg === 'rgb(245, 241, 230)';
   check('V1 .reader-root 背景 = rgb(245,241,230)', bgOk, `bg=${st?.bg} fontScale=${st?.fontScale} readerFs=${st?.readerFs}`);
 
-  /* V2 正文度量 */
-  check('V2a 正文 font-size = 18px', st?.pFont === '18px', `pFont=${st?.pFont}`);
-  check('V2b 正文 line-height = 32.4px', st?.pLine === '32.4px', `pLine=${st?.pLine}`);
-  check('V2c 正文 text-indent = 36px', st?.pIndent === '36px', `pIndent=${st?.pIndent}`);
+  /* V1b 正文默认字号（第 3 轮：18 → 20） */
+  check('V1b --reader-fs = 20px（正文默认字号）', st?.readerFs === '20px', `readerFs=${st?.readerFs}`);
+
+  /* V2 正文度量（第 3 轮：20px / 1.8→36px / 2em→40px） */
+  check('V2a 正文 font-size = 20px', st?.pFont === '20px', `pFont=${st?.pFont}`);
+  check('V2b 正文 line-height = 36px', st?.pLine === '36px', `pLine=${st?.pLine}`);
+  check('V2c 正文 text-indent = 40px', st?.pIndent === '40px', `pIndent=${st?.pIndent}`);
 
   /* V3 标题 */
   check('V3a h2 font-size = 22px', st?.h2Font === '22px', `h2Font=${st?.h2Font}`);
@@ -234,6 +238,55 @@ try {
   /* V6 底部常驻信息条（点中央前就应存在） */
   check('V6a 底部信息条存在', st?.statusbar === true, `statusbar=${st?.statusbar}`);
   check('V6b 信息条进度匹配 /^\\d+\\/\\d+$/', /^\d+\/\d+$/.test(st?.statusText || ''), `statusText=${JSON.stringify(st?.statusText)}`);
+
+  /* ---- N2 常驻导航栏：overlay 未唤出时也应可见可点（第 3 轮） ---- */
+  const NAV_PROBE = `(function(){
+    var nav = document.querySelector('.reader-bottom-tabs');
+    if(!nav) return { present:false };
+    var cs = getComputedStyle(nav);
+    var r = nav.getBoundingClientRect();
+    var root = document.querySelector('.reader-root');
+    return {
+      present:true,
+      display: cs.display,
+      opacity: cs.opacity,
+      visibility: cs.visibility,
+      zIndex: cs.zIndex,
+      height: Math.round(r.height),
+      tabs: nav.querySelectorAll('.reader-tab').length,
+      overlay: root ? root.classList.contains('has-overlay') : null
+    };
+  })()`;
+  const navBefore = await evaluate(NAV_PROBE);
+  check(
+    'N2a 常驻导航栏存在且未点中央时可见（display≠none / opacity>0.9 / visible）',
+    navBefore?.present === true &&
+      navBefore?.display !== 'none' &&
+      Number(navBefore?.opacity) > 0.9 &&
+      navBefore?.visibility === 'visible',
+    JSON.stringify(navBefore),
+  );
+  check('N2b 未点中央时 overlay 仍为 false（导航非由 overlay 带出）', navBefore?.overlay === false, `overlay=${navBefore?.overlay}`);
+  check('N2c 导航栏含 3 个 tab', navBefore?.tabs === 3, `tabs=${navBefore?.tabs}`);
+
+  /* ---- N1 顶栏右侧竖排「⋮」= 打开章节目录（第 3 轮） ---- */
+  const DOT_TEST = `(async function(){
+    var sleep = function(ms){ return new Promise(function(r){setTimeout(r,ms);}); };
+    var btns = Array.prototype.slice.call(document.querySelectorAll('.reader-top button'));
+    var dot = btns.filter(function(b){ return b.getAttribute('aria-label')==='章节目录'; })[0];
+    if(!dot) return { ok:false, why:'no ⋮ button' };
+    dot.click(); await sleep(350);
+    var sheet = document.querySelector('.reader-chapter-sheet');
+    var opened = !!sheet;
+    var mask = document.querySelector('.reader-sheet-layer .reader-sheet-mask');
+    if(mask) mask.click();
+    await sleep(350);
+    return { ok:true, opened: opened, closed: !document.querySelector('.reader-chapter-sheet') };
+  })()`;
+  const dotRes = await evaluate(DOT_TEST);
+  check('N1a 顶栏存在 aria-label=章节目录 的 ⋮ 按钮', dotRes?.ok === true, JSON.stringify(dotRes));
+  check('N1b 点 ⋮ 打开章节目录面板', dotRes?.opened === true, `opened=${dotRes?.opened}`);
+  check('N1c 点遮罩后目录面板关闭', dotRes?.closed === true, `closed=${dotRes?.closed}`);
 
   /* V5 点中央 → 3 等分导航栏 */
   await evaluate(CLICK_CENTER);
@@ -294,6 +347,7 @@ try {
         animCount: animPills.length,
         animOnBg: animOn ? cs(animOn).backgroundColor : null,
         animOnColor: animOn ? cs(animOn).color : null,
+        animOnBorder: animOn ? cs(animOn).borderTopColor : null,
         animOffBg: animOff ? cs(animOff).backgroundColor : null,
         actions: actions
       };
@@ -313,13 +367,57 @@ try {
     check('P3 面板圆角 = 20px', panel?.sheetRadius === '20px', `radius=${panel?.sheetRadius}`);
     const maskOk = typeof panel?.maskBg === 'string' && panel.maskBg.indexOf('rgba') === 0 && /,\s*(0?\.\d+|0)\)$/.test(panel.maskBg);
     check('P4 遮罩为半透明（rgba 且 alpha<1）', maskOk, `maskBg=${panel?.maskBg}`);
+
+    /* ---- N3 面板不遮挡常驻导航（第 3 轮） ---- */
+    const N3_PROBE = `(function(){
+      var nav = document.querySelector('.reader-bottom-tabs');
+      var sheet = document.querySelector('.reader-sheet');
+      var layer = document.querySelector('.reader-sheet-layer');
+      if(!nav || !sheet) return { ok:false };
+      var navCs = getComputedStyle(nav);
+      var sheetCs = getComputedStyle(sheet);
+      var navR = nav.getBoundingClientRect();
+      var mask = document.querySelector('.reader-sheet-mask');
+      return {
+        ok:true,
+        navVisible: navCs.display !== 'none' && Number(navCs.opacity) > 0.9 && navCs.visibility === 'visible',
+        navZ: Number(navCs.zIndex),
+        layerZ: layer ? Number(getComputedStyle(layer).zIndex) : null,
+        /* 用计算后的 bottom 而非 getBoundingClientRect：sheet-up 动画期间
+           transform: translateY(...) 会让 rect 暂时偏下，测量会失真。 */
+        sheetBottomPx: parseFloat(sheetCs.bottom || 'NaN'),
+        navHeight: Math.round(navR.height),
+        maskFilter: mask ? getComputedStyle(mask).backdropFilter : null
+      };
+    })()`;
+    await sleep(400); /* 等 sheet-up 动画结束 */
+    const n3 = await evaluate(N3_PROBE);
+    check('N3a 设置面板打开时常驻导航仍可见', n3?.ok === true && n3?.navVisible === true, JSON.stringify(n3));
+    check('N3b 导航 z-index 高于面板层（不被遮罩盖住）', (n3?.navZ ?? 0) > (n3?.layerZ ?? 0), `navZ=${n3?.navZ} layerZ=${n3?.layerZ}`);
+    check(
+      'N3c 面板 bottom 抬高 ≥ 导航高度',
+      Number.isFinite(n3?.sheetBottomPx) && n3.sheetBottomPx >= (n3?.navHeight ?? 0),
+      `sheetBottom=${n3?.sheetBottomPx}px navHeight=${n3?.navHeight}px`,
+    );
+    /* ---- N4 遮罩微模糊 ---- */
+    if (typeof n3?.maskFilter === 'string' && /blur/.test(n3.maskFilter)) {
+      check('N4 遮罩 backdrop-filter 含 blur', true, `maskFilter=${n3?.maskFilter}`);
+    } else {
+      const cssText2 = await readFile(join(ROOT, 'apps', 'web', 'src', 'styles.css'), 'utf8').catch(() => '');
+      check(
+        'N4 遮罩含 backdrop-filter（取不到计算值，按源 CSS 断言）',
+        /\.reader-sheet-mask\s*\{[^}]*backdrop-filter:\s*blur/.test(cssText2),
+        `maskFilter=${n3?.maskFilter}`,
+      );
+    }
     check('P5 亮度行含「护眼模式」按钮且默认 aria-pressed=true', panel?.eyePresent === true && panel?.eyePressed === 'true', `present=${panel?.eyePresent} pressed=${panel?.eyePressed}`);
-    check('P6 字号行数字 = 当前 px（默认 18）', panel?.fontNum === '18', `fontNum=${panel?.fontNum}`);
+    check('P6 字号行数字 = 当前 px（默认 20）', panel?.fontNum === '20', `fontNum=${panel?.fontNum}`);
     check('P7 颜色行 7 个色块', panel?.dotCount === 7, `dotCount=${panel?.dotCount}`);
     check('P8 选中色块描边 = rgb(0,0,0)', panel?.dotOnBorder === 'rgb(0, 0, 0)', `border=${panel?.dotOnBorder}`);
     check('P9 翻页行 5 胶囊', panel?.animCount === 5, `count=${panel?.animCount}`);
     check('P10a 选中翻页胶囊背景 = rgb(255,255,255)', panel?.animOnBg === 'rgb(255, 255, 255)', `bg=${panel?.animOnBg}`);
     check('P10b 选中翻页胶囊字色 = rgb(0,0,0)', panel?.animOnColor === 'rgb(0, 0, 0)', `color=${panel?.animOnColor}`);
+    check('P10c 选中翻页胶囊边框 = rgb(255,106,0)（第 3 轮）', panel?.animOnBorder === 'rgb(255, 106, 0)', `border=${panel?.animOnBorder}`);
     check('P11 未选中翻页胶囊背景 = rgb(240,240,240)', panel?.animOffBg === 'rgb(240, 240, 240)', `bg=${panel?.animOffBg}`);
     const acts = panel?.actions || [];
     check('P12 底部含「间距设置」与「更多」', acts.some((a) => a.indexOf('间距设置') >= 0) && acts.some((a) => a.indexOf('更多') >= 0), `actions=${JSON.stringify(acts)}`);
@@ -379,16 +477,16 @@ try {
       var top = num(); var topDisabled = plus.disabled;
       for(var j=0;j<40 && !minus.disabled;j++){ minus.click(); await sleep(28); }
       var bottom = num(); var bottomDisabled = minus.disabled;
-      for(var k=0;k<6;k++){ plus.click(); await sleep(28); }
+      for(var k=0;k<8;k++){ plus.click(); await sleep(28); }   /* 12 → 20（默认） */
       var restored = num();
       return { before:before, afterUp:afterUp, fsAfterUp:fsAfterUp, top:top, topDisabled:topDisabled, bottom:bottom, bottomDisabled:bottomDisabled, restored:restored };
     })()`;
     const fr = await evaluate(FONT_TEST);
-    check('P14a 点击 A+ 后 = 19', fr?.afterUp === '19', `afterUp=${fr?.afterUp}`);
-    check('P14b 点击 A+ 后 --reader-fs = 19px', fr?.fsAfterUp === '19px', `fsVar=${fr?.fsAfterUp}`);
+    check('P14a 点击 A+ 后 = 21', fr?.afterUp === '21', `afterUp=${fr?.afterUp}`);
+    check('P14b 点击 A+ 后 --reader-fs = 21px', fr?.fsAfterUp === '21px', `fsVar=${fr?.fsAfterUp}`);
     check('P14c 连续 A+ 到 30 且 A+ disabled', fr?.top === '30' && fr?.topDisabled === true, `top=${fr?.top} disabled=${fr?.topDisabled}`);
     check('P14d 连续 A− 到 12 且 A− disabled', fr?.bottom === '12' && fr?.bottomDisabled === true, `bottom=${fr?.bottom} disabled=${fr?.bottomDisabled}`);
-    check('P14e 复位回 18', fr?.restored === '18', `restored=${fr?.restored}`);
+    check('P14e 复位回 20', fr?.restored === '20', `restored=${fr?.restored}`);
 
     /* ---- 打开间距设置子层 ---- */
     await evaluate(`(function(){ var b=document.querySelector('.reader-sheet .reader-action-primary'); if(!b) return false; b.click(); return true; })()`);
@@ -400,7 +498,13 @@ try {
         var label = g.querySelector('.reader-spacing-label');
         var pills = Array.prototype.slice.call(g.querySelectorAll('.reader-pill'));
         var on = pills.filter(function(p){return p.classList.contains('is-on');})[0];
-        return { label: label?label.textContent.trim():null, count: pills.length, on: on?on.textContent.trim():null };
+        return {
+          label: label?label.textContent.trim():null,
+          count: pills.length,
+          on: on?on.textContent.trim():null,
+          onBg: on?getComputedStyle(on).backgroundColor:null,
+          onColor: on?getComputedStyle(on).color:null
+        };
       });
       var slider = sheet.querySelector('.reader-spacing-slider input[type=range]');
       return {
@@ -422,29 +526,19 @@ try {
     }
     const g0 = spacing?.groups?.[0], g1 = spacing?.groups?.[1];
     check('S1 间距子层三组（行段间距/页面边距/对齐）', spacing?.open === true && spacing?.groups?.length === 3, `labels=${JSON.stringify((spacing?.groups||[]).map((g)=>g.label))}`);
-    check('S2 行段间距 5 档且默认选中「适中」', g0?.count === 5 && g0?.on === '适中', `count=${g0?.count} on=${g0?.on}`);
-    check('S3 页面边距 5 档且默认选中「智能匹配」', g1?.count === 5 && g1?.on === '智能匹配', `count=${g1?.count} on=${g1?.on}`);
-    check('S4 默认 data-paraspacing=md / data-pagemargin=smart', spacing?.paraSpacing === 'md' && spacing?.pageMargin === 'smart', `para=${spacing?.paraSpacing} page=${spacing?.pageMargin}`);
-    check('S5 自定义前无滑块', spacing?.hasSlider === false, `hasSlider=${spacing?.hasSlider}`);
-
-    await evaluate(`(function(){ var g=document.querySelectorAll('.reader-spacing-group')[0]; var pills=g.querySelectorAll('.reader-pill'); for(var i=0;i<pills.length;i++){ if(pills[i].textContent.trim()==='自定义'){ pills[i].click(); return true; } } return false; })()`);
-    await sleep(200);
-    const spacing2 = await evaluate(SPACING_PROBE);
-    check('S6 选中「自定义」后出现 input[type=range]', spacing2?.hasSlider === true, `hasSlider=${spacing2?.hasSlider}`);
-
-    /* ---- 智能匹配：两视口下 padding-inline 取不同值（clamp 生效） ---- */
-    const READ_DOC_PAD = `(function(){ var d=document.querySelector('.reader-doc'); if(!d) return null; var cs=getComputedStyle(d); return { left: cs.paddingLeft, right: cs.paddingRight }; })()`;
-    try { await client.send('Emulation.setDeviceMetricsOverride', { width: 390, height: 820, deviceScaleFactor: 1, mobile: true }); } catch {}
-    await sleep(300);
-    const pad390 = await evaluate(READ_DOC_PAD);
-    try { await client.send('Emulation.setDeviceMetricsOverride', { width: 900, height: 820, deviceScaleFactor: 1, mobile: false }); } catch {}
-    await sleep(300);
-    const pad900 = await evaluate(READ_DOC_PAD);
-    try { await client.send('Emulation.clearDeviceMetricsOverride'); } catch {}
-    await sleep(200);
-    const px = (s) => parseFloat(s || 'NaN');
-    const clampOk = pad390 && pad900 && pad390.left !== pad900.left && px(pad390.left) >= 16 && px(pad390.left) <= 40 && px(pad900.left) >= 16 && px(pad900.left) <= 40;
-    check('S7 智能匹配 padding-inline 随视口变化（390≠900，均∈[16,40]）', clampOk, `390=${JSON.stringify(pad390)} 900=${JSON.stringify(pad900)}`);
+    /* 第 3 轮：两组均收敛为 4 档，默认都是「适中」 */
+    check('S2 行段间距 4 档且默认选中「适中」', g0?.count === 4 && g0?.on === '适中', `count=${g0?.count} on=${g0?.on}`);
+    check('S3 页面边距 4 档且默认选中「适中」', g1?.count === 4 && g1?.on === '适中', `count=${g1?.count} on=${g1?.on}`);
+    check(
+      'S4 默认 data-paraspacing=md / data-pagemargin=md',
+      spacing?.paraSpacing === 'md' && spacing?.pageMargin === 'md',
+      `para=${spacing?.paraSpacing} page=${spacing?.pageMargin}`,
+    );
+    /* 第 3 轮：间距 / 对齐选中态 = 橙底白字 */
+    const g2 = spacing?.groups?.[2];
+    check('S5a 行段间距选中胶囊 = 橙底白字', g0?.onBg === 'rgb(255, 106, 0)' && g0?.onColor === 'rgb(255, 255, 255)', `bg=${g0?.onBg} color=${g0?.onColor}`);
+    check('S5b 页面边距选中胶囊 = 橙底白字', g1?.onBg === 'rgb(255, 106, 0)' && g1?.onColor === 'rgb(255, 255, 255)', `bg=${g1?.onBg} color=${g1?.onColor}`);
+    check('S5c 对齐组保留且选中胶囊 = 橙底白字', g2?.label === '对齐' && g2?.onBg === 'rgb(255, 106, 0)' && g2?.onColor === 'rgb(255, 255, 255)', `label=${g2?.label} bg=${g2?.onBg} color=${g2?.onColor}`);
 
     /* ---- 关闭间距子层，打开更多子层 ---- */
     await evaluate(`(function(){ var c=document.querySelector('.reader-more-sheet .reader-more-close'); if(c) c.click(); return true; })()`);
@@ -466,17 +560,42 @@ try {
       const deadline = Date.now() + 4000;
       while (Date.now() < deadline) {
         more = await evaluate(MORE_PROBE);
-        if (more && more.open && more.rowCount === 3) break;
+        if (more && more.open && more.rowCount === 2) break;
         await sleep(150);
       }
     }
-    check('M1 更多子层恰好 3 个开关行', more?.open === true && more?.rowCount === 3, `rowCount=${more?.rowCount} labels=${JSON.stringify((more?.switches||[]).map((s)=>s.label))}`);
+    check(
+      'M1 更多子层恰好 2 个开关行（第 3 轮删单手模式）',
+      more?.open === true && more?.rowCount === 2,
+      `rowCount=${more?.rowCount} labels=${JSON.stringify((more?.switches || []).map((s) => s.label))}`,
+    );
     const onStates = (more?.switches || []).map((s) => s.on);
-    check('M2 默认开关态 = [false,true,true]', JSON.stringify(onStates) === JSON.stringify([false, true, true]), `on=${JSON.stringify(onStates)}`);
-    const offBg = (more?.switches || []).filter((s) => s.on === false).map((s) => s.bg);
+    check('M2 默认开关态 = [true,true]', JSON.stringify(onStates) === JSON.stringify([true, true]), `on=${JSON.stringify(onStates)}`);
     const onBg = (more?.switches || []).filter((s) => s.on === true).map((s) => s.bg);
-    check('M3 开态开关背景 = rgb(255,106,0)', onBg.length === 2 && onBg.every((b) => b === 'rgb(255, 106, 0)'), `onBg=${JSON.stringify(onBg)}`);
-    check('M4 关态开关背景 = rgb(224,224,224)', offBg.length === 1 && offBg.every((b) => b === 'rgb(224, 224, 224)'), `offBg=${JSON.stringify(offBg)}`);
+    check(
+      'M3 两个开关均为开态且背景 = rgb(255,106,0)',
+      onBg.length === 2 && onBg.every((b) => b === 'rgb(255, 106, 0)'),
+      `onBg=${JSON.stringify(onBg)}`,
+    );
+    /* 关掉第 2 个开关以验证「关态」配色，随即还原 */
+    const OFF_TEST = `(async function(){
+      var sleep = function(ms){ return new Promise(function(r){setTimeout(r,ms);}); };
+      var pick = function(i){ var rows=document.querySelectorAll('.reader-more-sheet .reader-more-row'); return rows[i]?rows[i].querySelector('.reader-switch'):null; };
+      var sw = pick(1);
+      if(!sw) return { ok:false };
+      sw.click(); await sleep(400);   /* 开关有 0.18s 背景过渡，须等过渡结束再取色 */
+      var off = document.querySelectorAll('.reader-more-sheet .reader-switch:not(.is-on)');
+      var offBg = off[0] ? getComputedStyle(off[0]).backgroundColor : null;
+      var offCount = off.length;
+      var back = pick(1);
+      if(back) back.click();
+      await sleep(400);
+      return { ok:true, offBg: offBg, offCount: offCount, onCount: document.querySelectorAll('.reader-more-sheet .reader-switch.is-on').length };
+    })()`;
+    const offRes = await evaluate(OFF_TEST);
+    check('M4a 关掉一个开关后出现 1 个关态', offRes?.ok === true && offRes?.offCount === 1, JSON.stringify(offRes));
+    check('M4b 关态开关背景 = rgb(224,224,224)', offRes?.offBg === 'rgb(224, 224, 224)', `offBg=${offRes?.offBg}`);
+    check('M4c 还原后 2 个开关均回到开态', offRes?.onCount === 2, `onCount=${offRes?.onCount}`);
 
     /* ---- 划词浮层：工具条 + 释义卡 ---- */
     const SELECT_AND_OPEN_MENU = `(async function(){
