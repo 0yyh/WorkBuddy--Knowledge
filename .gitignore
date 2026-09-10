@@ -1,0 +1,51 @@
+# ============ 依赖 ============
+node_modules/
+.pnpm-store/
+
+# ============ 构建产物 ============
+dist/
+apps/web/dist/
+dist-bundle/
+release/
+*.zip
+*.apk
+*.tsbuildinfo
+*.timestamp-*.mjs
+
+# ============ 内容派生物（由 CLI / 脚本生成，勿入版本库）============
+# 注意：content/ 下只有源内容入库；.index 是 build:index 产物，
+# public/content 是 copy-content 产物（投递时 .index 改名为 index）。
+content/.index/
+content/_browse/
+content/_bundles/
+content/.pks/
+apps/web/public/content/
+apps/reader/public/content/
+
+# ============ Android ============
+# 旧版曾 `apps/web/android/` 整个忽略 —— 导致手改且 cap sync 无法重建的
+# Gradle 配置永不入库、丢失不可恢复。现改为：只忽略构建产物与本机环境，
+# 工程配置 / 源码 / 包装器必须入库。
+apps/web/android/.gradle/
+apps/web/android/build/
+apps/web/android/app/build/
+apps/web/android/app/src/main/assets/public/
+apps/web/android/local.properties   # 含本机 SDK 绝对路径：sdk.dir=...
+
+# ============ Agent 工作数据 ============
+# .workbuddy 是 Agent 记忆与协作数据；仅把项目记忆（纯 Markdown）纳入版本库。
+.workbuddy/*
+!.workbuddy/memory/
+
+# ============ 备份 / 临时 ============
+.backup-*/
+*.tmp
+*.bak
+*~
+
+# ============ 工具 / 系统 ============
+.DS_Store
+Thumbs.db
+*.log
+.vite/
+coverage/

@@ -1,0 +1,33 @@
+{
+  "name": "personal-knowledge-station",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "个人本地知识学习站 —— 纯本地、零网络、内容与代码分离的双端阅读器",
+  "packageManager": "pnpm@9.15.9",
+  "engines": {
+    "node": ">=20.11"
+  },
+  "scripts": {
+    "core:build": "tsc -p packages/core/tsconfig.json",
+    "build": "tsc -p packages/core/tsconfig.json && tsc -p packages/cli/tsconfig.json && npm run typecheck && npm --prefix apps/web run build",
+    "typecheck": "tsc -p packages/core/tsconfig.json --noEmit && tsc -p packages/cli/tsconfig.json --noEmit && npm --prefix apps/web run typecheck",
+    "test": "npm --prefix packages/core run test",
+    "dev": "npm --prefix apps/web run dev",
+    "pks": "tsc -p packages/core/tsconfig.json && tsx packages/cli/src/index.ts",
+    "build:index": "tsc -p packages/core/tsconfig.json && tsx packages/cli/src/index.ts build:index",
+    "lint": "tsc -p packages/core/tsconfig.json && tsx packages/cli/src/index.ts lint",
+    "bundle": "tsc -p packages/core/tsconfig.json && tsx packages/cli/src/index.ts bundle",
+    "rename": "tsc -p packages/core/tsconfig.json && tsx packages/cli/src/index.ts rename",
+    "browse:gen": "tsc -p packages/core/tsconfig.json && tsx packages/cli/src/index.ts browse:gen",
+    "content:copy": "node scripts/copy-content.mjs",
+    "build:update": "node scripts/build-update.mjs",
+    "serve:lan": "node scripts/serve-lan.mjs",
+    "android:sync": "npm --prefix apps/web run android:sync",
+    "android:build": "npm --prefix apps/web run android:build"
+  },
+  "devDependencies": {
+    "tsx": "^4.19.2",
+    "typescript": "^5.6.3"
+  }
+}
