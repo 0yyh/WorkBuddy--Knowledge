@@ -2,7 +2,18 @@
 
 纯本地、离线优先的个人知识学习站。Web（React 18 + Vite 5 + TS strict，**纯 CSS 无 Tailwind**）
 + Android（Capacitor 7，同一套代码）。pnpm monorepo：`packages/core`、`packages/cli`、`apps/web`。
-**项目不是 git 仓库**（无 `.git`），进度靠 `.workbuddy/memory/` 下的日志保存。
+**项目已 git 化**（2026-09-10）：分支 `master`，远程 `git@gitee.com:Peter-Y/WorkBuddy--Knowledge.git`（SSH），
+身份 `Peter-Y / 2270778780@qq.com`。密钥 `~/.ssh/id_ed25519`。
+
+## 目录约定（2026-09-10 重整后）
+- `docs/` **只放现行规范**（01–06 设计类、11–14 方案/评审/重构）。
+- `docs/archive/` = 历史审计与评审（07–10），结论可能过期，**不作为规范引用**。
+- `docs/reports/` = 各轮过程报告与状态快照（根目录不再散落 md，除 README.md）。
+- `scripts/` = 构建投递（`build-update` / `copy-content` / `serve-lan`）；`scripts/tools/` = 一次性辅助工具。
+  原 `apps/web/scripts/` **已删除**，脚本入口唯一。
+- `.gitignore` 已改为精确忽略 Android **构建产物**（`.gradle/ build/ app/build/ assets/public/ local.properties`），
+  **手改的 Gradle / Java / Manifest 全部入库**（此前被整行 `apps/web/android/` 吞掉，换机无法重建）。
+- `.workbuddy/*` 被忽略但 `!.workbuddy/memory/` 保留入库。
 
 ## 环境约束（违反会直接失败）
 - **禁止 `pnpm`**：本项目下 pnpm 触发沙箱 wmic 拦截 → 一律用 `npm`（依赖已装好，勿 reinstall）。
