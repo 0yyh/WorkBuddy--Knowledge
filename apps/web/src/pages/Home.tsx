@@ -23,15 +23,16 @@ interface L1Visual {
 }
 
 /**
- * L1 配色表：严格按评审锁定的五组色，不引其它色。
+ * L1 配色表：严格按评审锁定的五组色，色值回退到 tokens.css 的语义变量
+ * （--l1-color-* / --l1-color-*-soft），便于后续主题化 / 暗色一致。
  * 键为 L1 标题全匹配；未来新增 L1 走 L1_FALLBACK 灰。
  */
 const L1_VISUAL: Record<string, L1Visual> = {
-  历史: { icon: '史', bg: 'var(--c-amber-50)', fg: 'var(--c-amber-600)' },
-  哲学: { icon: '哲', bg: 'var(--c-purple-50)', fg: 'var(--c-purple-600)' },
-  科学: { icon: '理', bg: 'var(--c-green-50)', fg: 'var(--c-green-600)' },
-  经济学: { icon: '经', bg: 'var(--c-blue-50)', fg: 'var(--c-blue-600)' },
-  政治理论: { icon: '政', bg: 'var(--c-coral-50)', fg: 'var(--c-coral-600)' },
+  历史: { icon: '史', bg: 'var(--l1-color-history-soft)', fg: 'var(--l1-color-history)' },
+  哲学: { icon: '哲', bg: 'var(--l1-color-philosophy-soft)', fg: 'var(--l1-color-philosophy)' },
+  科学: { icon: '理', bg: 'var(--l1-color-science-soft)', fg: 'var(--l1-color-science)' },
+  经济学: { icon: '经', bg: 'var(--l1-color-economics-soft)', fg: 'var(--l1-color-economics)' },
+  政治理论: { icon: '政', bg: 'var(--l1-color-politics-soft)', fg: 'var(--l1-color-politics)' },
 };
 
 /** 未收录的 L1 用中性灰，避免出现"没配色"的裸卡片 */

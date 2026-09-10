@@ -10,6 +10,7 @@
     "build": "vite build",
     "preview": "vite preview",
     "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test:web": "vitest run",
     "cap": "cap",
     "android:sync": "cap sync android",
     "android:build": "cap sync android && cd android && gradlew assembleDebug --no-daemon"

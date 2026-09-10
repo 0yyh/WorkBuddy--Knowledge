@@ -1,51 +1,10 @@
 /* ==========================================================================
-   个人知识学习站 · Web 阅读端样式
-   - 单一文件、纯 CSS（无 Tailwind），保持包体精简
-   - 浅色主题，柔和阴影，过渡平滑
+   个人知识学习站 · Web 阅读端样式入口
+   - 纯 CSS + CSS 变量设计令牌（零 UI 框架，无 Tailwind / MUI / Emotion）
+   - 设计令牌集中于 styles/tokens.css；本文件承载布局与组件样式
    ========================================================================== */
 
-:root {
-  /* 柔和暖色主题：奶白底 + 陶土橙主色 + 苔绿点缀，大圆角、轻暖阴影 */
-  --bg: #faf6f0;
-  --bg-soft: #f4ede3;
-  --surface: #ffffff;
-  --surface-alt: #fcf8f1;
-  --surface-2: #f6f0e7;
-  --border: #ece3d6;
-  --border-strong: #dcd0bd;
-  --text: #261f16;
-  --text-soft: #5c5242;
-  --text-dim: #978a76;
-  --brand: #cf5f2b;
-  --brand-strong: #b74e1e;
-  --brand-soft: #fbe7d6;
-  --accent: #5b8a4e;
-  --accent-soft: #e8f0e2;
-  --warn: #b26a11;
-  --warn-soft: #faf0db;
-  --danger: #c0472e;
-  --danger-soft: #fbe7e0;
-  --radius: 22px;
-  --radius-sm: 14px;
-  --radius-pill: 999px;
-  --shadow-sm: 0 1px 2px rgba(120, 90, 40, 0.05);
-  --shadow-md: 0 16px 34px rgba(130, 95, 45, 0.10);
-  --shadow-lg: 0 30px 64px rgba(130, 95, 45, 0.15);
-  --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
-  --maxw: 1180px;
-  --reading-font-scale: 1;
-  --sys-font-scale: 1;
-  --rp-lh: 1.85;
-  --spacing-card: 16px;
-  --reading-immersive-bg: #faf6f0;
-  /* 阅读页顶/底栏「贴阅读底色」的半透明背景（番茄小说：浅色带、无硬边框、无模糊）。
-     各 .reading-bg-* 主题类会就地覆写该 token，默认值对应白底阅读。 */
-  --reader-chrome-bg: rgba(255, 255, 255, 0.92);
-  --tabbar-h: 60px;
-  --serif: 'Songti SC', 'Noto Serif CJK SC', 'Source Han Serif SC', Georgia, 'Times New Roman', serif;
-  --sans: 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Noto Sans CJK SC', system-ui, -apple-system,
-    'Segoe UI', Roboto, sans-serif;
-}
+@import './styles/tokens.css';
 
 * {
   box-sizing: border-box;

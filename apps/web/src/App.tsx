@@ -14,10 +14,12 @@ import { TimelinePage } from './pages/TimelinePage';
 import { HistoryPage } from './pages/HistoryPage';
 import { SettingsPage } from './pages/SettingsPage';
 import { MePage } from './pages/MePage';
-import { useHashRoute } from './router';
+import { useHashRoute, navigate } from './router';
 import { StationProvider } from './state/AppContext';
 import { ImmersiveProvider, useImmersive } from './state/ImmersiveContext';
 import { ExitToastProvider } from './components/ExitToast';
+import { ErrorBoundary } from './components/ErrorBoundary';
+import { installPerfGuard } from './lib/perf';
 import { applyAllPrefs } from './lib/preferences';
 import { installNativeBackHandler } from './lib/backHandler';
 import type { Route } from './types';
@@ -119,11 +121,15 @@ function Router(): JSX.Element {
   }, [route.name, setReader]);
 
   return (
-      <AppShell>
+    <AppShell>
+      {/* 错误边界包裹路由主体：阅读页 / 搜索页等渲染异常时显示中文兜底 UI，
+          并提供「重新加载」恢复入口，避免整页白屏。 */}
+      <ErrorBoundary>
         <div key={routeKey(route)} className="route-fade">
           {renderRoute(route)}
         </div>
-      </AppShell>
+      </ErrorBoundary>
+    </AppShell>
   );
 }
 
@@ -142,6 +148,12 @@ export default function App(): JSX.Element {
     // 通过 evaluateJavascript 调用 window.__pksHandleBack()。
     // 浏览器/桌面不调用原生 onBackPressed，此钩子无副作用，可安全全局挂载。
     return installNativeBackHandler();
+  }, []);
+
+  useEffect(() => {
+    // 全局崩溃 / 未处理 rejection 可观测：离线优先无远程上报，
+    // 仅在页面顶部渲染非阻塞提示条，便于真机自测第一时间发现运行期异常。
+    return installPerfGuard();
   }, []);
 
   return (
