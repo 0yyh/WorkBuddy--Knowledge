@@ -1,0 +1,102 @@
+id: philosophy-history
+title: 哲学史主线
+category: 哲学
+order_mode: chronological
+description: 从古代到当代的哲学演进主线，串联东西方哲学的关键人物、学派与转折，呈现哲学在不同历史阶段的展开。
+items:
+  - order: "1"
+    entry: ancient-greek-philosophy
+    sort_date: -585
+    date_label: "约公元前6世纪"
+    era: "古代"
+    note: "米利都学派追问万物本原，哲学与科学共同的开端"
+  - order: "2"
+    entry: confucius
+    sort_date: -551
+    date_label: "公元前551年"
+    era: "古代"
+    note: "孔子创立儒家，中国哲学伦理转向的枢纽"
+  - order: "3"
+    entry: daoism
+    sort_date: -500
+    date_label: "约公元前5世纪"
+    era: "古代"
+    note: "老子与道家：道法自然、无为而治"
+  - order: "4"
+    entry: buddhism
+    sort_date: -480
+    date_label: "约公元前5世纪"
+    era: "古代"
+    note: "佛陀立教，东方关于苦与解脱的哲学"
+  - order: "5"
+    entry: plato
+    sort_date: -387
+    date_label: "公元前387年"
+    era: "古代"
+    note: "柏拉图创学园，理念论奠定西方形而上学"
+  - order: "6"
+    entry: the-republic
+    sort_date: -375
+    date_label: "约公元前375年"
+    era: "古代"
+    note: "《理想国》：正义、灵魂与哲人王"
+  - order: "7"
+    entry: aristotle
+    sort_date: -343
+    date_label: "公元前343年"
+    era: "古代"
+    note: "亚里士多德集大成：逻辑学、形而上学与伦理学"
+  - order: "8"
+    entry: stoicism
+    sort_date: -300
+    date_label: "约公元前300年"
+    era: "古代"
+    note: "斯多葛学派：顺应自然、内心自由"
+  - order: "9"
+    entry: scholasticism
+    sort_date: 1100
+    date_label: "约11—13世纪"
+    era: "中世纪"
+    note: "经院哲学：以理性论证信仰，承希腊而启近代"
+  - order: "10"
+    entry: renaissance
+    sort_date: 1400
+    date_label: "约14—15世纪"
+    era: "中世纪"
+    note: "文艺复兴与人文主义：以人为中心重估古典"
+  - order: "11"
+    entry: descartes
+    sort_date: 1637
+    date_label: "1637年"
+    era: "近代"
+    note: "我思故我在，近代哲学奠基"
+  - order: "12"
+    entry: enlightenment
+    sort_date: 1700
+    date_label: "约18世纪"
+    era: "近代"
+    note: "启蒙运动：理性、自由与进步"
+  - order: "13"
+    entry: kant
+    sort_date: 1781
+    date_label: "1781年"
+    era: "近代"
+    note: "康德：批判哲学，德国古典哲学开端"
+  - order: "14"
+    entry: hegel
+    sort_date: 1807
+    date_label: "1807年"
+    era: "近代"
+    note: "黑格尔：辩证法与绝对精神，德国古典哲学的顶点"
+  - order: "15"
+    entry: nietzsche
+    sort_date: 1882
+    date_label: "约1882年"
+    era: "近代"
+    note: "尼采：上帝已死，重估一切价值"
+  - order: "16"
+    entry: existentialism
+    sort_date: 1943
+    date_label: "约1943年"
+    era: "现当代"
+    note: "存在主义：存在先于本质"

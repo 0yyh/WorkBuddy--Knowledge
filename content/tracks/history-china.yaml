@@ -1,0 +1,75 @@
+id: history-china
+title: 中国历史主线
+category: 历史/中国史
+order_mode: chronological
+timeline: china
+description: 从中国本土视角的历史主线，按时间顺序串联从先秦到当代的关键事件与制度。
+items:
+  - order: "1"
+    entry: qin-han-unification
+    sort_date: -221
+    date_label: "公元前221年"
+    era: "古代"
+    note: "秦并六国，郡县制与大一统格局确立"
+  - order: "2"
+    entry: silk-road
+    sort_date: -138
+    date_label: "公元前138年"
+    era: "古代"
+    note: "张骞凿空西域，丝路东西互鉴，跨中国/世界双时间线"
+    cross_timeline: true
+  - order: "3"
+    entry: sui-tang
+    sort_date: 581
+    date_label: "581年"
+    era: "古代"
+    note: "隋再统、唐鼎盛，制度集大成与盛唐气象"
+  - order: "4"
+    entry: imperial-exam
+    sort_date: 605
+    date_label: "约605年"
+    era: "古代"
+    note: "科举取士通行千年，重塑选官与社会流动"
+  - order: "5"
+    entry: song-dynasty
+    sort_date: 960
+    date_label: "960年"
+    era: "古代"
+    note: "重文轻武、商品经济发达而军事积弱的宋代"
+  - order: "6"
+    entry: ming-dynasty
+    sort_date: 1368
+    date_label: "1368年"
+    era: "古代"
+    note: "君主专制极盛、郑和下西洋与市镇商品经济"
+  - order: "7"
+    entry: qing-dynasty
+    sort_date: 1636
+    date_label: "1636年"
+    era: "古代"
+    note: "最后一个王朝，康乾盛世与多民族统一国家的定型"
+  - order: "8"
+    entry: opium-war
+    sort_date: 1840
+    date_label: "1840年"
+    era: "近代"
+    note: "中国近代史开端，屈辱与变局之始"
+    cross_timeline: true
+  - order: "9"
+    entry: may-fourth-movement
+    sort_date: 1919
+    date_label: "1919年"
+    era: "近代"
+    note: "新文化运动与马克思主义传播的关键节点"
+  - order: "10"
+    entry: anti-japanese-war
+    sort_date: 1937
+    date_label: "1937年"
+    era: "近代"
+    note: "十四年抗战的全民族阶段，洗雪民族耻辱的转折"
+  - order: "11"
+    entry: reform-and-opening
+    sort_date: 1978
+    date_label: "1978年"
+    era: "现当代"
+    note: "对内改革、对外开放，中国融入世界"

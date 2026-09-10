@@ -1,0 +1,41 @@
+---
+schema: 1
+slug: anti-duhring
+title: 反杜林论
+original_title: Herrn Eugen Dührings Umwälzung der Wissenschaft
+aliases: [反杜林论, 欧根·杜林先生在科学中实行的变革]
+type: work
+categories:
+  - 政治理论/马克思主义/马克思主义经典著作
+  - 哲学/思想史
+tags: [恩格斯, 马克思主义哲学, 科学社会主义]
+summary: >-
+  《反杜林论》是恩格斯1876—1878年为批判杜林、捍卫并系统阐发马克思主义而写的论战性著作，分哲学、政治经济学、社会主义三编，第一次较完整地论述了马克思主义的三个组成部分及其内在联系。
+status: published
+confidence: high
+license: public-domain
+ai_generated: true
+ai_annotated: true
+created_at: 2026-09-09
+updated_at: 2026-09-09
+rev: 1
+author: 弗里德里希·恩格斯
+structure:
+  levels: [章]
+  total_sections: 5
+  total_words: 2800
+sources:
+  - title: 反杜林论 - 维基百科
+    url: https://zh.wikipedia.org/wiki/反杜林论
+    license: public-domain
+    fetched_at: 2026-09-09
+see_also: [communist-manifesto, dialectics, german-ideology, on-contradiction]
+---
+
+# 反杜林论
+
+**《反杜林论》**（全名《欧根·杜林先生在科学中实行的变革》）是恩格斯于 1876—1878 年撰写的论战性著作。针对柏林大学讲师杜林及其追随者在德国社会民主党内散布的一整套"体系"，恩格斯在马克思的支持与参与下撰文反击，最终汇集成书。全书分为**哲学、政治经济学、社会主义**三编，在论战中系统阐述了马克思主义的世界观，被誉为"马克思主义的百科全书"。
+
+> 📝 编者注：阅读本词条宜知两点：其一，它虽是"论战"之作，但恩格斯借批杜林正面而系统地阐发了马克思主义，价值远超一时论争；其二，恩格斯后来把其中的《引论》第二章和第三编第一、二章改编为著名的小册子《社会主义从空想到科学的发展》，被马克思称为"科学社会主义的入门"。本词条以概况性梳理为主，不作逐章逐句的引文展开。
+
+本词条按「写作背景 → 哲学 → 政治经济学 → 社会主义 → 历史地位」五章展开。

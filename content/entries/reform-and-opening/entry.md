@@ -1,0 +1,41 @@
+---
+schema: 1
+slug: reform-and-opening
+title: 改革开放
+aliases: [改革开放, 改革开放政策]
+type: event
+categories:
+  - 历史/中国史
+tags: [十一届三中全会, 经济特区, 市场经济, 现代化]
+timeline: [china]
+summary: >-
+  改革开放指1978年中共十一届三中全会开启的对内改革、对外开放的历史进程，涵盖农村与城市的体制改革、经济特区的建立以及社会主义市场经济的探索，推动中国经济持续增长、融入世界并深刻改变社会面貌。
+status: published
+confidence: high
+license: CC-BY-SA-4.0
+ai_generated: true
+ai_annotated: true
+created_at: 2026-09-09
+updated_at: 2026-09-09
+rev: 1
+date: 1978
+location: 中国
+structure:
+  levels: [章]
+  total_sections: 6
+  total_words: 2800
+sources:
+  - title: 改革开放 - 维基百科
+    url: https://zh.wikipedia.org/wiki/改革开放
+    license: CC-BY-SA-4.0
+    fetched_at: 2026-09-09
+see_also: [opium-war, may-fourth-movement, industrial-revolution]
+---
+
+# 改革开放
+
+**改革开放**是 1978 年中共十一届三中全会开启的一场持续深刻的社会变革，包含"对内改革"与"对外开放"两大主线。它从农村突破，逐步扩展到城市与整个经济体制；从建立经济特区起步，逐步融入世界市场。改革开放重塑了中国的经济制度与社会生活，使其从一个相对封闭、落后的经济体，成长为深度参与全球化的现代化国家。
+
+本词条按「历史背景 → 农村改革 → 城市与国企改革 → 对外开放与经济特区 → 社会主义市场经济体制的确立 → 成就与评价」六章展开。
+
+> 📝 编者注：改革开放不是单一事件，而是一个不断深化的长期进程。理解它需兼顾两条线索：一是内部的体制转型（从计划经济转向引入市场机制），二是与外部世界的重新联结（从封闭走向开放）。二者相互促进，构成理解当代中国发展的一把钥匙。

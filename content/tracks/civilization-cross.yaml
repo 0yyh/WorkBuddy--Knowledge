@@ -1,0 +1,157 @@
+id: civilization-cross
+title: 文明长河 · 跨领域对照
+category: 综合
+order_mode: chronological
+description: 把世界历史、哲学史与科学技术史的里程碑置于同一时间轴对照，呈现思想、科学与社会的相互呼应。
+items:
+  - order: "1"
+    entry: ancient-egypt
+    sort_date: -3100
+    date_label: "约公元前3100年"
+    era: "古代"
+    note: "上下埃及统一，文明的黎明"
+  - order: "2"
+    entry: ancient-greek-philosophy
+    sort_date: -585
+    date_label: "约公元前6世纪"
+    era: "古代"
+    note: "哲学与科学在爱琴海畔共同开端"
+  - order: "3"
+    entry: confucius
+    sort_date: -551
+    date_label: "公元前551年"
+    era: "古代"
+    note: "东方伦理哲学的奠基"
+  - order: "4"
+    entry: plato
+    sort_date: -387
+    date_label: "公元前387年"
+    era: "古代"
+    note: "西方形而上学的奠基"
+  - order: "5"
+    entry: aristotle
+    sort_date: -343
+    date_label: "公元前343年"
+    era: "古代"
+    note: "体系化的知识总汇，贯通哲学与自然研究"
+  - order: "6"
+    entry: euclidean-geometry
+    sort_date: -300
+    date_label: "约公元前300年"
+    era: "古代"
+    note: "公理化演绎的典范，科学的数学化先声"
+  - order: "7"
+    entry: qin-han-unification
+    sort_date: -221
+    date_label: "公元前221年"
+    era: "古代"
+    note: "中国大一统格局确立，与罗马同期的帝国并立"
+  - order: "8"
+    entry: silk-road
+    sort_date: -138
+    date_label: "公元前138年"
+    era: "古代"
+    note: "贯通东西方的交流网络，跨中国/世界双时间线"
+    cross_timeline: true
+  - order: "9"
+    entry: roman-empire
+    sort_date: -27
+    date_label: "公元前27年"
+    era: "古代"
+    note: "地中海古典文明的高峰"
+  - order: "10"
+    entry: scholasticism
+    sort_date: 1100
+    date_label: "约11—13世纪"
+    era: "中世纪"
+    note: "理性与信仰的调和，古典向近代的渡桥"
+  - order: "11"
+    entry: renaissance
+    sort_date: 1400
+    date_label: "约14—15世纪"
+    era: "中世纪"
+    note: "人文主义复兴古典，欧洲走向近代"
+  - order: "12"
+    entry: printing-press
+    sort_date: 1440
+    date_label: "约1440年"
+    era: "中世纪"
+    note: "知识传播革命，思想扩散的物质基础"
+  - order: "13"
+    entry: age-of-discovery
+    sort_date: 1492
+    date_label: "1492年"
+    era: "中世纪"
+    note: "新航路开辟，全球首次连成一体"
+  - order: "14"
+    entry: scientific-revolution
+    sort_date: 1543
+    date_label: "1543年"
+    era: "近代"
+    note: "从神学权威转向可检验的数学规律"
+  - order: "15"
+    entry: descartes
+    sort_date: 1637
+    date_label: "1637年"
+    era: "近代"
+    note: "以我思重建知识地基，近代哲学奠基"
+  - order: "16"
+    entry: classical-mechanics
+    sort_date: 1687
+    date_label: "1687年"
+    era: "近代"
+    note: "牛顿力学，自然的数学化集大成"
+  - order: "17"
+    entry: enlightenment
+    sort_date: 1700
+    date_label: "约18世纪"
+    era: "近代"
+    note: "以理性审视权威，倡自由平等与人权"
+  - order: "18"
+    entry: steam-engine
+    sort_date: 1712
+    date_label: "1712年"
+    era: "近代"
+    note: "蒸汽动力开启机器时代"
+  - order: "19"
+    entry: industrial-revolution
+    sort_date: 1760
+    date_label: "约1760年"
+    era: "近代"
+    note: "生产力革命与资本主义世界体系扩张"
+  - order: "20"
+    entry: kant
+    sort_date: 1781
+    date_label: "1781年"
+    era: "近代"
+    note: "批判哲学，为理性划定边界"
+  - order: "21"
+    entry: french-revolution
+    sort_date: 1789
+    date_label: "1789年"
+    era: "近代"
+    note: "自由平等博爱，颠覆欧洲旧制度"
+  - order: "22"
+    entry: evolution-theory
+    sort_date: 1859
+    date_label: "1859年"
+    era: "近代"
+    note: "生命科学的革命，重塑人的自我认识"
+  - order: "23"
+    entry: computer
+    sort_date: 1936
+    date_label: "1936年"
+    era: "现当代"
+    note: "可计算性理论与电子计算机，信息时代的地基"
+  - order: "24"
+    entry: internet
+    sort_date: 1969
+    date_label: "1969年"
+    era: "现当代"
+    note: "从阿帕网到全球互联，信息传播的第二次革命"
+  - order: "25"
+    entry: globalization
+    sort_date: 1990
+    date_label: "约1990年"
+    era: "现当代"
+    note: "冷战后经贸与信息互联高速深化"

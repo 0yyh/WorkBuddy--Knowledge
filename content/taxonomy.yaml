@@ -1,0 +1,179 @@
+# 类目体系（唯一权威，02 §9.2 / 06 §7）
+# 六大 L1：历史 / 哲学 / 科学（含 人类认知与心理）/ 经济学（含 金融）/ 政治理论 / 技术
+# 2026-09-09 扩充为领域骨架；2026-09-10 新增「技术」L1 与「哲学/西方哲学/中世纪哲学」节点，
+# 以支撑「科学技术发展史」与「哲学思想史」两条跨领域时间线。
+# 注意：词条 categories 用「标题路径」引用（如 科学/人类认知与心理）；改/删节点标题会破坏旧词条。
+
+- id: history
+  title: 历史
+  order: 1
+  children:
+    - id: history-world
+      title: 世界史
+      order: 1
+      children:
+        - id: world-ancient
+          title: 古代文明
+          order: 1
+        - id: world-medieval
+          title: 中世纪
+          order: 2
+        - id: world-modern
+          title: 近代史
+          order: 3
+        - id: world-contemp
+          title: 现当代史
+          order: 4
+    - id: history-china
+      title: 中国史
+      order: 2
+      children:
+        - id: china-ancient
+          title: 先秦至秦汉
+          order: 1
+        - id: china-mid
+          title: 魏晋至隋唐
+          order: 2
+        - id: china-songming
+          title: 宋元明清
+          order: 3
+        - id: china-modern
+          title: 近现代史
+          order: 4
+    - id: world-history-concepts
+      title: 历史方法与概念
+      order: 3
+- id: philosophy
+  title: 哲学
+  order: 2
+  children:
+    - id: phil-history
+      title: 思想史
+      order: 1
+    - id: chinese-philosophy
+      title: 中国哲学
+      order: 2
+    - id: western-philosophy
+      title: 西方哲学
+      order: 3
+      children:
+        - id: west-ancient
+          title: 古希腊哲学
+          order: 1
+        - id: west-medieval
+          title: 中世纪哲学
+          order: 2
+        - id: west-modern
+          title: 近代欧陆哲学
+          order: 3
+        - id: west-analytic
+          title: 英美与现当代哲学
+          order: 4
+    - id: logic-critical
+      title: 逻辑与批判性思维
+      order: 4
+- id: science
+  title: 科学
+  order: 3
+  children:
+    - id: cog-psych
+      title: 人类认知与心理
+      order: 1
+      children:
+        - id: cog-process
+          title: 认知过程
+          order: 1
+        - id: psych-fields
+          title: 心理学分支
+          order: 2
+    - id: sci-method
+      title: 科学方法论
+      order: 2
+    - id: nat-science
+      title: 自然科学基础
+      order: 3
+      children:
+        - id: physics
+          title: 物理
+          order: 1
+        - id: chemistry
+          title: 化学
+          order: 2
+        - id: biology
+          title: 生物与生命
+          order: 3
+        - id: astronomy-earth
+          title: 天文与地球科学
+          order: 4
+    - id: math-systems
+      title: 数学与系统科学
+      order: 4
+      children:
+        - id: math-found
+          title: 数学基础
+          order: 1
+        - id: complex-systems
+          title: 系统与复杂性
+          order: 2
+- id: economics
+  title: 经济学
+  order: 4
+  children:
+    - id: micro
+      title: 微观经济学
+      order: 1
+    - id: macro
+      title: 宏观经济学
+      order: 2
+    - id: finance
+      title: 金融
+      order: 3
+      children:
+        - id: money-banking
+          title: 货币与银行
+          order: 1
+        - id: capital-markets
+          title: 资本市场与资产
+          order: 2
+    - id: econ-thought
+      title: 经济学说与流派
+      order: 4
+- id: politics
+  title: 政治理论
+  order: 5
+  children:
+    - id: political-thought
+      title: 政治思想
+      order: 1
+    - id: political-concepts
+      title: 政治学概念
+      order: 2
+    - id: govt-systems
+      title: 政体与国家制度
+      order: 3
+    - id: marxism
+      title: 马克思主义
+      order: 4
+      children:
+        - id: marx-classics
+          title: 马克思主义经典著作
+          order: 1
+        - id: marx-pe
+          title: 马克思主义政治经济学
+          order: 2
+- id: technology
+  title: 技术
+  order: 6
+  children:
+    - id: tech-history
+      title: 技术史
+      order: 1
+    - id: energy-power
+      title: 能源与动力
+      order: 2
+    - id: info-tech
+      title: 信息技术
+      order: 3
+    - id: transport-manufacturing
+      title: 交通与制造
+      order: 4

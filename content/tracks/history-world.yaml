@@ -1,0 +1,99 @@
+id: history-world
+title: 世界历史主线
+category: 历史/世界史
+order_mode: chronological
+timeline: world
+description: 从全球视角的历史主线，按时间顺序串联从古典帝国到当代的关键事件与思潮。
+items:
+  - order: "1"
+    entry: ancient-egypt
+    sort_date: -3100
+    date_label: "约公元前3100年"
+    era: "古代"
+    note: "上下埃及统一，古埃及王朝文明的开端"
+  - order: "2"
+    entry: silk-road
+    sort_date: -138
+    date_label: "公元前138年"
+    era: "古代"
+    note: "张骞凿空西域，贯通东西方的丝路网络，跨中国/世界双时间线"
+    cross_timeline: true
+  - order: "3"
+    entry: roman-empire
+    sort_date: -27
+    date_label: "公元前27年"
+    era: "古代"
+    note: "屋大维建元首制，罗马进入帝国时代"
+  - order: "4"
+    entry: crusades
+    sort_date: 1096
+    date_label: "约1096年"
+    era: "中世纪"
+    note: "十字军东征拉开序幕，圣地与地中海局势剧变"
+  - order: "5"
+    entry: renaissance
+    sort_date: 1300
+    date_label: "约14世纪"
+    era: "中世纪"
+    note: "复兴古典、人文主义兴起，欧洲走向近代之桥"
+  - order: "6"
+    entry: age-of-discovery
+    sort_date: 1492
+    date_label: "1492年"
+    era: "中世纪"
+    note: "新航路开辟，全球首次连成一体"
+  - order: "7"
+    entry: scientific-revolution
+    sort_date: 1543
+    date_label: "约1543年"
+    era: "近代"
+    note: "哥白尼到牛顿，现代科学方法的奠基"
+  - order: "8"
+    entry: enlightenment
+    sort_date: 1700
+    date_label: "约1700年"
+    era: "近代"
+    note: "理性审视权威，倡自由平等与人权"
+  - order: "9"
+    entry: industrial-revolution
+    sort_date: 1760
+    date_label: "约1760年"
+    era: "近代"
+    note: "生产力革命与资本主义世界体系扩张"
+  - order: "10"
+    entry: french-revolution
+    sort_date: 1789
+    date_label: "1789年"
+    era: "近代"
+    note: "自由平等博爱，颠覆欧洲旧制度"
+  - order: "11"
+    entry: opium-war
+    sort_date: 1840
+    date_label: "1840年"
+    era: "近代"
+    note: "殖民扩张与东亚变局，跨中国/世界双时间线"
+    cross_timeline: true
+  - order: "12"
+    entry: first-world-war
+    sort_date: 1914
+    date_label: "1914年"
+    era: "近代"
+    note: "一战爆发，总体战重塑世界格局"
+  - order: "13"
+    entry: october-revolution
+    sort_date: 1917
+    date_label: "1917年"
+    era: "近代"
+    note: "首个社会主义国家的建立，改变世界进程"
+  - order: "14"
+    entry: cold-war
+    sort_date: 1947
+    date_label: "约1947年"
+    era: "现当代"
+    note: "美苏两极对峙与核威慑下的长期冷战"
+  - order: "15"
+    entry: globalization
+    sort_date: 1990
+    date_label: "约1990年"
+    era: "现当代"
+    note: "冷战后的经贸与信息互联高速深化"

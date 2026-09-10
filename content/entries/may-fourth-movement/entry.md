@@ -1,0 +1,41 @@
+---
+schema: 1
+slug: may-fourth-movement
+title: 五四运动
+aliases: [五四, 五四爱国运动]
+type: event
+categories:
+  - 历史/中国史
+tags: [反帝, 新文化, 青年, 1919]
+timeline: [china]
+summary: >-
+  五四运动是1919年以北京学生为先导、反对《凡尔赛和约》将山东权益转交日本的反帝爱国运动，迅速发展为全国性的思想与社会革新浪潮。它推动了新文化运动的深化，促进了马克思主义在中国的传播。
+status: published
+confidence: high
+license: CC-BY-SA-4.0
+ai_generated: true
+ai_annotated: true
+created_at: 2026-09-09
+updated_at: 2026-09-09
+rev: 2
+date: 1919-05-04
+location: 中国北京
+structure:
+  levels: [章]
+  total_sections: 5
+  total_words: 2400
+sources:
+  - title: 五四运动 - 维基百科
+    url: https://zh.wikipedia.org/wiki/五四运动
+    license: CC-BY-SA-4.0
+    fetched_at: 2026-09-09
+see_also: [opium-war, reform-and-opening, communist-manifesto, qin-han-unification, anti-japanese-war]
+---
+
+# 五四运动
+
+**五四运动**因 1919 年巴黎和会上中国外交失败而起：列强决定把德国在山东的权益转交日本，激起中国人民强烈愤慨。5 月 4 日，北京学生率先走上街头抗议，随后工人罢工、商人罢市，运动扩展到全国，形成一场声势浩大的反帝爱国斗争。这场运动既是政治斗争，也是一次深刻的思想文化革新，被视为中国新民主主义革命的开端。
+
+> 📝 编者注：理解五四运动需把握其"两翼"：一是以学生为先导、以"外争主权、内除国贼"为口号的爱国政治运动；二是从新文化运动延续而来的思想启蒙与民族觉醒。二者相互交织，共同塑造了五四的历史内涵。
+
+本词条按「背景 → 事件的经过 → 思想与文化 → 马克思主义的传播 → 历史意义与评价」五章展开。

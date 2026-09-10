@@ -1,0 +1,90 @@
+id: tech-history
+title: 科学技术史主线
+category: 科学技术
+order_mode: chronological
+description: 从古代数理传统到信息时代的科学技术演进主线，串联科学发现与技术发明的里程碑，呈现人类认识与改造世界能力的跃迁。
+items:
+  - order: "1"
+    entry: euclidean-geometry
+    sort_date: -300
+    date_label: "约公元前300年"
+    era: "古代"
+    note: "欧几里得《几何原本》确立公理化演绎体系"
+  - order: "2"
+    entry: astronomy
+    sort_date: 150
+    date_label: "约2世纪"
+    era: "古代"
+    note: "托勒密《天文学大成》，古代天文学的集大成"
+  - order: "3"
+    entry: printing-press
+    sort_date: 1440
+    date_label: "约1440年"
+    era: "中世纪"
+    note: "古腾堡活字印刷，知识传播的第一次革命"
+  - order: "4"
+    entry: scientific-revolution
+    sort_date: 1543
+    date_label: "1543年"
+    era: "近代"
+    note: "哥白尼《天体运行论》，近代科学范式奠基"
+  - order: "5"
+    entry: scientific-method
+    sort_date: 1620
+    date_label: "1620年"
+    era: "近代"
+    note: "培根《新工具》，实验与归纳方法的奠基"
+  - order: "6"
+    entry: classical-mechanics
+    sort_date: 1687
+    date_label: "1687年"
+    era: "近代"
+    note: "牛顿《自然哲学的数学原理》，力学体系集大成"
+  - order: "7"
+    entry: steam-engine
+    sort_date: 1712
+    date_label: "1712年"
+    era: "近代"
+    note: "纽科门—瓦特蒸汽机，动力革命的开端"
+  - order: "8"
+    entry: industrial-revolution
+    sort_date: 1760
+    date_label: "约1760年"
+    era: "近代"
+    note: "工业革命，生产方式的根本变革"
+  - order: "9"
+    entry: thermodynamics
+    sort_date: 1824
+    date_label: "1824年"
+    era: "近代"
+    note: "卡诺奠基热力学，能量与熵的科学"
+  - order: "10"
+    entry: evolution-theory
+    sort_date: 1859
+    date_label: "1859年"
+    era: "近代"
+    note: "达尔文《物种起源》，生命科学的革命"
+  - order: "11"
+    entry: periodic-table
+    sort_date: 1869
+    date_label: "1869年"
+    era: "近代"
+    note: "门捷列夫元素周期律，化学的系统化"
+  - order: "12"
+    entry: quantum-mechanics
+    sort_date: 1900
+    date_label: "1900年"
+    era: "现当代"
+    note: "普朗克量子论，微观世界的新范式"
+  - order: "13"
+    entry: computer
+    sort_date: 1936
+    date_label: "1936年"
+    era: "现当代"
+    note: "图灵机与电子计算机，信息时代的地基"
+  - order: "14"
+    entry: internet
+    sort_date: 1969
+    date_label: "1969年"
+    era: "现当代"
+    note: "从阿帕网到全球互联，信息传播的第二次革命"
