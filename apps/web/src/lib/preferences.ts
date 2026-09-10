@@ -88,7 +88,7 @@ export const READ_DEFAULTS: ReaderPrefs = {
   animation: 'slide',
   lineHeight: 'normal',
   brightnessLevel: 70,
-  statusbarPermanent: false,
+  statusbarPermanent: true,
   align: 'justify',
   autoLoad: true,
   showProgress: true,
@@ -269,10 +269,11 @@ export function readReadPrefs(): ReaderPrefs {
         legacyBrightnessToLevel(store.getItem(READ_KEYS.brightness)),
       READ_DEFAULTS.brightnessLevel,
     ),
-    // 兼容历史误存的 'true'/'false'
-    statusbarPermanent:
-      store.getItem(READ_KEYS.statusbarPermanent) === '1' ||
-      store.getItem(READ_KEYS.statusbarPermanent) === 'true',
+    // 兼容历史误存的 'true'/'false'；键缺失时回退默认（第 2 步：默认改为 true）。
+    statusbarPermanent: readBoolWithDefault(
+      store.getItem(READ_KEYS.statusbarPermanent),
+      READ_DEFAULTS.statusbarPermanent,
+    ),
     align: pick(store.getItem(READ_KEYS.align), ALIGNS, READ_DEFAULTS.align),
     autoLoad: readBoolWithDefault(store.getItem(READ_KEYS.autoLoad), READ_DEFAULTS.autoLoad),
     // 底部信息条：缺失即开（默认 true）。

@@ -1627,13 +1627,17 @@ html[data-paraspacing='sm']  .reader-doc .prose p { margin-bottom: 0.875em; }
 html[data-paraspacing='md']  .reader-doc .prose p { margin-bottom: 1.25em; }
 html[data-paraspacing='lg']  .reader-doc .prose p { margin-bottom: 1.625em; }
 html[data-paraspacing='xl']  .reader-doc .prose p { margin-bottom: 1.25em; }
+/* 自定义：真实值由间距子层滑块写 --rp-para-gap（em） */
+html[data-paraspacing='custom'] .reader-doc .prose p { margin-bottom: var(--rp-para-gap, 1.25em); }
 
-/* 间距设置：页面边距 4 档（小/适中/较大/大），通过 [data-pagemargin] 驱动 .reader-doc padding */
+/* 间距设置：页面边距 5 档（小/适中/较大/大/智能匹配），通过 [data-pagemargin] 驱动 .reader-doc padding */
 html[data-pagemargin='sm'] .reader-doc { padding: 0.5rem max(0.5rem, env(safe-area-inset-left, 0px)) 0.5rem max(0.5rem, env(safe-area-inset-right, 0px)); }
 html[data-pagemargin='md'] .reader-doc { padding: 1rem max(1rem, env(safe-area-inset-left, 0px)) 1rem max(1rem, env(safe-area-inset-right, 0px)); }
 html[data-pagemargin='lg'] .reader-doc { padding: 1.5rem max(1.5rem, env(safe-area-inset-left, 0px)) 1.5rem max(1.5rem, env(safe-area-inset-right, 0px)); }
 html[data-pagemargin='xl'] .reader-doc { padding: 2rem max(2rem, env(safe-area-inset-left, 0px)) 2rem max(2rem, env(safe-area-inset-right, 0px)); }
 html[data-pagemargin='custom'] .reader-doc { padding: 1.25rem max(1.25rem, env(safe-area-inset-left, 0px)) 1.25rem max(1.25rem, env(safe-area-inset-right, 0px)); }
+/* 智能匹配（默认）：横向内边距随视口自适应（clamp 16–40px），窄屏不局促、宽屏不过散 */
+html[data-pagemargin='smart'] .reader-doc { padding-inline: clamp(16px, 5vw, 40px); }
 
 /* 标题 / 引用 / 代码 / 表格不缩进 */
 .prose h1,
@@ -3029,7 +3033,7 @@ html[data-pagemargin='custom'] .reader-doc { padding: 1.25rem max(1.25rem, env(s
   bottom: 0;
   background: var(--surface);
   color: var(--text);
-  border-radius: 22px 22px 0 0;
+  border-radius: 20px 20px 0 0; /* 第 2 步：22px → 20px */
   /* 去投影（阅读器扁平化规范）：改用 1px 顶边分层 */
   border-top: 1px solid var(--border);
   padding: 6px 18px calc(env(safe-area-inset-bottom, 0px) + 14px);
@@ -3038,26 +3042,17 @@ html[data-pagemargin='custom'] .reader-doc { padding: 1.25rem max(1.25rem, env(s
   animation: sheet-up 0.26s var(--ease);
 }
 
-/* 阅读设置面板背景跟随阅读背景色（用户要求）。7 主题齐全，与 .reading-bg-* 对齐。 */
-.reader-sheet-bg-white {
+/* 阅读设置面板底色（第 2 步规范）：
+   浅色主题（white/sepia/green/blue/pink）统一纯白 #FFFFFF —— 面板是"操作层"，
+   与阅读底刻意分层，不再跟随各自的浅色底（用户明确要求）。
+   dark/gray 主题保持深色面（白底在深色阅读背景上刺眼，属必要偏离，注释写明）。 */
+.reader-sheet-bg-white,
+.reader-sheet-bg-sepia,
+.reader-sheet-bg-green,
+.reader-sheet-bg-blue,
+.reader-sheet-bg-pink {
   background: #ffffff;
   color: #333333;
-}
-.reader-sheet-bg-sepia {
-  background: #f5f1e6;
-  color: #333333;
-}
-.reader-sheet-bg-green {
-  background: #d6e6d8;
-  color: #22402e;
-}
-.reader-sheet-bg-blue {
-  background: #dde6f0;
-  color: #2c3a4d;
-}
-.reader-sheet-bg-pink {
-  background: #f6e4e4;
-  color: #4a2f33;
 }
 .reader-sheet-bg-gray {
   background: #333333;
@@ -3273,6 +3268,158 @@ html[data-pagemargin='custom'] .reader-doc { padding: 1.25rem max(1.25rem, env(s
   text-align: center;
 }
 
+/* 亮度行右侧「护眼模式」按钮（线框眼睛图标 + 文字） */
+.reader-eye-btn {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text-soft);
+  border-radius: 999px;
+  padding: 6px 10px;
+  font-size: 0.75rem;
+  line-height: 1;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: color 0.16s var(--ease), border-color 0.16s var(--ease);
+}
+.reader-eye-btn.is-on {
+  color: #ff6a00;
+  border-color: #ff6a00;
+}
+.reader-eye-label {
+  font-size: 0.75rem;
+}
+
+/* 字号行右侧「字体名 ›」入口按钮（进入字体子层） */
+.reader-enter-btn {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  border: 0;
+  background: transparent;
+  color: var(--text-soft);
+  font-size: 0.8125rem;
+  padding: 6px 4px;
+  cursor: pointer;
+}
+.reader-enter-text {
+  color: var(--text);
+}
+.reader-enter-arrow {
+  color: var(--text-dim);
+  font-size: 1rem;
+  line-height: 1;
+}
+
+/* 翻页行专属胶囊配色（第 2 步规范）——只作用于带 .reader-pills-tone 的组，
+   不改全局 .reader-pill 语义。
+   未选中：底 #F0F0F0 / 字 #666666；选中：白底 #FFFFFF + 黑字 #000000 + 1px 边框 #E0E0E0。 */
+.reader-sheet .reader-pills-tone .reader-pill {
+  background: #f0f0f0;
+  color: #666666;
+  border: 1px solid transparent;
+}
+.reader-sheet .reader-pills-tone .reader-pill.is-on {
+  background: #ffffff;
+  color: #000000;
+  border: 1px solid #e0e0e0;
+}
+
+/* 主层底部：间距设置（主按钮）+ 更多（文本入口） */
+.reader-sheet-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 0 4px;
+}
+.reader-action-primary {
+  flex: 1 1 auto;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text);
+  border-radius: 12px;
+  padding: 12px 16px;
+  font-size: 0.9375rem;
+  text-align: center;
+  cursor: pointer;
+}
+.reader-action-more {
+  flex: 0 0 auto;
+  border: 0;
+  background: transparent;
+  color: var(--text-soft);
+  font-size: 0.875rem;
+  padding: 12px 8px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+/* 行段间距「自定义」滑块（0.5–2.5em） */
+.reader-spacing-slider {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 2px 0;
+}
+.reader-spacing-slider input[type='range'] {
+  -webkit-appearance: none;
+  appearance: none;
+  flex: 1 1 auto;
+  height: 6px;
+  border-radius: 3px;
+  background: var(--bg-soft);
+  margin: 0;
+  cursor: pointer;
+}
+.reader-spacing-slider input[type='range']::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 999px;
+  background: #ffffff;
+  border: 1px solid #cfcfcf;
+}
+.reader-spacing-slider input[type='range']::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  border-radius: 999px;
+  background: #ffffff;
+  border: 1px solid #cfcfcf;
+}
+.reader-spacing-value {
+  flex: 0 0 auto;
+  font-size: 0.75rem;
+  color: var(--text-soft);
+  font-variant-numeric: tabular-nums;
+  min-width: 3em;
+  text-align: right;
+}
+
+/* 单手模式示意图（更多子层内，仅说明"点哪里翻页"） */
+.reader-onehand-hint {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  margin-top: 6px;
+}
+.reader-onehand-zone {
+  border: 1px dashed var(--border);
+  border-radius: 6px;
+  padding: 2px 8px;
+  font-size: 0.6875rem;
+  color: var(--text-soft);
+}
+.reader-onehand-note {
+  font-size: 0.6875rem;
+  color: var(--text-dim);
+}
+
 /* 通用胶囊组（用于字体/字号/翻页/其他） */
 .reader-pill-group {
   display: inline-flex;
@@ -3350,7 +3497,8 @@ html[data-pagemargin='custom'] .reader-doc { padding: 1.25rem max(1.25rem, env(s
 }
 
 .reader-color-dot.is-on {
-  border-color: var(--brand);
+  /* 第 2 步规范：选中加黑色细边框（浅色主题；深色主题另有高亮描边，见下） */
+  border: 2px solid #000;
   transform: scale(1.12);
 }
 
@@ -3514,14 +3662,16 @@ html[data-pagemargin='custom'] .reader-doc { padding: 1.25rem max(1.25rem, env(s
 .reader-brightness-slider::-webkit-slider-runnable-track {
   height: 6px;
   border-radius: 3px;
-  background: linear-gradient(to right, #6c7a89, #f7c948);
+  /* 第 2 步：改为中性灰轨道（去掉旧蓝→黄渐变），纯轨道 + 圆滑块 */
+  background: #d4d4d4;
   border: 0;
 }
 
 .reader-brightness-slider::-moz-range-track {
   height: 6px;
   border-radius: 3px;
-  background: linear-gradient(to right, #6c7a89, #f7c948);
+  /* 第 2 步：改为中性灰轨道（去掉旧蓝→黄渐变），纯轨道 + 圆滑块 */
+  background: #d4d4d4;
   border: 0;
 }
 
@@ -3547,11 +3697,11 @@ html[data-pagemargin='custom'] .reader-doc { padding: 1.25rem max(1.25rem, env(s
 }
 
 .reader-sheet-bg-dark .reader-brightness-slider::-webkit-slider-runnable-track {
-  background: linear-gradient(to right, #4a4a4a, #f7c948);
+  background: #555555;
 }
 
 .reader-sheet-bg-dark .reader-brightness-slider::-moz-range-track {
-  background: linear-gradient(to right, #4a4a4a, #f7c948);
+  background: #555555;
 }
 
 /* 更多设置子层（参考 13.jpg） */
@@ -3669,13 +3819,13 @@ html[data-pagemargin='custom'] .reader-doc { padding: 1.25rem max(1.25rem, env(s
   color: var(--text-soft);
 }
 
-/* 圆形开关（iOS-like 拨片） */
+/* 圆形开关（iOS-like 拨片）：开 = #FF6A00、关 = #E0E0E0（第 2 步规范） */
 .reader-switch {
   flex: 0 0 auto;
   width: 44px;
   height: 26px;
   border-radius: 999px;
-  background: var(--bg-soft);
+  background: #e0e0e0;
   border: 0;
   padding: 0;
   position: relative;
@@ -3698,7 +3848,7 @@ html[data-pagemargin='custom'] .reader-doc { padding: 1.25rem max(1.25rem, env(s
 }
 
 .reader-switch.is-on {
-  background: #f0a23a; /* 番茄小说橙 */
+  background: #ff6a00; /* 第 2 步：番茄橙（原 #f0a23a 停用） */
 }
 
 .reader-switch.is-on::after {
@@ -4829,9 +4979,10 @@ mark.hl { background: var(--brand-soft); color: var(--brand-strong); padding: 0 
   justify-content: center;
   gap: 6px;
   padding: 7px;
-  border-radius: 14px;
-  background: rgba(46, 46, 48, 0.96);
-  color: #f5f5f5;
+  /* 第 2 步：固定深色 #333333、圆角 8px，不随阅读主题 */
+  border-radius: 8px;
+  background: #333333;
+  color: #ffffff;
   /* 去投影（阅读器扁平化规范）：深色实色块自身已足够分层 */
 }
 
@@ -4841,7 +4992,7 @@ mark.hl { background: var(--brand-soft); color: var(--brand-strong); padding: 0 
   left: 50%;
   width: 10px;
   height: 10px;
-  background: rgba(46, 46, 48, 0.96);
+  background: #333333;
   transform: translateX(-50%) rotate(45deg);
   pointer-events: none;
 }
@@ -4867,7 +5018,7 @@ mark.hl { background: var(--brand-soft); color: var(--brand-strong); padding: 0 
   min-height: 54px;
   border: 0;
   background: transparent;
-  color: #ededed;
+  color: #ffffff;
   border-radius: 10px;
   cursor: pointer;
   transition: background 0.16s var(--ease);
@@ -4887,9 +5038,9 @@ mark.hl { background: var(--brand-soft); color: var(--brand-strong); padding: 0 
 }
 
 .dict-menu-label {
-  font-size: 0.6875rem; /* 11px */
+  font-size: 0.75rem; /* 12px */
   line-height: 1;
-  color: #d8d8d8;
+  color: #aaaaaa; /* 第 2 步：按钮下标签统一浅灰 */
 }
 
 /* —— 释义卡（底部弹出，番茄小说风「深色卡 + 竖向信息层级」）——
@@ -4915,10 +5066,11 @@ mark.hl { background: var(--brand-soft); color: var(--brand-strong); padding: 0 
   left: 0;
   right: 0;
   bottom: 0;
-  border-radius: 18px 18px 0 0;
+  /* 第 2 步：底部大卡片形态，圆角 12px 12px 0 0（原 18px），固定深色 #333333 */
+  border-radius: 12px 12px 0 0;
   padding: 6px 20px calc(env(safe-area-inset-bottom, 0px) + 18px);
-  background: #2e2e30;
-  color: #f5f5f5;
+  background: #333333;
+  color: #ffffff;
   /* 去投影（阅读器扁平化规范）：改用 1px 顶边分层 */
   border-top: 1px solid rgba(255, 255, 255, 0.08);
   max-height: 62%;
@@ -4926,19 +5078,19 @@ mark.hl { background: var(--brand-soft); color: var(--brand-strong); padding: 0 
   flex-direction: column;
   animation: sheet-up 0.26s var(--ease);
   /* 深色卡主题 token（覆盖主题类） */
-  --t-text: #f5f5f5;
-  --t-soft: #dcdcdc;
-  --t-dim: #9aa0a6;
+  --t-text: #ffffff;
+  --t-soft: #cccccc;
+  --t-dim: #aaaaaa;
   --t-line: rgba(255, 255, 255, 0.1);
-  --t-accent: #e8913a; /* 暖橙强调色（序号 / 专业义小标题） */
-  --t-accent-soft: rgba(232, 145, 58, 0.16);
-  --text: #f5f5f5;
-  --text-soft: #dcdcdc;
-  --text-dim: #9aa0a6;
+  --t-accent: #ff6a00; /* 第 2 步：与全局强调色一致 */
+  --t-accent-soft: rgba(255, 106, 0, 0.16);
+  --text: #ffffff;
+  --text-soft: #cccccc;
+  --text-dim: #aaaaaa;
   --border: rgba(255, 255, 255, 0.1);
   --border-strong: rgba(255, 255, 255, 0.16);
-  --brand: #e8913a;
-  --brand-soft: rgba(232, 145, 58, 0.16);
+  --brand: #ff6a00;
+  --brand-soft: rgba(255, 106, 0, 0.16);
 }
 
 /* 卡片顶部把手在深色面上更明显 */
@@ -4974,7 +5126,7 @@ mark.hl { background: var(--brand-soft); color: var(--brand-strong); padding: 0 
 
 /* 1) 拼音（小字、灰）—— 位于词头之上 */
 .dict-phonetic {
-  color: #9aa0a6;
+  color: #aaaaaa;
   font-size: 0.8125rem; /* 13px */
   line-height: 1.3;
   letter-spacing: 0.02em;
@@ -4985,7 +5137,7 @@ mark.hl { background: var(--brand-soft); color: var(--brand-strong); padding: 0 
   margin: 0;
   font-size: 1.375rem; /* 22px */
   font-weight: 700;
-  color: #f5f5f5;
+  color: #ffffff;
   letter-spacing: 0.01em;
   line-height: 1.25;
 }
@@ -4995,11 +5147,12 @@ mark.hl { background: var(--brand-soft); color: var(--brand-strong); padding: 0 
 }
 
 .dict-pos {
-  color: #e8913a;
+  /* 第 2 步：词性渲染为浅灰方框（仅 entry 级 pos，无 per-def 标签） */
+  color: #aaaaaa;
   font-size: 0.75rem;
-  background: rgba(232, 145, 58, 0.16);
-  padding: 1px 8px;
-  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.12);
+  padding: 1px 6px;
+  border-radius: 4px;
 }
 
 .dict-close {
@@ -5080,7 +5233,7 @@ mark.hl { background: var(--brand-soft); color: var(--brand-strong); padding: 0 
 
 .dict-def-no {
   flex: 0 0 auto;
-  color: #e8913a; /* 暖橙强调色 */
+  color: #ff6a00; /* 第 2 步：强调色统一为番茄橙 */
   font-weight: 600;
   font-size: 0.75rem;
   line-height: 1.9;
@@ -5117,7 +5270,7 @@ mark.hl { background: var(--brand-soft); color: var(--brand-strong); padding: 0 
 .dict-source {
   margin: 16px 0 2px;
   font-size: 0.75rem;
-  color: #8a8a8e;
+  color: #aaaaaa;
   text-align: right;
 }
 
@@ -5156,56 +5309,42 @@ mark.hl { background: var(--brand-soft); color: var(--brand-strong); padding: 0 
 
 /* ==========================================================================
    文本选区高亮（::selection）
-   - 背景：默认跟随 App 主色（陶土橙）的柔和半透明，替代浏览器默认青色。
-   - 阅读页：按阅读背景主题各取协调的暖/冷色调，参考番茄小说「与底色融合的柔和选区」。
+   - 第 2 步规范：阅读区选中高亮统一为浅橘黄 #E8D3A2（不再按主题分色）。
+   - 全站与阅读区共用 --selection-bg（均指向 #E8D3A2）。
+   - 深色主题下把文字压深，保证在浅橘黄底上可读。
    - 注意：Chromium 下 <input>/<textarea> 内的 ::selection 背景色不被支持（如目录搜索框），
      这里不做处理。
    ========================================================================== */
+:root {
+  --selection-bg: #E8D3A2;
+}
 ::selection {
-  background: rgba(207, 95, 43, 0.28);
+  background: var(--selection-bg, #E8D3A2);
   color: inherit;
 }
 ::-moz-selection {
-  background: rgba(207, 95, 43, 0.28);
+  background: var(--selection-bg, #E8D3A2);
   color: inherit;
 }
 
-/* 暖黄（默认米黄纸感底）→ 琥珀色选区 */
-.reader-root.reading-bg-sepia ::selection {
-  background: rgba(196, 140, 46, 0.34);
-  color: var(--reading-fg);
+/* 阅读区：各主题统一浅橘黄 #E8D3A2 */
+.reader-root ::selection {
+  background: #E8D3A2;
+  color: inherit;
 }
-.reader-root.reading-bg-sepia ::-moz-selection {
-  background: rgba(196, 140, 46, 0.34);
-  color: var(--reading-fg);
-}
-
-/* 护眼绿底 → 同调绿选区 */
-.reader-root.reading-bg-green ::selection {
-  background: rgba(64, 145, 92, 0.30);
-  color: var(--reading-fg);
-}
-.reader-root.reading-bg-green ::-moz-selection {
-  background: rgba(64, 145, 92, 0.30);
-  color: var(--reading-fg);
+.reader-root ::-moz-selection {
+  background: #E8D3A2;
+  color: inherit;
 }
 
-/* 冷蓝底 → 同调蓝选区 */
-.reader-root.reading-bg-blue ::selection {
-  background: rgba(74, 124, 196, 0.30);
-  color: var(--reading-fg);
+/* 深色底（dark / gray）→ 文字压深，保证浅橘黄高亮上可读 */
+.reader-root.reading-bg-dark ::selection,
+.reader-root.reading-bg-gray ::selection {
+  background: #E8D3A2;
+  color: #1b1a18;
 }
-.reader-root.reading-bg-blue ::-moz-selection {
-  background: rgba(74, 124, 196, 0.30);
-  color: var(--reading-fg);
-}
-
-/* 深色底 → 浅色半透明选区 + 亮色文字，保证对比度 */
-.reader-root.reading-bg-dark ::selection {
-  background: rgba(180, 168, 130, 0.34);
-  color: #fff7e2;
-}
-.reader-root.reading-bg-dark ::-moz-selection {
-  background: rgba(180, 168, 130, 0.34);
-  color: #fff7e2;
+.reader-root.reading-bg-dark ::-moz-selection,
+.reader-root.reading-bg-gray ::-moz-selection {
+  background: #E8D3A2;
+  color: #1b1a18;
 }
