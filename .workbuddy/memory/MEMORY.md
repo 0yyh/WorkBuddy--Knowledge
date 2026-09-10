@@ -27,4 +27,4 @@
 ## 近期决策（2026-09-10）
 - **C1/C2 UI = 纯CSS + design token，严禁 MUI/Tailwind**。docs/02 §18 误写「MUI+Tailwind」，需更正为纯CSS+token方案。
 - **内置词典**：`chinese-xinhua`(MIT, ©2018 PWXCOO) 可作数据源；build-step 归一化→`content/dict/dictionary.json`，排除完整 264k `ci`（仅取 idiom+word+精选ci）；须随包 LICENSE+署名。评估见 `docs/reports/词典数据源评估-chinese-xinhua-2026-09-10.md`。
-- **2000万字优化**：docs/02 §18 蓝图**未落地**（代码仍150万字基线：16 shard / full load / pretty JSON）。优先项(I→XIII)：①索引二进制化(varint+fflate, 已备 varint.ts) ②全局BM25 ③Web Worker搜索 ④LRU接线(PartitionLoader现0引用) ⑤OPFS缓存 ⑥OTA单zip ⑦Seed-only包 ⑧拼音搜索 ⑨片段预览 ⑩笔记高亮 ⑪精确续读 ⑫发现流 ⑬构建链提速。拒绝 Tantivy-wasm/Meilisearch/MiniSearch/DuckDB-wasm（体积/离线不符）。
+- **2000万字优化**：docs/02 §18 蓝图**大部分已落地**（读码确认）。core 已实现 BM25/LRU/PartitionLoader(IndexedDB+LRU)/varint/inverted(SearchEngine L1+L2)/shards；web 已接线 `SearchEngine`+惰性分片加载+`warmSearchShards` 预热+`contentCache`(IndexedDB) 持久化；离线词典已完整落地（`content/dict/dictionary.json`+`@pks/core/dict`+`lib/dict.ts`）。**剩 P0-I 索引二进制化 / P0-II 全局BM25（已完成, commit 7fc773a）/ P0-III 检索移 Web Worker**；P0-IV(PartitionLoader 接线)/P0-V(OPFS) 已由 web loader+contentCache(IndexedDB) 等效覆盖。拒绝 Tantivy-wasm/Meilisearch/MiniSearch/DuckDB-wasm（体积/离线不符）。

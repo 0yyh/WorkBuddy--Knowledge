@@ -26,6 +26,7 @@ export * from './index/bm25.js';
 export * from './index/shards.js';
 export * from './index/inverted.js';
 export * from './index/lazy-loader.js';
+export * from './index/shard-codec.js';
 
 // 合并 / 打包 / 冲突
 export * from './merge/conflict.js';

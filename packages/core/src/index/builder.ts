@@ -12,6 +12,7 @@ import { parseYamlFrontmatter } from '../parse/frontmatter.js';
 import { toPlainText } from '../parse/markdown.js';
 import { countWords } from '../parse/words.js';
 import { buildShards, type IndexingDoc, type ShardIndex } from './inverted.js';
+import { encodePostings } from './shard-codec.js';
 import { chooseShardCount } from './shards.js';
 import { deriveCrossTimeline, deriveTimelineDimensions } from '../track/parse.js';
 import { sha1 } from '../util/sha1.js';
@@ -294,11 +295,14 @@ export function buildIndex(vfs: Vfs, opts: BuildIndexOptions = {}): BuildResult 
     2,
   );
   for (const sh of shards) {
-    files[`.index/search/s${String(sh.shard).padStart(2, '0')}.json`] = JSON.stringify(
-      { shard: sh.shard, docs: sh.docs, lengths: sh.lengths, index: sh.index },
-      null,
-      2,
-    );
+    // P0-I：倒排 postings 二进制化（varint 差分 + zlib + base64），doc 表/长度仍为 JSON。
+    // 用紧凑 JSON（无缩进）进一步减小体积；其余产物保持 pretty JSON 不变。
+    files[`.index/search/s${String(sh.shard).padStart(2, '0')}.json`] = JSON.stringify({
+      shard: sh.shard,
+      docs: sh.docs,
+      lengths: sh.lengths,
+      postings: encodePostings(sh.index),
+    });
   }
 
   return { files, manifest, titleIndex, shards, snapshot, errors, warnings };

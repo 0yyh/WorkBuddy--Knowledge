@@ -4,7 +4,7 @@
  *  - 惰性：search/sNN.json（L2 全文检索按需拉取 + 缓存）
  * 全部通过 fetch 读取 public/content 下的静态资源。
  */
-import { SearchEngine } from '@pks/core';
+import { SearchEngine, decodePostings } from '@pks/core';
 import type {
   EntryIndexItem,
   IndexManifest,
@@ -99,14 +99,35 @@ function letterOf(slug: string): string {
   return /[a-z]/.test(ch) ? ch : '_';
 }
 
+/** 检索分片线上格式：P0-I 起倒排走 `postings`（base64）；旧产物仍为内联 `index`。 */
+interface WireShardIndex {
+  shard: number;
+  docs: ShardIndex['docs'];
+  lengths: number[];
+  /** 新格式：base64(varint 差分 + zlib) 的倒排表 */
+  postings?: string;
+  /** 旧格式：内联展开的倒排表（向后兼容） */
+  index?: ShardIndex['index'];
+}
+
 /** 拉取单个检索分片（幂等 + 单飞） */
 export function loadShard(shard: number): Promise<void> {
   const cached = shardInflight.get(shard);
   if (cached) return cached;
   if (shardCache.has(shard)) return Promise.resolve();
 
-  const task = fetchJson<ShardIndex>(`index/search/s${String(shard).padStart(2, '0')}.json`)
-    .then((data) => {
+  const task = fetchJson<WireShardIndex>(`index/search/s${String(shard).padStart(2, '0')}.json`)
+    .then((wire) => {
+      // P0-I：优先解 base64 倒排；旧产物回落到内联 index（不崩）。
+      const index: ShardIndex['index'] = wire.postings
+        ? decodePostings(wire.postings)
+        : (wire.index ?? {});
+      const data: ShardIndex = {
+        shard: wire.shard,
+        docs: wire.docs,
+        lengths: wire.lengths,
+        index,
+      };
       shardCache.set(shard, data);
       shardInflight.delete(shard);
     })
