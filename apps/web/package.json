@@ -1,0 +1,31 @@
+{
+  "name": "@pks/web",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "个人知识学习站 · Web 阅读端（离线优先）",
+  "scripts": {
+    "copy:content": "node ../../scripts/copy-content.mjs",
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "cap": "cap",
+    "android:sync": "cap sync android",
+    "android:build": "cap sync android && cd android && gradlew assembleDebug --no-daemon"
+  },
+  "dependencies": {
+    "@capacitor/android": "^7.0.0",
+    "@capacitor/core": "^7.0.0",
+    "@pks/core": "workspace:*",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@capacitor/cli": "^7.0.0",
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1",
+    "@vitejs/plugin-react": "^4.3.4",
+    "vite": "^5.4.21"
+  }
+}
