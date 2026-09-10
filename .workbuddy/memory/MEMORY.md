@@ -26,7 +26,7 @@
 
 ## 近期决策（2026-09-10）
 - **UI = 纯CSS + design token，严禁 MUI/Tailwind**（docs/02 §18 已于 37d9a79 更正）。
-- **内置词典**：`chinese-xinhua`(MIT, ©2018 PWXCOO)→`content/dict/dictionary.json`，须随包 LICENSE 署名；评估见 docs/reports/词典数据源评估-chinese-xinhua-2026-09-10.md。
+- **内置词典已完整集成**（用户问过，已核实）：数据 `content/dict/dictionary.json`（**217 条，自研「PKS 内置词典」，非 chinese-xinhua → 无外部署名义务**）+ core `@pks/core/dict`（注意 `parseDictionary` 返回 `{value,errors}`；`lookupDict(dict, selectedText)` 2 参）+ `apps/web/src/lib/dict.ts` + `components/ReaderSelectionMenu.tsx`（阅读页划词「查询」→释义卡片，挂 `EntryReaderPage.tsx`）。数据投递到 public / dist / Android assets 三处。
 - **2000万字优化：P0-I/II/III 全部完成**（`5a5679d` / `7fc773a` / P0-III）。core 本已实现 BM25/LRU/PartitionLoader/varint/SearchEngine，web 已接线 contentCache；P0-IV/V 等效覆盖。拒绝 Tantivy-wasm/Meilisearch/DuckDB-wasm。
 - **P0-I**：分片仍是 JSON 文本，倒排内嵌 `postings`=base64(varint 差分+fflate zlib)（`core/index/shard-codec.ts`）；旧内联 `index` 兼容。**格式消费点 3 处须同步**：`web/lib/loader.ts`、`cli/src/load-index.ts`、`builder.ts`。13.3MB→1.42MB。
 - **P0-III**：`web/lib/{search.worker,searchWorkerClient,searchWorkerProtocol}.ts`。主线程只 fetch 文本（`fetchShardText` 缓存+并发去重），worker 解码+BM25+分组；`fullTextSearch` worker 优先+主线程兜底（**永久降级开关**）；探针 `window.__pksSearchViaWorker`。

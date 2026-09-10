@@ -48,6 +48,13 @@ interface LoadedDoc {
 
 const SWIPE_X = 60;
 
+/** 当前时间格式化为 HH:MM（24 小时制，补零）。 */
+function formatClock(d: Date): string {
+  const hh = String(d.getHours()).padStart(2, '0');
+  const mm = String(d.getMinutes()).padStart(2, '0');
+  return `${hh}:${mm}`;
+}
+
 export function EntryReaderPage({ slug, chapterStart }: EntryReaderPageProps): JSX.Element {
   const { ready, slugMap, knownSlugs } = useStation();
   const item = slugMap.get(slug);
@@ -81,6 +88,9 @@ export function EntryReaderPage({ slug, chapterStart }: EntryReaderPageProps): J
   const [headingsMap, setHeadingsMap] = useState<Record<string, HeadingView[]>>({});
   // 点击小节后：跳到目标章并滚动到对应标题（载入完成后再执行滚动）
   const [pendingScroll, setPendingScroll] = useState<{ index: number; text: string } | null>(null);
+  // 底部常驻信息条：当前时间（HH:MM，每秒刷新）+ 电量（getBattery 可用时；不可用则不显示）。
+  const [clock, setClock] = useState<string>(() => formatClock(new Date()));
+  const [battery, setBattery] = useState<number | null>(null);
 
   const scrollRef = useRef<HTMLDivElement | null>(null);
   const rootRef = useRef<HTMLDivElement | null>(null);
@@ -343,6 +353,38 @@ export function EntryReaderPage({ slug, chapterStart }: EntryReaderPageProps): J
     applyReadPrefs(readReadPrefs());
   }, [prefs]);
 
+  // 底部信息条「当前时间」：showProgress 开启时每秒刷新；关闭或离开页面时清理 interval。
+  useEffect(() => {
+    if (!prefs.showProgress) return;
+    setClock(formatClock(new Date()));
+    const id = window.setInterval(() => setClock(formatClock(new Date())), 1000);
+    return () => window.clearInterval(id);
+  }, [prefs.showProgress]);
+
+  // 底部信息条「电量」：仅当 navigator.getBattery 可用时读取；不可用则保持 null（只显示时间，不编造）。
+  useEffect(() => {
+    if (!prefs.showProgress) return;
+    let alive = true;
+    const nav = navigator as Navigator & {
+      getBattery?: () => Promise<{ level: number }>;
+    };
+    if (typeof nav.getBattery !== 'function') {
+      setBattery(null);
+      return;
+    }
+    nav
+      .getBattery()
+      .then((b) => {
+        if (alive) setBattery(Math.round((b.level ?? 0) * 100));
+      })
+      .catch(() => {
+        if (alive) setBattery(null);
+      });
+    return () => {
+      alive = false;
+    };
+  }, [prefs.showProgress]);
+
   /**
    * 状态栏常驻：仅作用于阅读页（不在其他页面生效）。
    *   进入阅读页 → 隐藏系统状态栏（除非用户开了"手机状态栏常驻"）
@@ -533,7 +575,7 @@ export function EntryReaderPage({ slug, chapterStart }: EntryReaderPageProps): J
   return createPortal(
     <div
       ref={rootRef}
-      className={`reader-root${bg ? ` ${bg}` : ''}${overlay ? ' has-overlay' : ''}${chromeDismissed ? ' chrome-dismissed' : ''}`}
+      className={`reader-root${bg ? ` ${bg}` : ''}${overlay ? ' has-overlay' : ''}${chromeDismissed ? ' chrome-dismissed' : ''}${prefs.showProgress ? '' : ' reader-no-statusbar'}`}
       style={rootStyle}
       onTouchStart={onTouchStart}
       onTouchEnd={onTouchEnd}
@@ -565,7 +607,8 @@ export function EntryReaderPage({ slug, chapterStart }: EntryReaderPageProps): J
       {veilOpacity > 0 ? <div className="reader-veil" style={{ opacity: veilOpacity }} aria-hidden="true" /> : null}
 
       <header className="reader-top">
-        <div className="reader-top-bar">
+        {/* 顶部按新稿仅保留左侧返回「<」；进度与目录已分别移到底部信息条 / 3 等分导航栏 */}
+        <div className="reader-top-bar reader-top-bar-solo">
           <button
             type="button"
             className="reader-circle-btn reader-circle-btn-sm"
@@ -574,21 +617,6 @@ export function EntryReaderPage({ slug, chapterStart }: EntryReaderPageProps): J
           >
             <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
               <path d="M15 6l-6 6 6 6" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
-          </button>
-          <span className="reader-pos-mini" aria-live="polite">
-            {currentPos}<i className="reader-pos-sep">/</i>{total}
-          </span>
-          <button
-            type="button"
-            className="reader-circle-btn reader-circle-btn-sm"
-            aria-label="章节目录"
-            onClick={openChapter}
-          >
-            <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
-              <line x1="4" y1="6" x2="20" y2="6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-              <line x1="4" y1="12" x2="20" y2="12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-              <line x1="4" y1="18" x2="20" y2="18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
             </svg>
           </button>
         </div>
@@ -633,24 +661,19 @@ export function EntryReaderPage({ slug, chapterStart }: EntryReaderPageProps): J
             下一章
           </button>
         </div>
-        {/* 下行：仅三个圆形工具按钮（目录 / 夜间 / 设置） */}
-        <div className="reader-tools">
-          <button
-            type="button"
-            className="reader-circle-btn"
-            aria-label="章节目录"
-            onClick={openChapter}
-          >
+        {/* 下行：3 等分导航栏（目录 / 夜间 / 设置），图标在上、文字在下，三项等宽 */}
+        <div className="reader-bottom-tabs">
+          <button type="button" className="reader-tab" aria-label="章节目录" onClick={openChapter}>
             <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
               <line x1="4" y1="6" x2="20" y2="6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
               <line x1="4" y1="12" x2="20" y2="12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
               <line x1="4" y1="18" x2="20" y2="18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
             </svg>
-            <span className="reader-circle-btn-label">目录</span>
+            <span className="reader-tab-label">目录</span>
           </button>
           <button
             type="button"
-            className="reader-circle-btn"
+            className="reader-tab"
             aria-label={isNight ? '日间模式' : '夜间模式'}
             onClick={toggleNight}
           >
@@ -667,11 +690,11 @@ export function EntryReaderPage({ slug, chapterStart }: EntryReaderPageProps): J
                 <path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z" fill="currentColor" />
               )}
             </svg>
-            <span className="reader-circle-btn-label">{isNight ? '日间' : '夜间'}</span>
+            <span className="reader-tab-label">{isNight ? '日间' : '夜间'}</span>
           </button>
           <button
             type="button"
-            className="reader-circle-btn"
+            className="reader-tab"
             aria-label="阅读区设置"
             onClick={() => setSettingsOpen(true)}
           >
@@ -679,10 +702,22 @@ export function EntryReaderPage({ slug, chapterStart }: EntryReaderPageProps): J
               <circle cx="12" cy="12" r="3" fill="none" stroke="currentColor" strokeWidth="2" />
               <path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1-1.5 1.7 1.7 0 0 0-1.9.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.9 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1 1.7 1.7 0 0 0-.3-1.9l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.9.3h.1a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.9-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.9v.1a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z" fill="none" stroke="currentColor" strokeWidth="2" strokeLinejoin="round" />
             </svg>
-            <span className="reader-circle-btn-label">设置</span>
+            <span className="reader-tab-label">设置</span>
           </button>
         </div>
       </footer>
+
+      {/* 底部常驻信息条（不受 overlay 影响）：左下 进度 1/666，右下 时间 + 电量。
+          仅 prefs.showProgress 开启时渲染。 */}
+      {prefs.showProgress ? (
+        <div className="reader-statusbar" aria-live="off">
+          <span className="reader-statusbar-progress">{`${currentPos}/${total}`}</span>
+          <span className="reader-statusbar-right">
+            <span className="reader-statusbar-time">{clock}</span>
+            {battery !== null ? <span className="reader-statusbar-battery">{`${battery}%`}</span> : null}
+          </span>
+        </div>
+      ) : null}
 
       <ReaderSettingsSheet
         open={settingsOpen}

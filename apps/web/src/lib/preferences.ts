@@ -7,7 +7,8 @@
  */
 export type FontSizePref = 'sm' | 'md' | 'lg' | 'xl';
 export type FontFamilyPref = 'serif' | 'sans' | 'kai' | 'mono';
-export type BgColorPref = 'white' | 'sepia' | 'green' | 'blue' | 'dark';
+/** 阅读区主题色板（7 色）：色板顺序即 UI 顺序。sepia（米黄）为默认。 */
+export type BgColorPref = 'white' | 'sepia' | 'green' | 'blue' | 'pink' | 'gray' | 'dark';
 export type AnimationPref = 'none' | 'slide' | 'fade' | 'simulation' | 'cover' | 'vertical';
 export type LineHeightPref = 'tight' | 'compact' | 'normal' | 'loose';
 /** 正文对齐：justify=两端对齐（默认）；left=左对齐 */
@@ -23,7 +24,11 @@ export interface SysPrefs {
 }
 
 export interface ReaderPrefs {
-  fontSize: FontSizePref;
+  /**
+   * 阅读区正文字号（px，12–30 整数）。**区别于**系统字号 `SysPrefs.fontSize`（枚举）。
+   * 数值化后由 `--reading-font-scale = fontSize / 17` 驱动 em 级联（基准 17px → 默认 18px）。
+   */
+  fontSize: number;
   fontFamily: FontFamilyPref;
   bgColor: BgColorPref;
   animation: AnimationPref;
@@ -36,6 +41,8 @@ export interface ReaderPrefs {
   align: AlignPref;
   /** 滚到章末自动加载下一章（阅读页「更多」开关） */
   autoLoad: boolean;
+  /** 底部常驻信息条（进度 + 时间 + 电量）是否显示。默认 true（缺失即显示）。 */
+  showProgress: boolean;
 }
 
 const SYS_KEYS = {
@@ -56,6 +63,7 @@ const READ_KEYS = {
   statusbarPermanent: 'pks_pref_read_statusbarPermanent',
   align: 'pks_pref_read_align',
   autoLoad: 'pks_pref_read_autoload',
+  showProgress: 'pks_pref_read_showProgress',
 } as const;
 
 /** V1 遗留键名：仅在新键缺失时回退读取（绝不写入），保证老用户设置无缝迁移 */
@@ -74,18 +82,58 @@ export const SYS_DEFAULTS: SysPrefs = {
 };
 
 export const READ_DEFAULTS: ReaderPrefs = {
-  fontSize: 'md',
+  fontSize: 18,
   fontFamily: 'serif',
-  bgColor: 'white',
+  bgColor: 'sepia',
   animation: 'slide',
   lineHeight: 'normal',
   brightnessLevel: 70,
   statusbarPermanent: false,
   align: 'justify',
   autoLoad: true,
+  showProgress: true,
 };
 
-/** 字号档位 → 缩放系数（系统基准 15px / 阅读区 .prose 基准 16px） */
+/** 阅读区字号（px）取值边界与默认值（供 UI 复用）。 */
+export const READ_FONT_MIN = 12;
+export const READ_FONT_MAX = 30;
+export const READ_FONT_DEFAULT = 18;
+
+/**
+ * 阅读字号「粗档」：供设置页 / 旧面板这类 4 档 UI 复用（数值化的临时兼容层）。
+ * 第 2 步面板重写为连续步进后，此粗档映射即可退役。
+ */
+export const READ_FONT_BUCKETS = [
+  { value: 15, label: '小' },
+  { value: 18, label: '默认' },
+  { value: 21, label: '大' },
+  { value: 24, label: '特大' },
+] as const;
+
+/** number(px) → 最近粗档下标：≤16→0 / ≤19→1 / ≤22→2 / 其余→3。 */
+export function readFontBucketIndex(px: number): number {
+  if (px <= 16) return 0;
+  if (px <= 19) return 1;
+  if (px <= 22) return 2;
+  return 3;
+}
+
+/**
+ * 阅读字号解析：兼容老值迁移。
+ *  - 旧枚举 'sm'|'md'|'lg'|'xl' → 15 / 17 / 20 / 23（仅「尽量接近原视觉」；18 才是新默认）
+ *  - 数字字符串 → 夹取到 [READ_FONT_MIN, READ_FONT_MAX] 的整数
+ *  - 其它（null / 非法）→ READ_FONT_DEFAULT
+ */
+function parseReadFontSize(raw: string | null): number {
+  if (raw == null) return READ_FONT_DEFAULT;
+  const legacy: Record<string, number> = { sm: 15, md: 17, lg: 20, xl: 23 };
+  if (Object.prototype.hasOwnProperty.call(legacy, raw)) return legacy[raw];
+  const n = Number(raw);
+  if (!Number.isFinite(n)) return READ_FONT_DEFAULT;
+  return Math.max(READ_FONT_MIN, Math.min(READ_FONT_MAX, Math.round(n)));
+}
+
+/** 【系统字号】档位 → 缩放系数（系统基准 15px）。阅读区字号已数值化，不再使用此表。 */
 export const FONT_SCALE: Record<FontSizePref, string> = {
   sm: '0.9',
   md: '1',
@@ -93,11 +141,11 @@ export const FONT_SCALE: Record<FontSizePref, string> = {
   xl: '1.3',
 };
 
-/** 阅读区行距系数（.prose 基准 1.85） */
+/** 阅读区行距系数（.prose 基准 1.8） */
 export const LINE_HEIGHT_SCALE: Record<LineHeightPref, string> = {
   tight: '1.45',
   compact: '1.65',
-  normal: '1.85',
+  normal: '1.8',
   loose: '2.08',
 };
 
@@ -126,7 +174,7 @@ export function brightnessFilter(level: number): string {
 
 const FONT_SIZES: FontSizePref[] = ['sm', 'md', 'lg', 'xl'];
 const FONT_FAMILIES: FontFamilyPref[] = ['serif', 'sans', 'kai', 'mono'];
-const BG_COLORS: BgColorPref[] = ['white', 'sepia', 'green', 'blue', 'dark'];
+const BG_COLORS: BgColorPref[] = ['white', 'sepia', 'green', 'blue', 'pink', 'gray', 'dark'];
 const ANIMATIONS: AnimationPref[] = ['none', 'slide', 'fade', 'simulation', 'cover', 'vertical'];
 const LINE_HEIGHTS: LineHeightPref[] = ['tight', 'compact', 'normal', 'loose'];
 const ALIGNS: AlignPref[] = ['justify', 'left'];
@@ -197,11 +245,8 @@ export function readReadPrefs(): ReaderPrefs {
   const store = safeStorage();
   if (!store) return { ...READ_DEFAULTS };
   return {
-    fontSize: pick(
-      readItem(store, READ_KEYS.fontSize, V1_READ_KEYS.fontSize),
-      FONT_SIZES,
-      READ_DEFAULTS.fontSize,
-    ),
+    // 阅读字号已数值化：解析老枚举迁移 + 夹取区间（见 parseReadFontSize）。
+    fontSize: parseReadFontSize(readItem(store, READ_KEYS.fontSize, V1_READ_KEYS.fontSize)),
     fontFamily: pick(
       readItem(store, READ_KEYS.fontFamily, V1_READ_KEYS.fontFamily),
       FONT_FAMILIES,
@@ -230,6 +275,8 @@ export function readReadPrefs(): ReaderPrefs {
       store.getItem(READ_KEYS.statusbarPermanent) === 'true',
     align: pick(store.getItem(READ_KEYS.align), ALIGNS, READ_DEFAULTS.align),
     autoLoad: readBoolWithDefault(store.getItem(READ_KEYS.autoLoad), READ_DEFAULTS.autoLoad),
+    // 底部信息条：缺失即开（默认 true）。
+    showProgress: readBoolWithDefault(store.getItem(READ_KEYS.showProgress), READ_DEFAULTS.showProgress),
   };
 }
 
@@ -261,8 +308,8 @@ export function writeReadPref<K extends keyof ReaderPrefs>(
   const store = safeStorage();
   if (store) {
     try {
-      // 布尔（仅 statusbarPermanent）统一存 '1'/'0'，与读取端 === '1' 对齐。
-      // 曾误存 'true'/'false'，读取端兼容处理。
+      // 布尔（statusbarPermanent / showProgress）统一存 '1'/'0'，与读取端 === '1' 对齐。
+      // 曾误存 'true'/'false'，读取端兼容处理。数值（fontSize / brightnessLevel）存数字串。
       const serialized = typeof value === 'boolean' ? (value ? '1' : '0') : String(value);
       store.setItem(READ_KEYS[key], serialized);
     } catch {
@@ -277,7 +324,11 @@ export function writeReadPref<K extends keyof ReaderPrefs>(
 /** 把阅读区偏好写入 DOM：CSS 变量 + data-* 属性（仅 .prose 等阅读场景消费） */
 export function applyReadPrefs(prefs: ReaderPrefs): void {
   if (typeof document === 'undefined') return;
-  document.documentElement.style.setProperty('--reading-font-scale', FONT_SCALE[prefs.fontSize]);
+  // 阅读字号数值化：scale = 字号px / 17（保持 .prose「17px × scale」em 级联不崩，
+  // 默认 18px → scale 1.0588 → 实际 18px）。同时给出绝对 px 变量 --reader-fs，
+  // 供标题等需要精确 px（默认 22px）的地方使用。
+  document.documentElement.style.setProperty('--reading-font-scale', String(prefs.fontSize / 17));
+  document.documentElement.style.setProperty('--reader-fs', `${prefs.fontSize}px`);
   document.documentElement.style.setProperty('--rp-lh', LINE_HEIGHT_SCALE[prefs.lineHeight]);
   document.body.dataset.readingFont = prefs.fontFamily;
   document.body.dataset.readingBg = prefs.bgColor;
@@ -285,9 +336,13 @@ export function applyReadPrefs(prefs: ReaderPrefs): void {
   document.body.dataset.readingAlign = prefs.align;
 }
 
-/** 背景色偏好 → 阅读容器 class（.entry-cover / .reader-view 上叠加） */
+/**
+ * 背景色偏好 → 阅读容器 class。
+ * 7 个主题**全部显式带类**（含 white → `reading-bg-white`），消除「无类=白」的隐式语义；
+ * 这样「默认」（sepia 米黄）与任一主题都由 CSS 变量显式提供，不依赖兜底。
+ */
 export function bgClassOf(bg: BgColorPref): string {
-  return bg === 'white' ? '' : `reading-bg-${bg}`;
+  return `reading-bg-${bg}`;
 }
 
 /* ------------------------------- 兼容别名（V1 API） ------------------------------- */

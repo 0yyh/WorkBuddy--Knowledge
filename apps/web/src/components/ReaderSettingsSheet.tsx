@@ -21,10 +21,10 @@ import type {
   AnimationPref,
   BgColorPref,
   FontFamilyPref,
-  FontSizePref,
   LineHeightPref,
   ReaderPrefs,
 } from '../lib/preferences';
+import { READ_FONT_BUCKETS, readFontBucketIndex } from '../lib/preferences';
 
 interface ReaderSettingsSheetProps {
   open: boolean;
@@ -36,9 +36,8 @@ interface ReaderSettingsSheetProps {
   isNight?: boolean;
 }
 
-// 字号：4 档
-const FONT_SIZE_LIST: FontSizePref[] = ['sm', 'md', 'lg', 'xl'];
-const FONT_SIZE_LABEL: Record<FontSizePref, string> = { sm: '小', md: '默认', lg: '大', xl: '特大' };
+// 字号：临时 4 档「粗档」（数值化的兼容层，来自 preferences；第 2 步面板会改为连续步进）。
+// 使用 READ_FONT_BUCKETS / readFontBucketIndex，避免在此重复魔法数字。
 
 // 字体：横向轮播胶囊
 const FAMILY_OPTIONS: { value: FontFamilyPref; label: string }[] = [
@@ -117,10 +116,11 @@ export function ReaderSettingsSheet({ open, onClose, prefs, onChange }: ReaderSe
   const [moreOpen, setMoreOpen] = useState<boolean>(false);
   if (!open) return null;
 
-  const fontSizeIdx = Math.max(0, FONT_SIZE_LIST.indexOf(prefs.fontSize));
+  // 阅读字号已数值化（px）：面板暂用「粗档」下标定位（兼容层，第 2 步重写为连续步进）。
+  const fontSizeIdx = readFontBucketIndex(prefs.fontSize);
   const canFontDown = fontSizeIdx > 0;
-  const canFontUp = fontSizeIdx < FONT_SIZE_LIST.length - 1;
-  const bg = prefs.bgColor; // 'white' | 'sepia' | 'green' | 'blue' | 'dark'
+  const canFontUp = fontSizeIdx < READ_FONT_BUCKETS.length - 1;
+  const bg = prefs.bgColor; // 'white' | 'sepia' | 'green' | 'blue' | 'pink' | 'gray' | 'dark'
   const level = prefs.brightnessLevel;
 
   return (
@@ -165,7 +165,7 @@ export function ReaderSettingsSheet({ open, onClose, prefs, onChange }: ReaderSe
                   className="reader-font-step"
                   aria-label="缩小字号"
                   disabled={!canFontDown}
-                  onClick={() => canFontDown && onChange('fontSize', FONT_SIZE_LIST[fontSizeIdx - 1])}
+                  onClick={() => canFontDown && onChange('fontSize', READ_FONT_BUCKETS[fontSizeIdx - 1].value)}
                 >
                   A−
                 </button>
@@ -175,20 +175,20 @@ export function ReaderSettingsSheet({ open, onClose, prefs, onChange }: ReaderSe
                   className="reader-font-step"
                   aria-label="放大字号"
                   disabled={!canFontUp}
-                  onClick={() => canFontUp && onChange('fontSize', FONT_SIZE_LIST[fontSizeIdx + 1])}
+                  onClick={() => canFontUp && onChange('fontSize', READ_FONT_BUCKETS[fontSizeIdx + 1].value)}
                 >
                   A+
                 </button>
               </div>
               <div className="reader-pill-group reader-pill-group-scroll">
-                {FONT_SIZE_LIST.map((v) => (
+                {READ_FONT_BUCKETS.map((b, i) => (
                   <button
-                    key={v}
+                    key={b.value}
                     type="button"
-                    className={`reader-pill${prefs.fontSize === v ? ' is-on' : ''}`}
-                    onClick={() => onChange('fontSize', v)}
+                    className={`reader-pill${fontSizeIdx === i ? ' is-on' : ''}`}
+                    onClick={() => onChange('fontSize', b.value)}
                   >
-                    {FONT_SIZE_LABEL[v]}
+                    {b.label}
                   </button>
                 ))}
               </div>

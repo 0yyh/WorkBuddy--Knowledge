@@ -1351,11 +1351,11 @@ body[data-sys-anim='fade'] .page {
 
 /* ------------------------------- 阅读偏好（仅阅读区） ------------------------------- */
 
-/* 字号：设置页写 --reading-font-scale（sm .9 / md 1 / lg 1.15 / xl 1.3）
-   基准由 16px 提升到 17px（番茄小说正文观感，成段更从容） */
+/* 字号：设置页写 --reading-font-scale = 阅读字号px / 17（数值化后）。
+   基准 17px，默认字号 18px → scale 1.0588 → 实际 18px（番茄小说正文观感）。 */
 .prose {
   font-size: calc(17px * var(--reading-font-scale, 1));
-  line-height: var(--rp-lh, 1.85);
+  line-height: var(--rp-lh, 1.8);
   color: var(--rp-text, #232a38);
   font-family: var(--serif);
 }
@@ -1376,34 +1376,57 @@ body[data-reading-font='mono'] .prose {
 /* 阅读区背景：变量只挂在 .reading-bg-* 类上，且该类只允许加在阅读页根容器
    （.reader-root）上 —— 详情页 / 首页一律不加，否则整页会被米黄或深色横条污染。
    这些变量绝不下放到 :root / html / body。 */
-.reading-bg-sepia {
-  --reading-bg: #f6efe0;
-  --reading-fg: #4f4130;
-  --reader-chrome-bg: rgba(246, 239, 224, 0.93);
+/* 7 主题（顺序即 UI 色板顺序）：white / sepia(默认米黄) / green / blue / pink / gray(深灰) / dark
+   每个主题补全 10 个阅读变量 + --rp-heading（标题色）。
+   阅读区统一规范（浅色主题）：正文 #333333、标题 #000000 加粗、底色 follow --reading-bg。
+   深色系（gray/dark）正文用浅色、标题近白，保证深底可读。 */
+.reading-bg-white {
+  --reading-bg: #ffffff;
+  --reading-fg: #333333;
+  --reader-chrome-bg: rgba(255, 255, 255, 0.94);
   background: var(--reading-bg);
   color: var(--reading-fg);
-  --rp-text: #453823;
-  --rp-soft: #6f6047;
-  --rp-code-bg: #ece1c9;
-  --rp-quote-bg: #efe6d1;
-  --rp-pre-bg: #e9dec4;
-  --rp-border: #ddd0b2;
-  --rp-table-head: #efe6d1;
+  --rp-text: #333333;
+  --rp-soft: #666666;
+  --rp-code-bg: #f0f0f0;
+  --rp-quote-bg: #f0f0f0;
+  --rp-pre-bg: #f0f0f0;
+  --rp-border: #e0e0e0;
+  --rp-table-head: #f0f0f0;
+  --rp-heading: #000000;
+}
+
+/* sepia = 默认真·米黄 #F5F1E6（护眼底） */
+.reading-bg-sepia {
+  --reading-bg: #f5f1e6;
+  --reading-fg: #333333;
+  --reader-chrome-bg: rgba(245, 241, 230, 0.94);
+  background: var(--reading-bg);
+  color: var(--reading-fg);
+  --rp-text: #333333;
+  --rp-soft: #666666;
+  --rp-code-bg: #ece5d4;
+  --rp-quote-bg: #efe9da;
+  --rp-pre-bg: #eae3d1;
+  --rp-border: #ddd5c2;
+  --rp-table-head: #efe9da;
+  --rp-heading: #000000;
 }
 
 .reading-bg-green {
   --reading-bg: #d6e6d8;
-  --reading-fg: #22402e;
+  --reading-fg: #26402f;
   --reader-chrome-bg: rgba(214, 230, 216, 0.93);
   background: var(--reading-bg);
   color: var(--reading-fg);
-  --rp-text: #274230;
-  --rp-soft: #4b6653;
+  --rp-text: #26402f;
+  --rp-soft: #55705d;
   --rp-code-bg: #c6dacb;
   --rp-quote-bg: #cbdfd0;
   --rp-pre-bg: #c5d9ca;
   --rp-border: #b1ccb8;
   --rp-table-head: #cbded0;
+  --rp-heading: #10231a;
 }
 
 .reading-bg-blue {
@@ -1419,6 +1442,40 @@ body[data-reading-font='mono'] .prose {
   --rp-pre-bg: #c7d4e3;
   --rp-border: #b8c6da;
   --rp-table-head: #cfd9e8;
+  --rp-heading: #16212f;
+}
+
+.reading-bg-pink {
+  --reading-bg: #f6e4e4;
+  --reading-fg: #4a2f33;
+  --reader-chrome-bg: rgba(246, 228, 228, 0.94);
+  background: var(--reading-bg);
+  color: var(--reading-fg);
+  --rp-text: #4a2f33;
+  --rp-soft: #7a5a5f;
+  --rp-code-bg: #efd6d6;
+  --rp-quote-bg: #f1dcdc;
+  --rp-pre-bg: #eed4d4;
+  --rp-border: #e3c4c4;
+  --rp-table-head: #f1dcdc;
+  --rp-heading: #2a1418;
+}
+
+/* gray = 深灰系阅读主题（底 #333），正文浅色、标题近白（非浅灰！） */
+.reading-bg-gray {
+  --reading-bg: #333333;
+  --reading-fg: #e6e6e6;
+  --reader-chrome-bg: rgba(51, 51, 51, 0.92);
+  background: var(--reading-bg);
+  color: var(--reading-fg);
+  --rp-text: #e6e6e6;
+  --rp-soft: #b3b3b3;
+  --rp-code-bg: #2a2a2a;
+  --rp-quote-bg: #3a3a3a;
+  --rp-pre-bg: #2a2a2a;
+  --rp-border: #4a4a4a;
+  --rp-table-head: #3d3d3d;
+  --rp-heading: #ffffff;
 }
 
 .reading-bg-dark {
@@ -1434,6 +1491,7 @@ body[data-reading-font='mono'] .prose {
   --rp-pre-bg: #24231e;
   --rp-border: #3a382f;
   --rp-table-head: #26251f;
+  --rp-heading: #f0e9d6;
 }
 
 /* 深色阅读区：正文链接提亮为浅蓝，保证深底对比度（默认 brand 蓝在深底仅 ~4:1） */
@@ -1542,7 +1600,8 @@ body[data-reading-font='mono'] .prose {
   font-size: 0.97em;
 }
 
-/* 正文是主角：首行缩进 2 字、段间留白、行高走 --rp-lh（默认 1.85），
+/* 正文是主角：首行缩进 2 字（text-indent: 2em → 默认 18px 字号下 = 36px）、
+   段间留白、行高走 --rp-lh（默认 1.8 → 18px 字号下 32.4px），
    两端对齐让中文段落边缘整齐，接近番茄小说的成段观感。 */
 .prose p {
   margin: 0 0 1.15em;
@@ -2387,7 +2446,8 @@ html[data-pagemargin='custom'] .reader-doc { padding: 1.25rem max(1.25rem, env(s
   }
 }
 
-.reader-root.reading-bg-dark {
+.reader-root.reading-bg-dark,
+.reader-root.reading-bg-gray {
   color-scheme: dark;
 }
 
@@ -2419,31 +2479,36 @@ html[data-pagemargin='custom'] .reader-doc { padding: 1.25rem max(1.25rem, env(s
 .reader-doc .prose {
   font-family: var(--serif);
   letter-spacing: 0.01em;
-  /* 阅读页行高：在用户「行距」设置（--rp-lh）之上整体抬一档 → 默认约 1.9。
-     用乘法而非固定值，保证 4 档行距设置仍然生效。 */
-  line-height: calc(var(--rp-lh, 1.85) * 1.03);
+  /* 阅读页行高 = 用户「行距」设置（--rp-lh，默认 1.8）。
+     直接取变量（不再 *1.03 抬档），保证默认行高恰好 1.8 → 18px 正文 = 32.4px。 */
+  line-height: var(--rp-lh, 1.8);
 }
 
 /* 正文标题（番茄风）：去掉 h2 的下边框分割线，改为更大字号 + 更粗字重 + 上下留白，
    h1/h2/h3 逐级递减。 */
+/* 标题字号随阅读字号联动：用绝对 px（--reader-fs）+ 偏移，
+   保证默认（--reader-fs=18px）时 h1=26 / h2=22 / h3=19，且加粗、标题色走 --rp-heading。 */
 .reader-doc .prose h1 {
   margin: 1.8em 0 0.9em;
-  font-size: 1.5em;
+  font-size: calc(var(--reader-fs, 18px) + 8px);
   font-weight: 700;
+  color: var(--rp-heading, #000000);
 }
 
 .reader-doc .prose h2 {
   margin: 1.8em 0 0.9em;
   padding-bottom: 0;
   border-bottom: 0;
-  font-size: 1.3em;
+  font-size: calc(var(--reader-fs, 18px) + 4px); /* 默认 22px */
   font-weight: 700;
+  color: var(--rp-heading, #000000);
 }
 
 .reader-doc .prose h3 {
   margin: 1.5em 0 0.7em;
-  font-size: 1.12em;
-  font-weight: 600;
+  font-size: calc(var(--reader-fs, 18px) + 1px);
+  font-weight: 700;
+  color: var(--rp-heading, #000000);
 }
 
 /* 首屏首个标题不留上边距，避免顶部大片空白 */
@@ -2453,7 +2518,8 @@ html[data-pagemargin='custom'] .reader-doc { padding: 1.25rem max(1.25rem, env(s
   margin-top: 0.2em;
 }
 
-.reader-root.reading-bg-dark .reader-scroll {
+.reader-root.reading-bg-dark .reader-scroll,
+.reader-root.reading-bg-gray .reader-scroll {
   scrollbar-color: #3a3a3a #262626;
 }
 
@@ -2618,14 +2684,21 @@ html[data-pagemargin='custom'] .reader-doc { padding: 1.25rem max(1.25rem, env(s
   color: var(--reading-fg, #1f2937);
 }
 
-/* 底部：两行（上行 nav 上一章/滑杆/下一章；下行 三个圆形工具） */
+/* 底部：两行（上行 nav 上一章/滑杆/下一章；下行 3 等分导航栏）。
+   整体上移，为底部常驻信息条（高 30px + safe-area）让出空间。 */
 .reader-bottom {
-  bottom: 0;
+  bottom: calc(var(--reader-statusbar-h, 30px) + env(safe-area-inset-bottom, 0px));
   flex-direction: column;
-  gap: 12px;
-  padding: 14px 14px calc(env(safe-area-inset-bottom, 0px) + 16px);
+  gap: 10px;
+  padding: 14px 14px 16px;
   background: var(--reader-chrome-bg, rgba(255, 255, 255, 0.92));
   color: var(--reading-fg, #1f2937);
+}
+
+/* 关闭信息条（prefs.showProgress=false）时，底栏贴底并自行处理安全区 */
+.reader-root.reader-no-statusbar .reader-bottom {
+  bottom: 0;
+  padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 16px);
 }
 
 /* 深色阅读区：chrome 文字色由 var(--reading-fg) 决定（深色底自动浅字） */
@@ -2643,6 +2716,11 @@ html[data-pagemargin='custom'] .reader-doc { padding: 1.25rem max(1.25rem, env(s
   width: 100%;
   max-width: 380px;
   margin: 0 auto;
+}
+
+/* 新稿：顶栏仅剩左侧返回「<」→ 取消居中窄栏，让返回键贴左 */
+.reader-top-bar-solo {
+  max-width: none;
 }
 
 /* 大字标题不再渲染（参考番茄阅读页：顶部仅 ← / 进度 / 目录） */
@@ -2756,6 +2834,104 @@ html[data-pagemargin='custom'] .reader-doc { padding: 1.25rem max(1.25rem, env(s
   width: 100%;
 }
 
+/* —— 底部 3 等分导航栏（目录 / 夜间 / 设置）——
+   与 .reader-top 同套 overlay 显隐；白底 + 上边框浅灰；三项 flex:1 等宽、
+   图标在上文字在下。深色系主题改用深色面（必要偏离，避免白底刺眼）。 */
+.reader-bottom-tabs {
+  display: flex;
+  align-items: stretch;
+  width: 100%;
+  flex: 0 0 auto;
+  border-top: 1px solid #e0e0e0;
+  background: #ffffff;
+  border-radius: 14px;
+  overflow: hidden;
+}
+
+.reader-tab {
+  flex: 1 1 0;
+  min-width: 0;
+  box-sizing: border-box; /* 保证内部分隔线不改变三者等宽 */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  padding: 8px 4px;
+  border: 0;
+  background: transparent;
+  color: #333333;
+  font-size: 0.6875rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: background 0.16s var(--ease);
+}
+
+.reader-tab:not(:first-child) {
+  border-left: 1px solid #f0f0f0;
+}
+
+.reader-tab svg {
+  width: 22px;
+  height: 22px;
+  display: block;
+}
+
+.reader-tab-label {
+  font-size: 0.6875rem;
+  line-height: 1;
+}
+
+.reader-tab:active {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+/* 深色系主题（gray/dark）：导航栏白底会刺眼 → 深色面 + 深色分隔 / 文字 */
+.reader-root.reading-bg-dark .reader-bottom-tabs,
+.reader-root.reading-bg-gray .reader-bottom-tabs {
+  background: #1f1f1f;
+  border-top-color: #333333;
+}
+.reader-root.reading-bg-dark .reader-tab,
+.reader-root.reading-bg-gray .reader-tab {
+  color: #e6e6e6;
+}
+.reader-root.reading-bg-dark .reader-tab:not(:first-child),
+.reader-root.reading-bg-gray .reader-tab:not(:first-child) {
+  border-left-color: #333333;
+}
+
+/* —— 底部常驻信息条（进度 / 时间 / 电量）：不受 overlay 影响，始终可见 ——
+   小字、克制、无投影；底部为它预留高度，正文不会被挡（见 .reader-scroll padding）。 */
+.reader-statusbar {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 87;
+  height: calc(var(--reader-statusbar-h, 30px) + env(safe-area-inset-bottom, 0px));
+  box-sizing: border-box;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 2px 18px 6px;
+  padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 6px);
+  font-size: 0.6875rem;
+  line-height: 1;
+  letter-spacing: 0.02em;
+  font-variant-numeric: tabular-nums;
+  color: var(--rp-soft, #666666);
+  opacity: 0.72;
+  pointer-events: none;
+}
+
+.reader-statusbar-right {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+}
+
 .reader-chapter-slider {
   -webkit-appearance: none;
   appearance: none;
@@ -2789,8 +2965,8 @@ html[data-pagemargin='custom'] .reader-doc { padding: 1.25rem max(1.25rem, env(s
   border-radius: 999px;
   background: currentColor;
   margin-top: -7px;
+  /* 去投影（阅读器扁平化规范）：滑块靠 2px 描边与底色分层，不再用 box-shadow */
   border: 2px solid var(--reading-bg, #fff);
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.22);
 }
 
 .reader-chapter-slider::-moz-range-thumb {
@@ -2798,8 +2974,8 @@ html[data-pagemargin='custom'] .reader-doc { padding: 1.25rem max(1.25rem, env(s
   height: 18px;
   border-radius: 999px;
   background: currentColor;
+  /* 去投影（阅读器扁平化规范） */
   border: 2px solid var(--reading-bg, #fff);
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.22);
 }
 
 .reader-chapter-slider:disabled {
@@ -2854,21 +3030,22 @@ html[data-pagemargin='custom'] .reader-doc { padding: 1.25rem max(1.25rem, env(s
   background: var(--surface);
   color: var(--text);
   border-radius: 22px 22px 0 0;
+  /* 去投影（阅读器扁平化规范）：改用 1px 顶边分层 */
+  border-top: 1px solid var(--border);
   padding: 6px 18px calc(env(safe-area-inset-bottom, 0px) + 14px);
-  box-shadow: var(--shadow-lg);
   max-height: 84%;
   overflow: auto;
   animation: sheet-up 0.26s var(--ease);
 }
 
-/* 阅读设置面板背景跟随阅读背景色（用户要求） */
+/* 阅读设置面板背景跟随阅读背景色（用户要求）。7 主题齐全，与 .reading-bg-* 对齐。 */
 .reader-sheet-bg-white {
   background: #ffffff;
-  color: #1f2937;
+  color: #333333;
 }
 .reader-sheet-bg-sepia {
-  background: #f6efe0;
-  color: #4f4130;
+  background: #f5f1e6;
+  color: #333333;
 }
 .reader-sheet-bg-green {
   background: #d6e6d8;
@@ -2877,6 +3054,14 @@ html[data-pagemargin='custom'] .reader-doc { padding: 1.25rem max(1.25rem, env(s
 .reader-sheet-bg-blue {
   background: #dde6f0;
   color: #2c3a4d;
+}
+.reader-sheet-bg-pink {
+  background: #f6e4e4;
+  color: #4a2f33;
+}
+.reader-sheet-bg-gray {
+  background: #333333;
+  color: #e6e6e6;
 }
 .reader-sheet-bg-dark {
   background: #1b1a18;
@@ -2887,10 +3072,12 @@ html[data-pagemargin='custom'] .reader-doc { padding: 1.25rem max(1.25rem, env(s
    弹层文字/分隔线可读且与背景协调（否则残留系统浅色字，深底上看不清）。
    附 --t-accent/--t-accent-soft：弹层内的"激活/强调"色（章号、读至N% 徽章、选中行、tab 高亮等），
    否则亮蓝色在米黄/深色背景上会突兀。 */
-.reader-sheet-bg-white  { --t-text: #29231a; --t-soft: #5c5242; --t-dim: #978a76; --t-line: #ece3d6;  --t-accent: #cf5f2b; --t-accent-soft: #fbe7d6; }
-.reader-sheet-bg-sepia  { --t-text: #4f4130; --t-soft: #6b5a45; --t-dim: #9b8a70; --t-line: #ddcfae;  --t-accent: #8a6a3a; --t-accent-soft: #ecdfc5; }
+.reader-sheet-bg-white  { --t-text: #333333; --t-soft: #666666; --t-dim: #999999; --t-line: #e0e0e0;  --t-accent: #ff6a00; --t-accent-soft: #ffe6d6; }
+.reader-sheet-bg-sepia  { --t-text: #333333; --t-soft: #666666; --t-dim: #9a9a9a; --t-line: #ddd5c2;  --t-accent: #ff6a00; --t-accent-soft: #fbe0d0; }
 .reader-sheet-bg-green  { --t-text: #22402e; --t-soft: #3d5a46; --t-dim: #6e8877; --t-line: #b8cfbd;  --t-accent: #3a7a4a; --t-accent-soft: #d4e7d7; }
 .reader-sheet-bg-blue   { --t-text: #2c3a4d; --t-soft: #4a5a70; --t-dim: #7c8ca0; --t-line: #bccad9;  --t-accent: #2f5a9a; --t-accent-soft: #d3deee; }
+.reader-sheet-bg-pink   { --t-text: #4a2f33; --t-soft: #7a5a5f; --t-dim: #a08085; --t-line: #e3c4c4;  --t-accent: #ff6a00; --t-accent-soft: #fbe0d0; }
+.reader-sheet-bg-gray   { --t-text: #e6e6e6; --t-soft: #b3b3b3; --t-dim: #8a8a8a; --t-line: #4a4a4a;  --t-accent: #ff6a00; --t-accent-soft: #3a2a1a; }
 .reader-sheet-bg-dark   { --t-text: #d4cdb7; --t-soft: #b3ab96; --t-dim: #8a8372; --t-line: #4a4438;  --t-accent: #d4cdb7; --t-accent-soft: #2e2c28; }
 
 /* 以上变量只对"在弹层作用域内声明的 var(--*)"生效；把通用 var 别名指到它 */
@@ -2898,6 +3085,8 @@ html[data-pagemargin='custom'] .reader-doc { padding: 1.25rem max(1.25rem, env(s
 .reader-sheet-bg-sepia,
 .reader-sheet-bg-green,
 .reader-sheet-bg-blue,
+.reader-sheet-bg-pink,
+.reader-sheet-bg-gray,
 .reader-sheet-bg-dark {
   --text: var(--t-text);
   --text-soft: var(--t-soft);
@@ -2913,9 +3102,11 @@ html[data-pagemargin='custom'] .reader-doc { padding: 1.25rem max(1.25rem, env(s
 .reader-sheet-bg-white .reader-pill,
 .reader-sheet-bg-sepia .reader-pill,
 .reader-sheet-bg-green .reader-pill,
-.reader-sheet-bg-blue .reader-pill {
+.reader-sheet-bg-blue .reader-pill,
+.reader-sheet-bg-pink .reader-pill {
   background: rgba(0, 0, 0, 0.06);
 }
+.reader-sheet-bg-gray .reader-pill,
 .reader-sheet-bg-dark .reader-pill {
   background: rgba(255, 255, 255, 0.1);
   color: #d4cdb7;
@@ -2925,6 +3116,8 @@ html[data-pagemargin='custom'] .reader-doc { padding: 1.25rem max(1.25rem, env(s
 .reader-sheet-bg-sepia .reader-pill.is-on,
 .reader-sheet-bg-green .reader-pill.is-on,
 .reader-sheet-bg-blue .reader-pill.is-on,
+.reader-sheet-bg-pink .reader-pill.is-on,
+.reader-sheet-bg-gray .reader-pill.is-on,
 .reader-sheet-bg-dark .reader-pill.is-on {
   background: var(--brand);
   color: #fff;
@@ -2937,9 +3130,11 @@ html[data-pagemargin='custom'] .reader-doc { padding: 1.25rem max(1.25rem, env(s
 .reader-sheet-bg-sepia .reader-font-size,
 .reader-sheet-bg-green .reader-font-size,
 .reader-sheet-bg-blue .reader-font-size,
+.reader-sheet-bg-pink .reader-font-size,
 .reader-sheet-bg-white .reader-font-size {
   background: rgba(0, 0, 0, 0.06);
 }
+.reader-sheet-bg-gray .reader-font-size,
 .reader-sheet-bg-dark .reader-font-size {
   background: rgba(255, 255, 255, 0.1);
 }
@@ -3190,9 +3385,9 @@ html[data-pagemargin='custom'] .reader-doc { padding: 1.25rem max(1.25rem, env(s
 }
 
 .reader-bg-thumb.is-on {
+  /* 去投影（阅读器扁平化规范）：选中态仅靠加粗描边 + 放大表达 */
   border-color: var(--brand);
   transform: scale(1.08);
-  box-shadow: 0 0 0 2px var(--brand-soft, rgba(122, 162, 255, 0.18));
 }
 
 .reader-bg-thumb-custom {
@@ -3337,9 +3532,9 @@ html[data-pagemargin='custom'] .reader-doc { padding: 1.25rem max(1.25rem, env(s
   height: 22px;
   border-radius: 999px;
   background: #ffffff;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.18);
+  /* 去投影（阅读器扁平化规范）：改用 1px 描边分层 */
   margin-top: -8px;
-  border: 0;
+  border: 1px solid #cfcfcf;
 }
 
 .reader-brightness-slider::-moz-range-thumb {
@@ -3347,8 +3542,8 @@ html[data-pagemargin='custom'] .reader-doc { padding: 1.25rem max(1.25rem, env(s
   height: 22px;
   border-radius: 999px;
   background: #ffffff;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.18);
-  border: 0;
+  /* 去投影（阅读器扁平化规范） */
+  border: 1px solid #cfcfcf;
 }
 
 .reader-sheet-bg-dark .reader-brightness-slider::-webkit-slider-runnable-track {
@@ -3497,7 +3692,8 @@ html[data-pagemargin='custom'] .reader-doc { padding: 1.25rem max(1.25rem, env(s
   height: 20px;
   background: #fff;
   border-radius: 999px;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.18);
+  /* 去投影（阅读器扁平化规范）：拨片改用 1px 描边分层 */
+  border: 1px solid rgba(0, 0, 0, 0.08);
   transition: transform 0.18s var(--ease);
 }
 
@@ -4636,7 +4832,7 @@ mark.hl { background: var(--brand-soft); color: var(--brand-strong); padding: 0 
   border-radius: 14px;
   background: rgba(46, 46, 48, 0.96);
   color: #f5f5f5;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.32);
+  /* 去投影（阅读器扁平化规范）：深色实色块自身已足够分层 */
 }
 
 .dict-menu::after {
@@ -4723,7 +4919,8 @@ mark.hl { background: var(--brand-soft); color: var(--brand-strong); padding: 0 
   padding: 6px 20px calc(env(safe-area-inset-bottom, 0px) + 18px);
   background: #2e2e30;
   color: #f5f5f5;
-  box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.34);
+  /* 去投影（阅读器扁平化规范）：改用 1px 顶边分层 */
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
   max-height: 62%;
   display: flex;
   flex-direction: column;

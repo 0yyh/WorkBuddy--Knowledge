@@ -14,6 +14,8 @@ import {
 } from '../components/SettingControls';
 import { ConfirmDialog } from '../components/ConfirmDialog';
 import {
+  READ_FONT_BUCKETS,
+  readFontBucketIndex,
   readReadPrefs,
   readSysPrefs,
   writeReadPref,
@@ -30,12 +32,19 @@ import { clearHistory, clearLastReadSlug } from '../lib/history';
 
 const APP_VERSION = '0.1.0';
 
+// 系统字号：4 档枚举（系统那套，保持不变）
 const FONT_OPTIONS: Array<SegOption<FontSizePref>> = [
   { value: 'sm', label: '小' },
   { value: 'md', label: '默认' },
   { value: 'lg', label: '大' },
   { value: 'xl', label: '特大' },
 ];
+
+// 阅读字号：临时「粗档」映射（value 为像素 px 字符串；第 2 步面板会改为连续步进）。
+const READ_FONT_OPTIONS: Array<SegOption<string>> = READ_FONT_BUCKETS.map((b) => ({
+  value: String(b.value),
+  label: b.label,
+}));
 
 const FAMILY_OPTIONS: Array<SegOption<FontFamilyPref>> = [
   { value: 'serif', label: '宋体' },
@@ -132,7 +141,11 @@ export function SettingsPage(): JSX.Element {
           <GroupTitle>阅读区设置 · 仅阅读</GroupTitle>
           <div className="settings-row">
             <span className="settings-row-label">阅读字号</span>
-            <Segmented value={read.fontSize} options={FONT_OPTIONS} onChange={(v) => setReadPref('fontSize', v)} />
+            <Segmented
+              value={String(READ_FONT_BUCKETS[readFontBucketIndex(read.fontSize)].value)}
+              options={READ_FONT_OPTIONS}
+              onChange={(v) => setReadPref('fontSize', Number(v))}
+            />
           </div>
           <div className="settings-row">
             <span className="settings-row-label">阅读字体</span>

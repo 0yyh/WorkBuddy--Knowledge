@@ -29,12 +29,13 @@ describe('brightnessFilter', () => {
 });
 
 describe('bgClassOf', () => {
-  it('白色背景返回空串（不叠加 class）', () => {
-    expect(bgClassOf('white')).toBe('');
-  });
-
-  it('非白色返回 reading-bg-<bg>', () => {
+  it('7 个主题全部显式返回 reading-bg-<bg>（含 white，消除「无类=白」隐式语义）', () => {
+    expect(bgClassOf('white')).toBe('reading-bg-white');
     expect(bgClassOf('sepia')).toBe('reading-bg-sepia');
+    expect(bgClassOf('green')).toBe('reading-bg-green');
+    expect(bgClassOf('blue')).toBe('reading-bg-blue');
+    expect(bgClassOf('pink')).toBe('reading-bg-pink');
+    expect(bgClassOf('gray')).toBe('reading-bg-gray');
     expect(bgClassOf('dark')).toBe('reading-bg-dark');
   });
 });
