@@ -19,6 +19,8 @@
  *   M1..M4 更多子层 3 开关默认态 [false,true,true] + 开关配色
  *   D1..D5 划词工具条(srgb 51,51,51 / 8px) + 释义卡(12px 12px 0 0 / #333)
  *   S8 源 styles.css ::selection 含 #E8D3A2
+ *   S9 源 styles.css .dict-toast 背景 = #333333；S10 废弃 reader-* 死类已清除
+ *   T1 深色主题（dark）渲染：.reading-bg-dark / 背景为深色 / 仍无投影 / 面板非纯白 / 可还原
  *
  * 依赖：本机 Chrome（PKS_CHROME 可覆盖）；运行前请先 `npm --prefix apps/web run build`。
  * 运行：node scripts/tools/e2e-reader-refactor.mjs    （exit 0=全绿）
@@ -339,6 +341,30 @@ try {
     check('P13b 点击后切到 white 主题', /reader-sheet-bg-white/.test(eyeRes?.after || ''), `after=${eyeRes?.after}`);
     check('P13c 再点回 sepia 主题', /reader-sheet-bg-sepia/.test(eyeRes?.back || ''), `back=${eyeRes?.back}`);
 
+    /* ---- 深色主题渲染（补上「非 sepia 主题未逐一验证」的缺口） ---- */
+    const DARK_TEST = `(async function(){
+      var sleep = function(ms){ return new Promise(function(r){setTimeout(r,ms);}); };
+      var dots = document.querySelectorAll('.reader-sheet .reader-color-dot');
+      var dark = dots[dots.length-1];   /* 色板末位 = dark */
+      dark.click(); await sleep(150);
+      var root = document.querySelector('.reader-root');
+      var cls = root.className;   /* 必须在还原前捕获 */
+      var bg = getComputedStyle(root).backgroundColor;
+      var m = bg.match(/\\d+/g) || [];
+      var lum = m.length>=3 ? (Number(m[0])+Number(m[1])+Number(m[2]))/3 : 999;
+      var nonNone = 0;
+      root.querySelectorAll('*').forEach(function(el){ var s=getComputedStyle(el).boxShadow; if(s && s!=='none') nonNone++; });
+      var sheetBg = getComputedStyle(document.querySelector('.reader-sheet')).backgroundColor;
+      dots[1].click(); await sleep(150);   /* 还原 sepia */
+      return { cls: cls, bg: bg, lum: lum, nonNone: nonNone, sheetBg: sheetBg, backCls: document.querySelector('.reader-root').className };
+    })()`;
+    const dk = await evaluate(DARK_TEST);
+    check('T1a 切到 dark 主题（.reading-bg-dark）', /reading-bg-dark/.test(dk?.cls || ''), `cls=${dk?.cls}`);
+    check('T1b dark 主题阅读区背景为深色（平均亮度<110）', (dk?.lum ?? 999) < 110, `bg=${dk?.bg} lum=${dk?.lum}`);
+    check('T1c dark 主题下阅读器作用域仍无投影', dk?.nonNone === 0, `nonNone=${dk?.nonNone}`);
+    check('T1d dark 主题面板非纯白（深色面）', dk?.sheetBg !== 'rgb(255, 255, 255)', `sheetBg=${dk?.sheetBg}`);
+    check('T1e 已还原为 sepia', /reading-bg-sepia/.test(dk?.backCls || ''), `backCls=${dk?.backCls}`);
+
     /* ---- 字号 A−/A+ 连续性 + 边界 ---- */
     const FONT_TEST = `(async function(){
       var sleep = function(ms){ return new Promise(function(r){setTimeout(r,ms);}); };
@@ -502,6 +528,8 @@ try {
     let cssText = '';
     try { cssText = await readFile(join(ROOT, 'apps', 'web', 'src', 'styles.css'), 'utf8'); } catch (e) { cssText = ''; }
     check('S8 styles.css ::selection 规则含 #E8D3A2', /#E8D3A2/i.test(cssText), `cssLen=${cssText.length}`);
+    check('S9 源 styles.css .dict-toast 背景 = #333333（浮层家族统一深色）', /\.dict-toast\s*\{[^}]*background:\s*#333333/i.test(cssText), `hit=${/\.dict-toast\s*\{[^}]*background:\s*#333333/i.test(cssText)}`);
+    check('S10 源 styles.css 已清除废弃 reader-* 死类', !/\.reader-bg-thumb|\.reader-sheet-tools|\.reader-brightness-bar|\.reader-pos-mini|\.reader-tools\b/i.test(cssText), `deadLeft=${/\.reader-bg-thumb|\.reader-sheet-tools|\.reader-brightness-bar|\.reader-pos-mini|\.reader-tools\b/i.test(cssText)}`);
   } catch (e) {
     check('step2-harness', false, String((e && e.stack) || e));
   }

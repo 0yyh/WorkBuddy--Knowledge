@@ -2732,27 +2732,6 @@ html[data-pagemargin='smart'] .reader-doc { padding-inline: clamp(16px, 5vw, 40p
   display: none;
 }
 
-/* 顶部中间进度小字 */
-.reader-pos-mini {
-  flex: 1 1 auto;
-  text-align: center;
-  font-size: 0.8125rem;
-  font-weight: 500;
-  font-variant-numeric: tabular-nums;
-  opacity: 0.78;
-  letter-spacing: 0.04em;
-  display: inline-flex;
-  align-items: baseline;
-  justify-content: center;
-  gap: 6px;
-}
-
-.reader-pos-sep {
-  font-style: normal;
-  opacity: 0.5;
-  font-size: 0.7em;
-}
-
 /* 圆形 icon 按钮（顶 ←/目录用小号，底部三工具用大号） */
 .reader-circle-btn {
   flex: 0 0 auto;
@@ -2818,16 +2797,6 @@ html[data-pagemargin='smart'] .reader-doc { padding-inline: clamp(16px, 5vw, 40p
 .reader-pill-btn:disabled {
   opacity: 0.32;
   cursor: default;
-}
-
-/* 底部中间三个圆形工具按钮组：固定 3 个、等距分布（参考 14.jpg） */
-.reader-tools {
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-  gap: 16px;
-  width: 100%;
-  flex: 0 0 auto;
 }
 
 /* 底部上行：上一章 / 章节进度滑杆 / 下一章 */
@@ -2993,24 +2962,6 @@ html[data-pagemargin='smart'] .reader-doc { padding-inline: clamp(16px, 5vw, 40p
   gap: 2px;
 }
 
-.reader-circle-btn-label {
-  font-size: 0.6875rem;
-  line-height: 1;
-  margin-top: 1px;
-  opacity: 0.82; /* 番茄风：文字标签小而淡 */
-}
-
-/* 旧式强调蓝（删除：现在的工具按钮不再用蓝底胶囊） */
-.reader-ctrl-main {
-  background: transparent;
-}
-
-/* 旧式独立进度条已移除：底部不再画横线 */
-.reader-progress-track,
-.reader-progress-fill {
-  display: none;
-}
-
 /* ------------------------------- 阅读设置浮层（底部弹出） ------------------------------- */
 
 .reader-sheet-layer {
@@ -3134,23 +3085,8 @@ html[data-pagemargin='smart'] .reader-doc { padding-inline: clamp(16px, 5vw, 40p
   background: rgba(255, 255, 255, 0.1);
 }
 
-.reader-sheet-bg-dark .reader-bg-thumb {
-  border-color: rgba(255, 255, 255, 0.18);
-  color: #d4cdb7;
-}
-
 .reader-sheet-bg-dark .reader-row {
   border-bottom-color: rgba(255, 255, 255, 0.1);
-}
-.reader-sheet-bg-dark .reader-sheet-tools {
-  border-top-color: rgba(255, 255, 255, 0.1);
-}
-.reader-sheet-bg-dark .reader-sheet-tool-icon {
-  background: rgba(255, 255, 255, 0.08);
-}
-
-.reader-sheet-bg-dark .reader-brightness-bar {
-  background: rgba(255, 255, 255, 0.08);
 }
 .reader-sheet-bg-dark .reader-sheet-title {
   border-bottom-color: rgba(255, 255, 255, 0.12);
@@ -3215,23 +3151,6 @@ html[data-pagemargin='smart'] .reader-doc { padding-inline: clamp(16px, 5vw, 40p
 
 .reader-row-control-grow {
   flex: 1 1 auto;
-}
-
-/* 亮度滑杆 + 胶囊组 */
-.reader-brightness-bar {
-  flex: 1 1 auto;
-  height: 4px;
-  border-radius: 2px;
-  background: var(--bg-soft);
-  overflow: hidden;
-  position: relative;
-}
-
-.reader-brightness-fill {
-  height: 100%;
-  background: linear-gradient(to right, #7aa2ff, #f7c948);
-  border-radius: 2px;
-  transition: width 0.22s var(--ease);
 }
 
 /* 字号 A-/数字/A+ 控件（参考 3.jpg） */
@@ -3502,118 +3421,12 @@ html[data-pagemargin='smart'] .reader-doc { padding-inline: clamp(16px, 5vw, 40p
   transform: scale(1.12);
 }
 
-.reader-color-dot.reader-color-dark {
-  border-color: rgba(255, 255, 255, 0.32);
-}
-
 /* 背景：5 个方形缩略图 + 自定义 */
 .reader-bg-row {
   display: inline-flex;
   align-items: center;
   gap: 8px;
   padding: 4px 0;
-}
-
-.reader-bg-thumb {
-  width: 38px;
-  height: 38px;
-  border-radius: 8px;
-  border: 1px solid var(--border);
-  cursor: pointer;
-  padding: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: transform 0.18s var(--ease), border-color 0.18s var(--ease);
-  font-weight: 600;
-}
-
-.reader-bg-thumb-text {
-  font-size: 0.9375rem;
-}
-
-.reader-bg-thumb.is-on {
-  /* 去投影（阅读器扁平化规范）：选中态仅靠加粗描边 + 放大表达 */
-  border-color: var(--brand);
-  transform: scale(1.08);
-}
-
-.reader-bg-thumb-custom {
-  background: var(--bg-soft);
-  flex-direction: column;
-  font-size: 0.6875rem;
-  color: var(--text-soft);
-  gap: 0;
-  padding: 0 2px;
-  line-height: 1.1;
-}
-
-.reader-bg-thumb-custom-label {
-  margin-top: 1px;
-}
-
-/* 开启自动阅读入口 */
-.reader-row-auto {
-  border-bottom: 0;
-  padding-top: 14px;
-}
-
-.reader-auto-btn {
-  width: 100%;
-  border: 0;
-  background: var(--bg-soft);
-  color: inherit;
-  border-radius: 999px;
-  padding: 11px 16px;
-  font-size: 0.875rem;
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-}
-
-/* 底部工具按钮行（参考 3.jpg 目录/夜间/设置/收起） */
-.reader-sheet-tools {
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-  gap: 8px;
-  padding: 12px 4px 4px;
-  margin-top: 4px;
-  border-top: 1px solid var(--border);
-}
-
-.reader-sheet-tool {
-  border: 0;
-  background: transparent;
-  color: inherit;
-  display: inline-flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 4px;
-  font-size: 0.75rem;
-  padding: 6px 8px;
-  border-radius: 12px;
-  cursor: pointer;
-}
-
-.reader-sheet-tool.is-on {
-  color: var(--brand);
-}
-
-.reader-sheet-tool-icon {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 26px;
-  height: 26px;
-  border-radius: 999px;
-  background: var(--bg-soft);
-}
-
-.reader-sheet-tool.is-on .reader-sheet-tool-icon {
-  background: var(--brand-soft, rgba(122, 162, 255, 0.18));
 }
 
 /* 翻页行：5 胶囊并排（参考 11.jpg） */
@@ -4258,10 +4071,6 @@ html[data-pagemargin='smart'] .reader-doc { padding-inline: clamp(16px, 5vw, 40p
   .reader-bottom-row {
     gap: 6px;
   }
-  .reader-ctrl-btn {
-    padding: 8px 10px;
-    font-size: 0.7813rem;
-  }
 }
 
 @media (max-width: 420px) {
@@ -4276,17 +4085,6 @@ html[data-pagemargin='smart'] .reader-doc { padding-inline: clamp(16px, 5vw, 40p
     gap: 4px;
     padding-left: 8px;
     padding-right: 8px;
-  }
-  .reader-tools {
-    gap: 0;
-  }
-  .reader-tool-btn {
-    width: 34px;
-    font-size: 0.9375rem;
-  }
-  .reader-ctrl-btn {
-    padding: 6px 9px;
-    font-size: 0.75rem;
   }
 }
 
@@ -5293,7 +5091,8 @@ mark.hl { background: var(--brand-soft); color: var(--brand-strong); padding: 0 
   bottom: 130px;
   transform: translateX(-50%);
   z-index: 170;
-  background: rgba(46, 46, 48, 0.96);
+  /* 划词浮层家族统一固定深色 #333333（不再用旧 rgba(46,46,48,.96)） */
+  background: #333333;
   color: #fff;
   border-radius: 999px;
   padding: 9px 20px;
