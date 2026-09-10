@@ -24,6 +24,7 @@
  * 运行：node scripts/tools/e2e-reader-refactor.mjs    （exit 0=全绿）
  */
 import http from 'node:http';
+import net from 'node:net';
 import { readFile } from 'node:fs/promises';
 import { existsSync, mkdtempSync, rmSync } from 'node:fs';
 import { tmpdir } from 'node:os';
@@ -33,7 +34,14 @@ import { spawn } from 'node:child_process';
 
 const ROOT = normalize(join(dirname(fileURLToPath(import.meta.url)), '..', '..'));
 const DIST = join(ROOT, 'apps', 'web', 'dist');
-const DBG_PORT = Number(process.env.PKS_CDP_PORT || 9337);
+/*
+ * CDP 调试端口：默认**自动选一个空闲端口**。
+ * 原因：固定端口在上一轮 Chrome 未退干净时会被占用，脚本会复用那个残留浏览器，
+ * 页面根本没挂载 → 全量断言拿到 undefined 的"假失败"（本仓库确实踩过一次）。
+ * 需要固定端口时用环境变量 PKS_CDP_PORT 覆盖。
+ */
+const FIXED_DBG_PORT = process.env.PKS_CDP_PORT ? Number(process.env.PKS_CDP_PORT) : null;
+let DBG_PORT = 0;
 const CHROME = process.env.PKS_CHROME || [
   'C:/Program Files/Google/Chrome/Application/chrome.exe',
   'C:/Program Files (x86)/Google/Chrome/Application/chrome.exe',
@@ -78,6 +86,19 @@ await new Promise((r) => server.listen(0, '127.0.0.1', r));
 const baseUrl = `http://127.0.0.1:${server.address().port}/`;
 
 /* ---------- headless Chrome ---------- */
+/** 选一个当前空闲的本地端口（避免与残留 Chrome 的 CDP 端口冲突）。 */
+async function pickFreePort() {
+  return new Promise((resolve, reject) => {
+    const probe = net.createServer();
+    probe.once('error', reject);
+    probe.listen(0, '127.0.0.1', () => {
+      const port = probe.address().port;
+      probe.close(() => resolve(port));
+    });
+  });
+}
+DBG_PORT = FIXED_DBG_PORT ?? (await pickFreePort());
+
 const profile = mkdtempSync(join(tmpdir(), 'pks-reader-'));
 const chrome = spawn(CHROME, [
   '--headless=new', '--disable-gpu', '--no-sandbox', '--no-first-run', '--no-default-browser-check',

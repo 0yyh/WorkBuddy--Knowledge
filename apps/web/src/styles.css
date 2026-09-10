@@ -5309,21 +5309,18 @@ mark.hl { background: var(--brand-soft); color: var(--brand-strong); padding: 0 
 
 /* ==========================================================================
    文本选区高亮（::selection）
-   - 第 2 步规范：阅读区选中高亮统一为浅橘黄 #E8D3A2（不再按主题分色）。
-   - 全站与阅读区共用 --selection-bg（均指向 #E8D3A2）。
+   - 全站默认：跟随 App 主色（陶土橙）的柔和半透明，替代浏览器默认青色。
+   - 阅读区（第 2 步规范）：统一为浅橘黄 #E8D3A2（不再按主题分色）。
    - 深色主题下把文字压深，保证在浅橘黄底上可读。
    - 注意：Chromium 下 <input>/<textarea> 内的 ::selection 背景色不被支持（如目录搜索框），
      这里不做处理。
    ========================================================================== */
-:root {
-  --selection-bg: #E8D3A2;
-}
 ::selection {
-  background: var(--selection-bg, #E8D3A2);
+  background: rgba(207, 95, 43, 0.28);
   color: inherit;
 }
 ::-moz-selection {
-  background: var(--selection-bg, #E8D3A2);
+  background: rgba(207, 95, 43, 0.28);
   color: inherit;
 }
 
