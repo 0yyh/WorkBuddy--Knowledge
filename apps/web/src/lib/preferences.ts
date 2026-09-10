@@ -8,7 +8,7 @@
 export type FontSizePref = 'sm' | 'md' | 'lg' | 'xl';
 export type FontFamilyPref = 'serif' | 'sans' | 'kai' | 'mono';
 /** 阅读区主题色板（7 色）：色板顺序即 UI 顺序。sepia（米黄）为默认。 */
-export type BgColorPref = 'white' | 'sepia' | 'green' | 'blue' | 'pink' | 'gray' | 'dark';
+export type BgColorPref = 'white' | 'sepia' | 'green' | 'blue' | 'black' | 'gray' | 'dark';
 export type AnimationPref = 'none' | 'slide' | 'fade' | 'simulation' | 'cover' | 'vertical';
 export type LineHeightPref = 'tight' | 'compact' | 'normal' | 'loose';
 /** 正文对齐：justify=两端对齐（默认）；left=左对齐 */
@@ -83,7 +83,7 @@ export const SYS_DEFAULTS: SysPrefs = {
 
 export const READ_DEFAULTS: ReaderPrefs = {
   fontSize: 20,
-  fontFamily: 'serif',
+  fontFamily: 'sans',
   bgColor: 'sepia',
   animation: 'slide',
   lineHeight: 'normal',
@@ -179,7 +179,7 @@ export function brightnessFilter(level: number): string {
 
 const FONT_SIZES: FontSizePref[] = ['sm', 'md', 'lg', 'xl'];
 const FONT_FAMILIES: FontFamilyPref[] = ['serif', 'sans', 'kai', 'mono'];
-const BG_COLORS: BgColorPref[] = ['white', 'sepia', 'green', 'blue', 'pink', 'gray', 'dark'];
+const BG_COLORS: BgColorPref[] = ['white', 'sepia', 'green', 'blue', 'black', 'gray', 'dark'];
 const ANIMATIONS: AnimationPref[] = ['none', 'slide', 'fade', 'simulation', 'cover', 'vertical'];
 const LINE_HEIGHTS: LineHeightPref[] = ['tight', 'compact', 'normal', 'loose'];
 const ALIGNS: AlignPref[] = ['justify', 'left'];

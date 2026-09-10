@@ -1376,7 +1376,7 @@ body[data-reading-font='mono'] .prose {
 /* 阅读区背景：变量只挂在 .reading-bg-* 类上，且该类只允许加在阅读页根容器
    （.reader-root）上 —— 详情页 / 首页一律不加，否则整页会被米黄或深色横条污染。
    这些变量绝不下放到 :root / html / body。 */
-/* 7 主题（顺序即 UI 色板顺序）：white / sepia(默认米黄) / green / blue / pink / gray(深灰) / dark
+/* 7 主题（顺序即 UI 色板顺序）：white / sepia(默认米黄) / green / blue / black(纯黑) / gray(深灰) / dark
    每个主题补全 10 个阅读变量 + --rp-heading（标题色）。
    阅读区统一规范（浅色主题）：正文 #333333、标题 #000000 加粗、底色 follow --reading-bg。
    深色系（gray/dark）正文用浅色、标题近白，保证深底可读。 */
@@ -1445,20 +1445,21 @@ body[data-reading-font='mono'] .prose {
   --rp-heading: #16212f;
 }
 
-.reading-bg-pink {
-  --reading-bg: #f6e4e4;
-  --reading-fg: #4a2f33;
-  --reader-chrome-bg: rgba(246, 228, 228, 0.94);
+/* black = 纯黑底 #000000 + 浅色字（OLED 夜间模式）。面板同 dark 用深色面。 */
+.reading-bg-black {
+  --reading-bg: #000000;
+  --reading-fg: #d4cdb7;
+  --reader-chrome-bg: rgba(20, 20, 20, 0.96);
   background: var(--reading-bg);
   color: var(--reading-fg);
-  --rp-text: #4a2f33;
-  --rp-soft: #7a5a5f;
-  --rp-code-bg: #efd6d6;
-  --rp-quote-bg: #f1dcdc;
-  --rp-pre-bg: #eed4d4;
-  --rp-border: #e3c4c4;
-  --rp-table-head: #f1dcdc;
-  --rp-heading: #2a1418;
+  --rp-text: #d4cdb7;
+  --rp-soft: #a8a08d;
+  --rp-code-bg: #1a1a1a;
+  --rp-quote-bg: #1a1a1a;
+  --rp-pre-bg: #151515;
+  --rp-border: #333333;
+  --rp-table-head: #1a1a1a;
+  --rp-heading: #f2e6ce;
 }
 
 /* gray = 中灰底 #888888 + 深色字（第 3 轮：按用户 App 截图 1.jpg「灰底配深字」落地）。
@@ -2632,21 +2633,21 @@ html[data-pagemargin='custom'] .reader-doc { padding: 1.25rem max(1.25rem, env(s
   100% { transform: perspective(800px) rotateY(0); opacity: 1; }
 }
 @keyframes doc-cover-in {
-  0%   { transform: translateY(8px) scale(0.985); opacity: 0; filter: brightness(1.05); }
-  100% { transform: translateY(0) scale(1); opacity: 1; filter: brightness(1); }
+  0%   { transform: translate3d(0, 8px, 0) scale(0.985); opacity: 0; filter: brightness(1.05); }
+  100% { transform: translate3d(0, 0, 0) scale(1); opacity: 1; filter: brightness(1); }
 }
 @keyframes doc-vertical-in {
-  0%   { transform: translateY(100%); opacity: 0; }
-  100% { transform: translateY(0); opacity: 1; }
+  0%   { transform: translate3d(0, 100%, 0); opacity: 0; }
+  100% { transform: translate3d(0, 0, 0); opacity: 1; }
 }
 
 @keyframes doc-slide-in {
   from {
-    transform: translateX(5%);
+    transform: translate3d(5%, 0, 0);
     opacity: 0.35;
   }
   to {
-    transform: none;
+    transform: translate3d(0, 0, 0);
     opacity: 1;
   }
 }
@@ -2673,6 +2674,7 @@ html[data-pagemargin='custom'] .reader-doc { padding: 1.25rem max(1.25rem, env(s
   opacity: 0;
   pointer-events: none;
   transform: translateY(0);
+  will-change: opacity, transform;
   transition: opacity 0.22s var(--ease), transform 0.22s var(--ease);
 }
 
@@ -2860,7 +2862,7 @@ html[data-pagemargin='custom'] .reader-doc { padding: 1.25rem max(1.25rem, env(s
   font-size: 0.6875rem;
   line-height: 1;
   cursor: pointer;
-  transition: background 0.16s var(--ease);
+  transition: background 0.16s var(--ease), transform 0.12s var(--ease);
 }
 
 .reader-tab:not(:first-child) {
@@ -2880,6 +2882,7 @@ html[data-pagemargin='custom'] .reader-doc { padding: 1.25rem max(1.25rem, env(s
 
 .reader-tab:active {
   background: rgba(0, 0, 0, 0.05);
+  transform: scale(0.97);
 }
 
 /* 深色系主题（gray/dark）：导航栏白底会刺眼 → 深色面 + 深色分隔 / 文字 */
@@ -2899,7 +2902,8 @@ html[data-pagemargin='custom'] .reader-doc { padding: 1.25rem max(1.25rem, env(s
 
 /* —— 底部常驻信息条（进度 / 时间 / 电量）：不受 overlay 影响，始终可见 ——
    第 3 轮：z-index 提到 97（与常驻导航栏同级），保证设置面板打开时仍可见。
-   小字、克制、无投影；底部为它预留高度，正文不会被挡（见 .reader-scroll padding）。 */
+   第 4 轮：加与阅读背景同色的实色底，避免正文文字透上来显得杂乱；
+           文字垂直居中、加大字重，提升可读性。 */
 .reader-statusbar {
   position: absolute;
   left: 0;
@@ -2909,18 +2913,26 @@ html[data-pagemargin='custom'] .reader-doc { padding: 1.25rem max(1.25rem, env(s
   height: calc(var(--reader-statusbar-h, 30px) + env(safe-area-inset-bottom, 0px));
   box-sizing: border-box;
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: space-between;
   gap: 10px;
-  padding: 2px 18px 6px;
-  padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 6px);
+  padding: 0 18px;
+  padding-bottom: env(safe-area-inset-bottom, 0px);
   font-size: 0.6875rem;
   line-height: 1;
   letter-spacing: 0.02em;
   font-variant-numeric: tabular-nums;
   color: var(--rp-soft, #666666);
-  opacity: 0.72;
   pointer-events: none;
+  background: var(--reader-chrome-bg, var(--reading-bg));
+  border-top: 1px solid rgba(127, 127, 127, 0.12);
+}
+
+/* 深色主题下进度条文字更亮，避免在深色阅读底上发灰 */
+.reader-root.reading-bg-black .reader-statusbar,
+.reader-root.reading-bg-dark .reader-statusbar,
+.reader-root.reading-bg-gray .reader-statusbar {
+  color: var(--rp-soft, #d0d0d0);
 }
 
 .reader-statusbar-right {
@@ -3018,20 +3030,23 @@ html[data-pagemargin='custom'] .reader-doc { padding: 1.25rem max(1.25rem, env(s
   padding: 6px 18px calc(env(safe-area-inset-bottom, 0px) + 14px);
   max-height: 84%;
   overflow: auto;
-  animation: sheet-up 0.26s var(--ease);
+  animation: sheet-up 0.3s var(--ease-out-expo);
 }
 
 /* 阅读设置面板底色（第 2 步规范）：
-   浅色主题（white/sepia/green/blue/pink）统一纯白 #FFFFFF —— 面板是"操作层"，
+   浅色主题（white/sepia/green/blue）统一纯白 #FFFFFF —— 面板是"操作层"，
    与阅读底刻意分层，不再跟随各自的浅色底（用户明确要求）。
-   dark/gray 主题保持深色面（白底在深色阅读背景上刺眼，属必要偏离，注释写明）。 */
+   black/gray/dark 主题保持深色面（白底在深色阅读背景上刺眼，属必要偏离，注释写明）。 */
 .reader-sheet-bg-white,
 .reader-sheet-bg-sepia,
 .reader-sheet-bg-green,
-.reader-sheet-bg-blue,
-.reader-sheet-bg-pink {
+.reader-sheet-bg-blue {
   background: #ffffff;
   color: #333333;
+}
+.reader-sheet-bg-black {
+  background: #141414;
+  color: #d4cdb7;
 }
 .reader-sheet-bg-gray {
   background: #333333;
@@ -3050,7 +3065,7 @@ html[data-pagemargin='custom'] .reader-doc { padding: 1.25rem max(1.25rem, env(s
 .reader-sheet-bg-sepia  { --t-text: #333333; --t-soft: #666666; --t-dim: #9a9a9a; --t-line: #ddd5c2;  --t-accent: #ff6a00; --t-accent-soft: #fbe0d0; }
 .reader-sheet-bg-green  { --t-text: #22402e; --t-soft: #3d5a46; --t-dim: #6e8877; --t-line: #b8cfbd;  --t-accent: #3a7a4a; --t-accent-soft: #d4e7d7; }
 .reader-sheet-bg-blue   { --t-text: #2c3a4d; --t-soft: #4a5a70; --t-dim: #7c8ca0; --t-line: #bccad9;  --t-accent: #2f5a9a; --t-accent-soft: #d3deee; }
-.reader-sheet-bg-pink   { --t-text: #4a2f33; --t-soft: #7a5a5f; --t-dim: #a08085; --t-line: #e3c4c4;  --t-accent: #ff6a00; --t-accent-soft: #fbe0d0; }
+.reader-sheet-bg-black  { --t-text: #d4cdb7; --t-soft: #a8a08d; --t-dim: #8a8372; --t-line: #333333;  --t-accent: #ff6a00; --t-accent-soft: #2e2c28; }
 .reader-sheet-bg-gray   { --t-text: #e6e6e6; --t-soft: #b3b3b3; --t-dim: #8a8a8a; --t-line: #4a4a4a;  --t-accent: #ff6a00; --t-accent-soft: #3a2a1a; }
 .reader-sheet-bg-dark   { --t-text: #d4cdb7; --t-soft: #b3ab96; --t-dim: #8a8372; --t-line: #4a4438;  --t-accent: #d4cdb7; --t-accent-soft: #2e2c28; }
 
@@ -3059,7 +3074,7 @@ html[data-pagemargin='custom'] .reader-doc { padding: 1.25rem max(1.25rem, env(s
 .reader-sheet-bg-sepia,
 .reader-sheet-bg-green,
 .reader-sheet-bg-blue,
-.reader-sheet-bg-pink,
+.reader-sheet-bg-black,
 .reader-sheet-bg-gray,
 .reader-sheet-bg-dark {
   --text: var(--t-text);
@@ -3076,10 +3091,10 @@ html[data-pagemargin='custom'] .reader-doc { padding: 1.25rem max(1.25rem, env(s
 .reader-sheet-bg-white .reader-pill,
 .reader-sheet-bg-sepia .reader-pill,
 .reader-sheet-bg-green .reader-pill,
-.reader-sheet-bg-blue .reader-pill,
-.reader-sheet-bg-pink .reader-pill {
+.reader-sheet-bg-blue .reader-pill {
   background: rgba(0, 0, 0, 0.06);
 }
+.reader-sheet-bg-black .reader-pill,
 .reader-sheet-bg-gray .reader-pill,
 .reader-sheet-bg-dark .reader-pill {
   background: rgba(255, 255, 255, 0.1);
@@ -3090,7 +3105,7 @@ html[data-pagemargin='custom'] .reader-doc { padding: 1.25rem max(1.25rem, env(s
 .reader-sheet-bg-sepia .reader-pill.is-on,
 .reader-sheet-bg-green .reader-pill.is-on,
 .reader-sheet-bg-blue .reader-pill.is-on,
-.reader-sheet-bg-pink .reader-pill.is-on,
+.reader-sheet-bg-black .reader-pill.is-on,
 .reader-sheet-bg-gray .reader-pill.is-on,
 .reader-sheet-bg-dark .reader-pill.is-on {
   background: var(--brand);
@@ -3104,10 +3119,10 @@ html[data-pagemargin='custom'] .reader-doc { padding: 1.25rem max(1.25rem, env(s
 .reader-sheet-bg-sepia .reader-font-size,
 .reader-sheet-bg-green .reader-font-size,
 .reader-sheet-bg-blue .reader-font-size,
-.reader-sheet-bg-pink .reader-font-size,
 .reader-sheet-bg-white .reader-font-size {
   background: rgba(0, 0, 0, 0.06);
 }
+.reader-sheet-bg-black .reader-font-size,
 .reader-sheet-bg-gray .reader-font-size,
 .reader-sheet-bg-dark .reader-font-size {
   background: rgba(255, 255, 255, 0.1);
@@ -3122,19 +3137,22 @@ html[data-pagemargin='custom'] .reader-doc { padding: 1.25rem max(1.25rem, env(s
 
 @keyframes sheet-up {
   from {
-    transform: translateY(100%);
+    opacity: 0;
+    transform: translate3d(0, 100%, 0);
   }
   to {
-    transform: translateY(0);
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
   }
 }
 
 .reader-sheet-handle {
-  width: 38px;
-  height: 4px;
-  border-radius: 2px;
-  background: var(--border-strong);
-  margin: 8px auto 10px;
+  width: 42px;
+  height: 5px;
+  border-radius: 3px;
+  background: var(--text-dim);
+  opacity: 0.35;
+  margin: 8px auto 12px;
 }
 
 .reader-sheet-title {
@@ -3146,7 +3164,7 @@ html[data-pagemargin='custom'] .reader-doc { padding: 1.25rem max(1.25rem, env(s
 }
 
 .reader-sheet-body {
-  padding: 4px 0 8px;
+  padding: 2px 0 10px;
 }
 
 /* 设置行（左标签 + 右控件，参考 3.jpg） */
@@ -3154,7 +3172,7 @@ html[data-pagemargin='custom'] .reader-doc { padding: 1.25rem max(1.25rem, env(s
   display: flex;
   align-items: center;
   gap: 14px;
-  padding: 12px 0;
+  padding: 14px 0;
   border-bottom: 1px solid var(--border);
 }
 
@@ -3215,31 +3233,6 @@ html[data-pagemargin='custom'] .reader-doc { padding: 1.25rem max(1.25rem, env(s
   text-align: center;
 }
 
-/* 亮度行右侧「护眼模式」按钮（线框眼睛图标 + 文字） */
-.reader-eye-btn {
-  flex: 0 0 auto;
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  border: 1px solid var(--border);
-  background: transparent;
-  color: var(--text-soft);
-  border-radius: 999px;
-  padding: 6px 10px;
-  font-size: 0.75rem;
-  line-height: 1;
-  white-space: nowrap;
-  cursor: pointer;
-  transition: color 0.16s var(--ease), border-color 0.16s var(--ease);
-}
-.reader-eye-btn.is-on {
-  color: #ff6a00;
-  border-color: #ff6a00;
-}
-.reader-eye-label {
-  font-size: 0.75rem;
-}
-
 /* 字号行右侧「字体名 ›」入口按钮（进入字体子层） */
 .reader-enter-btn {
   flex: 0 0 auto;
@@ -3283,6 +3276,10 @@ html[data-pagemargin='custom'] .reader-doc { padding: 1.25rem max(1.25rem, env(s
 }
 
 /* 字号 A−/A+ 与「字体 ›」入口：hover/active 用番茄橙（弱强调，不喧宾夺主） */
+.reader-sheet .reader-font-step,
+.reader-sheet .reader-enter-btn {
+  transition: color 0.16s var(--ease), transform 0.12s var(--ease);
+}
 .reader-sheet .reader-font-step:hover,
 .reader-sheet .reader-enter-btn:hover {
   color: #ff6a00;
@@ -3290,6 +3287,7 @@ html[data-pagemargin='custom'] .reader-doc { padding: 1.25rem max(1.25rem, env(s
 .reader-sheet .reader-font-step:active,
 .reader-sheet .reader-enter-btn:active {
   color: #e05f00;
+  transform: scale(0.96);
 }
 .reader-sheet .reader-enter-btn:hover .reader-enter-text {
   color: #ff6a00;
@@ -3355,7 +3353,11 @@ html[data-pagemargin='custom'] .reader-doc { padding: 1.25rem max(1.25rem, env(s
   line-height: 1;
   white-space: nowrap;
   cursor: pointer;
-  transition: background 0.16s var(--ease), color 0.16s var(--ease);
+  transition: background 0.16s var(--ease), color 0.16s var(--ease), transform 0.12s var(--ease);
+}
+
+.reader-pill:active {
+  transform: scale(0.96);
 }
 
 .reader-pill.is-on {
@@ -3405,6 +3407,12 @@ html[data-pagemargin='custom'] .reader-doc { padding: 1.25rem max(1.25rem, env(s
   /* 第 2 步规范：选中加黑色细边框（浅色主题；深色主题另有高亮描边，见下） */
   border: 2px solid #000;
   transform: scale(1.12);
+}
+
+/* 纯黑主题选中态：黑底上黑色描边不可见，改用白边 + 内阴影保持清晰 */
+.reader-color-dot[data-value='black'].is-on {
+  border-color: #ffffff;
+  box-shadow: inset 0 0 0 1.5px rgba(255, 255, 255, 0.25);
 }
 
 /* 背景：5 个方形缩略图 + 自定义 */
@@ -3530,7 +3538,7 @@ html[data-pagemargin='custom'] .reader-doc { padding: 1.25rem max(1.25rem, env(s
   padding: 8px 18px calc(env(safe-area-inset-bottom, 0px) + 14px);
   max-height: 76%;
   overflow: auto;
-  animation: sheet-up 0.22s var(--ease);
+  animation: sheet-up 0.26s var(--ease-out-expo);
 }
 
 .reader-more-head {
@@ -4768,6 +4776,8 @@ mark.hl { background: var(--brand-soft); color: var(--brand-strong); padding: 0 
   border-radius: 8px;
   background: #333333;
   color: #ffffff;
+  animation: pop-in 0.22s var(--ease-spring);
+  will-change: transform, opacity;
   /* 去投影（阅读器扁平化规范）：深色实色块自身已足够分层 */
 }
 
@@ -4806,7 +4816,7 @@ mark.hl { background: var(--brand-soft); color: var(--brand-strong); padding: 0 
   color: #ffffff;
   border-radius: 10px;
   cursor: pointer;
-  transition: background 0.16s var(--ease);
+  transition: background 0.16s var(--ease), transform 0.12s var(--ease);
 }
 
 .dict-menu-btn svg {
@@ -4820,6 +4830,7 @@ mark.hl { background: var(--brand-soft); color: var(--brand-strong); padding: 0 
 
 .dict-menu-btn:active {
   background: rgba(255, 255, 255, 0.18);
+  transform: scale(0.96);
 }
 
 .dict-menu-label {
@@ -4828,46 +4839,52 @@ mark.hl { background: var(--brand-soft); color: var(--brand-strong); padding: 0 
   color: #aaaaaa; /* 第 2 步：按钮下标签统一浅灰 */
 }
 
-/* —— 释义卡（底部弹出，番茄小说风「深色卡 + 竖向信息层级」）——
-   卡片固定深色面 #2E2E30（与工具条同系），不随阅读底色变化；
-   就地覆写 .reader-sheet-bg-* 注入的浅色 token，保证卡内所有 var(--*) 均为深色系。 */
-.dict-card-layer {
+/* —— 释义卡（第 4 轮：由底部 sheet 改为浮动卡片，带三角指向选区）——
+   卡片固定深色面 #333333，不随阅读底色变化。 */
+.dict-card {
   position: fixed;
-  inset: 0;
-  z-index: 150;
-}
-
-.dict-card-mask {
-  position: absolute;
-  inset: 0;
-  background: rgba(10, 14, 22, 0.36);
-  animation: fade-in 0.2s var(--ease);
-}
-
-/* 选择器用 `.dict-card-layer .dict-card`（2 个 class）以稳定压过同特异度（1 个 class）
-   的 `.reader-sheet-bg-*`，避免日后源码重排时深色卡被浅色底覆盖。 */
-.dict-card-layer .dict-card {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  /* 第 2 步：底部大卡片形态，圆角 12px 12px 0 0（原 18px），固定深色 #333333 */
-  border-radius: 12px 12px 0 0;
-  padding: 6px 20px calc(env(safe-area-inset-bottom, 0px) + 18px);
+  z-index: 155;
+  width: var(--dict-card-w, 300px);
+  max-width: calc(100vw - 20px);
+  max-height: var(--dict-card-max-h, 260px);
+  border-radius: 12px;
+  padding: 14px 16px 16px;
   background: #333333;
   color: #ffffff;
-  /* 去投影（阅读器扁平化规范）：改用 1px 顶边分层 */
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
-  max-height: 62%;
   display: flex;
   flex-direction: column;
-  animation: sheet-up 0.26s var(--ease);
-  /* 深色卡主题 token（覆盖主题类） */
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  animation: pop-in 0.24s var(--ease-spring);
+  will-change: transform, opacity;
+  /* 去投影（阅读器扁平化规范）：用实色深色面自身分层 */
+}
+
+.dict-card::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  width: 10px;
+  height: 10px;
+  background: #333333;
+  transform: translateX(-50%) rotate(45deg);
+  pointer-events: none;
+}
+
+.dict-card[data-arrow='up']::after {
+  bottom: -4px;
+}
+.dict-card[data-arrow='down']::after {
+  top: -4px;
+}
+
+/* 深色卡主题 token（固定，不随阅读背景） */
+.dict-card {
   --t-text: #ffffff;
   --t-soft: #cccccc;
   --t-dim: #aaaaaa;
   --t-line: rgba(255, 255, 255, 0.1);
-  --t-accent: #ff6a00; /* 第 2 步：与全局强调色一致 */
+  --t-accent: #ff6a00;
   --t-accent-soft: rgba(255, 106, 0, 0.16);
   --text: #ffffff;
   --text-soft: #cccccc;
@@ -4878,9 +4895,15 @@ mark.hl { background: var(--brand-soft); color: var(--brand-strong); padding: 0 
   --brand-soft: rgba(255, 106, 0, 0.16);
 }
 
-/* 卡片顶部把手在深色面上更明显 */
-.dict-card .reader-sheet-handle {
-  background: rgba(255, 255, 255, 0.24);
+@keyframes pop-in {
+  from {
+    opacity: 0;
+    transform: scale(0.92) translate3d(0, 10px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translate3d(0, 0, 0);
+  }
 }
 
 /* 头部：左侧竖向信息（拼音 → 词头 [+ 词性]），右侧关闭按钮 */

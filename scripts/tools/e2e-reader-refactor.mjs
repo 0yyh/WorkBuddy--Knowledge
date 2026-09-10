@@ -11,13 +11,13 @@
  *   V6 底部常驻信息条存在，左下文本匹配 /^\d+\/\d+$/
  *
  * 第 2 步断言（面板层）：
- *   P1..P12 主设置面板：纯白面 / 圆角20px / 半透明遮罩 / 护眼按钮 / 字号px / 7 色块 /
+ *   P1..P12 主设置面板：纯白面 / 圆角20px / 半透明遮罩 / 字号px / 7 色块 /
  *           翻页 5 胶囊配色 / 底部「间距设置+更多」
- *   P13 护眼模式 sepia⇄white 切换
+ *   P13 （护眼模式按钮已移除；sepia 护眼色保留在颜色行）
  *   P14 A−/A+ 连续步进 + 12/30 边界 disabled + 复位 18
  *   S1..S5 间距子层三组：4+4 档且默认均「适中」+ 选中态橙底白字（第 3 轮删自定义/智能匹配）
  *   M1..M4 更多子层 2 开关（第 3 轮删单手模式）默认 [true,true] + 开关开/关配色
- *   D1..D5 划词工具条(#333 / 8px) + 释义卡(12px 12px 0 0 / #333)
+ *   D1..D5 划词工具条(#333 / 8px) + 浮动释义卡(12px / #333)
  *   S8 源 styles.css ::selection 含 #E8D3A2
  *   N1 顶栏 ⋮ = 章节目录；N2 常驻导航栏始终可见；N3 面板不遮挡导航；N4 遮罩 backdrop blur
  *   S9 源 styles.css .dict-toast 背景 = #333333；S10 废弃 reader-* 死类已清除
@@ -325,10 +325,10 @@ try {
       var mask = document.querySelector('.reader-sheet-mask');
       var cs = function(el){ return el?getComputedStyle(el):null; };
       var sheetCs = cs(sheet), maskCs = cs(mask);
-      var eye = sheet.querySelector('.reader-eye-btn');
       var fontNum = sheet.querySelector('.reader-font-num');
       var dots = Array.prototype.slice.call(sheet.querySelectorAll('.reader-color-dot'));
       var dotOn = dots.filter(function(d){ return d.classList.contains('is-on'); })[0];
+      var sepiaDot = dots.filter(function(d){ return d.getAttribute('data-value') === 'sepia'; })[0];
       var animPills = Array.prototype.slice.call(sheet.querySelectorAll('.reader-pills-tone .reader-pill'));
       var animOn = animPills.filter(function(p){ return p.classList.contains('is-on'); })[0];
       var animOff = animPills.filter(function(p){ return !p.classList.contains('is-on'); })[0];
@@ -339,9 +339,8 @@ try {
         sheetRadius: sheetCs.borderTopLeftRadius,
         sheetClass: sheet.className,
         maskBg: maskCs ? maskCs.backgroundColor : null,
-        eyePresent: !!eye,
-        eyePressed: eye ? eye.getAttribute('aria-pressed') : null,
         fontNum: fontNum ? fontNum.textContent.trim() : null,
+        sepiaSelected: sepiaDot ? sepiaDot.classList.contains('is-on') : false,
         dotCount: dots.length,
         dotOnBorder: dotOn ? cs(dotOn).borderTopColor : null,
         animCount: animPills.length,
@@ -410,7 +409,7 @@ try {
         `maskFilter=${n3?.maskFilter}`,
       );
     }
-    check('P5 亮度行含「护眼模式」按钮且默认 aria-pressed=true', panel?.eyePresent === true && panel?.eyePressed === 'true', `present=${panel?.eyePresent} pressed=${panel?.eyePressed}`);
+    check('P5 亮度行仅保留滑块（护眼模式已并入颜色行 sepia）', panel?.sepiaSelected === true, `sepiaSelected=${panel?.sepiaSelected}`);
     check('P6 字号行数字 = 当前 px（默认 20）', panel?.fontNum === '20', `fontNum=${panel?.fontNum}`);
     check('P7 颜色行 7 个色块', panel?.dotCount === 7, `dotCount=${panel?.dotCount}`);
     check('P8 选中色块描边 = rgb(0,0,0)', panel?.dotOnBorder === 'rgb(0, 0, 0)', `border=${panel?.dotOnBorder}`);
@@ -421,23 +420,6 @@ try {
     check('P11 未选中翻页胶囊背景 = rgb(240,240,240)', panel?.animOffBg === 'rgb(240, 240, 240)', `bg=${panel?.animOffBg}`);
     const acts = panel?.actions || [];
     check('P12 底部含「间距设置」与「更多」', acts.some((a) => a.indexOf('间距设置') >= 0) && acts.some((a) => a.indexOf('更多') >= 0), `actions=${JSON.stringify(acts)}`);
-
-    /* ---- 护眼模式切换（sepia ⇄ white） ---- */
-    const EYE_TOGGLE = `(async function(){
-      var sleep = function(ms){ return new Promise(function(r){setTimeout(r,ms);}); };
-      var cls = function(){ var s=document.querySelector('.reader-sheet'); return s?s.className:''; };
-      var eye = document.querySelector('.reader-sheet .reader-eye-btn');
-      var before = cls();
-      eye.click(); await sleep(90);
-      var after = cls();
-      document.querySelector('.reader-sheet .reader-eye-btn').click(); await sleep(90);
-      var back = cls();
-      return { before:before, after:after, back:back };
-    })()`;
-    const eyeRes = await evaluate(EYE_TOGGLE);
-    check('P13a 护眼按钮初始为 sepia 主题', /reader-sheet-bg-sepia/.test(eyeRes?.before || ''), `before=${eyeRes?.before}`);
-    check('P13b 点击后切到 white 主题', /reader-sheet-bg-white/.test(eyeRes?.after || ''), `after=${eyeRes?.after}`);
-    check('P13c 再点回 sepia 主题', /reader-sheet-bg-sepia/.test(eyeRes?.back || ''), `back=${eyeRes?.back}`);
 
     /* ---- 深色主题渲染（补上「非 sepia 主题未逐一验证」的缺口） ---- */
     const DARK_TEST = `(async function(){
@@ -640,7 +622,7 @@ try {
         await sleep(150);
       }
     }
-    check('D4 释义卡圆角 = 12px 12px 0 0', card?.tl === '12px' && card?.tr === '12px' && card?.bl === '0px', `tl=${card?.tl} tr=${card?.tr} bl=${card?.bl}`);
+    check('D4 释义卡圆角 = 12px（浮动卡片，四边一致）', card?.tl === '12px' && card?.tr === '12px' && card?.bl === '12px', `tl=${card?.tl} tr=${card?.tr} bl=${card?.bl}`);
     check('D5 释义卡背景 = rgb(51,51,51)', card?.bg === 'rgb(51, 51, 51)', `bg=${card?.bg}`);
 
     /* ---- 选区高亮：源 styles.css 含 #E8D3A2 ---- */

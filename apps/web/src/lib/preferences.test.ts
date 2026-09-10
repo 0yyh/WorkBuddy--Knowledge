@@ -34,7 +34,7 @@ describe('bgClassOf', () => {
     expect(bgClassOf('sepia')).toBe('reading-bg-sepia');
     expect(bgClassOf('green')).toBe('reading-bg-green');
     expect(bgClassOf('blue')).toBe('reading-bg-blue');
-    expect(bgClassOf('pink')).toBe('reading-bg-pink');
+    expect(bgClassOf('black')).toBe('reading-bg-black');
     expect(bgClassOf('gray')).toBe('reading-bg-gray');
     expect(bgClassOf('dark')).toBe('reading-bg-dark');
   });

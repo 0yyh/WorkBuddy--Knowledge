@@ -54,6 +54,9 @@ interface QueryState {
 const MENU_W = 164;
 const MENU_H = 68;
 const MENU_GAP = 10;
+const CARD_W = 300;
+const CARD_MAX_H = 260;
+const CARD_GAP = 10;
 const HIDE_ABSORB_MS = 350;
 
 /** 复制文本：优先 Clipboard API，异常/不可用时回退 textarea + execCommand（Android WebView） */
@@ -107,6 +110,22 @@ function menuPosition(rect: DOMRect): { x: number; y: number; arrow: 'up' | 'dow
   return { x, y, arrow };
 }
 
+/** 依据选区 rect 计算释义卡 fixed 坐标（优先选区上方，放不下翻到下方） */
+function cardPosition(rect: DOMRect): { x: number; y: number; arrow: 'up' | 'down' } {
+  const { w: vw, h: vh } = viewportSize();
+  let arrow: 'up' | 'down' = 'up';
+  let y = rect.top - CARD_MAX_H - CARD_GAP;
+  if (y < 10) {
+    arrow = 'down';
+    y = rect.bottom + CARD_GAP;
+  }
+  if (y + CARD_MAX_H > vh - 10) {
+    y = Math.max(10, vh - CARD_MAX_H - 10);
+  }
+  const x = Math.max(10, Math.min(rect.left + rect.width / 2 - CARD_W / 2, vw - CARD_W - 10));
+  return { x, y, arrow };
+}
+
 export function ReaderSelectionMenu({
   bg,
   scrollRef,
@@ -114,6 +133,7 @@ export function ReaderSelectionMenu({
   enabled,
 }: ReaderSelectionMenuProps): JSX.Element | null {
   const [menu, setMenu] = useState<MenuState | null>(null);
+  const [cardPos, setCardPos] = useState<{ x: number; y: number; arrow: 'up' | 'down' } | null>(null);
   const [query, setQuery] = useState<QueryState>({ status: 'closed', queried: '', entry: null });
   const [toast, setToast] = useState<string>('');
 
@@ -123,6 +143,8 @@ export function ReaderSelectionMenu({
   // 释义卡是否已展开：展开期间不再叠加工具条，避免两套浮层互相遮挡
   // （用 ref 是因 readAndShow 在原生事件回调里执行，需读到最新值而非闭包快照）
   const cardOpenRef = useRef<boolean>(false);
+  // 卡片 DOM ref（点外部关闭用）
+  const cardRef = useRef<HTMLDivElement | null>(null);
   // 卡片下滑关闭手势起点
   const cardDragStart = useRef<{ y: number } | null>(null);
   // 查询竞态序号：只采纳最后一次查询
@@ -145,6 +167,7 @@ export function ReaderSelectionMenu({
   const closeCard = useCallback((): void => {
     querySeq.current += 1;
     setQuery({ status: 'closed', queried: '', entry: null });
+    setCardPos(null);
   }, []);
 
   // 同步释义卡展开标记（原生事件回调用 ref 读取，避免闭包过期）
@@ -152,9 +175,25 @@ export function ReaderSelectionMenu({
     cardOpenRef.current = query.status !== 'closed';
   }, [query.status]);
 
+  // 释义卡外部点击 / 点返回键 → 关闭卡片
+  useEffect(() => {
+    if (query.status === 'closed') return;
+    const onPointerDown = (e: PointerEvent): void => {
+      const target = e.target as Node | null;
+      if (!target) return;
+      if (cardRef.current && cardRef.current.contains(target)) return;
+      // 若工具条仍打开，优先让工具条自己的点击/失能处理，不因此关闭卡片
+      if (menu) return;
+      closeCard();
+    };
+    document.addEventListener('pointerdown', onPointerDown, { passive: true });
+    return () => document.removeEventListener('pointerdown', onPointerDown);
+  }, [query.status, menu, closeCard]);
+
   // 切章 / 失能 → 工具条、释义卡、toast 全部清空
   useEffect(() => {
     setMenu(null);
+    setCardPos(null);
     querySeq.current += 1;
     setQuery({ status: 'closed', queried: '', entry: null });
     setToast('');
@@ -220,23 +259,27 @@ export function ReaderSelectionMenu({
       const sel = window.getSelection();
       if (!sel || sel.isCollapsed) {
         hideMenu();
+        closeCard();
         return;
       }
       const anchor = sel.anchorNode;
       if (!anchor || !host.contains(anchor)) {
         hideMenu();
+        closeCard();
         return;
       }
       scheduleShow();
     };
 
-    /** 正文滚动 → 工具条消失 */
+    /** 正文滚动 → 工具条 + 释义卡消失 */
     const onScroll = (): void => {
       hideMenu();
+      closeCard();
     };
 
     const onResize = (): void => {
       hideMenu();
+      closeCard();
     };
 
     // mouseup：桌面拖选 / 双击选词的主通道
@@ -270,11 +313,15 @@ export function ReaderSelectionMenu({
     showToast(ok ? '已复制' : '复制失败，请手动长按复制');
   }, [menu, showToast]);
 
-  /** 查询：立即收起工具条并滑出释义卡（loading → done） */
+  /** 查询：立即收起工具条并弹出浮动释义卡（loading → done） */
   const onQuery = useCallback((): void => {
     if (!menu) return;
     const text = menu.text;
+    const sel = window.getSelection();
+    const rect = sel && sel.rangeCount > 0 ? sel.getRangeAt(0).getBoundingClientRect() : null;
+    const pos = rect && rect.width > 0 && rect.height > 0 ? cardPosition(rect) : null;
     setMenu(null);
+    setCardPos(pos);
     const seq = ++querySeq.current;
     setQuery({ status: 'loading', queried: text, entry: null });
     void lookupWord(text)
@@ -345,25 +392,22 @@ export function ReaderSelectionMenu({
         </div>
       ) : null}
 
-      {/* 释义卡（底部弹出） */}
-      {query.status !== 'closed' ? (
+      {/* 释义卡（浮动卡片，带三角指向选区；第 4 轮：由底部 sheet 改浮层） */}
+      {query.status !== 'closed' && cardPos ? (
         <div
-          className="dict-card-layer"
+          ref={cardRef}
+          className="dict-card"
           data-control="dict"
-          onPointerDown={(e) => e.stopPropagation()}
-          onMouseDown={(e) => e.stopPropagation()}
+          data-arrow={cardPos.arrow}
+          style={{ left: cardPos.x, top: cardPos.y }}
+          role="dialog"
+          aria-label="词典释义"
+          onPointerDown={prevent}
+          onMouseDown={prevent}
+          onTouchStart={onCardTouchStart}
+          onTouchEnd={onCardTouchEnd}
         >
-          <div className="dict-card-mask" onClick={closeCard} />
-          <div
-            className={`dict-card reader-sheet-bg-${bg}`}
-            role="dialog"
-            aria-label="词典释义"
-            onTouchStart={onCardTouchStart}
-            onTouchEnd={onCardTouchEnd}
-          >
-            <div className="reader-sheet-handle" aria-hidden="true" />
-
-            {query.status === 'loading' ? (
+          {query.status === 'loading' ? (
               <div className="dict-card-body dict-card-body-loading">
                 <span className="dict-loading-spin" aria-hidden="true" />
                 <p className="dict-loading-text">正在查询「{query.queried}」…</p>
@@ -442,7 +486,6 @@ export function ReaderSelectionMenu({
               </>
             )}
           </div>
-        </div>
       ) : null}
 
       {/* 复制结果提示 */}

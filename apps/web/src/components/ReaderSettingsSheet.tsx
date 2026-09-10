@@ -3,7 +3,7 @@
  *   主层 — 严格 5 行：亮度 / 字号 / 颜色 / 翻页 / 底部按钮
  *     · 亮度：纯轨道 + 圆滑块；右侧「护眼模式」按钮（在 米黄 #F5F1E6 ⇄ 白 之间切换）
  *     · 字号：A− [当前 px] A+；右侧「字体名 ›」入口 → 字体子层
- *     · 颜色：7 个圆色块（white/sepia/green/blue/pink/gray/dark），选中加黑描边
+ *     · 颜色：7 个圆色块（white/sepia/green/blue/black/gray/dark），选中加黑描边
  *     · 翻页：5 胶囊（仿真/覆盖/平移/上下/无动画），选中态 = 白底黑字 + 番茄橙描边（第 3 轮）
  *     · 底部：圆角矩形「间距设置」+ 文字按钮「更多 ›」
  *
@@ -14,7 +14,7 @@
  *     · ReaderMoreSheet：展示进度时间和电量 / 手机状态栏常驻（严格 2 个开关，
  *       第 3 轮删「单手模式」）
  *
- *   面板底色：浅色主题（white/sepia/green/blue/pink）统一纯白 #FFFFFF；dark/gray 保持深色面
+ *   面板底色：浅色主题（white/sepia/green/blue）统一纯白 #FFFFFF；black/gray/dark 保持深色面
  *   （白底在深色阅读背景上刺眼，属必要偏离）。全部只作用于阅读区；离开阅读页即销毁。
  */
 import { useEffect, useState } from 'react';
@@ -57,7 +57,7 @@ const COLOR_SWATCH: Array<{ value: BgColorPref; label: string; color: string }> 
   { value: 'sepia', label: '米黄', color: '#F5F1E6' },
   { value: 'green', label: '护眼', color: '#CFE3D3' },
   { value: 'blue', label: '蓝灰', color: '#DDE6F0' },
-  { value: 'pink', label: '浅粉', color: '#F6E4E4' },
+  { value: 'black', label: '纯黑', color: '#000000' },
   // 第 3 轮：深色两档改为「灰底」——gray 中灰 #888888（配深字）、dark 深灰 #555555（配浅字）
   { value: 'gray', label: '中灰', color: '#888888' },
   { value: 'dark', label: '深灰', color: '#555555' },
@@ -112,7 +112,7 @@ export function ReaderSettingsSheet({
   const [moreOpen, setMoreOpen] = useState<boolean>(false);
   if (!open) return null;
 
-  const bg = prefs.bgColor; // 'white' | 'sepia' | 'green' | 'blue' | 'pink' | 'gray' | 'dark'
+  const bg = prefs.bgColor; // 'white' | 'sepia' | 'green' | 'blue' | 'black' | 'gray' | 'dark'
   const level = prefs.brightnessLevel;
   const canFontDown = prefs.fontSize > READ_FONT_MIN;
   const canFontUp = prefs.fontSize < READ_FONT_MAX;
@@ -125,7 +125,7 @@ export function ReaderSettingsSheet({
         <h3 className="reader-sheet-title">阅读设置</h3>
 
         <div className="reader-sheet-body">
-          {/* 亮度：纯灰轨道 + 圆滑块；右侧「护眼模式」（在 米黄 ⇄ 白 间切换）。 */}
+          {/* 亮度：纯灰轨道 + 圆滑块（第 4 轮：移除右侧「护眼模式」按钮，颜色行已包含 sepia，避免冗余）。 */}
           <div className="reader-row">
             <span className="reader-row-label">亮度</span>
             <div className="reader-row-control reader-row-control-grow">
@@ -139,25 +139,6 @@ export function ReaderSettingsSheet({
                 aria-label="App 显示亮度（不影响系统亮度）"
                 onChange={(e) => onChange('brightnessLevel', Number(e.target.value))}
               />
-              <button
-                type="button"
-                className={`reader-eye-btn${prefs.bgColor === 'sepia' ? ' is-on' : ''}`}
-                aria-label="护眼模式"
-                aria-pressed={prefs.bgColor === 'sepia'}
-                onClick={() => onChange('bgColor', prefs.bgColor === 'sepia' ? 'white' : 'sepia')}
-              >
-                <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
-                  <path
-                    d="M2 12s3.5-6.5 10-6.5S22 12 22 12s-3.5 6.5-10 6.5S2 12 2 12z"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinejoin="round"
-                  />
-                  <circle cx="12" cy="12" r="2.6" fill="none" stroke="currentColor" strokeWidth="2" />
-                </svg>
-                <span className="reader-eye-label">护眼模式</span>
-              </button>
             </div>
           </div>
 
@@ -210,6 +191,7 @@ export function ReaderSettingsSheet({
                     key={c.value}
                     type="button"
                     className={`reader-color-dot${prefs.bgColor === c.value ? ' is-on' : ''}`}
+                    data-value={c.value}
                     style={{ background: c.color }}
                     aria-label={`${c.label}主题`}
                     aria-pressed={prefs.bgColor === c.value}
