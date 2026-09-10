@@ -4,6 +4,7 @@
   "private": true,
   "type": "module",
   "description": "同构核心层：不依赖 DOM，主入口不依赖 node:*",
+  "sideEffects": false,
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "exports": {

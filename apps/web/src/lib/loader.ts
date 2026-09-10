@@ -15,6 +15,7 @@ import type {
   TitleIndexItem,
 } from '@pks/core';
 import { ACTIVATED_KEY, getCached, getMeta, putCached } from './contentCache';
+import { searchViaWorker, warmSearchWorker } from './searchWorkerClient';
 
 /** 静态资源根：跟随 Vite base（开发 '/'、构建 './'） */
 const RAW_BASE: string = (import.meta.env && import.meta.env.BASE_URL ? import.meta.env.BASE_URL : '/') || '/';
@@ -87,11 +88,50 @@ export interface StationBundle {
   titleIndex: TitleIndexItem[];
   slugMap: Map<string, EntryIndexItem>;
   engine: SearchEngine;
+  /**
+   * P0-III：全局 BM25 统计原始数据（Record 形式的 df），供 Worker init 重建 Map。
+   * 缺失（旧产物）为 null → Worker 与主线程均退化为分片内 BM25。
+   */
+  statsSeed: { totalDocs: number; avgLen: number; df: Record<string, number> } | null;
 }
 
 const shardCache = new Map<number, ShardIndex>();
 const shardInflight = new Map<number, Promise<void>>();
+/** P0-III：分片原始文本缓存（worker 与主线程共享，避免重复下载）。 */
+const shardTextCache = new Map<number, string>();
+/** P0-III：分片文本在途请求（并发去重：空闲预热与首搜可能同时请求同一分片）。 */
+const shardTextInflight = new Map<number, Promise<string>>();
 let bundlePromise: Promise<StationBundle> | null = null;
+
+/** 分片相对路径（唯一拼装点）。 */
+function shardPath(shard: number): string {
+  return `index/search/s${String(shard).padStart(2, '0')}.json`;
+}
+
+/**
+ * 读取单个检索分片的**原始 JSON 文本**（走 fetchText 缓存优先链路）。
+ * worker 消费原始文本（从而局域网 OTA 更新过的内容仍可检索），
+ * 并与主线程 loadShard 共享同一份缓存 —— 同一分片只下载一次（含并发去重）。
+ */
+export function fetchShardText(shard: number): Promise<string> {
+  const hit = shardTextCache.get(shard);
+  if (hit !== undefined) return Promise.resolve(hit);
+  const inflight = shardTextInflight.get(shard);
+  if (inflight) return inflight;
+
+  const task = fetchText(shardPath(shard))
+    .then((text) => {
+      shardTextCache.set(shard, text);
+      shardTextInflight.delete(shard);
+      return text;
+    })
+    .catch((e: unknown) => {
+      shardTextInflight.delete(shard);
+      throw e;
+    });
+  shardTextInflight.set(shard, task);
+  return task;
+}
 
 /** 由 slug 推导首字母分片名；非字母开头归入 '_' */
 function letterOf(slug: string): string {
@@ -116,8 +156,9 @@ export function loadShard(shard: number): Promise<void> {
   if (cached) return cached;
   if (shardCache.has(shard)) return Promise.resolve();
 
-  const task = fetchJson<WireShardIndex>(`index/search/s${String(shard).padStart(2, '0')}.json`)
-    .then((wire) => {
+  const task = fetchShardText(shard)
+    .then((text) => {
+      const wire = JSON.parse(text) as WireShardIndex;
       // P0-I：优先解 base64 倒排；旧产物回落到内联 index（不崩）。
       const index: ShardIndex['index'] = wire.postings
         ? decodePostings(wire.postings)
@@ -147,14 +188,27 @@ export async function ensureAllShards(shards: number): Promise<void> {
 }
 
 /**
- * 空闲预热：把全部分片在浏览器空闲期提前 fetch + parse 进 shardCache，
- * 使首次全文检索无需等待 13.45MB JSON 解析（实测首搜秒级 → 预热后 <50ms）。
- * 幂等：shardCache / shardInflight 已保证重复调用不重复拉取。
+ * 仅预热全部分片的**原始文本**（不解码）。
+ * P0-III：worker 可用时解码只在 worker 内发生一次；若 worker 降级，主线程兜底检索时
+ * 会经 loadShard → fetchShardText 命中本缓存后再按需解码。避免「主线程 + worker 各解一遍」。
+ */
+export async function ensureAllShardTexts(shards: number): Promise<void> {
+  const tasks: Array<Promise<string>> = [];
+  for (let i = 0; i < shards; i++) tasks.push(fetchShardText(i).catch(() => ''));
+  await Promise.all(tasks);
+}
+
+/**
+ * 空闲预热：把全部分片文本在浏览器空闲期提前 fetch（+ 交给 Worker 解码），
+ * 使首次全文检索无需等待下载/解码（实测首搜秒级 → 预热后 <50ms）。
+ * P0-III：只预热**文本**（不再在主线程预解码），解码交由 Worker 完成；
+ * worker 不可用时主线程兜底仍会按需解码，且文本已缓存、不会二次下载。
+ * 幂等：shardTextCache / shardTextInflight / sentShards 均保证不重复。
  */
 export function warmSearchShards(): void {
   const run = (): void => {
     void loadStation()
-      .then((b) => ensureAllShards(b.manifest.search.shards))
+      .then((b) => ensureAllShardTexts(b.manifest.search.shards).then(() => warmSearchWorker(b)))
       .catch(() => undefined);
   };
   const ric = (globalThis as {
@@ -200,20 +254,27 @@ export function loadStation(): Promise<StationBundle> {
     for (const items of shards) for (const item of items) slugMap.set(item.s, item);
 
     // P0-II：全局 BM25 统计（跨分片打分可比）；df.json 缺失时 stats 为 undefined → 分片内 BM25
-    const stats =
-      dfData
-        ? {
-            totalDocs: dfData.totalDocs ?? manifest.search.docs,
-            avgLen: dfData.avgDocLen ?? manifest.search.avgDocLen,
-            df: new Map<string, number>(Object.entries(dfData.df ?? {})),
-          }
-        : undefined;
+    // P0-III：statsSeed 为同一数据的 Record 形式，供 Worker init 重建 Map。
+    const statsSeed = dfData
+      ? {
+          totalDocs: dfData.totalDocs ?? manifest.search.docs,
+          avgLen: dfData.avgDocLen ?? manifest.search.avgDocLen,
+          df: dfData.df ?? {},
+        }
+      : null;
+    const stats = statsSeed
+      ? {
+          totalDocs: statsSeed.totalDocs,
+          avgLen: statsSeed.avgLen,
+          df: new Map<string, number>(Object.entries(statsSeed.df)),
+        }
+      : undefined;
 
     const engine = new SearchEngine(manifest, titleIndex, (shard: number): ShardIndex | null => {
       return shardCache.get(shard) ?? null;
     }, stats);
 
-    return { manifest, taxonomy, titleIndex, slugMap, engine };
+    return { manifest, taxonomy, titleIndex, slugMap, engine, statsSeed };
   })().catch((e: unknown) => {
     bundlePromise = null; // 允许重试
     throw e;
@@ -222,13 +283,24 @@ export function loadStation(): Promise<StationBundle> {
   return bundlePromise;
 }
 
-/** L2 全文检索：先并行预热分片，再交给核心 SearchEngine 做 BM25 */
+/**
+ * L2 全文检索：worker 优先（解码 + BM25 全在 worker），失败/不可用则安静降级到主线程。
+ * 签名保持不变：SearchPage / AppContext 依赖 `(bundle, query) => Promise<SearchResultGroup[]>`。
+ */
 export async function fullTextSearch(
   bundle: StationBundle,
   query: string,
 ): Promise<SearchResultGroup[]> {
   const q = query.trim();
   if (!q) return [];
+
+  try {
+    const viaWorker = await searchViaWorker(bundle, q);
+    if (viaWorker) return viaWorker; // 成功即返回（含空结果）
+  } catch {
+    // Worker 不可用或执行失败：静默降级到主线程，保证功能不回归。
+  }
+
   await ensureAllShards(bundle.manifest.search.shards);
   const hits: SearchHit[] = bundle.engine.searchL2(q);
   return bundle.engine.groupByEntry(hits);
