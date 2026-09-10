@@ -7,6 +7,9 @@
 export * from './constants.js';
 export * from './types.js';
 
+// 通用工具
+export * from './util/version.js';
+
 // 解析层
 export * from './parse/frontmatter.js';
 export * from './parse/markdown.js';
