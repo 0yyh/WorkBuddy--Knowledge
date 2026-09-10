@@ -1,0 +1,52 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+
+buildscript {
+    
+    repositories {
+        google()
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:8.7.2'
+        classpath 'com.google.gms:google-services:4.4.2'
+
+        // NOTE: Do not place your application dependencies here; they belong
+        // in the individual module build.gradle files
+    }
+}
+
+apply from: "variables.gradle"
+
+allprojects {
+    repositories {
+        google()
+        mavenCentral()
+    }
+    configurations.all {
+        resolutionStrategy {
+            // Pin androidx.core to 1.14.0 so it stays compatible with compileSdk 34.
+            // 1.15.0+ requires compileSdk 35, which is not installed in this SDK.
+            force 'androidx.core:core:1.13.1'
+            force 'androidx.core:core-ktx:1.13.1'
+        }
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}
+
+// Capacitor's generated `capacitor.build.gradle` hardcodes source/target to Java 21,
+// which requires a JDK 21 toolchain. This project builds with JDK 17+ (JDK 19 here).
+// Override EVERY Android module's compileOptions after evaluation so the setting
+// survives `cap sync` regeneration of capacitor.build.gradle.
+subprojects {
+    afterEvaluate { p ->
+        if (p.extensions.findByName('android') != null) {
+            p.android.compileOptions {
+                sourceCompatibility JavaVersion.VERSION_17
+                targetCompatibility JavaVersion.VERSION_17
+            }
+        }
+    }
+}
