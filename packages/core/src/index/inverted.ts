@@ -30,6 +30,20 @@ export interface ShardIndex {
   index: Record<string, Array<[number, number]>>; // term -> [docId, tf][]
 }
 
+/**
+ * 全局检索统计（P0-II，02 §4）：跨全语料的 BM25 参数，保证分片间打分可比。
+ * 各分片独立算 BM25 时 totalDocs / avgLen / df 都是「分片内」值，导致不同分片
+ * 产出的分数量纲不一致、合并后排序失真。统一用全局参数即可修正。
+ * - totalDocs：全语料文档数（manifest.search.docs）
+ * - avgLen：全语料平均文档长度（token 数，manifest.search.avgDocLen）
+ * - df：term -> 含该词的文档数（全局文档频率）
+ */
+export interface GlobalSearchStats {
+  totalDocs: number;
+  avgLen: number;
+  df: Map<string, number>;
+}
+
 /** 将文档集合分片构建为倒排索引 */
 export function buildShards(docs: IndexingDoc[], m: number): ShardIndex[] {
   const shards: ShardIndex[] = Array.from({ length: m }, (_, i) => ({
@@ -69,10 +83,11 @@ export function buildShards(docs: IndexingDoc[], m: number): ShardIndex[] {
   return shards;
 }
 
-function searchInShard(shard: ShardIndex, queryTokens: string[]): SearchHit[] {
-  const totalDocs = shard.docs.length;
+function searchInShard(shard: ShardIndex, queryTokens: string[], stats?: GlobalSearchStats): SearchHit[] {
+  const totalDocs = stats?.totalDocs ?? shard.docs.length;
   if (totalDocs === 0 || queryTokens.length === 0) return [];
-  const avgLen = shard.lengths.reduce((a, b) => a + b, 0) / totalDocs;
+  // 全局平均文档长度（P0-II）；缺失时退回分片内均值以兼容旧产物
+  const avgLen = stats?.avgLen ?? shard.lengths.reduce((a, b) => a + b, 0) / totalDocs;
 
   // 候选文档 = 命中任一查询词的文档并集
   const candidates = new Set<number>();
@@ -80,7 +95,8 @@ function searchInShard(shard: ShardIndex, queryTokens: string[]): SearchHit[] {
   for (const term of queryTokens) {
     const postings = shard.index[term];
     if (!postings) continue;
-    termDf.set(term, postings.length);
+    // 全局 df（P0-II）；缺失时退回本分片 df，保证兼容
+    termDf.set(term, stats?.df.get(term) ?? postings.length);
     for (const [docId] of postings) candidates.add(docId);
   }
   if (candidates.size === 0) return [];
@@ -139,6 +155,8 @@ export class SearchEngine {
     private manifest: { search: { shards: number; docs: number; terms: number; avgDocLen: number } },
     private titleIndex: TitleIndexItem[],
     private shardLoader: (shard: number) => ShardIndex | null,
+    /** P0-II 全局 BM25 统计；不传则退化为分片内 BM25（兼容旧产物/测试） */
+    private stats?: GlobalSearchStats,
   ) {}
 
   private loadShard(s: number): ShardIndex | null {
@@ -153,7 +171,7 @@ export class SearchEngine {
     return searchTitleIndex(this.titleIndex, query);
   }
 
-  /** L2 全文：跨全部分片 BM25 合并 */
+  /** L2 全文：跨全部分片 BM25 合并（统一用全局统计，保证分片间可比） */
   searchL2(query: string): SearchHit[] {
     const q = tokenize(query);
     const m = this.manifest.search.shards;
@@ -161,7 +179,7 @@ export class SearchEngine {
     for (let s = 0; s < m; s++) {
       const shard = this.loadShard(s);
       if (!shard) continue;
-      for (const hit of searchInShard(shard, q)) {
+      for (const hit of searchInShard(shard, q, this.stats)) {
         const key = hit.doc.id;
         const prev = merged.get(key);
         if (!prev || hit.score > prev.score) merged.set(key, hit);

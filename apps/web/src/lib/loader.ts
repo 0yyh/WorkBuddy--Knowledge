@@ -151,10 +151,14 @@ export function loadStation(): Promise<StationBundle> {
   if (bundlePromise) return bundlePromise;
 
   bundlePromise = (async (): Promise<StationBundle> => {
-    const [manifest, taxonomy, titleIndex] = await Promise.all([
+    const [manifest, taxonomy, titleIndex, dfData] = await Promise.all([
       fetchJson<IndexManifest>('index/manifest.json'),
       fetchJson<TaxonomyNode[]>('index/taxonomy.json'),
       fetchJson<TitleIndexItem[]>('index/search/title.json'),
+      // P0-II 全局检索统计：缺失（旧产物）时回落到分片内 BM25，不阻断首屏
+      fetchJson<{ totalDocs: number; avgDocLen: number; df: Record<string, number> }>(
+        'index/search/df.json',
+      ).catch(() => null),
     ]);
 
     // entryShards 可能为空（旧产物），退回由 title 索引推导
@@ -174,9 +178,19 @@ export function loadStation(): Promise<StationBundle> {
     const slugMap = new Map<string, EntryIndexItem>();
     for (const items of shards) for (const item of items) slugMap.set(item.s, item);
 
+    // P0-II：全局 BM25 统计（跨分片打分可比）；df.json 缺失时 stats 为 undefined → 分片内 BM25
+    const stats =
+      dfData
+        ? {
+            totalDocs: dfData.totalDocs ?? manifest.search.docs,
+            avgLen: dfData.avgDocLen ?? manifest.search.avgDocLen,
+            df: new Map<string, number>(Object.entries(dfData.df ?? {})),
+          }
+        : undefined;
+
     const engine = new SearchEngine(manifest, titleIndex, (shard: number): ShardIndex | null => {
       return shardCache.get(shard) ?? null;
-    });
+    }, stats);
 
     return { manifest, taxonomy, titleIndex, slugMap, engine };
   })().catch((e: unknown) => {

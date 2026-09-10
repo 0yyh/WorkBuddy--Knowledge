@@ -217,6 +217,16 @@ export function buildIndex(vfs: Vfs, opts: BuildIndexOptions = {}): BuildResult 
   }
   const avgDocLen = indexingDocs.length ? totalLen / indexingDocs.length : 0;
 
+  // P0-II：全局文档频率 df（term -> 含该词的文档数），供跨分片 BM25 统一打分
+  const dfMap = new Map<string, number>();
+  for (const sh of shards) {
+    for (const term of Object.keys(sh.index)) {
+      dfMap.set(term, (dfMap.get(term) ?? 0) + sh.index[term].length);
+    }
+  }
+  const df: Record<string, number> = {};
+  for (const [term, count] of dfMap) df[term] = count;
+
   const manifest: IndexManifest = {
     schema: SCHEMA_VERSION,
     generator: GENERATOR,
@@ -277,6 +287,12 @@ export function buildIndex(vfs: Vfs, opts: BuildIndexOptions = {}): BuildResult 
   // search
   files['.index/search/meta.json'] = JSON.stringify(manifest.search, null, 2);
   files['.index/search/title.json'] = JSON.stringify(titleIndex, null, 2);
+  // P0-II：全局检索统计（跨分片 BM25 所需；与 manifest.search 的 docs/avgDocLen 配合即可得全局参数）
+  files['.index/search/df.json'] = JSON.stringify(
+    { totalDocs: indexingDocs.length, avgDocLen: Math.round(avgDocLen * 100) / 100, df },
+    null,
+    2,
+  );
   for (const sh of shards) {
     files[`.index/search/s${String(sh.shard).padStart(2, '0')}.json`] = JSON.stringify(
       { shard: sh.shard, docs: sh.docs, lengths: sh.lengths, index: sh.index },
