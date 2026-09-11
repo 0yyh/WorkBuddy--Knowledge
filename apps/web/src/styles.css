@@ -2726,9 +2726,12 @@ body.reader-no-statusbar {
   bottom: var(--reader-nav-h);
   flex-direction: column;
   gap: 10px;
-  padding: 14px 14px 16px;
-  background: var(--reader-chrome-bg, rgba(255, 255, 255, 0.92));
+  padding: 12px 14px;
+  /* 与阅读背景同色实底：避免关闭「展示进度时间和电量」后，状态条区域收缩时
+     正文文字从半透明 chrome 底透上来（用户截图红框问题）。 */
+  background: var(--reading-bg);
   color: var(--reading-fg, #1f2937);
+  border-top: 1px solid var(--rp-border, var(--border));
 }
 
 /* 深色阅读区：chrome 文字色由 var(--reading-fg) 决定（深色底自动浅字） */
@@ -2851,8 +2854,9 @@ body.reader-no-statusbar {
   width: 100%;
   height: var(--reader-tabs-h);
   box-sizing: border-box;
-  border-top: 1px solid #e0e0e0;
-  background: #ffffff;
+  border-top: 1px solid var(--rp-border, var(--border));
+  /* 番茄风：底栏与阅读背景融为一体（实色），而非纯白浮层 */
+  background: var(--reading-bg);
   overflow: hidden;
   /* 沉浸：默认隐藏，淡入带微位移（指南 §3.3） */
   opacity: 0;
@@ -2889,15 +2893,12 @@ body.reader-no-statusbar {
   padding: 8px 4px;
   border: 0;
   background: transparent;
-  color: #333333;
+  /* 番茄风：图标/文字用阅读主题柔和色，避免硬编码 #333 */
+  color: var(--rp-soft, var(--text-soft));
   font-size: 0.6875rem;
   line-height: 1;
   cursor: pointer;
   transition: background 0.16s var(--ease), transform 0.12s var(--ease);
-}
-
-.reader-tab:not(:first-child) {
-  border-left: 1px solid #f0f0f0;
 }
 
 .reader-tab svg {
@@ -2912,24 +2913,11 @@ body.reader-no-statusbar {
 }
 
 .reader-tab:active {
-  background: rgba(0, 0, 0, 0.05);
+  background: rgba(127, 127, 127, 0.12);
   transform: scale(0.97);
 }
 
-/* 深色系主题（gray/dark）：导航栏白底会刺眼 → 深色面 + 深色分隔 / 文字 */
-.reader-root.reading-bg-dark .reader-bottom-tabs,
-.reader-root.reading-bg-gray .reader-bottom-tabs {
-  background: #1f1f1f;
-  border-top-color: #333333;
-}
-.reader-root.reading-bg-dark .reader-tab,
-.reader-root.reading-bg-gray .reader-tab {
-  color: #e6e6e6;
-}
-.reader-root.reading-bg-dark .reader-tab:not(:first-child),
-.reader-root.reading-bg-gray .reader-tab:not(:first-child) {
-  border-left-color: #333333;
-}
+/* 深色系主题：导航栏现在随 --reading-bg/--rp-border 自动适配，无需硬编码覆写 */
 
 /* —— 底部常驻信息条（进度 / 时间 / 电量）：不受 overlay 影响，始终可见 ——
    第 3 轮：z-index 提到 97（与常驻导航栏同级），保证设置面板打开时仍可见。
@@ -2955,7 +2943,8 @@ body.reader-no-statusbar {
   font-variant-numeric: tabular-nums;
   color: var(--rp-soft, #666666);
   pointer-events: none;
-  background: var(--reader-chrome-bg, var(--reading-bg));
+  /* 实色底（与阅读背景同色）：半透明 chrome 底会让正文文字透上来（用户红框反馈） */
+  background: var(--reading-bg);
   border-top: 1px solid rgba(127, 127, 127, 0.12);
 }
 

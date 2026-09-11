@@ -728,10 +728,13 @@ export function EntryReaderPage({ slug, chapterStart }: EntryReaderPageProps): J
           CSS 里位于信息条之上、章节条之下（--reader-nav-h），z-index 高于面板遮罩。 */}
       <nav className="reader-bottom-tabs">
           <button type="button" className="reader-tab" aria-label="章节目录" onClick={openChapter}>
+            {/* 番茄风：细线列表/目录图标 */}
             <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
-              <rect x="4" y="3" width="16" height="18" rx="2" fill="none" stroke="currentColor" strokeWidth="2" />
-              <line x1="4" y1="8" x2="20" y2="8" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-              <line x1="12" y1="3" x2="12" y2="21" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+              <g fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
+                <line x1="4" y1="6" x2="20" y2="6" />
+                <line x1="4" y1="12" x2="20" y2="12" />
+                <line x1="4" y1="18" x2="20" y2="18" />
+              </g>
             </svg>
             <span className="reader-tab-label">目录</span>
           </button>
@@ -743,7 +746,7 @@ export function EntryReaderPage({ slug, chapterStart }: EntryReaderPageProps): J
           >
             <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
               {isNight ? (
-                <g fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+                <g fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
                   <circle cx="12" cy="12" r="4" />
                   <line x1="12" y1="2" x2="12" y2="4" />
                   <line x1="12" y1="20" x2="12" y2="22" />
@@ -751,7 +754,7 @@ export function EntryReaderPage({ slug, chapterStart }: EntryReaderPageProps): J
                   <line x1="20" y1="12" x2="22" y2="12" />
                 </g>
               ) : (
-                <path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z" fill="currentColor" />
+                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
               )}
             </svg>
             <span className="reader-tab-label">{isNight ? '日间' : '夜间'}</span>
@@ -763,8 +766,10 @@ export function EntryReaderPage({ slug, chapterStart }: EntryReaderPageProps): J
             onClick={openSettings}
           >
             <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
-              <circle cx="12" cy="12" r="3" fill="none" stroke="currentColor" strokeWidth="2" />
-              <path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1-1.5 1.7 1.7 0 0 0-1.9.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.9 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1 1.7 1.7 0 0 0-.3-1.9l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.9.3h.1a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.9-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.9v.1a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z" fill="none" stroke="currentColor" strokeWidth="2" strokeLinejoin="round" />
+              <g fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M12 2l8.66 5v10L12 22l-8.66-5V7L12 2z" />
+                <circle cx="12" cy="12" r="2.5" />
+              </g>
             </svg>
             <span className="reader-tab-label">设置</span>
           </button>
