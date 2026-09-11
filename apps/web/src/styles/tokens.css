@@ -95,6 +95,44 @@
   --l1-color-politics-soft: #faece7;
   --l1-color-theory: var(--l1-color-politics);
   --l1-color-theory-soft: var(--l1-color-politics-soft);
+
+  /* —— 阅读器规范令牌（对齐 reader-ui-spec.md / reader-modernization-guide.md）——
+     颜色 / 圆角 / 时长 / 缓动 / 层级统一命名，组件只消费 var(--xxx)，禁止硬编码。
+     与上文既有令牌（--bg / --surface / --brand 等）共存，互不破坏。 */
+  --bg-paper: #f5f1e6;
+  --text-body: #333333;
+  --text-title: #000000;
+  --accent-orange: #ff6a00;
+  --panel-bg: #ffffff;
+  --overlay-dark: #333333;
+  --gray-light: #f0f0f0;
+  --gray-mid: #e0e0e0;
+  /* 指南别名（含 -color- 前缀）指向上述值，便于两套规范共存 */
+  --color-paper: var(--bg-paper);
+  --color-text-primary: var(--text-body);
+  --color-text-title: var(--text-title);
+  --color-accent: var(--accent-orange);
+  --color-panel: var(--panel-bg);
+  --color-overlay: var(--overlay-dark);
+  --color-selection: #e8d3a2;
+  --color-toggle-on: var(--accent-orange);
+  --color-toggle-off: var(--gray-mid);
+
+  --radius-sheet: 20px;
+  --radius-button: 8px;
+  --radius-capsule: 999px;
+  --radius-dot: 50%;
+
+  --duration-fast: 150ms;
+  --duration-base: 250ms;
+  --duration-slow: 350ms;
+  --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+
+  --z-reading: 1;
+  --z-nav: 86;
+  --z-sheet: 95;
+  --z-mask: 150;
+  --z-selection: 155;
 }
 
 /* 深色主题下 L1 类目卡改用高亮字 + 半透明深底，保证可读。

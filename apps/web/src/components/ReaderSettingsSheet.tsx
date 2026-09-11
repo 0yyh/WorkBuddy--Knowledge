@@ -18,6 +18,7 @@
  *   （白底在深色阅读背景上刺眼，属必要偏离）。全部只作用于阅读区；离开阅读页即销毁。
  */
 import { useEffect, useState } from 'react';
+import { BaseSheet } from './sheet/BaseSheet';
 import type {
   AlignPref,
   AnimationPref,
@@ -110,7 +111,15 @@ export function ReaderSettingsSheet({
   const [fontOpen, setFontOpen] = useState<boolean>(false);
   const [spacingOpen, setSpacingOpen] = useState<boolean>(false);
   const [moreOpen, setMoreOpen] = useState<boolean>(false);
-  if (!open) return null;
+
+  // 关闭时复位子层状态，避免下次打开残留（字体 / 间距 / 更多）
+  useEffect(() => {
+    if (!open) {
+      setFontOpen(false);
+      setSpacingOpen(false);
+      setMoreOpen(false);
+    }
+  }, [open]);
 
   const bg = prefs.bgColor; // 'white' | 'sepia' | 'green' | 'blue' | 'black' | 'gray' | 'dark'
   const level = prefs.brightnessLevel;
@@ -118,13 +127,8 @@ export function ReaderSettingsSheet({
   const canFontUp = prefs.fontSize < READ_FONT_MAX;
 
   return (
-    <div className="reader-sheet-layer" data-control="sheet">
-      <div className="reader-sheet-mask" onClick={onClose} />
-      <div className={`reader-sheet reader-sheet-bg-${bg}`} role="dialog" aria-label="阅读设置">
-        <div className="reader-sheet-handle" aria-hidden="true" />
-        <h3 className="reader-sheet-title">阅读设置</h3>
-
-        <div className="reader-sheet-body">
+    <BaseSheet open={open} onClose={onClose} title="阅读设置" bg={bg}>
+      <div className="reader-sheet-body">
           {/* 亮度：纯灰轨道 + 圆滑块（第 4 轮：移除右侧「护眼模式」按钮，颜色行已包含 sepia，避免冗余）。 */}
           <div className="reader-row">
             <span className="reader-row-label">亮度</span>
@@ -260,8 +264,7 @@ export function ReaderSettingsSheet({
             onClose={() => setMoreOpen(false)}
           />
         ) : null}
-      </div>
-    </div>
+    </BaseSheet>
   );
 }
 

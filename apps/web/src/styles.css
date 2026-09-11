@@ -2454,9 +2454,9 @@ html[data-pagemargin='custom'] .reader-doc { padding: 1.25rem max(1.25rem, env(s
   color-scheme: dark;
 }
 
-/* 阅读页底部三层结构（第 3 轮，自下而上）：
-     信息条 .reader-statusbar（最底，受 showProgress 控制）
-   → 常驻导航栏 .reader-bottom-tabs（目录 / 夜间 / 设置，**始终可见**）
+/* 阅读页底部三层结构（自下而上）：
+     信息条 .reader-statusbar（最底，受 showProgress 控制，**常驻**）
+   → 底部导航栏 .reader-bottom-tabs（目录 / 夜间 / 设置，**沉浸非常驻**：仅 overlay 唤出时淡入）
    → 章节条 .reader-bottom（上一章 / 滑杆 / 下一章，仅 overlay 唤出时）
    三层高度用变量表达，避免彼此硬编码错位；面板（.reader-sheet / 子层）也按
    --reader-nav-h 抬高，保证导航栏不被遮罩盖住且可点。 */
@@ -2594,7 +2594,12 @@ html[data-pagemargin='custom'] .reader-doc { padding: 1.25rem max(1.25rem, env(s
   inset: 0;
   background: #000;
   pointer-events: none;
-  z-index: 82;
+  /* 窗口级亮度：遮罩须位于所有内容「之上（含弹出的 Sheet）」，拖动亮度时
+     面板与正文天然同步变暗（reader-ui-spec §一.2 / 指南 §3.5）。
+     浮词工具条 / 释义卡经 React Portal 挂到 body、且 z-index(155/160) 高于本层，
+     故查词浮层始终清晰可读，不被遮罩压暗。 */
+  z-index: var(--z-mask);
+  will-change: opacity;
 }
 
 /* 阅读区翻页动画：切章时随 data-anim 应用 */
@@ -2675,7 +2680,8 @@ html[data-pagemargin='custom'] .reader-doc { padding: 1.25rem max(1.25rem, env(s
   pointer-events: none;
   transform: translateY(0);
   will-change: opacity, transform;
-  transition: opacity 0.22s var(--ease), transform 0.22s var(--ease);
+  transition: opacity var(--duration-fast) var(--ease-out-expo),
+    transform var(--duration-fast) var(--ease-out-expo);
 }
 
 .reader-root.has-overlay .reader-top,
@@ -2712,8 +2718,8 @@ html[data-pagemargin='custom'] .reader-doc { padding: 1.25rem max(1.25rem, env(s
 }
 
 /* 底部：仅「章节条」（上一章 / 章节进度滑杆 / 下一章）。
-   第 3 轮：3 等分导航栏已抽离为常驻的 .reader-bottom-tabs，本章节条
-   随 overlay 显隐，并叠在常驻导航之上（--reader-nav-h）。 */
+   3 等分导航栏 .reader-bottom-tabs 现在为沉浸非常驻（随 overlay 淡入），
+   本章节条随 overlay 显隐，并叠在导航之上（--reader-nav-h）。 */
 .reader-bottom {
   bottom: var(--reader-nav-h);
   flex-direction: column;
@@ -2826,7 +2832,9 @@ html[data-pagemargin='custom'] .reader-doc { padding: 1.25rem max(1.25rem, env(s
 }
 
 /* —— 底部 3 等分导航栏（目录 / 夜间 / 设置）——
-   第 3 轮：改为**常驻**（不再随 overlay 消隐），叠在信息条之上、章节条之下；
+   沉浸规范（reader-ui-spec §一.1 / 指南 §3.3）：**禁止常驻**——默认隐藏，
+   仅「点屏幕中央」唤出 overlay 时随顶栏 / 章节条一起淡入（带 +8px 微位移）；
+   滚动正文时随 chrome-dismissed 一起淡出，停顿后恢复。
    z-index 97 高于设置面板遮罩（95/96），保证面板打开时导航仍可见可点。
    白底 + 上边框浅灰；三项 flex:1 等宽、图标在上文字在下。
    深色系主题改用深色面（必要偏离，避免白底刺眼）。 */
@@ -2844,6 +2852,27 @@ html[data-pagemargin='custom'] .reader-doc { padding: 1.25rem max(1.25rem, env(s
   border-top: 1px solid #e0e0e0;
   background: #ffffff;
   overflow: hidden;
+  /* 沉浸：默认隐藏，淡入带微位移（指南 §3.3） */
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(8px);
+  will-change: opacity, transform;
+  transition: opacity var(--duration-fast) var(--ease-out-expo),
+    transform var(--duration-fast) var(--ease-out-expo);
+}
+
+/* overlay 唤出态：底部导航 + 微位移淡入（与顶栏 / 章节条一致） */
+.reader-root.has-overlay .reader-bottom-tabs {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+/* 滚隐：overlay 唤出态下滚动正文，底部导航随顶栏 / 章节条一起淡出 */
+.reader-root.chrome-dismissed .reader-bottom-tabs {
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(8px);
 }
 
 .reader-tab {
@@ -3003,7 +3032,7 @@ html[data-pagemargin='custom'] .reader-doc { padding: 1.25rem max(1.25rem, env(s
 .reader-sheet-layer {
   position: absolute;
   inset: 0;
-  z-index: 95;
+  z-index: var(--z-sheet);
 }
 
 .reader-sheet-mask {
@@ -3030,7 +3059,10 @@ html[data-pagemargin='custom'] .reader-doc { padding: 1.25rem max(1.25rem, env(s
   padding: 6px 18px calc(env(safe-area-inset-bottom, 0px) + 14px);
   max-height: 84%;
   overflow: auto;
-  animation: sheet-up 0.3s var(--ease-out-expo);
+  /* 面板本体保留纵向原生滚动；拖拽手柄单独 touch-action:none（见下） */
+  touch-action: pan-y;
+  /* 指南 §3.2：面板弹簧滑入（ease-spring / duration-slow） */
+  animation: sheet-up var(--duration-slow) var(--ease-spring);
 }
 
 /* 阅读设置面板底色（第 2 步规范）：
@@ -3153,6 +3185,12 @@ html[data-pagemargin='custom'] .reader-doc { padding: 1.25rem max(1.25rem, env(s
   background: var(--text-dim);
   opacity: 0.35;
   margin: 8px auto 12px;
+  /* 移动端可靠拖拽起点：禁用该区域的浏览器手势接管，拖拽手势完全由 useSheetDrag 处理 */
+  touch-action: none;
+  cursor: grab;
+}
+.reader-sheet-handle:active {
+  cursor: grabbing;
 }
 
 .reader-sheet-title {
@@ -3322,6 +3360,17 @@ html[data-pagemargin='custom'] .reader-doc { padding: 1.25rem max(1.25rem, env(s
   white-space: nowrap;
 }
 
+/* 指南 §3.1：按钮按下反馈（缩放 + 颜色，spring 回弹） */
+.reader-action-primary,
+.reader-action-more {
+  transition: background var(--duration-fast) var(--ease-out-expo),
+    color var(--duration-fast) var(--ease-out-expo), transform var(--duration-fast) var(--ease-out-expo);
+}
+.reader-action-primary:active,
+.reader-action-more:active {
+  transform: scale(0.97);
+}
+
 
 /* 通用胶囊组（用于字体/字号/翻页/其他） */
 .reader-pill-group {
@@ -3363,6 +3412,19 @@ html[data-pagemargin='custom'] .reader-doc { padding: 1.25rem max(1.25rem, env(s
 .reader-pill.is-on {
   background: var(--brand);
   color: #fff;
+  /* 指南 §3.1：胶囊选中滑块从左滑入（缩放 + 淡入） */
+  animation: capsule-in var(--duration-fast) var(--ease-out-expo);
+}
+
+@keyframes capsule-in {
+  from {
+    transform: scale(0.92);
+    opacity: 0.6;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
 }
 
 .reader-pill-select {
@@ -3407,12 +3469,30 @@ html[data-pagemargin='custom'] .reader-doc { padding: 1.25rem max(1.25rem, env(s
   /* 第 2 步规范：选中加黑色细边框（浅色主题；深色主题另有高亮描边，见下） */
   border: 2px solid #000;
   transform: scale(1.12);
+  /* 指南 §3.1：色点选中内圈缩放脉冲（放大 1.2 → 缩回 1.12，spring） */
+  animation: dot-pulse var(--duration-base) var(--ease-spring);
 }
 
 /* 纯黑主题选中态：黑底上黑色描边不可见，改用白边 + 内阴影保持清晰 */
 .reader-color-dot[data-value='black'].is-on {
   border-color: #ffffff;
   box-shadow: inset 0 0 0 1.5px rgba(255, 255, 255, 0.25);
+}
+
+@keyframes dot-pulse {
+  0% {
+    transform: scale(1);
+  }
+  45% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1.12);
+  }
+}
+
+.reader-color-dot:active {
+  transform: scale(0.9);
 }
 
 /* 背景：5 个方形缩略图 + 自定义 */
@@ -3638,7 +3718,8 @@ html[data-pagemargin='custom'] .reader-doc { padding: 1.25rem max(1.25rem, env(s
   padding: 0;
   position: relative;
   cursor: pointer;
-  transition: background 0.18s var(--ease);
+  /* 指南 §3.1：滑块滑动 + 背景色渐变（duration-base / ease-out-expo） */
+  transition: background var(--duration-base) var(--ease-out-expo), transform var(--duration-fast) var(--ease-out-expo);
 }
 
 .reader-switch::after {
@@ -3652,7 +3733,7 @@ html[data-pagemargin='custom'] .reader-doc { padding: 1.25rem max(1.25rem, env(s
   border-radius: 999px;
   /* 去投影（阅读器扁平化规范）：拨片改用 1px 描边分层 */
   border: 1px solid rgba(0, 0, 0, 0.08);
-  transition: transform 0.18s var(--ease);
+  transition: transform var(--duration-base) var(--ease-out-expo);
 }
 
 .reader-switch.is-on {
@@ -3661,6 +3742,10 @@ html[data-pagemargin='custom'] .reader-doc { padding: 1.25rem max(1.25rem, env(s
 
 .reader-switch.is-on::after {
   transform: translateX(18px);
+}
+
+.reader-switch:active {
+  transform: scale(0.96);
 }
 
 .reader-sheet-bg-dark .reader-switch {

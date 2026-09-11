@@ -9,6 +9,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { Spinner } from '../components/Spinner';
 import { ReaderSettingsSheet } from '../components/ReaderSettingsSheet';
+import { BaseSheet } from '../components/sheet/BaseSheet';
 import { ReaderSelectionMenu } from '../components/ReaderSelectionMenu';
 import { Link, navigate, replaceRoute } from '../router';
 import { flattenChapterList, fetchDocHeadings, loadChapterDocument, loadEntryDocument } from '../lib/content';
@@ -95,8 +96,6 @@ export function EntryReaderPage({ slug, chapterStart }: EntryReaderPageProps): J
   const scrollRef = useRef<HTMLDivElement | null>(null);
   const rootRef = useRef<HTMLDivElement | null>(null);
   const touchStart = useRef<{ x: number; y: number } | null>(null);
-  // 目录面板「左缘右滑关闭」手势：记录起点，结束滑动时判定
-  const sheetTouchStart = useRef<{ x: number; y: number } | null>(null);
   // 信息栏滚隐计时：停止滚动后延时淡入
   const chromeRevealTimer = useRef<number | null>(null);
   // 章末自动加载：去抖计时 + 是否已触发的去抖保护
@@ -468,26 +467,7 @@ export function EntryReaderPage({ slug, chapterStart }: EntryReaderPageProps): J
     [go],
   );
 
-  // 目录面板左缘右滑关闭：起点需在屏幕左缘(≤40px)且明显向右滑、纵向位移小
-  const onSheetTouchStart = useCallback((e: React.TouchEvent<HTMLDivElement>) => {
-    const t = e.touches[0];
-    if (t) sheetTouchStart.current = { x: t.clientX, y: t.clientY };
-  }, []);
-  const onSheetTouchEnd = useCallback(
-    (e: React.TouchEvent<HTMLDivElement>) => {
-      const s = sheetTouchStart.current;
-      sheetTouchStart.current = null;
-      if (!s) return;
-      const t = e.changedTouches[0];
-      if (!t) return;
-      const dx = t.clientX - s.x;
-      const dy = t.clientY - s.y;
-      if (s.x <= 40 && dx > 60 && Math.abs(dx) > Math.abs(dy) * 1.5) {
-        setChapterOpen(false);
-      }
-    },
-    [],
-  );
+  // 目录面板左缘右滑关闭：已迁移为 BaseSheet 的跟手拖拽阻尼（向下拖拽条 / 顶部下拉关闭）。
 
   const changePref = useCallback(
     <K extends keyof ReaderPrefs>(key: K, value: ReaderPrefs[K]): void => {
@@ -752,19 +732,15 @@ export function EntryReaderPage({ slug, chapterStart }: EntryReaderPageProps): J
         enabled={status === 'ready' && !!loaded}
       />
 
-      {chapterOpen ? (
-        <div className="reader-sheet-layer" data-control="sheet">
-          <div className="reader-sheet-mask" onClick={() => setChapterOpen(false)} />
-          <div
-            className={`reader-sheet reader-chapter-sheet reader-sheet-bg-${prefs.bgColor}`}
-            role="dialog"
-            aria-label="章节目录"
-            onTouchStart={onSheetTouchStart}
-            onTouchEnd={onSheetTouchEnd}
-          >
-            <div className="reader-sheet-handle" aria-hidden="true" />
-            <h3 className="reader-sheet-title reader-sheet-title-sm">目录</h3>
-            <div className="reader-sheet-body reader-chapter-body">
+      <BaseSheet
+        open={chapterOpen}
+        onClose={() => setChapterOpen(false)}
+        title="目录"
+        titleClassName="reader-sheet-title-sm"
+        bg={prefs.bgColor}
+        className="reader-chapter-sheet"
+      >
+        <div className="reader-sheet-body reader-chapter-body">
               {/* 目录搜索：按章节名 / 二级小节标题过滤 */}
               <div className="toc-search">
                 <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true">
@@ -867,10 +843,7 @@ export function EntryReaderPage({ slug, chapterStart }: EntryReaderPageProps): J
               })()}
               </div>
             </div>
-            {/* 无"收起"按钮：点击屏幕空白处即关（@4.jpg 标注） */}
-          </div>
-        </div>
-      ) : null}
+      </BaseSheet>
     </div>,
     document.body
   );

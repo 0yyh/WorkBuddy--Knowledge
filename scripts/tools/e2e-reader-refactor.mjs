@@ -259,11 +259,9 @@ try {
   })()`;
   const navBefore = await evaluate(NAV_PROBE);
   check(
-    'N2a 常驻导航栏存在且未点中央时可见（display≠none / opacity>0.9 / visible）',
+    'N2a 沉浸态：未点中央时底部导航隐藏（非常驻，opacity<0.1 或不可见）',
     navBefore?.present === true &&
-      navBefore?.display !== 'none' &&
-      Number(navBefore?.opacity) > 0.9 &&
-      navBefore?.visibility === 'visible',
+      (navBefore?.display === 'none' || Number(navBefore?.opacity) < 0.1 || navBefore?.visibility === 'hidden'),
     JSON.stringify(navBefore),
   );
   check('N2b 未点中央时 overlay 仍为 false（导航非由 overlay 带出）', navBefore?.overlay === false, `overlay=${navBefore?.overlay}`);
@@ -306,6 +304,14 @@ try {
   const w = tabs?.widths || [];
   const wMax = Math.max(...w), wMin = Math.min(...w);
   check('V5d 三项宽度近似相等(±2px)', w.length === 3 && (wMax - wMin) <= 2, `widths=${JSON.stringify(w)}`);
+
+  /* ---- N2d 沉浸态：点中央后底部导航淡入可见 ---- */
+  const navAfter = await evaluate(NAV_PROBE);
+  check(
+    'N2d 点中央后底部导航可见（opacity>0.9 / visible）',
+    navAfter?.present === true && Number(navAfter?.opacity) > 0.9 && navAfter?.visibility === 'visible',
+    JSON.stringify(navAfter),
+  );
 
   /* ====================================================================
      第 2 步：设置面板 / 间距子层 / 更多子层 / 划词浮层 / 选区高亮
