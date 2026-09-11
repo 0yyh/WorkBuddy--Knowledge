@@ -2463,6 +2463,14 @@ html[data-pagemargin='custom'] .reader-doc { padding: 1.25rem max(1.25rem, env(s
 :root {
   --reader-statusbar-h: 30px;
   --reader-tabs-h: 54px;
+}
+/* 关键（bug 修复）：--reader-nav-h 必须放在 .reader-root / body 上计算，不能放 :root。
+   CSS 自定义属性在「声明元素处」按当时可见的变量完成 var() 替换后按计算值继承——
+   若放 :root，statusbar-h=30px 被烤进 nav-h 的继承值，下方 .reader-no-statusbar
+   对 --reader-statusbar-h 的覆写无法让 nav-h 重算 → 章节条/设置面板/子层（消费 nav-h）
+   不下沉，而导航栏/信息条（直接消费 statusbar-h）下沉，中间裂出 30px 缝隙露出正文。 */
+.reader-root,
+body {
   --reader-nav-h: calc(
     var(--reader-tabs-h) + var(--reader-statusbar-h) + env(safe-area-inset-bottom, 0px)
   );

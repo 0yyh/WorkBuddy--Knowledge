@@ -107,6 +107,10 @@ export function EntryReaderPage({ slug, chapterStart }: EntryReaderPageProps): J
   const touchStart = useRef<{ x: number; y: number } | null>(null);
   // 信息栏滚隐计时：停止滚动后延时淡入
   const chromeRevealTimer = useRef<number | null>(null);
+  // 切章滚隐抑制旗标：[index] effect 里 scrollTo(0) 会在旧内容上触发一次**异步** scroll
+  // 事件（晚于同 effect 的 setChromeDismissed(false)），hideChrome 会看到 overlay 仍为 true
+  // 而把 chrome 重新滚隐 1.8s → 切章后 overlay 在但卡片不可见，首次点击像「失灵」。
+  const chromeSuppressRef = useRef<boolean>(false);
   // 章末自动加载：去抖计时 + 是否已触发的去抖保护
   const autoNextTimer = useRef<number | null>(null);
   const autoNextArmed = useRef<boolean>(false);
@@ -195,6 +199,9 @@ export function EntryReaderPage({ slug, chapterStart }: EntryReaderPageProps): J
         if (!alive) return;
         setLoaded({ html: d.html, title: 'title' in d && typeof d.title === 'string' ? d.title : def.title });
         setStatus('ready');
+        // 新章内容就位：解除切章滚隐抑制（若旧内容本就在顶部，scrollTo(0) 不会
+        // 触发 scroll 事件，旗标无人消费 → 不解除会吞掉用户切章后的第一次真实滚隐）。
+        chromeSuppressRef.current = false;
         // 阅读历史（仅成功装载后记录；续读位置由下方即时持久化 effect 负责）
         // 进度按当前章节 / 总章节估算（章节间均匀），用于「看过」页进度条。
         const totalCh = docs.length;
@@ -282,10 +289,16 @@ export function EntryReaderPage({ slug, chapterStart }: EntryReaderPageProps): J
   }, [slug, index, item, ready, docs.length]);
 
   useEffect(() => {
+    // 抑制随后 scrollTo(0) 触发的异步 scroll 事件把 chrome 重新滚隐（见 chromeSuppressRef 注释）
+    chromeSuppressRef.current = true;
     scrollRef.current?.scrollTo({ top: 0, behavior: 'auto' });
     // 切章时把滑杆归 0（随后随 scroll 实时刷新到正确百分比）
     setChapterScrollPct(0);
     // 切章后取消可能悬置的滚隐计时，并恢复信息栏（若原本唤出）
+    if (chromeRevealTimer.current !== null) {
+      window.clearTimeout(chromeRevealTimer.current);
+      chromeRevealTimer.current = null;
+    }
     setChromeDismissed(false);
   }, [index]);
 
@@ -316,6 +329,11 @@ export function EntryReaderPage({ slug, chapterStart }: EntryReaderPageProps): J
     };
     // 用户在 overlay 唤出态下开始滚动 → 隐藏信息栏，停顿后淡入
     const hideChrome = (): void => {
+      // 切章 scrollTo(0) 的异步 scroll 事件：消费掉抑制旗标、不当作用户滚动
+      if (chromeSuppressRef.current) {
+        chromeSuppressRef.current = false;
+        return;
+      }
       if (!overlayRef.current) return;
       setChromeDismissed(true);
       if (chromeRevealTimer.current !== null) window.clearTimeout(chromeRevealTimer.current);
@@ -558,6 +576,13 @@ export function EntryReaderPage({ slug, chapterStart }: EntryReaderPageProps): J
         setOverlay(false);
         return;
       }
+      // 唤起 overlay 时必须同时清掉滚隐态：否则任何残留的 chromeDismissed（如切章
+      // 竞态遗留）会让卡片「已唤起却不可见」，用户感觉点击失灵要多点几次。
+      if (chromeRevealTimer.current !== null) {
+        window.clearTimeout(chromeRevealTimer.current);
+        chromeRevealTimer.current = null;
+      }
+      setChromeDismissed(false);
       const rect = rootRef.current?.getBoundingClientRect();
       if (!rect || rect.width === 0) {
         setOverlay(true);
