@@ -8,7 +8,12 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { Spinner } from '../components/Spinner';
-import { ReaderSettingsSheet } from '../components/ReaderSettingsSheet';
+import {
+  ReaderFontSheet,
+  ReaderMoreSheet,
+  ReaderSettingsSheet,
+  ReaderSpacingSheet,
+} from '../components/ReaderSettingsSheet';
 import { BaseSheet } from '../components/sheet/BaseSheet';
 import { ReaderSelectionMenu } from '../components/ReaderSelectionMenu';
 import { Link, navigate, replaceRoute } from '../router';
@@ -78,6 +83,10 @@ export function EntryReaderPage({ slug, chapterStart }: EntryReaderPageProps): J
   const [overlay, setOverlay] = useState<boolean>(false);
   const [settingsOpen, setSettingsOpen] = useState<boolean>(false);
   const [chapterOpen, setChapterOpen] = useState<boolean>(false);
+  // 字体 / 间距 / 更多子层：与主设置面板互斥，同一时间仅显示一个卡片
+  const [fontOpen, setFontOpen] = useState<boolean>(false);
+  const [spacingOpen, setSpacingOpen] = useState<boolean>(false);
+  const [moreOpen, setMoreOpen] = useState<boolean>(false);
   // 目录搜索：过滤章节名 / 二级小节标题
   const [tocQuery, setTocQuery] = useState<string>('');
   // 信息栏滚隐：overlay 显示期间，用户滚动正文时信息栏淡出，停顿 ~2s 后自动淡入。
@@ -230,6 +239,18 @@ export function EntryReaderPage({ slug, chapterStart }: EntryReaderPageProps): J
   // 通过 lib/backHandler 的拦截器接入，返回 true 表示本次返回已被消费。
   useEffect(() => {
     setBackInterceptor(() => {
+      if (fontOpen) {
+        setFontOpen(false);
+        return true;
+      }
+      if (spacingOpen) {
+        setSpacingOpen(false);
+        return true;
+      }
+      if (moreOpen) {
+        setMoreOpen(false);
+        return true;
+      }
       if (settingsOpen) {
         setSettingsOpen(false);
         return true;
@@ -241,7 +262,7 @@ export function EntryReaderPage({ slug, chapterStart }: EntryReaderPageProps): J
       return false;
     });
     return () => setBackInterceptor(null);
-  }, [settingsOpen, chapterOpen]);
+  }, [settingsOpen, chapterOpen, fontOpen, spacingOpen, moreOpen]);
 
   // 内容收缩（本地索引变更）时把越界的章节下标拉回合法范围。
   // 仅在索引就绪后生效：就绪前 docs 是「仅导读」的占位清单，不能据此复位续读章节。
@@ -352,6 +373,18 @@ export function EntryReaderPage({ slug, chapterStart }: EntryReaderPageProps): J
     applyReadPrefs(readReadPrefs());
   }, [prefs]);
 
+  // 底部信息条显隐同步到 body class：面板层经 Portal 挂到 body，须让 body 也知道
+  // showProgress 状态，这样 --reader-statusbar-h 能在面板/目录等层级正确归 0，
+  // 避免底部导航已下沉而面板未下沉导致的空白栏。
+  useEffect(() => {
+    if (prefs.showProgress) {
+      document.body.classList.remove('reader-no-statusbar');
+    } else {
+      document.body.classList.add('reader-no-statusbar');
+    }
+    return () => document.body.classList.remove('reader-no-statusbar');
+  }, [prefs.showProgress]);
+
   // 底部信息条「当前时间」：showProgress 开启时每秒刷新；关闭或离开页面时清理 interval。
   useEffect(() => {
     if (!prefs.showProgress) return;
@@ -428,8 +461,41 @@ export function EntryReaderPage({ slug, chapterStart }: EntryReaderPageProps): J
 
   const openChapter = useCallback(() => {
     setSettingsOpen(false);
+    setFontOpen(false);
+    setSpacingOpen(false);
+    setMoreOpen(false);
     setChapterOpen(true);
   }, []);
+
+  // 设置面板与子层互斥：打开子层时主面板下拉消失，确保阅读页仅显示一个卡片
+  const openSettings = useCallback(() => {
+    setFontOpen(false);
+    setSpacingOpen(false);
+    setMoreOpen(false);
+    setChapterOpen(false);
+    setSettingsOpen(true);
+  }, []);
+  const openFont = useCallback(() => {
+    setSettingsOpen(false);
+    setSpacingOpen(false);
+    setMoreOpen(false);
+    setFontOpen(true);
+  }, []);
+  const openSpacing = useCallback(() => {
+    setSettingsOpen(false);
+    setFontOpen(false);
+    setMoreOpen(false);
+    setSpacingOpen(true);
+  }, []);
+  const openMore = useCallback(() => {
+    setSettingsOpen(false);
+    setFontOpen(false);
+    setSpacingOpen(false);
+    setMoreOpen(true);
+  }, []);
+  const closeFont = useCallback(() => setFontOpen(false), []);
+  const closeSpacing = useCallback(() => setSpacingOpen(false), []);
+  const closeMore = useCallback(() => setMoreOpen(false), []);
 
   // 快速「夜间」开关：进入深色背景，退出恢复到进入前的浅色背景。
   const prevBgRef = useRef<BgColorPref | null>(null);
@@ -694,7 +760,7 @@ export function EntryReaderPage({ slug, chapterStart }: EntryReaderPageProps): J
             type="button"
             className="reader-tab"
             aria-label="阅读区设置"
-            onClick={() => setSettingsOpen(true)}
+            onClick={openSettings}
           >
             <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
               <circle cx="12" cy="12" r="3" fill="none" stroke="currentColor" strokeWidth="2" />
@@ -721,7 +787,38 @@ export function EntryReaderPage({ slug, chapterStart }: EntryReaderPageProps): J
         onClose={() => setSettingsOpen(false)}
         prefs={prefs}
         onChange={changePref}
+        onOpenFont={openFont}
+        onOpenSpacing={openSpacing}
+        onOpenMore={openMore}
       />
+
+      {fontOpen ? (
+        <ReaderFontSheet
+          bg={prefs.bgColor}
+          fontFamily={prefs.fontFamily}
+          onPick={(v) => {
+            changePref('fontFamily', v);
+            setFontOpen(false);
+          }}
+          onClose={closeFont}
+        />
+      ) : null}
+      {spacingOpen ? (
+        <ReaderSpacingSheet
+          bg={prefs.bgColor}
+          align={prefs.align}
+          onAlignChange={(v) => changePref('align', v)}
+          onClose={closeSpacing}
+        />
+      ) : null}
+      {moreOpen ? (
+        <ReaderMoreSheet
+          bg={prefs.bgColor}
+          prefs={prefs}
+          onChange={changePref}
+          onClose={closeMore}
+        />
+      ) : null}
 
       {/* 划词词典：浮动工具条 + 释义卡（自身 portal 到 body，与 .reader-root 同级，
           不参与 onSurfaceClick / 左右滑切章判定；切章自动清空） */}

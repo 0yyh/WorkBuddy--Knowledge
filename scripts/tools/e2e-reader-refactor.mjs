@@ -306,7 +306,15 @@ try {
   check('V5d 三项宽度近似相等(±2px)', w.length === 3 && (wMax - wMin) <= 2, `widths=${JSON.stringify(w)}`);
 
   /* ---- N2d 沉浸态：点中央后底部导航淡入可见 ---- */
-  const navAfter = await evaluate(NAV_PROBE);
+  let navAfter = null;
+  {
+    const deadline = Date.now() + 3000;
+    while (Date.now() < deadline) {
+      navAfter = await evaluate(NAV_PROBE);
+      if (navAfter && Number(navAfter?.opacity) > 0.9) break;
+      await sleep(80);
+    }
+  }
   check(
     'N2d 点中央后底部导航可见（opacity>0.9 / visible）',
     navAfter?.present === true && Number(navAfter?.opacity) > 0.9 && navAfter?.visibility === 'visible',
@@ -419,7 +427,7 @@ try {
     check('P6 字号行数字 = 当前 px（默认 20）', panel?.fontNum === '20', `fontNum=${panel?.fontNum}`);
     check('P7 颜色行 7 个色块', panel?.dotCount === 7, `dotCount=${panel?.dotCount}`);
     check('P8 选中色块描边 = rgb(0,0,0)', panel?.dotOnBorder === 'rgb(0, 0, 0)', `border=${panel?.dotOnBorder}`);
-    check('P9 翻页行 5 胶囊', panel?.animCount === 5, `count=${panel?.animCount}`);
+    check('P9 翻页行 4 胶囊（已移除「无动画」）', panel?.animCount === 4, `count=${panel?.animCount}`);
     check('P10a 选中翻页胶囊背景 = rgb(255,255,255)', panel?.animOnBg === 'rgb(255, 255, 255)', `bg=${panel?.animOnBg}`);
     check('P10b 选中翻页胶囊字色 = rgb(0,0,0)', panel?.animOnColor === 'rgb(0, 0, 0)', `color=${panel?.animOnColor}`);
     check('P10c 选中翻页胶囊边框 = rgb(255,106,0)（第 3 轮）', panel?.animOnBorder === 'rgb(255, 106, 0)', `border=${panel?.animOnBorder}`);
@@ -528,8 +536,10 @@ try {
     check('S5b 页面边距选中胶囊 = 橙底白字', g1?.onBg === 'rgb(255, 106, 0)' && g1?.onColor === 'rgb(255, 255, 255)', `bg=${g1?.onBg} color=${g1?.onColor}`);
     check('S5c 对齐组保留且选中胶囊 = 橙底白字', g2?.label === '对齐' && g2?.onBg === 'rgb(255, 106, 0)' && g2?.onColor === 'rgb(255, 255, 255)', `label=${g2?.label} bg=${g2?.onBg} color=${g2?.onColor}`);
 
-    /* ---- 关闭间距子层，打开更多子层 ---- */
+    /* ---- 关闭间距子层；因主设置面板已随子层打开而下拉消失，须重新点开「设置」再进入「更多」 ---- */
     await evaluate(`(function(){ var c=document.querySelector('.reader-more-sheet .reader-more-close'); if(c) c.click(); return true; })()`);
+    await sleep(200);
+    await evaluate(OPEN_SETTINGS);
     await sleep(200);
     await evaluate(`(function(){ var b=document.querySelector('.reader-sheet .reader-action-more'); if(b) b.click(); return true; })()`);
     const MORE_PROBE = `(function(){
@@ -548,20 +558,20 @@ try {
       const deadline = Date.now() + 4000;
       while (Date.now() < deadline) {
         more = await evaluate(MORE_PROBE);
-        if (more && more.open && more.rowCount === 2) break;
+        if (more && more.open && more.rowCount === 3) break;
         await sleep(150);
       }
     }
     check(
-      'M1 更多子层恰好 2 个开关行（第 3 轮删单手模式）',
-      more?.open === true && more?.rowCount === 2,
+      'M1 更多子层 3 个开关行（进度 / 状态栏 / 自动翻页）',
+      more?.open === true && more?.rowCount === 3,
       `rowCount=${more?.rowCount} labels=${JSON.stringify((more?.switches || []).map((s) => s.label))}`,
     );
     const onStates = (more?.switches || []).map((s) => s.on);
-    check('M2 默认开关态 = [true,true]', JSON.stringify(onStates) === JSON.stringify([true, true]), `on=${JSON.stringify(onStates)}`);
+    check('M2 默认开关态 = [true,true,false]', JSON.stringify(onStates) === JSON.stringify([true, true, false]), `on=${JSON.stringify(onStates)}`);
     const onBg = (more?.switches || []).filter((s) => s.on === true).map((s) => s.bg);
     check(
-      'M3 两个开关均为开态且背景 = rgb(255,106,0)',
+      'M3 进度与状态栏开关默认开且背景 = rgb(255,106,0)',
       onBg.length === 2 && onBg.every((b) => b === 'rgb(255, 106, 0)'),
       `onBg=${JSON.stringify(onBg)}`,
     );
@@ -581,9 +591,40 @@ try {
       return { ok:true, offBg: offBg, offCount: offCount, onCount: document.querySelectorAll('.reader-more-sheet .reader-switch.is-on').length };
     })()`;
     const offRes = await evaluate(OFF_TEST);
-    check('M4a 关掉一个开关后出现 1 个关态', offRes?.ok === true && offRes?.offCount === 1, JSON.stringify(offRes));
+    check('M4a 关掉状态栏开关后出现 2 个关态（含默认关闭的自动翻页）', offRes?.ok === true && offRes?.offCount === 2, JSON.stringify(offRes));
     check('M4b 关态开关背景 = rgb(224,224,224)', offRes?.offBg === 'rgb(224, 224, 224)', `offBg=${offRes?.offBg}`);
-    check('M4c 还原后 2 个开关均回到开态', offRes?.onCount === 2, `onCount=${offRes?.onCount}`);
+    check('M4c 还原后进度与状态栏回到开态（onCount=2）', offRes?.onCount === 2, `onCount=${offRes?.onCount}`);
+
+    /* ---- 关闭「展示进度时间和电量」后底部导航与面板层同步下沉（消除空白栏） ---- */
+    const PROGRESS_OFF_TEST = `(async function(){
+      var sleep = function(ms){ return new Promise(function(r){setTimeout(r,ms);}); };
+      var pick = function(i){ var rows=document.querySelectorAll('.reader-more-sheet .reader-more-row'); return rows[i]?rows[i].querySelector('.reader-switch'):null; };
+      var sw = pick(0);
+      if(!sw) return { ok:false, why:'no progress switch' };
+      sw.click(); await sleep(400);
+      var bodyNoSb = document.body.classList.contains('reader-no-statusbar');
+      var tabs = document.querySelector('.reader-bottom-tabs');
+      var tabsBottom = tabs ? parseFloat(getComputedStyle(tabs).bottom || 'NaN') : NaN;
+      /* 面板层（目录/设置）经 Portal 挂到 body，须使用 body class 同步变量 */
+      var layerBottom = NaN;
+      var sheet = document.querySelector('.reader-sheet');
+      if(sheet) layerBottom = parseFloat(getComputedStyle(sheet).bottom || 'NaN');
+      var back = pick(0);
+      if(back) back.click();
+      await sleep(400);
+      return { ok:true, bodyNoSb: bodyNoSb, tabsBottom: tabsBottom, layerBottom: layerBottom };
+    })()`;
+    const progRes = await evaluate(PROGRESS_OFF_TEST);
+    check(
+      'L1 关闭进度信息后 body 增加 reader-no-statusbar',
+      progRes?.ok === true && progRes?.bodyNoSb === true,
+      JSON.stringify(progRes),
+    );
+    check(
+      'L2 关闭进度信息后底部导航下沉（bottom ≈ 0）',
+      progRes?.ok === true && Number(progRes?.tabsBottom) <= 1,
+      `tabsBottom=${progRes?.tabsBottom}`,
+    );
 
     /* ---- 划词浮层：工具条 + 释义卡 ---- */
     const SELECT_AND_OPEN_MENU = `(async function(){

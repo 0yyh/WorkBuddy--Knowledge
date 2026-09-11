@@ -2467,8 +2467,10 @@ html[data-pagemargin='custom'] .reader-doc { padding: 1.25rem max(1.25rem, env(s
     var(--reader-tabs-h) + var(--reader-statusbar-h) + env(safe-area-inset-bottom, 0px)
   );
 }
-/* 关闭信息条时其高度归 0，导航栏 / 章节条自动下沉贴底 */
-.reader-root.reader-no-statusbar {
+/* 关闭信息条时其高度归 0，导航栏 / 章节条 / 面板层自动下沉贴底。
+   同时挂在 body 上，因为面板层经 Portal 渲染到 body、不在 .reader-root 子树内。 */
+.reader-root.reader-no-statusbar,
+body.reader-no-statusbar {
   --reader-statusbar-h: 0px;
 }
 
@@ -3616,7 +3618,8 @@ html[data-pagemargin='custom'] .reader-doc { padding: 1.25rem max(1.25rem, env(s
      不加硬编码 background，避免覆盖主题类。 */
   border-radius: 22px 22px 0 0;
   padding: 8px 18px calc(env(safe-area-inset-bottom, 0px) + 14px);
-  max-height: 76%;
+  /* 放大子层：让间距设置里的「对齐」组无需下滑即可见 */
+  max-height: 88%;
   overflow: auto;
   animation: sheet-up 0.26s var(--ease-out-expo);
 }

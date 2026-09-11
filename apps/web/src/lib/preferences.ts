@@ -90,7 +90,7 @@ export const READ_DEFAULTS: ReaderPrefs = {
   brightnessLevel: 70,
   statusbarPermanent: true,
   align: 'justify',
-  autoLoad: true,
+  autoLoad: false,
   showProgress: true,
 };
 

@@ -33,9 +33,9 @@ interface ReaderSettingsSheetProps {
   onClose: () => void;
   prefs: ReaderPrefs;
   onChange: <K extends keyof ReaderPrefs>(key: K, value: ReaderPrefs[K]) => void;
-  onOpenChapter?: () => void;
-  onToggleNight?: () => void;
-  isNight?: boolean;
+  onOpenFont: () => void;
+  onOpenSpacing: () => void;
+  onOpenMore: () => void;
 }
 
 // 字体：项目实际可用的 4 款（不引「方正悠黑」等无授权/无内置字体）。
@@ -64,13 +64,12 @@ const COLOR_SWATCH: Array<{ value: BgColorPref; label: string; color: string }> 
   { value: 'dark', label: '深灰', color: '#555555' },
 ];
 
-// 翻页：5 胶囊并排（所有 5 种均有 CSS 支持——见 .reader-doc[data-anim]）
+// 翻页：4 胶囊并排（移除「无动画」，保持仿真/覆盖/平移/上下）
 const ANIM_OPTIONS: Array<{ value: AnimationPref; label: string }> = [
   { value: 'simulation', label: '仿真' },
   { value: 'cover', label: '覆盖' },
   { value: 'slide', label: '平移' },
   { value: 'vertical', label: '上下' },
-  { value: 'none', label: '无动画' },
 ];
 
 // 对齐：两端对齐 / 左对齐（第 2 步从主层迁到间距子层）
@@ -94,12 +93,13 @@ const PAGE_MARGIN_OPTIONS: Array<{ value: string; label: string }> = [
   { value: 'xl', label: '大' },
 ];
 
-// 更多设置：严格 2 个开关（第 3 轮：删「单手模式」，仅保留进度信息 / 状态栏常驻）
-const MORE_TOGGLE_KEYS = ['progress', 'statusbar'] as const;
+// 更多设置：3 个开关（进度信息 / 状态栏常驻 / 自动翻页）
+const MORE_TOGGLE_KEYS = ['progress', 'statusbar', 'autoLoad'] as const;
 type MoreToggleKey = (typeof MORE_TOGGLE_KEYS)[number];
 const MORE_TOGGLE_LABELS: Record<MoreToggleKey, { label: string; hint: string }> = {
   progress: { label: '展示进度时间和电量', hint: '阅读页底部显示进度 / 时间 / 电量' },
   statusbar: { label: '手机状态栏常驻', hint: '显示后台程序、通知、信号等' },
+  autoLoad: { label: '自动翻页', hint: '章节末尾滑至最底时自动跳转下一章' },
 };
 
 export function ReaderSettingsSheet({
@@ -107,20 +107,10 @@ export function ReaderSettingsSheet({
   onClose,
   prefs,
   onChange,
+  onOpenFont,
+  onOpenSpacing,
+  onOpenMore,
 }: ReaderSettingsSheetProps): JSX.Element | null {
-  const [fontOpen, setFontOpen] = useState<boolean>(false);
-  const [spacingOpen, setSpacingOpen] = useState<boolean>(false);
-  const [moreOpen, setMoreOpen] = useState<boolean>(false);
-
-  // 关闭时复位子层状态，避免下次打开残留（字体 / 间距 / 更多）
-  useEffect(() => {
-    if (!open) {
-      setFontOpen(false);
-      setSpacingOpen(false);
-      setMoreOpen(false);
-    }
-  }, [open]);
-
   const bg = prefs.bgColor; // 'white' | 'sepia' | 'green' | 'blue' | 'black' | 'gray' | 'dark'
   const level = prefs.brightnessLevel;
   const canFontDown = prefs.fontSize > READ_FONT_MIN;
@@ -175,7 +165,7 @@ export function ReaderSettingsSheet({
                 type="button"
                 className="reader-enter-btn"
                 aria-label="选择字体"
-                onClick={() => setFontOpen(true)}
+                onClick={onOpenFont}
               >
                 <span className="reader-enter-text">{FAMILY_LABEL[prefs.fontFamily]}</span>
                 <span className="reader-enter-arrow" aria-hidden="true">
@@ -228,42 +218,14 @@ export function ReaderSettingsSheet({
 
           {/* 底部：间距设置（主按钮）+ 更多（文本入口）。 */}
           <div className="reader-sheet-actions">
-            <button type="button" className="reader-action-primary" onClick={() => setSpacingOpen(true)}>
+            <button type="button" className="reader-action-primary" onClick={onOpenSpacing}>
               间距设置
             </button>
-            <button type="button" className="reader-action-more" onClick={() => setMoreOpen(true)}>
+            <button type="button" className="reader-action-more" onClick={onOpenMore}>
               更多 ›
             </button>
           </div>
         </div>
-
-        {fontOpen ? (
-          <ReaderFontSheet
-            bg={bg}
-            fontFamily={prefs.fontFamily}
-            onPick={(v) => {
-              onChange('fontFamily', v);
-              setFontOpen(false);
-            }}
-            onClose={() => setFontOpen(false)}
-          />
-        ) : null}
-        {spacingOpen ? (
-          <ReaderSpacingSheet
-            bg={bg}
-            align={prefs.align}
-            onAlignChange={(v) => onChange('align', v)}
-            onClose={() => setSpacingOpen(false)}
-          />
-        ) : null}
-        {moreOpen ? (
-          <ReaderMoreSheet
-            bg={bg}
-            prefs={prefs}
-            onChange={onChange}
-            onClose={() => setMoreOpen(false)}
-          />
-        ) : null}
     </BaseSheet>
   );
 }
@@ -280,7 +242,7 @@ interface ReaderFontSheetProps {
 }
 
 /** 字体子层：4 款实际可用字体，选中即应用并收起。 */
-function ReaderFontSheet({ bg, fontFamily, onPick, onClose }: ReaderFontSheetProps): JSX.Element {
+export function ReaderFontSheet({ bg, fontFamily, onPick, onClose }: ReaderFontSheetProps): JSX.Element {
   return (
     <div className="reader-more-layer">
       <div className="reader-more-mask" onClick={onClose} />
@@ -331,7 +293,7 @@ interface ReaderSpacingSheetProps {
  *   - 对齐：两端对齐 / 左对齐（自第 2 步从主层迁入）
  * 选中状态写 localStorage + 立刻落到 html data-attr → CSS 即时生效。
  */
-function ReaderSpacingSheet({ bg, align, onAlignChange, onClose }: ReaderSpacingSheetProps): JSX.Element {
+export function ReaderSpacingSheet({ bg, align, onAlignChange, onClose }: ReaderSpacingSheetProps): JSX.Element {
   // 第 3 轮：均为 4 档，默认「适中」（页面边距由 smart 改回 md）
   const [paraSpacing, setParaSpacing] = useLocalFlag('pks_pref_read_paraspacing', 'md');
   const [pageMargin, setPageMargin] = useLocalFlag('pks_pref_read_pagemargin', 'md');
@@ -424,18 +386,18 @@ interface ReaderMoreSheetProps {
 }
 
 /**
- * 更多设置子层（严格 3 个开关）：
- *   单手模式（本地存储）/ 展示进度时间和电量（prefs.showProgress）/
- *   手机状态栏常驻（prefs.statusbarPermanent）。
+ * 更多设置子层（3 个开关）：
+ *   展示进度时间和电量（prefs.showProgress）/ 手机状态栏常驻（prefs.statusbarPermanent）/
+ *   自动翻页（prefs.autoLoad）。
  *   - 「手机状态栏常驻」走 ReaderPrefs：EntryReaderPage 的 effect 会立刻同步原生层。
  *   - 「展示进度时间和电量」走 ReaderPrefs：控制底部信息条是否渲染。
- *   - 已删除「音量键翻页 / 锁屏继续翻页 / 滚动到底自动翻章」三行 UI
- *     （autoLoad 仍被 EntryReaderPage 消费，故保留字段，仅删 UI）。
+ *   - 「自动翻页」走 ReaderPrefs：控制章节末尾是否自动加载下一章。
  */
-function ReaderMoreSheet({ bg, prefs, onChange, onClose }: ReaderMoreSheetProps): JSX.Element {
+export function ReaderMoreSheet({ bg, prefs, onChange, onClose }: ReaderMoreSheetProps): JSX.Element {
   const [flags, setFlags] = useState<Record<MoreToggleKey, boolean>>(() => ({
     progress: prefs.showProgress,
     statusbar: prefs.statusbarPermanent,
+    autoLoad: prefs.autoLoad,
   }));
 
   const toggle = (k: MoreToggleKey): void => {
@@ -443,8 +405,10 @@ function ReaderMoreSheet({ bg, prefs, onChange, onClose }: ReaderMoreSheetProps)
       const next = !prev[k];
       if (k === 'progress') {
         onChange('showProgress', next);
-      } else {
+      } else if (k === 'statusbar') {
         onChange('statusbarPermanent', next);
+      } else {
+        onChange('autoLoad', next);
       }
       return { ...prev, [k]: next };
     });
