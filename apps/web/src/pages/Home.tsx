@@ -1,17 +1,17 @@
 /**
- * 首页（V5 类目导航改造）：
+ * 首页（V7 类目导航收敛）：
  *   标题 → 统计卡（4 格）→ 时间线 banner（品牌色 + 双轨 pill）
- *   → L1 类目卡片网格（5 张，点按定位到下方折叠组）
- *   → 5 组 L1 的 L2/L3 折叠树（默认折叠，点 L2 头部就地展开，L3 → #/browse/:catId）
+ *   → L1 类目卡片网格（5 张，点按直达 #/browse/:catId）
  *
+ * 独立的「全部类目」折叠树已移除：子类目导航全部收敛进类目卡片，
+ * 落地页 BrowsePage 顶部直接列出该主题的子类目，随内容增长首页不再变长。
  * 数据来源不变：manifest.stats 与 useStation().categoryViews / tracks。
- * 折叠树是本页内部组件（CollapsibleCategoryTree），components/CategoryTree 保留给 BrowsePage。
+ * components/CategoryTree 仍保留给 BrowsePage 侧栏。
  */
-import { useCallback, useEffect, useState, type CSSProperties } from 'react';
+import { useEffect, useState, type CSSProperties } from 'react';
 import { Link } from '../router';
 import { useStation } from '../state/AppContext';
 import { getLastRead } from '../lib/history';
-import type { CategoryView } from '../types';
 
 interface L1Visual {
   /** 角色块里的单汉字 */
@@ -58,131 +58,6 @@ function formatWords(words: number): string {
 interface StatCell {
   num: string;
   unit: string;
-}
-
-/** L1 分组 id（供卡片点击定位） */
-function groupDomId(l1Id: string): string {
-  return `l1-group-${l1Id}`;
-}
-
-/**
- * L1 折叠组：L1 标题 → L2 头部（可展开）→ L3 叶子（跳 browse）。
- * 展开状态是本地 Set，同一 L1 内多个 L2 互不干扰。
- */
-function CollapsibleCategoryTree({ views }: { views: CategoryView[] }): JSX.Element {
-  const [expanded, setExpanded] = useState<Set<string>>(() => new Set<string>());
-  // 读取「仅本节点主键归属」的词条，用于混合节点展开时显式列出「本类词条」，
-  // 让父级计数 = 本组条目数 + 各子分类计数之和，肉眼可对账。
-  const { nodeOwnSlugs, slugMap } = useStation();
-
-  const toggle = useCallback((id: string): void => {
-    setExpanded((prev) => {
-      const next = new Set(prev);
-      if (next.has(id)) next.delete(id);
-      else next.add(id);
-      return next;
-    });
-  }, []);
-
-  if (views.length === 0) {
-    return <p className="empty">暂无类目（请确认 content/index/taxonomy.json 已同步）</p>;
-  }
-
-  return (
-    <div className="home-tree-list">
-      {views.map((l1) => (
-        <section key={l1.id} id={groupDomId(l1.id)} className="l2-group">
-          <h3 className="l1-head">
-            <Link to={`/browse/${encodeURIComponent(l1.id)}`} className="l1-head-link">
-              <span className="l1-head-name">{l1.title}</span>
-              <span className="l1-head-count">{l1.count} 词条</span>
-            </Link>
-          </h3>
-
-          <ul className="l2-list">
-            {l1.children.map((l2) => {
-              const open = expanded.has(l2.id);
-              const isLeaf = l2.children.length === 0;
-              return (
-                <li key={l2.id} className="l2-item">
-                  <div className="l2-head">
-                    {/* 类目标题始终可点进 browse，精确罗列该分类下全部 count 词条，
-                        解决「有计数但展开无子项」的观感不一致。 */}
-                    <Link to={`/browse/${encodeURIComponent(l2.id)}`} className="l2-head-main">
-                      <span className="l2-name">{l2.title}</span>
-                      <span className="l2-count">{l2.count}</span>
-                    </Link>
-                    {!isLeaf ? (
-                      <button
-                        type="button"
-                        className="l2-caret"
-                        aria-expanded={open}
-                        aria-label={open ? '收起' : '展开'}
-                        onClick={() => toggle(l2.id)}
-                      >
-                        {open ? '▾' : '▸'}
-                      </button>
-                    ) : null}
-                  </div>
-
-                  {open ? (
-                    <div className="l2-expand">
-                      {/* 混合节点（既有本类直接词条、又有子分类）：把「本类词条」单独成组列出，
-                          使父级计数 = 本组条目数 + 各子分类计数之和，肉眼可对账。
-                          例：金融(6) = 本类直接词条(3) + 货币与银行(2) + 资本市场与资产(1)。 */}
-                      {((): JSX.Element | null => {
-                        const own = nodeOwnSlugs.get(l2.id) ?? [];
-                        if (isLeaf || own.length === 0) return null;
-                        return (
-                          <ul className="l3-list l3-own-list">
-                            <li className="l3-own-head" key={`${l2.id}-own`}>
-                              本类直接词条（{own.length}）
-                            </li>
-                            {own.map((slug, i) => {
-                              const item = slugMap.get(slug);
-                              const title = item?.t ?? slug;
-                              return (
-                                <li key={slug} style={{ '--i': i } as CSSProperties}>
-                                  <Link
-                                    to={`/entry-reader/${encodeURIComponent(slug)}`}
-                                    className="l3-row l3-own-row"
-                                  >
-                                    <span className="l3-name">{title}</span>
-                                  </Link>
-                                </li>
-                              );
-                            })}
-                          </ul>
-                        );
-                      })()}
-                      {!isLeaf ? (
-                        <ul className="l3-list">
-                          {l2.children.map((l3, i) => (
-                            //  stagger 序号挂在 li 上：router 的 Link 不接受 style prop（红线：不改 router.tsx）
-                            <li key={l3.id} style={{ '--i': i } as CSSProperties}>
-                              <Link to={`/browse/${encodeURIComponent(l3.id)}`} className="l3-row">
-                                <span className="l3-name">{l3.title}</span>
-                                <span className="l3-count">{l3.count}</span>
-                              </Link>
-                            </li>
-                          ))}
-                        </ul>
-                      ) : null}
-                      {isLeaf && l2.count > 0 ? (
-                        <p className="l2-empty-note">
-                          该分类下 {l2.count} 条词条直接归属，点击上方标题查看
-                        </p>
-                      ) : null}
-                    </div>
-                  ) : null}
-                </li>
-              );
-            })}
-          </ul>
-        </section>
-      ))}
-    </div>
-  );
 }
 
 export function HomePage(): JSX.Element {
@@ -234,16 +109,6 @@ export function HomePage(): JSX.Element {
         { num: formatWords(stats.words), unit: '字' },
       ]
     : [];
-
-  /** L1 卡片 → 定位到下方对应折叠组（当前页 anchor scroll，不改 hash） */
-  const scrollToGroup = useCallback((l1Id: string): void => {
-    const el = document.getElementById(groupDomId(l1Id));
-    if (!el) return;
-    const reduced =
-      typeof window.matchMedia === 'function' &&
-      window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    el.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'start' });
-  }, []);
 
   return (
     <div className="page home-page">
@@ -308,27 +173,22 @@ export function HomePage(): JSX.Element {
           {categoryViews.map((l1, i) => {
             const visual = l1VisualOf(l1.title);
             return (
-              <button
+              // 卡片直达该主题的类目页：页内列出子类目 + 全部词条（首页不再挂独立类目树）
+              <Link
                 key={l1.id}
-                type="button"
+                to={`/browse/${encodeURIComponent(l1.id)}`}
                 className="l1-card"
                 style={{ '--i': i } as CSSProperties}
-                onClick={() => scrollToGroup(l1.id)}
               >
                 <span className="l1-icon" style={{ background: visual.bg, color: visual.fg }}>
                   {visual.icon}
                 </span>
                 <span className="l1-name">{l1.title}</span>
                 <span className="l1-count">{l1.count} 词条</span>
-              </button>
+              </Link>
             );
           })}
         </div>
-      </section>
-
-      <section className="home-tree">
-        <h2 className="section-title">全部类目</h2>
-        <CollapsibleCategoryTree views={categoryViews} />
       </section>
     </div>
   );
