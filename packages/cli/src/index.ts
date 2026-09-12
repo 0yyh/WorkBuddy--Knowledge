@@ -101,7 +101,7 @@ function printHelp(): void {
   console.log(`个人知识学习站 · CLI
 用法：pks <命令> [--content <dir>]
 
-  build:index       内容目录 → .index/ 分片索引
+  build:index [--full]  内容目录 → .index/ 分片索引（默认增量，--full 强制全量）
   lint              内容规范校验
   bundle [--level seed|digest|full] [--category X] [--out <dir>]
                      导出数据包 zip
@@ -117,7 +117,7 @@ function main(): void {
   const { cmd, positional, flags } = parse(process.argv.slice(2));
   switch (cmd) {
     case 'build:index':
-      buildIndexCmd(contentDir(flags));
+      buildIndexCmd(contentDir(flags), { incremental: !flags.full });
       break;
     case 'lint':
       lintCmd(contentDir(flags));

@@ -13,10 +13,12 @@ import { toPlainText } from '../parse/markdown.js';
 import { countWords } from '../parse/words.js';
 import { buildShards, type IndexingDoc, type ShardIndex } from './inverted.js';
 import { buildDfBuckets } from './df.js';
-import { encodePostings } from './shard-codec.js';
+import { encodePostings, decodePostings } from './shard-codec.js';
 import { chooseShardCount } from './shards.js';
 import { deriveCrossTimeline, deriveTimelineDimensions } from '../track/parse.js';
 import { sha1 } from '../util/sha1.js';
+import { shardOf } from '../util/fnv1a.js';
+import { hashEntryDir } from '../content/hash.js';
 import {
   GENERATOR, SCHEMA_VERSION, TLDR_MAX,
 } from '../constants.js';
@@ -29,7 +31,32 @@ export interface BuildIndexOptions {
   shardCount?: number;
   /** 内容字节数（用于 manifest.bytes，可选） */
   contentBytes?: number;
+  /**
+   * ② 增量构建：命中「旧 build-state 有效 + 分区数 M 未变 + 旧分片齐全」时，
+   * 仅重建脏分片、干净分片复用旧文本（跳过分词）。默认关闭（全量），由 CLI 透传。
+   */
+  incremental?: boolean;
 }
+
+/** 单条词条的构建指纹（② 增量构建 state 项）。 */
+export interface EntryBuildFingerprint {
+  /** hashEntryDir 内容指纹 */
+  hash: string;
+  /** 该词条全部 docs（entry-doc + 各 section-doc）命中的检索分片号集合 */
+  shards: number[];
+}
+
+/** 增量构建状态（落 `content/.pks-build-state.json`，gitignore，不进 .index/、不随包分发）。 */
+export interface BuildState {
+  version: 1;
+  /** 构建时的检索分区数 M；M 变化即强转全量。 */
+  shardCount: number;
+  entries: Record<string, EntryBuildFingerprint>;
+  built_at: string;
+}
+
+/** 增量 state 落盘相对路径（相对 content/ 根） */
+export const BUILD_STATE_FILE = '.pks-build-state.json';
 
 function countNodes(nodes: TaxonomyNode[]): number {
   return nodes.reduce((acc, n) => acc + 1 + (n.children ? countNodes(n.children) : 0), 0);
@@ -68,6 +95,95 @@ export interface BuildResult {
   snapshot: ContentSnapshot;
   errors: string[];
   warnings: string[];
+  /** ② 增量构建：本次构建状态（由 CLI 落到 content/.pks-build-state.json）。 */
+  buildState: BuildState;
+  /** 本次是否真正走了增量路径（false = 全量，含首次/回退）。 */
+  incrementalUsed: boolean;
+}
+
+/** 读取旧增量 state；缺失/损坏/版本不符 → null（触发全量）。 */
+function readBuildState(vfs: Vfs): BuildState | null {
+  try {
+    if (!vfs.exists(BUILD_STATE_FILE)) return null;
+    const o = JSON.parse(vfs.readText(BUILD_STATE_FILE)) as BuildState;
+    if (!o || o.version !== 1 || typeof o.shardCount !== 'number' || !o.entries) return null;
+    return o;
+  } catch {
+    return null;
+  }
+}
+
+/** 解码线上分片文本为 ShardIndex（postings 优先，旧内联 index 兜底）。 */
+function decodeShardText(text: string): ShardIndex {
+  const wire = JSON.parse(text) as {
+    shard: number;
+    docs: ShardIndex['docs'];
+    lengths: number[];
+    postings?: string;
+    index?: ShardIndex['index'];
+  };
+  const index = wire.postings ? decodePostings(wire.postings) : (wire.index ?? {});
+  return { shard: wire.shard, docs: wire.docs, lengths: wire.lengths, index };
+}
+
+/**
+ * ② 增量构建尝试。命中条件（全部满足）：
+ *  - opts.incremental 开启；
+ *  - 旧 build-state 存在且 `shardCount === m`（M 未变）；
+ *  - 旧检索分片 `.index/search/sNN.json` 全部齐全（缺一即全量）。
+ * 脏分片 = 变更/删除词条的**旧 docs 分片** ∪ 变更/新增词条的**当前 docs 分片**；
+ * 干净分片复用旧文本（字节级不变），脏分片按当前 docs 重建。
+ */
+function tryLoadIncremental(
+  vfs: Vfs,
+  m: number,
+  hashes: Map<string, string>,
+  indexingDocs: IndexingDoc[],
+  enabled: boolean,
+): { shards: ShardIndex[]; reuseText: Map<number, string> } | null {
+  if (!enabled) return null;
+  const prev = readBuildState(vfs);
+  if (!prev || prev.shardCount !== m) return null;
+
+  const prevText = new Map<number, string>();
+  for (let s = 0; s < m; s++) {
+    const rel = `.index/search/s${String(s).padStart(2, '0')}.json`;
+    if (!vfs.exists(rel)) return null; // 旧分片不齐 → 全量
+    prevText.set(s, vfs.readText(rel));
+  }
+
+  const dirty = new Set<number>();
+  // 变更/删除的旧词条：其旧 docs 所在分片全部标记脏
+  for (const [slug, fp] of Object.entries(prev.entries)) {
+    const cur = hashes.get(slug);
+    if (cur === undefined || cur !== fp.hash) {
+      for (const s of fp.shards) dirty.add(s);
+    }
+  }
+  // 变更/新增词条的当前 docs 所在分片（覆盖「新增章节落在别的分片」的情况）
+  const changedEntries = new Set<string>();
+  for (const [slug, h] of hashes) {
+    const p = prev.entries[slug];
+    if (!p || p.hash !== h) changedEntries.add(slug);
+  }
+  for (const d of indexingDocs) {
+    const owner = d.kind === 'entry' ? d.slug : d.entrySlug ?? d.slug;
+    if (changedEntries.has(owner)) dirty.add(shardOf(d.slug, m));
+  }
+
+  const shards: ShardIndex[] = new Array(m);
+  const reuseText = new Map<number, string>();
+  for (let s = 0; s < m; s++) {
+    if (!dirty.has(s)) {
+      const text = prevText.get(s)!;
+      shards[s] = decodeShardText(text);
+      reuseText.set(s, text);
+    } else {
+      const subset = indexingDocs.filter((d) => shardOf(d.slug, m) === s);
+      shards[s] = buildShards(subset, m)[s];
+    }
+  }
+  return { shards, reuseText };
 }
 
 export function buildIndex(vfs: Vfs, opts: BuildIndexOptions = {}): BuildResult {
@@ -206,9 +322,13 @@ export function buildIndex(vfs: Vfs, opts: BuildIndexOptions = {}): BuildResult 
     if (e.sectionCount > 30) tocHeavy.push(e.slug);
   }
 
-  // 分片
+  // 分片（② 增量：命中则仅重建脏分片，干净分片复用旧文本）
   const M = opts.shardCount ?? chooseShardCount(totalWords);
-  const shards = buildShards(indexingDocs, M);
+  const hashes = new Map<string, string>();
+  for (const e of entries) hashes.set(e.slug, hashEntryDir(vfs, e.slug));
+  const incremental = tryLoadIncremental(vfs, M, hashes, indexingDocs, opts.incremental === true);
+  const reuseText = incremental?.reuseText ?? new Map<number, string>();
+  const shards = incremental?.shards ?? buildShards(indexingDocs, M);
 
   // 计算 terms / avgDocLen
   let terms = 0;
@@ -291,9 +411,12 @@ export function buildIndex(vfs: Vfs, opts: BuildIndexOptions = {}): BuildResult 
     );
   }
   for (const sh of shards) {
+    const key = `.index/search/s${String(sh.shard).padStart(2, '0')}.json`;
+    const reused = reuseText.get(sh.shard);
+    // ② 增量：干净分片直接复用旧文本（字节级不变）；脏分片才重新编码。
     // P0-I：倒排 postings 二进制化（varint 差分 + zlib + base64），doc 表/长度仍为 JSON。
     // 用紧凑 JSON（无缩进）进一步减小体积；其余产物保持 pretty JSON 不变。
-    files[`.index/search/s${String(sh.shard).padStart(2, '0')}.json`] = JSON.stringify({
+    files[key] = reused ?? JSON.stringify({
       shard: sh.shard,
       docs: sh.docs,
       lengths: sh.lengths,
@@ -301,7 +424,24 @@ export function buildIndex(vfs: Vfs, opts: BuildIndexOptions = {}): BuildResult 
     });
   }
 
-  return { files, manifest, titleIndex, shards, snapshot, errors, warnings };
+  // ② 增量构建：产出词条指纹（hash + 全部 docs 命中的分片集合），供下次构建比对。
+  const buildState: BuildState = {
+    version: 1,
+    shardCount: M,
+    entries: {},
+    built_at: manifest.built_at,
+  };
+  for (const e of entries) {
+    const docShards = new Set<number>();
+    docShards.add(shardOf(e.slug, M));
+    for (const sec of sections[e.slug] ?? []) docShards.add(shardOf(sec.slug, M));
+    buildState.entries[e.slug] = {
+      hash: hashes.get(e.slug) ?? '',
+      shards: [...docShards].sort((a, b) => a - b),
+    };
+  }
+
+  return { files, manifest, titleIndex, shards, snapshot, errors, warnings, buildState, incrementalUsed: incremental !== null };
 }
 
 /** 将构建产物落盘（Node，CLI 用） */

@@ -7,8 +7,8 @@ import { mkdtempSync, existsSync, readFileSync, rmSync } from 'node:fs';
 import { join } from 'node:path';
 import { tmpdir } from 'node:os';
 
-function makeContentVfs(): MemoryVfs {
-  return new MemoryVfs({
+function makeContentFiles(): Record<string, string> {
+  return {
     'taxonomy.yaml': `- id: philosophy
   title: Philosophy
   order: 1
@@ -66,7 +66,11 @@ items:
   - order: "2"
     entry: bar
 `,
-  });
+  };
+}
+
+function makeContentVfs(): MemoryVfs {
+  return new MemoryVfs(makeContentFiles());
 }
 
 describe('buildIndex', () => {
@@ -132,5 +136,84 @@ describe('buildIndex', () => {
     } finally {
       rmSync(dir, { recursive: true, force: true });
     }
+  });
+});
+
+describe('buildIndex 增量构建（②）', () => {
+  /** 用「内容文件 + 上次构建产物 + build-state」构造可增量构建的 Vfs。 */
+  function seedVfs(files: Record<string, string>, built: ReturnType<typeof buildIndex>): MemoryVfs {
+    return new MemoryVfs({
+      ...files,
+      ...built.files,
+      '.pks-build-state.json': JSON.stringify(built.buildState),
+    });
+  }
+
+  it('无内容变化 → 走增量且全部产物（除 manifest.built_at）字节一致', () => {
+    const files = makeContentFiles();
+    const full = buildIndex(new MemoryVfs(files));
+    const inc = buildIndex(seedVfs(files, full), { incremental: true });
+
+    expect(inc.incrementalUsed).toBe(true);
+    expect(Object.keys(inc.files).sort()).toEqual(Object.keys(full.files).sort());
+    for (const key of Object.keys(full.files)) {
+      if (key === '.index/manifest.json') continue;
+      expect(inc.files[key], `key=${key} 应字节一致`).toBe(full.files[key]);
+    }
+    const a = JSON.parse(full.files['.index/manifest.json']);
+    const b = JSON.parse(inc.files['.index/manifest.json']);
+    expect(b.stats).toEqual(a.stats);
+    expect(b.search).toEqual(a.search);
+  });
+
+  it('仅改一个词条 → 只重建其 docs 命中的分片，其余分片字节不变', () => {
+    const files = makeContentFiles();
+    const full = buildIndex(new MemoryVfs(files));
+    const fooShards = new Set(full.buildState.entries['foo'].shards);
+    expect(fooShards.size).toBeGreaterThan(0);
+
+    const changed: Record<string, string> = {
+      ...files,
+      'entries/foo/chapters/c1.md':
+        files['entries/foo/chapters/c1.md'] + '\n新增一段关于价值与劳动的补充论述。\n',
+    };
+    const inc = buildIndex(seedVfs(changed, full), { incremental: true });
+    expect(inc.incrementalUsed).toBe(true);
+
+    let fooChanged = 0;
+    for (const key of Object.keys(full.files)) {
+      const m = key.match(/^\.index\/search\/s(\d{2})\.json$/);
+      if (!m) continue;
+      const s = Number(m[1]);
+      const same = inc.files[key] === full.files[key];
+      if (fooShards.has(s)) {
+        if (!same) fooChanged++;
+      } else {
+        expect(same, `未涉及分片 s${m[1]} 应字节不变`).toBe(true);
+      }
+    }
+    // 被改词条命中的分片至少有一个确实重建（内容变了）
+    expect(fooChanged).toBeGreaterThan(0);
+  });
+
+  it('分区数 M 变化 → 回退全量', () => {
+    const files = makeContentFiles();
+    const full = buildIndex(new MemoryVfs(files));
+    const tampered = { ...full.buildState, shardCount: 999 };
+    const vfs = new MemoryVfs({
+      ...files,
+      ...full.files,
+      '.pks-build-state.json': JSON.stringify(tampered),
+    });
+    const inc = buildIndex(vfs, { incremental: true });
+    expect(inc.incrementalUsed).toBe(false);
+  });
+
+  it('缺旧 state → 全量，并产出可用 build-state', () => {
+    const files = makeContentFiles();
+    const inc = buildIndex(new MemoryVfs(files), { incremental: true });
+    expect(inc.incrementalUsed).toBe(false);
+    expect(inc.buildState.version).toBe(1);
+    expect(Object.keys(inc.buildState.entries).sort()).toEqual(['bar', 'foo']);
   });
 });

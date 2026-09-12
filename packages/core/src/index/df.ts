@@ -55,11 +55,13 @@ export function buildDfBuckets(shards: ShardIndex[]): { meta: DfMeta; buckets: D
     }
   }
 
-  // 初始化 B 个桶，再按 term 哈希归桶
+  // 初始化 B 个桶，再按 term 哈希归桶。
+  // term 全局排序后再归桶：保证同一 term→count 集合在「全量/增量、不同分片解码顺序」
+  // 下产出**字节一致**的桶文件（增量复用的确定性前提）。
   const buckets: DfBucket[] = Array.from({ length: DF_BUCKET_COUNT }, (_, n) => ({ n, df: {} }));
-  for (const [term, count] of globalDf) {
+  for (const term of [...globalDf.keys()].sort()) {
     const bucket = buckets[dfBucketOf(term)];
-    bucket.df[term] = count;
+    bucket.df[term] = globalDf.get(term)!;
   }
   const nonEmpty = buckets.filter((b) => Object.keys(b.df).length > 0);
 

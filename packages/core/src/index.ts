@@ -40,6 +40,7 @@ export * from './track/parse.js';
 
 // 内容仓储
 export * from './content/repository.js';
+export * from './content/hash.js';
 
 // 词典类型（仅供类型引用；数据与查询逻辑走 @pks/core/dict 子路径）
 export type {
