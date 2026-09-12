@@ -1,0 +1,72 @@
+classDiagram
+    class SearchEngine {
+      +manifest
+      +titleIndex
+      +shardLoader
+      +stats?
+      +searchL1(q) SearchHit[]
+      +searchL2(q) SearchHit[]
+      +groupByEntry(hits) SearchResultGroup[]
+    }
+    class StationLoader {
+      +loadStation() StationBundle
+      +loadDfForTerms(terms) Map~string,number~
+      +loadDfBuckets(idxs) Map~string,number~
+    }
+    class SearchWorkerClient {
+      +ensureInitialized(b)
+      +ensureShardsSent(n)
+      +searchViaWorker(b, q) groups
+    }
+    class SearchWorker {
+      +onmessage(init|shards|dfb|search)
+      -engine
+      -dfMap
+    }
+    class DfBucketStore {
+      +DF_BUCKET_COUNT
+      +dfBucketOf(term) int
+      +buildDfBuckets(shards) Map~int,Record~
+    }
+    class Builder {
+      +buildIndex(vfs, opts) BuildResult
+      -readBuildState()
+      -writeBuildState()
+      -incrementalShards()
+    }
+    class Generator {
+      +run(workOrder, provider)
+    }
+    class LLMProvider {
+      <<interface>>
+      +generate(req) GenResponse
+    }
+    class OpenAIProvider {
+      +generate(req) GenResponse
+    }
+    class FileProvider {
+      +generate(req) GenResponse
+    }
+    class Runner {
+      +runItem(item)
+      +resume(state)
+      +promote(slug)
+    }
+    class Staging {
+      +writeStaging(slug, files)
+      +promote(slug)
+    }
+    class LintEntry {
+      +lintEntryDir(vfs, slug) issues
+    }
+    SearchWorkerClient ..> SearchWorker : postMessage
+    StationLoader ..> SearchEngine : builds
+    StationLoader ..> DfBucketStore : uses
+    SearchWorker ..> SearchEngine : builds
+    Builder ..> DfBucketStore : uses
+    Generator ..> LLMProvider
+    OpenAIProvider ..|> LLMProvider
+    FileProvider ..|> LLMProvider
+    Runner ..> Generator
+    Runner ..> Staging
+    Runner ..> LintEntry

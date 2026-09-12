@@ -1,0 +1,37 @@
+sequenceDiagram
+    participant UI
+    participant Client as SearchWorkerClient
+    participant Loader as StationLoader
+    participant Worker as SearchWorker
+    Note over UI,Worker: ① df 分片化后——Worker 仅按查询词桶懒加载 df
+    UI->>Client: searchViaWorker(bundle, query)
+    Client->>Client: ensureInitialized (只传 dfMeta: totalDocs/avgLen)
+    Client->>Loader: loadDfForTerms(tokenize(query))
+    Loader->>Loader: bucketIdx = fnv1a(term) & (B-1)
+    Loader->>Loader: fetchText df/bucket-NNN.json（缓存优先+单飞去重）
+    Loader-->>Client: Map<term, df>
+    Client->>Worker: dfb { buckets: [{n, df}] }
+    Client->>Worker: search { id, query }
+    Worker->>Worker: 合并 df 到 dfMap；engine.searchL2
+    Worker-->>Client: result { groups, hitCount, tookMs }
+    Client-->>UI: SearchResultGroup[]
+
+    Note over UI,Worker: ③ 批量生成管线——runner 逐条：生成→解析→staging→lint 回路→state
+    participant Runner
+    participant Provider as LLMProvider
+    participant Staging
+    participant Lint as lintEntryDir
+    Runner->>Runner: 读取 work-order + .pks-gen-state.json（断点续跑）
+    loop 每条 pending item
+        Runner->>Provider: generate(prompt 含 outline/sources/material)
+        Provider-->>Runner: { text }
+        Runner->>Runner: parse-output → files map
+        Runner->>Staging: write content/.staging/{slug}/
+        Runner->>Lint: lintEntryDir(stagingVfs, slug)
+        alt lint 失败 且 attempts < 3
+            Runner->>Provider: generate(prompt + 错误反馈)
+        else 通过
+            Runner->>Runner: state[slug] = done
+        end
+    end
+    Runner-->>Human: pks gen promote {slug} → content/entries/{slug}/
