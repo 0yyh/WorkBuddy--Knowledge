@@ -4,8 +4,9 @@
  *  - 惰性：search/sNN.json（L2 全文检索按需拉取 + 缓存）
  * 全部通过 fetch 读取 public/content 下的静态资源。
  */
-import { SearchEngine, decodePostings } from '@pks/core';
+import { SearchEngine, decodePostings, dfBucketOf } from '@pks/core';
 import type {
+  DfBucket,
   EntryIndexItem,
   IndexManifest,
   SearchHit,
@@ -89,10 +90,10 @@ export interface StationBundle {
   slugMap: Map<string, EntryIndexItem>;
   engine: SearchEngine;
   /**
-   * P0-III：全局 BM25 统计原始数据（Record 形式的 df），供 Worker init 重建 Map。
-   * 缺失（旧产物）为 null → Worker 与主线程均退化为分片内 BM25。
+   * ① df 分片化：全局 BM25 全局参数（{totalDocs, avgLen}），由 `index/search/df/meta.json` 读取。
+   * 全量 df 不再随包常驻，改为按查询词哈希按需懒加载（见 loadDfForTerms / loadDfBuckets）。
    */
-  statsSeed: { totalDocs: number; avgLen: number; df: Record<string, number> } | null;
+  dfMeta: { totalDocs: number; avgLen: number };
 }
 
 const shardCache = new Map<number, ShardIndex>();
@@ -219,6 +220,70 @@ export function warmSearchShards(): void {
 }
 
 /**
+ * ① df 分片化：全局文档频率(df) 桶懒加载。
+ *
+ * df 被拆成 `.index/search/df/bucket-NNN.json` 多个小文件；Worker/主线程只在查询时，
+ * 按查询词哈希算出的桶号按需拉取命中的少数桶（缓存 + 单飞去重），不再整表加载。
+ */
+
+/** df 桶相对路径（唯一拼装点）。 */
+function dfBucketPath(n: number): string {
+  return `index/search/df/bucket-${String(n).padStart(3, '0')}.json`;
+}
+
+/** df 桶原始文本缓存（与 shardTextCache 同款，跨 worker/主线程共享） */
+const dfBucketCache = new Map<number, DfBucket>();
+/** df 桶在途请求（并发去重） */
+const dfBucketInflight = new Map<number, Promise<DfBucket | null>>();
+
+/** 拉取单个 df 桶（幂等 + 单飞）；缺失（404/损坏）视为空桶返回 null */
+function fetchDfBucket(n: number): Promise<DfBucket | null> {
+  const hit = dfBucketCache.get(n);
+  if (hit !== undefined) return Promise.resolve(hit);
+  const inflight = dfBucketInflight.get(n);
+  if (inflight) return inflight;
+
+  const task = fetchText(dfBucketPath(n))
+    .then((text) => {
+      const bucket = JSON.parse(text) as DfBucket;
+      dfBucketCache.set(n, bucket);
+      dfBucketInflight.delete(n);
+      return bucket;
+    })
+    .catch(() => {
+      // 桶文件缺失/损坏：当作该桶无 df（词不在任何文档），不打断检索。
+      dfBucketInflight.delete(n);
+      return null;
+    });
+  dfBucketInflight.set(n, task);
+  return task;
+}
+
+/**
+ * 按需拉取指定桶号的 df 桶（缓存 + 单飞），返回非零桶列表。
+ * 供 Worker `dfb` 消息直接投递（形状为 `Array<{ n, df }>`）。
+ */
+export async function loadDfBuckets(idxs: number[]): Promise<DfBucket[]> {
+  const unique = [...new Set(idxs)];
+  const results = await Promise.all(unique.map((n) => fetchDfBucket(n)));
+  return results.filter((b): b is DfBucket => b !== null);
+}
+
+/**
+ * 按查询词集合计算命中桶并合并为 `Map<term, df>`，供主线程兜底 BM25 打分使用。
+ * 仅需加载查询词对应的极少数桶（典型 1–3 个），消除整表加载卡顿。
+ */
+export async function loadDfForTerms(terms: string[]): Promise<Map<string, number>> {
+  const idxs = [...new Set(terms.map((t) => dfBucketOf(t)))];
+  const buckets = await loadDfBuckets(idxs);
+  const map = new Map<string, number>();
+  for (const b of buckets) {
+    for (const [term, count] of Object.entries(b.df)) map.set(term, count);
+  }
+  return map;
+}
+
+/**
  * 首屏装载：并行拉取常驻三件套，再按首字母拉取词条元数据分片。
  * 幂等：整个进程内只装载一次（StrictMode 双跑安全）。
  */
@@ -226,14 +291,13 @@ export function loadStation(): Promise<StationBundle> {
   if (bundlePromise) return bundlePromise;
 
   bundlePromise = (async (): Promise<StationBundle> => {
-    const [manifest, taxonomy, titleIndex, dfData] = await Promise.all([
+    const [manifest, taxonomy, titleIndex, dfMetaData] = await Promise.all([
       fetchJson<IndexManifest>('index/manifest.json'),
       fetchJson<TaxonomyNode[]>('index/taxonomy.json'),
       fetchJson<TitleIndexItem[]>('index/search/title.json'),
-      // P0-II 全局检索统计：缺失（旧产物）时回落到分片内 BM25，不阻断首屏
-      fetchJson<{ totalDocs: number; avgDocLen: number; df: Record<string, number> }>(
-        'index/search/df.json',
-      ).catch(() => null),
+      // ① df 分片化：常驻极小 meta.json（{totalDocs, avgLen}）；不再整表加载 df.json。
+      // 缺失（旧产物）时回落到 manifest.search 的全局参数，不阻断首屏。
+      fetchJson<{ totalDocs: number; avgLen: number }>('index/search/df/meta.json').catch(() => null),
     ]);
 
     // entryShards 可能为空（旧产物），退回由 title 索引推导
@@ -253,28 +317,26 @@ export function loadStation(): Promise<StationBundle> {
     const slugMap = new Map<string, EntryIndexItem>();
     for (const items of shards) for (const item of items) slugMap.set(item.s, item);
 
-    // P0-II：全局 BM25 统计（跨分片打分可比）；df.json 缺失时 stats 为 undefined → 分片内 BM25
-    // P0-III：statsSeed 为同一数据的 Record 形式，供 Worker init 重建 Map。
-    const statsSeed = dfData
+    // ① df 分片化：全局参数（totalDocs / avgLen）用于 BM25 归一化；全量 df 不再常驻，
+    // 由 loadDfForTerms / loadDfBuckets 按需懒加载（Worker 走 dfb，主线程兜底走同样路径）。
+    const dfMeta = dfMetaData
       ? {
-          totalDocs: dfData.totalDocs ?? manifest.search.docs,
-          avgLen: dfData.avgDocLen ?? manifest.search.avgDocLen,
-          df: dfData.df ?? {},
+          totalDocs: dfMetaData.totalDocs ?? manifest.search.docs,
+          avgLen: dfMetaData.avgLen ?? manifest.search.avgDocLen,
         }
-      : null;
-    const stats = statsSeed
-      ? {
-          totalDocs: statsSeed.totalDocs,
-          avgLen: statsSeed.avgLen,
-          df: new Map<string, number>(Object.entries(statsSeed.df)),
-        }
-      : undefined;
+      : { totalDocs: manifest.search.docs, avgLen: manifest.search.avgDocLen };
+
+    const stats = {
+      totalDocs: dfMeta.totalDocs,
+      avgLen: dfMeta.avgLen,
+      df: new Map<string, number>(),
+    };
 
     const engine = new SearchEngine(manifest, titleIndex, (shard: number): ShardIndex | null => {
       return shardCache.get(shard) ?? null;
     }, stats);
 
-    return { manifest, taxonomy, titleIndex, slugMap, engine, statsSeed };
+    return { manifest, taxonomy, titleIndex, slugMap, engine, dfMeta };
   })().catch((e: unknown) => {
     bundlePromise = null; // 允许重试
     throw e;

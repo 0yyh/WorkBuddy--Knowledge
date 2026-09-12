@@ -1,8 +1,8 @@
 /** 从已构建的 .index/ 目录加载索引，构造可查询的 SearchEngine（CLI search / 验证用） */
-import { readFileSync, existsSync } from 'node:fs';
+import { readFileSync, existsSync, readdirSync } from 'node:fs';
 import { join } from 'node:path';
 import { SearchEngine, decodePostings } from '@pks/core';
-import type { TitleIndexItem, IndexManifest, ShardIndex } from '@pks/core';
+import type { TitleIndexItem, IndexManifest, ShardIndex, GlobalSearchStats } from '@pks/core';
 
 /**
  * 从已构建的 .index/ 目录加载索引，构造可查询的 SearchEngine（CLI search / 验证用）。
@@ -42,5 +42,28 @@ export function loadIndex(contentDir: string): SearchEngine | null {
     }
   };
 
-  return new SearchEngine(manifest, titleIndex, shardLoader);
+  // ① df 分片化：从 `search/df/meta.json` + 全部 `bucket-NNN.json` 聚合全局 df，
+  // 与 web Worker 统一打分口径（旧产物无 df 目录时回落到分片内 BM25）。
+  let stats: GlobalSearchStats | undefined;
+  const dfDir = join(idxDir, 'search', 'df');
+  if (existsSync(dfDir)) {
+    try {
+      const meta = JSON.parse(readFileSync(join(dfDir, 'meta.json'), 'utf8')) as {
+        totalDocs: number;
+        avgLen: number;
+      };
+      const df = new Map<string, number>();
+      for (const f of readdirSync(dfDir)) {
+        if (!/^bucket-\d{3}\.json$/.test(f)) continue;
+        const b = JSON.parse(readFileSync(join(dfDir, f), 'utf8')) as { df: Record<string, number> };
+        for (const [term, count] of Object.entries(b.df)) df.set(term, count);
+      }
+      stats = { totalDocs: meta.totalDocs, avgLen: meta.avgLen, df };
+    } catch {
+      // df 目录存在但解析失败：不阻塞，退化为分片内 BM25。
+      stats = undefined;
+    }
+  }
+
+  return new SearchEngine(manifest, titleIndex, shardLoader, stats);
 }

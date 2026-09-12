@@ -14,6 +14,14 @@ export const SCHEMA_VERSION = 1 as const;
  */
 export const SHARD_COUNT = 16 as const;
 
+/**
+ * 全局文档频率(df) 分桶数（① df 分片化，解决运行期单表 48MB 卡顿）。
+ * term 按 `fnv1a(term) & (DF_BUCKET_COUNT - 1)` 散列；固定 64、与检索分片数 M 解耦，
+ * M 跳变只动 `sNN`、不影响 df 桶。每个桶约 48MB/64 ≈ 750KB，Worker 按需懒加载。
+ * 必须为 2 的幂，且 builder 与消费端（worker/CLI/loader）共用同一常量，避免 manifest 耦合。
+ */
+export const DF_BUCKET_COUNT = 64 as const;
+
 /** entries 元数据分片：按 slug 首字母 26 片（02 §3.4 轴 B） */
 export const ENTRY_SHARD_ALPHA = 26 as const;
 

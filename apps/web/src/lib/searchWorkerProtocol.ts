@@ -8,11 +8,11 @@
  */
 import type { IndexManifest, SearchResultGroup, TitleIndexItem } from '@pks/core';
 
-/** Worker init 用全局 BM25 统计（与 loader 的 statsSeed 对齐；缺失为 null → 分片内 BM25） */
-export interface SearchWorkerStats {
+/** Worker init 用全局 BM25 全局参数（与 loader 的 dfMeta 对齐；缺失为 null → 分片内 BM25）。
+ *  ① df 分片化后不再整表传 df：全量 df 由按需 `dfb` 消息懒加载。 */
+export interface SearchWorkerDfMeta {
   totalDocs: number;
   avgLen: number;
-  df: Record<string, number>;
 }
 
 /** 主 → worker：初始化引擎（发送一次） */
@@ -20,13 +20,20 @@ export interface SearchWorkerInitRequest {
   type: 'init';
   manifest: IndexManifest;
   titleIndex: TitleIndexItem[];
-  stats: SearchWorkerStats | null;
+  dfMeta: SearchWorkerDfMeta | null;
 }
 
 /** 主 → worker：投喂原始分片 JSON 文本（可增量多次发送） */
 export interface SearchWorkerShardsRequest {
   type: 'shards';
   items: Array<{ n: number; text: string }>;
+}
+
+/** 主 → worker：投喂检索所需的 df 桶（已按查询词哈希算桶，按需懒加载）。
+ *  worker 合并进内部 dfMap 供 BM25 打分。 */
+export interface SearchWorkerDfbRequest {
+  type: 'dfb';
+  buckets: Array<{ n: number; df: Record<string, number> }>;
 }
 
 /** 主 → worker：执行一次全文检索 */
@@ -39,6 +46,7 @@ export interface SearchWorkerSearchRequest {
 export type SearchWorkerRequest =
   | SearchWorkerInitRequest
   | SearchWorkerShardsRequest
+  | SearchWorkerDfbRequest
   | SearchWorkerSearchRequest;
 
 /** worker → 主：引擎就绪 */

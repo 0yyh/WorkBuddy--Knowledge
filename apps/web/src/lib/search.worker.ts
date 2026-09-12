@@ -44,6 +44,13 @@ const ctx = self as unknown as {
 const decoded = new Map<number, ShardIndex>();
 let engine: SearchEngine | null = null;
 
+/**
+ * ① df 分片化：Worker 内全局 df（term → 全局文档频率）。
+ * 与 engine.stats.df 持有同一 Map 引用；收到 `dfb` 消息时增量合并进此 Map，
+ * 引擎无需重建即可看到最新 df。仅在查询词命中的桶被懒加载后填充。
+ */
+const dfMap = new Map<string, number>();
+
 function reply(message: SearchWorkerResponse): void {
   ctx.postMessage(message);
 }
@@ -67,12 +74,10 @@ ctx.onmessage = (e: MessageEvent<SearchWorkerRequest>): void => {
   try {
     switch (msg.type) {
       case 'init': {
-        const stats = msg.stats
-          ? {
-              totalDocs: msg.stats.totalDocs,
-              avgLen: msg.stats.avgLen,
-              df: new Map<string, number>(Object.entries(msg.stats.df)),
-            }
+        // ① df 分片化：init 只建全局参数（totalDocs/avgLen）；全量 df 由后续 dfb 消息按需合并。
+        // dfMap 与 engine.stats.df 共用同一引用，故 dfb 增量写入对引擎立即可见。
+        const stats = msg.dfMeta
+          ? { totalDocs: msg.dfMeta.totalDocs, avgLen: msg.dfMeta.avgLen, df: dfMap }
           : undefined;
         engine = new SearchEngine(
           msg.manifest,
@@ -81,6 +86,14 @@ ctx.onmessage = (e: MessageEvent<SearchWorkerRequest>): void => {
           stats,
         );
         reply({ type: 'ready' });
+        break;
+      }
+
+      case 'dfb': {
+        // 合并各桶 df 进 dfMap（同引用对 engine 可见）。Worker 复用，跨查询累积命中词的 df。
+        for (const bucket of msg.buckets) {
+          for (const [term, count] of Object.entries(bucket.df)) dfMap.set(term, count);
+        }
         break;
       }
 

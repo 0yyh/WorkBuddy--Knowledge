@@ -9,9 +9,10 @@
  *  - init 只发一次（readyPromise 记忆）；分片用 sentShards 去重（幂等）。
  *  - 分片文本由本模块负责获取（fetchShardText，与主线程 loadShard 共享同一份缓存，不重复下载）。
  */
+import { tokenize, dfBucketOf } from '@pks/core';
 import type { SearchResultGroup } from '@pks/core';
 import type { StationBundle } from './loader';
-import { fetchShardText } from './loader';
+import { fetchShardText, loadDfBuckets } from './loader';
 import type {
   SearchWorkerRequest,
   SearchWorkerResponse,
@@ -127,7 +128,7 @@ async function ensureInitialized(bundle: StationBundle): Promise<void> {
       type: 'init',
       manifest: bundle.manifest,
       titleIndex: bundle.titleIndex,
-      stats: bundle.statsSeed,
+      dfMeta: bundle.dfMeta,
     };
     w.postMessage(initMessage);
     initialized = true;
@@ -164,6 +165,16 @@ export async function searchViaWorker(
   if (!w) throw new WorkerUnavailableError();
 
   await ensureInitialized(bundle);
+
+  // ① df 分片化：按查询词哈希算桶 → 懒加载命中桶 → 发 dfb 消息。
+  // Web Worker 消息 FIFO：先发 dfb 再发 search，保证检索时 dfMap 已合并就绪。
+  const qTerms = tokenize(query);
+  const qIdxs = [...new Set(qTerms.map((t) => dfBucketOf(t)))];
+  const dfBuckets = await loadDfBuckets(qIdxs);
+  if (dfBuckets.length > 0) {
+    w.postMessage({ type: 'dfb', buckets: dfBuckets });
+  }
+
   await ensureShardsSent(bundle.manifest.search.shards);
 
   const id = ++seq;

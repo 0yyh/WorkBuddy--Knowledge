@@ -27,6 +27,7 @@ export * from './index/tokenizer.js';
 export * from './index/bm25.js';
 export * from './index/shards.js';
 export * from './index/inverted.js';
+export * from './index/df.js';
 export * from './index/lazy-loader.js';
 export * from './index/shard-codec.js';
 

@@ -12,6 +12,7 @@ import { parseYamlFrontmatter } from '../parse/frontmatter.js';
 import { toPlainText } from '../parse/markdown.js';
 import { countWords } from '../parse/words.js';
 import { buildShards, type IndexingDoc, type ShardIndex } from './inverted.js';
+import { buildDfBuckets } from './df.js';
 import { encodePostings } from './shard-codec.js';
 import { chooseShardCount } from './shards.js';
 import { deriveCrossTimeline, deriveTimelineDimensions } from '../track/parse.js';
@@ -218,16 +219,6 @@ export function buildIndex(vfs: Vfs, opts: BuildIndexOptions = {}): BuildResult 
   }
   const avgDocLen = indexingDocs.length ? totalLen / indexingDocs.length : 0;
 
-  // P0-II：全局文档频率 df（term -> 含该词的文档数），供跨分片 BM25 统一打分
-  const dfMap = new Map<string, number>();
-  for (const sh of shards) {
-    for (const term of Object.keys(sh.index)) {
-      dfMap.set(term, (dfMap.get(term) ?? 0) + sh.index[term].length);
-    }
-  }
-  const df: Record<string, number> = {};
-  for (const [term, count] of dfMap) df[term] = count;
-
   const manifest: IndexManifest = {
     schema: SCHEMA_VERSION,
     generator: GENERATOR,
@@ -288,12 +279,17 @@ export function buildIndex(vfs: Vfs, opts: BuildIndexOptions = {}): BuildResult 
   // search
   files['.index/search/meta.json'] = JSON.stringify(manifest.search, null, 2);
   files['.index/search/title.json'] = JSON.stringify(titleIndex, null, 2);
-  // P0-II：全局检索统计（跨分片 BM25 所需；与 manifest.search 的 docs/avgDocLen 配合即可得全局参数）
-  files['.index/search/df.json'] = JSON.stringify(
-    { totalDocs: indexingDocs.length, avgDocLen: Math.round(avgDocLen * 100) / 100, df },
-    null,
-    2,
-  );
+  // ① df 分片化：meta(全局 {totalDocs, avgLen}) + 按 term 哈希分桶的多个小文件；
+  // Worker/CLI 只在查询时按需懒加载命中的桶，不再整表(约 48MB)加载进内存。
+  const { meta: dfMeta, buckets: dfBuckets } = buildDfBuckets(shards);
+  files['.index/search/df/meta.json'] = JSON.stringify(dfMeta, null, 2);
+  for (const b of dfBuckets) {
+    files[`.index/search/df/bucket-${String(b.n).padStart(3, '0')}.json`] = JSON.stringify(
+      { n: b.n, df: b.df },
+      null,
+      2,
+    );
+  }
   for (const sh of shards) {
     // P0-I：倒排 postings 二进制化（varint 差分 + zlib + base64），doc 表/长度仍为 JSON。
     // 用紧凑 JSON（无缩进）进一步减小体积；其余产物保持 pretty JSON 不变。

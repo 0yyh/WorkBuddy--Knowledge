@@ -1,6 +1,8 @@
 import { describe, it, expect } from 'vitest';
 import { buildIndex, writeIndexFiles } from '../src/index/builder.js';
 import { MemoryVfs } from '../src/vfs/memory.js';
+import { fnv1a } from '../src/util/fnv1a.js';
+import { DF_BUCKET_COUNT } from '../src/constants.js';
 import { mkdtempSync, existsSync, readFileSync, rmSync } from 'node:fs';
 import { join } from 'node:path';
 import { tmpdir } from 'node:os';
@@ -95,6 +97,27 @@ describe('buildIndex', () => {
     // Files map contains the expected products.
     expect(result.files['.index/manifest.json']).toBeDefined();
     expect(result.files['.index/search/title.json']).toBeDefined();
+
+    // ① df 分片化：不再产出整表 df.json，改为 df/meta.json + 多个 df/bucket-NNN.json。
+    expect(result.files['.index/search/df.json']).toBeUndefined();
+    expect(result.files['.index/search/df/meta.json']).toBeDefined();
+    const dfMeta = JSON.parse(result.files['.index/search/df/meta.json']) as {
+      totalDocs: number;
+      avgLen: number;
+    };
+    expect(dfMeta.totalDocs).toBe(3); // 3 indexing docs (foo entry+section, bar entry)
+
+    // 至少存在一个非空 df 桶，且桶形状为 { n, df: Record<term, count> }。
+    const bucketKeys = Object.keys(result.files).filter((k) => k.startsWith('.index/search/df/bucket-'));
+    expect(bucketKeys.length).toBeGreaterThan(0);
+    const sample = JSON.parse(result.files[bucketKeys[0]]) as { n: number; df: Record<string, number> };
+    expect(typeof sample.n).toBe('number');
+    expect(Object.keys(sample.df).length).toBeGreaterThan(0);
+    // 桶号与 term 哈希一致：桶内每个 term 的 dfBucketOf(term) === 该桶号。
+    for (const term of Object.keys(sample.df)) {
+      const bucket = (fnv1a(term) & (DF_BUCKET_COUNT - 1)) as number;
+      expect(bucket).toBe(sample.n);
+    }
   });
 
   it('writes index files to a temp directory', () => {
