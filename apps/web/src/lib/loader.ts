@@ -4,7 +4,7 @@
  *  - 惰性：search/sNN.json（L2 全文检索按需拉取 + 缓存）
  * 全部通过 fetch 读取 public/content 下的静态资源。
  */
-import { SearchEngine, decodePostings, dfBucketOf } from '@pks/core';
+import { SearchEngine, decodePostings, dfBucketOf, tokenize } from '@pks/core';
 import type {
   DfBucket,
   EntryIndexItem,
@@ -94,6 +94,11 @@ export interface StationBundle {
    * 全量 df 不再随包常驻，改为按查询词哈希按需懒加载（见 loadDfForTerms / loadDfBuckets）。
    */
   dfMeta: { totalDocs: number; avgLen: number };
+  /**
+   * 主线程兜底检索用的全局 df Map。与 `engine.stats.df` 是**同一引用**，
+   * 兜底路径按需把查询词命中的桶合并进此 Map，BM25 立即可见（无需重建引擎）。
+   */
+  dfMap: Map<string, number>;
 }
 
 const shardCache = new Map<number, ShardIndex>();
@@ -326,17 +331,19 @@ export function loadStation(): Promise<StationBundle> {
         }
       : { totalDocs: manifest.search.docs, avgLen: manifest.search.avgDocLen };
 
+    // 该 Map 与 engine.stats.df 为同一引用：主线程兜底检索时按需填充（见 fullTextSearch）。
+    const dfMap = new Map<string, number>();
     const stats = {
       totalDocs: dfMeta.totalDocs,
       avgLen: dfMeta.avgLen,
-      df: new Map<string, number>(),
+      df: dfMap,
     };
 
     const engine = new SearchEngine(manifest, titleIndex, (shard: number): ShardIndex | null => {
       return shardCache.get(shard) ?? null;
     }, stats);
 
-    return { manifest, taxonomy, titleIndex, slugMap, engine, dfMeta };
+    return { manifest, taxonomy, titleIndex, slugMap, engine, dfMeta, dfMap };
   })().catch((e: unknown) => {
     bundlePromise = null; // 允许重试
     throw e;
@@ -364,6 +371,10 @@ export async function fullTextSearch(
   }
 
   await ensureAllShards(bundle.manifest.search.shards);
+  // ① df 分片化：兜底路径同样只懒加载查询词命中的 df 桶，合并进 engine.stats.df（同一引用），
+  // 保持与 Worker 路径一致的全局 BM25 打分口径（否则退化为分片内 df）。
+  const df = await loadDfForTerms(tokenize(q));
+  for (const [term, count] of df) bundle.dfMap.set(term, count);
   const hits: SearchHit[] = bundle.engine.searchL2(q);
   return bundle.engine.groupByEntry(hits);
 }
