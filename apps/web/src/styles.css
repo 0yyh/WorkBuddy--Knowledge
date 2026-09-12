@@ -4943,6 +4943,42 @@ mark.hl { background: var(--brand-soft); color: var(--brand-strong); padding: 0 
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
   padding: 6px 2px 4px 0;
+
+  /* Firefox */
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.22) rgba(255, 255, 255, 0.06);
+}
+
+/* WebKit 滚动条：与深色卡片融为一体，窄轨 + 圆角胶囊滑块 */
+.dict-card-body::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.dict-card-body::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 3px;
+  margin: 4px 0;
+}
+
+.dict-card-body::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.22);
+  border-radius: 3px;
+  border: 1px solid transparent;
+  background-clip: padding-box;
+  transition: background 0.2s var(--ease, ease);
+}
+
+.dict-card-body::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.36);
+}
+
+.dict-card-body::-webkit-scrollbar-thumb:active {
+  background: var(--t-accent, var(--brand));
+}
+
+.dict-card-body::-webkit-scrollbar-corner {
+  background: transparent;
 }
 
 .dict-card-body-loading {
