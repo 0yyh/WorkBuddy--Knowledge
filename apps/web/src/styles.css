@@ -5049,6 +5049,39 @@ mark.hl { background: var(--brand-soft); color: var(--brand-strong); padding: 0 
   color: var(--text-dim);
 }
 
+/* 汉字词典卡：笔画 / 部首 / 结构 元信息行 */
+.dict-char-meta {
+  margin: 4px 0 8px;
+  font-size: 0.8125rem;
+  color: #aaaaaa;
+  letter-spacing: 0.02em;
+}
+
+/* 汉字词典卡：近义 / 反义 */
+.dict-char-rel {
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.dict-rel-line {
+  margin: 0;
+  font-size: 0.8438rem;
+  color: #dcdcdc;
+  line-height: 1.6;
+}
+
+.dict-rel-key {
+  display: inline-block;
+  min-width: 2.4em;
+  margin-right: 8px;
+  color: var(--t-accent, var(--brand));
+  font-weight: 600;
+}
+
 /* 复制成功提示（比阅读页 chrome 更高层级） */
 .dict-toast {
   position: fixed;

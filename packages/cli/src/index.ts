@@ -11,6 +11,7 @@ import { bundleCmd } from './commands/bundle.js';
 import { renameCmd } from './commands/rename.js';
 import { browseGenCmd } from './commands/browse-gen.js';
 import { searchCmd } from './commands/search.js';
+import { buildCharDictCmd } from './commands/build-chardict.js';
 
 interface Flags {
   content: string | boolean;
@@ -21,14 +22,35 @@ interface Flags {
 }
 
 function parse(argv: string[]): { cmd: string; positional: string[]; flags: Flags } {
-  const cmd = argv[0] ?? '';
+  // 命令是 argv 中首个命中已知集合的 token；其前的路径/加载器参数（如 tsx 以 import()
+  // 同进程加载时把脚本路径也塞进 argv）一律忽略。这样无论 node 直接 re-exec 还是 tsx
+  // import() 加载，命令都能被正确识别。
+  const KNOWN = new Set([
+    'build:index',
+    'lint',
+    'bundle',
+    'rename',
+    'browse:gen',
+    'build:chardict',
+    'search',
+  ]);
+  let cmd = '';
+  let idx = -1;
+  for (let i = 0; i < argv.length; i++) {
+    if (KNOWN.has(argv[i])) {
+      cmd = argv[i];
+      idx = i;
+      break;
+    }
+  }
+  const rest = idx >= 0 ? argv.slice(idx + 1) : [];
   const positional: string[] = [];
   const flags: Flags = { content: 'content' };
-  for (let i = 1; i < argv.length; i++) {
-    const a = argv[i];
+  for (let i = 0; i < rest.length; i++) {
+    const a = rest[i];
     if (a.startsWith('--')) {
       const key = a.slice(2);
-      const next = argv[i + 1];
+      const next = rest[i + 1];
       if (next !== undefined && !next.startsWith('--')) {
         flags[key] = next;
         i++;
@@ -83,12 +105,15 @@ function printHelp(): void {
                      导出数据包 zip
   rename <old> <new>  slug 改名级联
   browse:gen        生成 _browse/ 影子树
+  build:chardict    字符词典（character）合并为单个 index.json
   search <query> [--level l1|l2]   在已构建索引上检索
 `);
 }
 
 function main(): void {
+  console.error('DBG_ARGV', JSON.stringify(process.argv));
   const { cmd, positional, flags } = parse(process.argv.slice(2));
+  console.error('DBG_CMD', JSON.stringify(cmd));
   switch (cmd) {
     case 'build:index':
       buildIndexCmd(contentDir(flags));
@@ -113,6 +138,9 @@ function main(): void {
     case 'search':
       if (positional.length < 1) { console.error('用法: search <query> [--level l1|l2]'); process.exit(1); }
       searchCmd(contentDir(flags), positional.join(' '), searchLevel(flags.level));
+      break;
+    case 'build:chardict':
+      buildCharDictCmd(contentDir(flags));
       break;
     default:
       printHelp();

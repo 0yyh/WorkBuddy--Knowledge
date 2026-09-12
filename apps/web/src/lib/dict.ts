@@ -6,8 +6,8 @@
  *
  * 惰性 + 幂等：词典较大（~70KB）不进首屏，首次查询才 fetch 并缓存；失败不阻断阅读。
  */
-import { parseDictionary, lookupDict, normalizeQuery } from '@pks/core/dict';
-import type { DictEntry, Dictionary } from '@pks/core/dict';
+import { parseDictionary, lookupDict, normalizeQuery, parseCharIndex } from '@pks/core/dict';
+import type { DictEntry, Dictionary, CharInfo } from '@pks/core/dict';
 
 let dictCache: Dictionary | null = null;
 let dictInflight: Promise<Dictionary | null> | null = null;
@@ -98,4 +98,66 @@ export function dictReady(): boolean {
 export function resetDictCache(): void {
   dictCache = null;
   dictInflight = null;
+}
+
+// ============================================================
+// 汉字词典（character）：运行期只取构建产物 index.json
+// ============================================================
+
+let charCache: Map<string, CharInfo> | null = null;
+let charInflight: Promise<Map<string, CharInfo> | null> | null = null;
+
+/** 汉字词典 index.json 的确定 URL（与 dictUrl 同样的绝对化策略） */
+function charUrl(): string {
+  const base: string =
+    (import.meta.env && import.meta.env.BASE_URL ? import.meta.env.BASE_URL : '/') || '/';
+  const prefix = base.endsWith('/') ? base.slice(0, -1) : base;
+  const baseUri = typeof document !== 'undefined' && document.baseURI ? document.baseURI : base;
+  return new URL(`${prefix}/content/dict/chinese-dictionary/character/index.json`, baseUri).href;
+}
+
+/** 惰性装载汉字词典索引（缓存 + 单飞幂等）；失败返回 null（不抛，阅读不受影响） */
+export function loadCharDictionary(): Promise<Map<string, CharInfo> | null> {
+  if (charCache) return Promise.resolve(charCache);
+  if (charInflight) return charInflight;
+
+  const url = charUrl();
+  charInflight = fetch(url, { cache: 'no-cache' })
+    .then((res) => {
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      return res.json() as Promise<unknown>;
+    })
+    .then((raw) => {
+      const v = parseCharIndex(raw);
+      charCache = v.errors.length ? null : (v.value ?? null);
+      return charCache;
+    })
+    .catch(() => null)
+    .finally(() => {
+      charInflight = null;
+    });
+  return charInflight;
+}
+
+/**
+ * 单字查询：仅当文本为「单个汉字」时查汉字词典；命中返回 CharInfo，否则 null。
+ * 多字选区应走 lookupWord（dictionary.json）。
+ */
+export async function lookupChar(ch: string): Promise<CharInfo | null> {
+  const c = (ch ?? '').trim();
+  if (!c || [...c].length !== 1) return null;
+  const map = charCache ?? (await loadCharDictionary());
+  if (!map) return null;
+  return map.get(c) ?? null;
+}
+
+/** 汉字词典是否已就绪（已装载 / 装载中） */
+export function charReady(): boolean {
+  return charCache !== null || charInflight !== null;
+}
+
+/** 重置汉字词典缓存（供内容更新后清空用） */
+export function resetCharCache(): void {
+  charCache = null;
+  charInflight = null;
 }

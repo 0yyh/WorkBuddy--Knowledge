@@ -54,6 +54,14 @@ async function main() {
   // 离线词典（content/dict/dictionary.json）；随包与内容更新一并下发
   await copyDir('dict');
 
+  // 字符词典运行端只需构建产物 index.json，剔除 4 个原始大文件（约 16MB JSONL/JSON），
+  // 避免随 web/Android 包下发；源 content/dict 仍保留原始数据以保完整性与可读性。
+  const charDir = join(DEST_CONTENT, 'dict', 'chinese-dictionary', 'character');
+  for (const f of ['char_base.json', 'char_detail.json', 'polyphone.json', 'related.json']) {
+    const p = join(charDir, f);
+    if (existsSync(p)) await rm(p, { force: true });
+  }
+
   const indexFiles = await readdir(join(DEST_CONTENT, 'index'));
   const jf = await readdir(join(DEST_CONTENT, 'index', 'entries'));
   const sf = (await readdir(join(DEST_CONTENT, 'index', 'search'))).length;

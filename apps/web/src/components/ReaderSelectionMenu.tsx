@@ -18,8 +18,8 @@
  */
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
-import type { DictEntry } from '@pks/core/dict';
-import { lookupWord } from '../lib/dict';
+import type { DictEntry, CharInfo } from '@pks/core/dict';
+import { lookupWord, lookupChar } from '../lib/dict';
 import type { BgColorPref } from '../lib/preferences';
 
 interface ReaderSelectionMenuProps {
@@ -48,6 +48,8 @@ interface QueryState {
   /** 用户查询的词（未命中时用于提示） */
   queried: string;
   entry: DictEntry | null;
+  /** 命中汉字词典时的单字信息（与 entry 互斥） */
+  charInfo: CharInfo | null;
 }
 
 /** 复制后提示与菜单尺寸（定位 clamp 用） */
@@ -134,7 +136,7 @@ export function ReaderSelectionMenu({
 }: ReaderSelectionMenuProps): JSX.Element | null {
   const [menu, setMenu] = useState<MenuState | null>(null);
   const [cardPos, setCardPos] = useState<{ x: number; y: number; arrow: 'up' | 'down' } | null>(null);
-  const [query, setQuery] = useState<QueryState>({ status: 'closed', queried: '', entry: null });
+  const [query, setQuery] = useState<QueryState>({ status: 'closed', queried: '', entry: null, charInfo: null });
   const [toast, setToast] = useState<string>('');
 
   const toastTimer = useRef<number | null>(null);
@@ -166,7 +168,7 @@ export function ReaderSelectionMenu({
 
   const closeCard = useCallback((): void => {
     querySeq.current += 1;
-    setQuery({ status: 'closed', queried: '', entry: null });
+    setQuery({ status: 'closed', queried: '', entry: null, charInfo: null });
     setCardPos(null);
   }, []);
 
@@ -195,7 +197,7 @@ export function ReaderSelectionMenu({
     setMenu(null);
     setCardPos(null);
     querySeq.current += 1;
-    setQuery({ status: 'closed', queried: '', entry: null });
+    setQuery({ status: 'closed', queried: '', entry: null, charInfo: null });
     setToast('');
   }, [resetKey, enabled]);
 
@@ -323,16 +325,28 @@ export function ReaderSelectionMenu({
     setMenu(null);
     setCardPos(pos);
     const seq = ++querySeq.current;
-    setQuery({ status: 'loading', queried: text, entry: null });
-    void lookupWord(text)
-      .then((entry) => {
-        if (seq !== querySeq.current) return;
-        setQuery({ status: 'done', queried: text, entry });
-      })
-      .catch(() => {
-        if (seq !== querySeq.current) return;
-        setQuery({ status: 'done', queried: text, entry: null });
-      });
+    setQuery({ status: 'loading', queried: text, entry: null, charInfo: null });
+
+    const finishWord = (entry: DictEntry | null): void => {
+      if (seq !== querySeq.current) return;
+      setQuery({ status: 'done', queried: text, entry, charInfo: null });
+    };
+
+    // 单字优先查汉字词典；未命中再回落多词词典（dictionary.json）
+    if ([...text].length === 1) {
+      void lookupChar(text)
+        .then((ci) => {
+          if (seq !== querySeq.current) return;
+          if (ci) setQuery({ status: 'done', queried: text, entry: null, charInfo: ci });
+          else void lookupWord(text).then(finishWord);
+        })
+        .catch(() => {
+          if (seq !== querySeq.current) return;
+          void lookupWord(text).then(finishWord);
+        });
+    } else {
+      void lookupWord(text).then(finishWord);
+    }
   }, [menu]);
 
   /** 卡片顶部 handle 下滑关闭 */
@@ -412,6 +426,54 @@ export function ReaderSelectionMenu({
                 <span className="dict-loading-spin" aria-hidden="true" />
                 <p className="dict-loading-text">正在查询「{query.queried}」…</p>
               </div>
+            ) : query.charInfo ? (
+              <>
+                <header className="dict-card-head">
+                  <div className="dict-head-main">
+                    {query.charInfo.pinyin.length ? (
+                      <span className="dict-phonetic">{query.charInfo.pinyin.join(' / ')}</span>
+                    ) : null}
+                    <div className="dict-head-word">
+                      <h3 className="dict-word">{query.charInfo.char}</h3>
+                    </div>
+                  </div>
+                  <button type="button" className="dict-close" aria-label="关闭释义" onClick={closeCard}>
+                    <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
+                      <path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                  </button>
+                </header>
+
+                <div className="dict-card-body">
+                  <p className="dict-char-meta">
+                    {[
+                      query.charInfo.strokes !== undefined ? `笔画 ${query.charInfo.strokes}` : null,
+                      query.charInfo.radicals ? `部首 ${query.charInfo.radicals}` : null,
+                      query.charInfo.structure ? `结构 ${query.charInfo.structure}` : null,
+                    ].filter(Boolean).join(' · ')}
+                  </p>
+                  {query.charInfo.explanations.length > 0 ? (
+                    <ol className="dict-defs">
+                      {query.charInfo.explanations.map((d, i) => (
+                        <li key={i} className="dict-def">
+                          <span className="dict-def-no">{i + 1}</span>
+                          <span className="dict-def-text">{d}</span>
+                        </li>
+                      ))}
+                    </ol>
+                  ) : null}
+                  {(query.charInfo.synonyms.length > 0 || query.charInfo.antonyms.length > 0) ? (
+                    <div className="dict-char-rel">
+                      {query.charInfo.synonyms.length > 0 ? (
+                        <p className="dict-rel-line"><span className="dict-rel-key">近义</span>{query.charInfo.synonyms.join('、')}</p>
+                      ) : null}
+                      {query.charInfo.antonyms.length > 0 ? (
+                        <p className="dict-rel-line"><span className="dict-rel-key">反义</span>{query.charInfo.antonyms.join('、')}</p>
+                      ) : null}
+                    </div>
+                  ) : null}
+                </div>
+              </>
             ) : entry ? (
               <>
                 <header className="dict-card-head">

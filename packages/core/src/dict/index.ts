@@ -14,3 +14,4 @@
 export * from './types.js';
 export * from './query.js';
 export * from './serialize.js';
+export * from './chardict.js';

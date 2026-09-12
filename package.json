@@ -16,6 +16,7 @@
     "dev": "npm --prefix apps/web run dev",
     "pks": "tsc -p packages/core/tsconfig.json && tsx packages/cli/src/index.ts",
     "build:index": "tsc -p packages/core/tsconfig.json && tsx packages/cli/src/index.ts build:index",
+    "build:chardict": "tsc -p packages/core/tsconfig.json && tsx packages/cli/src/index.ts build:chardict",
     "lint": "tsc -p packages/core/tsconfig.json && tsx packages/cli/src/index.ts lint",
     "bundle": "tsc -p packages/core/tsconfig.json && tsx packages/cli/src/index.ts bundle",
     "rename": "tsc -p packages/core/tsconfig.json && tsx packages/cli/src/index.ts rename",
