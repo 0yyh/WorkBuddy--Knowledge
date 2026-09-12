@@ -1,0 +1,49 @@
+# PKS 批量生成 work-order 示例（T03 pilot）
+# categories 必须来自 content/taxonomy.yaml 的真实路径（见 `pks gen run` 启动前的 categories 校验）。
+# timeline/see_also/outline/sources/material 均为生成器提示；see_also 指向已存在 slug（L006 仅 warn）。
+items:
+  - slug: monetary-base
+    title: 基础货币
+    categories:
+      - 经济学/金融/货币与银行
+    timeline: []
+    see_also: [money, central-banking, inflation]
+    outline:
+      - 基础货币的定义与构成（流通中现金 + 银行准备金）
+      - 基础货币与货币乘数的关系
+      - 央行如何投放与回笼基础货币
+    sources:
+      - title: Monetary Base - Wikipedia
+        url: https://en.wikipedia.org/wiki/Monetary_base
+        license: Fair-Use
+    material: |
+      基础货币（monetary base / high-powered money）是央行负债，由流通中现金（C）与商业银行在央行的
+      准备金（R）构成。货币供应 M = 基础货币 × 货币乘数。
+
+  - slug: credit-creation
+    title: 信用创造
+    categories:
+      - 经济学/金融/货币与银行
+    see_also: [money, central-banking, inflation]
+    outline:
+      - 部分准备金制度下银行如何"创造"存款
+      - 贷款—存款循环与货币乘数
+      - 信用创造的上限与现实约束
+    sources:
+      - title: Credit Creation - Investopedia
+        url: https://www.investopedia.com/terms/c/creditcreation.asp
+        license: Fair-Use
+
+  - slug: velocity-of-money
+    title: 货币流通速度
+    categories:
+      - 经济学/宏观经济学
+    see_also: [money, inflation, interest-rate]
+    outline:
+      - 货币流通速度的定义（MV = PQ）
+      - 费雪方程与古典数量论
+      - 对货币政策的含义
+    sources:
+      - title: Velocity of Money - Federal Reserve
+        url: https://www.frbsf.org/education/publications/doctor-econ/2005/velocity-money
+        license: Fair-Use

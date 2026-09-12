@@ -4,6 +4,8 @@
  *   import { NodeFsVfs } from '@pks/core/node';
  *   import { buildIndex } from '@pks/core/build';
  */
+import yaml from 'js-yaml';
+
 export * from './constants.js';
 export * from './types.js';
 
@@ -42,3 +44,22 @@ export * from './content/repository.js';
 export type {
   DictEntry, DictSpecialized, Dictionary, DictLookupResult,
 } from './dict/types.js';
+
+// ============================================================
+// 生成管线（T03）复用导出
+// 仅新增 barrel 导出，不引入任何新依赖（js-yaml 已在 core 依赖中）。
+// 说明：生成器本身位于 @pks/cli（非 core，避免污染 web 包 worker 体积），
+// core 只暴露下列纯函数供 CLI 复用。
+// ============================================================
+// 显式重导出 frontmatter 校验函数（主 barrel 已通过 export * 包含，这里显式列出以便生成管线稳定引用）
+export { validateEntryMeta, validateSectionMeta } from './parse/frontmatter.js';
+
+/** 解析 YAML 文本（同 js-yaml.load），供 work-order / 配置解析复用 */
+export function yamlLoad(text: string): unknown {
+  return yaml.load(text);
+}
+
+/** 序列化对象为 YAML 文本（禁用换行折叠、关闭引用锚点），供解析 LLM 输出为 frontmatter 复用 */
+export function yamlDump(data: unknown): string {
+  return yaml.dump(data, { lineWidth: -1, noRefs: true, sortKeys: false });
+}

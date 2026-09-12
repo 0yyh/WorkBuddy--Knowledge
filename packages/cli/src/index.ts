@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /**
  * @pks/cli 入口：命令分发。
- * 命令：build:index / lint / bundle / rename / browse:gen / search
+ * 命令：build:index / lint / bundle / rename / browse:gen / search / gen
  * 公共参数：--content <dir>（默认 content）
  */
 import { resolve } from 'node:path';
@@ -12,6 +12,7 @@ import { renameCmd } from './commands/rename.js';
 import { browseGenCmd } from './commands/browse-gen.js';
 import { searchCmd } from './commands/search.js';
 import { buildCharDictCmd } from './commands/build-chardict.js';
+import { genCmd } from './commands/gen.js';
 
 interface Flags {
   content: string | boolean;
@@ -33,6 +34,7 @@ function parse(argv: string[]): { cmd: string; positional: string[]; flags: Flag
     'browse:gen',
     'build:chardict',
     'search',
+    'gen',
   ]);
   let cmd = '';
   let idx = -1;
@@ -107,13 +109,12 @@ function printHelp(): void {
   browse:gen        生成 _browse/ 影子树
   build:chardict    字符词典（character）合并为单个 index.json
   search <query> [--level l1|l2]   在已构建索引上检索
+  gen               批量生成管线（run/resume/promote/status）
 `);
 }
 
 function main(): void {
-  console.error('DBG_ARGV', JSON.stringify(process.argv));
   const { cmd, positional, flags } = parse(process.argv.slice(2));
-  console.error('DBG_CMD', JSON.stringify(cmd));
   switch (cmd) {
     case 'build:index':
       buildIndexCmd(contentDir(flags));
@@ -141,6 +142,9 @@ function main(): void {
       break;
     case 'build:chardict':
       buildCharDictCmd(contentDir(flags));
+      break;
+    case 'gen':
+      genCmd(positional, flags);
       break;
     default:
       printHelp();

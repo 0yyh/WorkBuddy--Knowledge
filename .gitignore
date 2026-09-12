@@ -19,6 +19,10 @@ content/.index/
 content/_browse/
 content/_bundles/
 content/.pks/
+# 批量生成管线（T03）运行时状态：staging 草稿 + 断点续跑/增量构建状态（不随包分发）
+content/.staging/
+content/.pks-gen-state.json
+content/.pks-build-state.json
 # 字符词典合并产物（由 build:chardict 从原始 4 文件生成，勿入版本库；源文件 char_base/detail/polyphone/related 保留）
 content/dict/chinese-dictionary/character/index.json
 # 原始词典数据源（约 107MB，含未导入的 idiom/word；仅作一次性导入来源，不入库；正式副本见 content/dict/chinese-dictionary/）
