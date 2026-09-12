@@ -60,6 +60,20 @@ const CARD_W = 300;
 const CARD_MAX_H = 260;
 const CARD_GAP = 10;
 const HIDE_ABSORB_MS = 350;
+const SCROLLBAR_SHOW_MS = 700;
+
+/** 释义卡 body 滚动条：滚动时短暂显示，停止后自动隐藏 */
+function handleDictBodyScroll(e: React.UIEvent<HTMLDivElement>) {
+  const el = e.currentTarget;
+  el.classList.add('scrolling');
+  const tid = el.dataset.scrollTimer;
+  if (tid) window.clearTimeout(Number(tid));
+  const newTid = window.setTimeout(() => {
+    if (el.isConnected) el.classList.remove('scrolling');
+    delete el.dataset.scrollTimer;
+  }, SCROLLBAR_SHOW_MS);
+  el.dataset.scrollTimer = String(newTid);
+}
 
 /** 复制文本：优先 Clipboard API，异常/不可用时回退 textarea + execCommand（Android WebView） */
 async function copyTextToClipboard(text: string): Promise<boolean> {
@@ -444,7 +458,7 @@ export function ReaderSelectionMenu({
                   </button>
                 </header>
 
-                <div className="dict-card-body">
+                <div className="dict-card-body" onScroll={handleDictBodyScroll}>
                   <p className="dict-char-meta">
                     {[
                       query.charInfo.strokes !== undefined ? `笔画 ${query.charInfo.strokes}` : null,
@@ -492,7 +506,7 @@ export function ReaderSelectionMenu({
                   </button>
                 </header>
 
-                <div className="dict-card-body">
+                <div className="dict-card-body" onScroll={handleDictBodyScroll}>
                   {entry.defs.length > 0 ? (
                     <ol className="dict-defs">
                       {entry.defs.map((d, i) => (
@@ -539,7 +553,7 @@ export function ReaderSelectionMenu({
                     </svg>
                   </button>
                 </header>
-                <div className="dict-card-body">
+                <div className="dict-card-body" onScroll={handleDictBodyScroll}>
                   <p className="dict-miss-text">
                     「{query.queried}」不在离线词表中
                   </p>

@@ -4808,8 +4808,9 @@ mark.hl { background: var(--brand-soft); color: var(--brand-strong); padding: 0 
   color: #ffffff;
   display: flex;
   flex-direction: column;
-  overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
+  /* 滚动由 .dict-card-body 负责；卡片自身不可滚动，避免与 body 出现双滚动条，
+     同时保证 ::after 三角箭头不被裁剪或顶出滚动区域 */
+  overflow: visible;
   animation: pop-in 0.24s var(--ease-spring);
   will-change: transform, opacity;
   /* 去投影（阅读器扁平化规范）：用实色深色面自身分层 */
@@ -4944,16 +4945,17 @@ mark.hl { background: var(--brand-soft); color: var(--brand-strong); padding: 0 
   -webkit-overflow-scrolling: touch;
   padding: 6px 2px 4px 0;
 
-  /* Firefox：默认隐藏滚动条，悬停到卡片时浮现 */
+  /* Firefox：默认隐藏滚动条，滚动过程中 .scrolling 类控制浮现 */
   scrollbar-width: thin;
   scrollbar-color: transparent transparent;
 }
 
-.dict-card-body:hover {
+/* Firefox：滚动过程中 .scrolling 类控制浮现 */
+.dict-card-body.scrolling {
   scrollbar-color: rgba(255, 255, 255, 0.22) rgba(255, 255, 255, 0.06);
 }
 
-/* WebKit 滚动条：默认隐藏，悬停/滚动时浮现；移除上下箭头按钮 */
+/* WebKit 滚动条：默认隐藏，滚动时（.scrolling）浮现；移除上下箭头按钮 */
 .dict-card-body::-webkit-scrollbar {
   width: 6px;
   height: 6px;
@@ -4969,7 +4971,7 @@ mark.hl { background: var(--brand-soft); color: var(--brand-strong); padding: 0 
   margin: 4px 0;
 }
 
-.dict-card-body:hover::-webkit-scrollbar-track {
+.dict-card-body.scrolling::-webkit-scrollbar-track {
   background: rgba(255, 255, 255, 0.06);
 }
 
@@ -4981,15 +4983,15 @@ mark.hl { background: var(--brand-soft); color: var(--brand-strong); padding: 0 
   transition: background 0.2s var(--ease, ease);
 }
 
-.dict-card-body:hover::-webkit-scrollbar-thumb {
+.dict-card-body.scrolling::-webkit-scrollbar-thumb {
   background: rgba(255, 255, 255, 0.22);
 }
 
-.dict-card-body:hover::-webkit-scrollbar-thumb:hover {
+.dict-card-body.scrolling::-webkit-scrollbar-thumb:hover {
   background: rgba(255, 255, 255, 0.36);
 }
 
-.dict-card-body:hover::-webkit-scrollbar-thumb:active {
+.dict-card-body.scrolling::-webkit-scrollbar-thumb:active {
   background: var(--t-accent, var(--brand));
 }
 
