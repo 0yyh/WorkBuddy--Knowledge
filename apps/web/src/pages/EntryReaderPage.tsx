@@ -822,33 +822,32 @@ export function EntryReaderPage({ slug, chapterStart }: EntryReaderPageProps): J
         onOpenMore={openMore}
       />
 
-      {fontOpen ? (
-        <ReaderFontSheet
-          bg={prefs.bgColor}
-          fontFamily={prefs.fontFamily}
-          onPick={(v) => {
-            changePref('fontFamily', v);
-            setFontOpen(false);
-          }}
-          onClose={closeFont}
-        />
-      ) : null}
-      {spacingOpen ? (
-        <ReaderSpacingSheet
-          bg={prefs.bgColor}
-          align={prefs.align}
-          onAlignChange={(v) => changePref('align', v)}
-          onClose={closeSpacing}
-        />
-      ) : null}
-      {moreOpen ? (
-        <ReaderMoreSheet
-          bg={prefs.bgColor}
-          prefs={prefs}
-          onChange={changePref}
-          onClose={closeMore}
-        />
-      ) : null}
+      {/* 子层改为「常驻渲染 + open 驱动」：由 SubSheet 播完退场动画再卸载，
+          此前是条件渲染直接摘除，收起时没有动画。 */}
+      <ReaderFontSheet
+        open={fontOpen}
+        bg={prefs.bgColor}
+        fontFamily={prefs.fontFamily}
+        onPick={(v) => {
+          changePref('fontFamily', v);
+          setFontOpen(false);
+        }}
+        onClose={closeFont}
+      />
+      <ReaderSpacingSheet
+        open={spacingOpen}
+        bg={prefs.bgColor}
+        align={prefs.align}
+        onAlignChange={(v) => changePref('align', v)}
+        onClose={closeSpacing}
+      />
+      <ReaderMoreSheet
+        open={moreOpen}
+        bg={prefs.bgColor}
+        prefs={prefs}
+        onChange={changePref}
+        onClose={closeMore}
+      />
 
       {/* 划词词典：浮动工具条 + 释义卡（自身 portal 到 body，与 .reader-root 同级，
           不参与 onSurfaceClick / 左右滑切章判定；切章自动清空） */}

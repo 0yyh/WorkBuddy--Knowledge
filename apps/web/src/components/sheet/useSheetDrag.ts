@@ -8,13 +8,29 @@
  *    未到顶时交给原生惯性滚动，互不打架。
  *  - 阈值 / 速度关闭：位移 > 面板高 × closeRatio 或松手速度 > velocity → onClose；
  *    否则 spring 回弹到 0。
- *  - 仅 `transform`/`will-change` 走 GPU，避免触发重绘，目标 60fps。
  *
- * 注意：拖拽手柄（.reader-sheet-handle）在 CSS 中设 `touch-action: none`，
+ * ───────────────────── 性能：跟手位移不走 React ─────────────────────
+ * 旧实现在每次 pointermove 里 `setTranslateY(dy * damping)`，即每个指针事件触发一次
+ * React 重渲染；高刷屏一秒可产生 120+ 次事件，面板（目录可达上千节点）所在子树被
+ * 反复 reconcile，是"滑动跟手卡顿"的主因。
+ *
+ * 现改为：pointermove 只把最新位移写进 ref，再用 requestAnimationFrame 合并到每帧
+ * 一次，直接写 `el.style.transform`（合成属性）。整个拖拽过程 React 只渲染 2 次
+ * （drag 开始 / 结束），中间零重渲染、零重排。
+ *
+ * 注意：拖拽期间组件的 inline style 由本 hook 接管，BaseSheet 在 dragging 态下
+ * 传入的是**引用稳定的常量** style 对象，不会与这里的直接写 DOM 打架；
+ * 手势结束时本 hook 会补上过渡并写入终态，随后 React 渲染回常态（值相同，无跳变）。
+ *
+ * 拖拽手柄（.reader-sheet-handle）在 CSS 中设 `touch-action: none`，
  * 是移动端最可靠的拖拽起点；面板本体 `touch-action: pan-y` 保留内部原生滚动。
  */
 import type * as React from 'react';
-import { useCallback, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
+
+/** 与 tokens.css --sheet-* 同源的过渡（内联 var() 在运行时解析，单一真源） */
+const TRANSITION_IN = 'transform var(--sheet-duration) var(--sheet-ease-in)';
+const TRANSITION_OUT = 'transform var(--sheet-duration) var(--sheet-ease-out)';
 
 export interface SheetDragOptions {
   onClose: () => void;
@@ -30,8 +46,8 @@ export interface SheetDragOptions {
 
 export interface SheetDrag {
   panelRef: React.MutableRefObject<HTMLElement | null>;
+  /** 是否处于拖拽接管态（仅开始/结束时翻转，不随位移变化） */
   dragging: boolean;
-  translateY: number;
   bind: {
     onPointerDown: (e: React.PointerEvent) => void;
     onPointerMove: (e: React.PointerEvent) => void;
@@ -42,7 +58,6 @@ export interface SheetDrag {
 
 export function useSheetDrag(opts: SheetDragOptions): SheetDrag {
   const { onClose, getScrollEl, damping = 0.55, closeRatio = 0.4, velocity = 0.6 } = opts;
-  const [translateY, setTranslateY] = useState(0);
   const [dragging, setDragging] = useState(false);
 
   const startY = useRef(0);
@@ -53,6 +68,38 @@ export function useSheetDrag(opts: SheetDragOptions): SheetDrag {
   const draggingRef = useRef(false);
   const panelRef = useRef<HTMLElement | null>(null);
 
+  /** 本帧待写入的位移；配合 rafRef 做"每帧最多写一次 DOM" */
+  const nextY = useRef(0);
+  const rafRef = useRef(0);
+
+  const flush = useCallback((): void => {
+    rafRef.current = 0;
+    const el = panelRef.current;
+    if (el) el.style.transform = `translate3d(0, ${nextY.current}px, 0)`;
+  }, []);
+
+  /** 拖拽期间直接写 DOM：只在动画帧里更新 transform，绝不触发 React 渲染 */
+  const schedule = useCallback(
+    (y: number): void => {
+      nextY.current = y;
+      if (rafRef.current === 0) {
+        rafRef.current = window.requestAnimationFrame(flush);
+      }
+    },
+    [flush],
+  );
+
+  // 卸载时收尾，避免残留的动画帧回调
+  useEffect(
+    () => () => {
+      if (rafRef.current !== 0) {
+        window.cancelAnimationFrame(rafRef.current);
+        rafRef.current = 0;
+      }
+    },
+    [],
+  );
+
   const onPointerDown = useCallback((e: React.PointerEvent) => {
     if (e.pointerType === 'mouse' && e.button !== 0) return;
     pointerId.current = e.pointerId;
@@ -61,6 +108,7 @@ export function useSheetDrag(opts: SheetDragOptions): SheetDrag {
     lastT.current = e.timeStamp;
     decided.current = false;
     draggingRef.current = false;
+    nextY.current = 0;
   }, []);
 
   const onPointerMove = useCallback(
@@ -84,6 +132,9 @@ export function useSheetDrag(opts: SheetDragOptions): SheetDrag {
         // 已到顶且继续下拉 → 接管面板拖拽
         decided.current = true;
         draggingRef.current = true;
+        // 立即关掉过渡，保证跟手（不等 React 渲染完成）
+        const el = panelRef.current;
+        if (el) el.style.transition = 'none';
         setDragging(true);
         try {
           (e.currentTarget as HTMLElement).setPointerCapture(e.pointerId);
@@ -93,40 +144,48 @@ export function useSheetDrag(opts: SheetDragOptions): SheetDrag {
       }
 
       if (!draggingRef.current) return;
-      if (dy < 0) {
-        setTranslateY(0);
-        return;
-      }
-      setTranslateY(dy * damping);
       lastY.current = e.clientY;
       lastT.current = e.timeStamp;
+      schedule(dy < 0 ? 0 : dy * damping);
       if (e.cancelable) e.preventDefault();
     },
-    [damping, getScrollEl],
+    [damping, getScrollEl, schedule],
   );
 
   const finish = useCallback(
     (e: React.PointerEvent) => {
       if (pointerId.current === null || e.pointerId !== pointerId.current) return;
       pointerId.current = null;
+
+      // 取消尚未执行的动画帧，改由本函数直接写终态
+      if (rafRef.current !== 0) {
+        window.cancelAnimationFrame(rafRef.current);
+        rafRef.current = 0;
+      }
+
       if (!draggingRef.current) {
         setDragging(false);
         return;
       }
       draggingRef.current = false;
-      setDragging(false);
 
       const dy = e.clientY - startY.current;
       const dt = Math.max(1, e.timeStamp - lastT.current);
       const v = Math.abs(e.clientY - lastY.current) / dt;
       const panelH = panelRef.current?.offsetHeight ?? 0;
+      const shouldClose = dy > panelH * closeRatio || v > velocity;
 
-      if (dy > panelH * closeRatio || v > velocity) {
-        setTranslateY(0);
-        onClose();
-      } else {
-        setTranslateY(0); // spring 回弹由 BaseSheet 的过渡负责
+      // 终态由本 hook 直接写入：补上过渡 + 目标 transform，React 随后渲染的
+      // 常态 style 与之同值，因此不会产生二次跳变。
+      const el = panelRef.current;
+      if (el) {
+        el.style.transition = shouldClose ? TRANSITION_OUT : TRANSITION_IN;
+        el.style.transform = shouldClose ? 'translate3d(0, 100%, 0)' : 'translate3d(0, 0, 0)';
       }
+      nextY.current = 0;
+
+      setDragging(false);
+      if (shouldClose) onClose();
     },
     [closeRatio, velocity, onClose],
   );
@@ -134,7 +193,6 @@ export function useSheetDrag(opts: SheetDragOptions): SheetDrag {
   return {
     panelRef,
     dragging,
-    translateY,
     bind: { onPointerDown, onPointerMove, onPointerUp: finish, onPointerCancel: finish },
   };
 }

@@ -222,7 +222,7 @@ export function buildIndex(vfs: Vfs, opts: BuildIndexOptions = {}): BuildResult 
   let totalWords = 0;
 
   for (const e of entries) {
-    // 词条正文词数
+    // 词条「导读」正文字数（仅用于「无章节的单页词条」回退口径）
     let entryWords = 0;
     try {
       const raw = vfs.readText(e.entryFile);
@@ -238,12 +238,23 @@ export function buildIndex(vfs: Vfs, opts: BuildIndexOptions = {}): BuildResult 
     const secs = sections[e.slug] ?? [];
     totalSections += secs.length;
 
+    // ★ 统一字数口径（唯一规则，勿分叉）：词条「总字数」= 各章节正文（kind !== 'container'）字数之和；
+    //   container（卷）无正文且不计入（与 lint L003 口径一致）；无章节的单页词条回退为词条正文字数。
+    //   `w` / `cover.word_count` / `titleIndex.words` / `stats.words` 全部改由本口径派生，
+    //   从而保证详情页「字数」严格等于其「章节目录」逐章字数之和。
+    const chapterWords = secs.reduce(
+      (acc, s) => acc + (s.kind === 'container' ? 0 : (s.words ?? 0)),
+      0,
+    );
+    const entryTotalWords = secs.some((s) => s.kind !== 'container') ? chapterWords : entryWords;
+    totalWords += entryTotalWords;
+
     const item: EntryIndexItem = {
       s: e.slug,
       t: e.title,
       ty: e.type,
       st: e.status,
-      w: entryWords,
+      w: entryTotalWords,
       ua: e.updated_at,
       rv: e.rev,
       al: e.aliases ?? [],
@@ -272,7 +283,7 @@ export function buildIndex(vfs: Vfs, opts: BuildIndexOptions = {}): BuildResult 
       categories: [...e.categories],
       tags: e.tags ?? [],
       original_title: e.original_title,
-      word_count: entryWords,
+      word_count: entryTotalWords,
       sources: e.sources ?? [],
       updated_at: e.updated_at,
       chapter_count: e.sectionCount,
@@ -287,7 +298,7 @@ export function buildIndex(vfs: Vfs, opts: BuildIndexOptions = {}): BuildResult 
         type: e.type,
         categoryIds: cats,
         docId: `e:${e.slug}`,
-        words: entryWords,
+        words: entryTotalWords,
       });
     }
 
@@ -301,10 +312,9 @@ export function buildIndex(vfs: Vfs, opts: BuildIndexOptions = {}): BuildResult 
       tl, sd, ctl,
     });
 
-    // 章节级 IndexingDoc + 字数累计
+    // 章节级 IndexingDoc（字数已在词条级按「章节之和」口径统一累计，此处不再重复累加）
     for (const sec of secs) {
       const bodyText = bodies[e.slug]?.[sec.key] ?? '';
-      totalWords += sec.words ?? 0;
       indexingDocs.push({
         id: `s:${sec.slug}`,
         kind: 'section',
@@ -317,8 +327,6 @@ export function buildIndex(vfs: Vfs, opts: BuildIndexOptions = {}): BuildResult 
         tl, sd, ctl,
       });
     }
-    totalWords += entryWords;
-
     if (e.sectionCount > 30) tocHeavy.push(e.slug);
   }
 

@@ -106,6 +106,16 @@ export function EntryCoverPage({ slug }: EntryCoverPageProps): JSX.Element {
 
   const resolved = cover ?? (item ? synthesizeCover(item, catIdToPath) : null);
 
+  // 「字数」展示口径：严格等于下方「章节目录」中 content 章节逐行字数之和
+  // （container/卷 行不显示字数、也不计入）。索引里的 cover.word_count 已按同一口径生成
+  // （见 core builder 统一字数规则）；此处再按目录行求和做二次保证，使
+  // 「总字数 === 各章节字数之和」在 UI 层恒成立。无内联目录（超长词条）时回退 cover.word_count。
+  const displayWords = useMemo(() => {
+    const contentRows = chapterRows.filter((r) => r.docIndex !== null);
+    if (contentRows.length === 0) return resolved?.word_count ?? 0;
+    return contentRows.reduce((acc, r) => acc + (r.ch.words ?? 0), 0);
+  }, [chapterRows, resolved]);
+
   if (loading && !resolved) {
     return (
       <div className="page state-box">
@@ -151,7 +161,7 @@ export function EntryCoverPage({ slug }: EntryCoverPageProps): JSX.Element {
         <div className="cover-meta-card">
           <div className="meta-cell">
             <span className="meta-k">字数</span>
-            <strong>{resolved.word_count.toLocaleString()}</strong>
+            <strong>{displayWords.toLocaleString()}</strong>
           </div>
           <div className="meta-cell">
             <span className="meta-k">章节</span>

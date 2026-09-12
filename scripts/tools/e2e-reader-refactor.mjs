@@ -19,7 +19,11 @@
  *   M1..M4 更多子层 2 开关（第 3 轮删单手模式）默认 [true,true] + 开关开/关配色
  *   D1..D5 划词工具条(#333 / 8px) + 浮动释义卡(12px / #333)
  *   S8 源 styles.css ::selection 含 #E8D3A2
- *   N1 顶栏 ⋮ = 章节目录；N2 常驻导航栏始终可见；N3 面板不遮挡导航；N4 遮罩 backdrop blur
+ *   N1 顶栏 ⋮ = 章节目录；N2 常驻导航栏始终可见；N3 面板不遮挡导航
+ *   N4 遮罩为纯半透明 + 仅 opacity 过渡（已移除 backdrop-filter，见 A 组）
+ *   A1..A12 面板动画统一（性能版）：无 CSS 关键帧 / 只过渡 transform /
+ *           时长 0.28s 与遮罩 0.2s 走 --sheet-* --mask-* 令牌 / will-change:transform /
+ *           入场与退场曲线均无过冲 / is-open·is-closing 状态类 / 退场后卸载
  *   S9 源 styles.css .dict-toast 背景 = #333333；S10 废弃 reader-* 死类已清除
  *   T1 深色主题（dark）渲染：.reading-bg-dark / 背景为深色 / 仍无投影 / 面板非纯白 / 可还原
  *
@@ -412,16 +416,112 @@ try {
       Number.isFinite(n3?.sheetBottomPx) && n3.sheetBottomPx >= (n3?.navHeight ?? 0),
       `sheetBottom=${n3?.sheetBottomPx}px navHeight=${n3?.navHeight}px`,
     );
-    /* ---- N4 遮罩微模糊 ---- */
-    if (typeof n3?.maskFilter === 'string' && /blur/.test(n3.maskFilter)) {
-      check('N4 遮罩 backdrop-filter 含 blur', true, `maskFilter=${n3?.maskFilter}`);
-    } else {
+    /* ---- N4 遮罩：纯半透明 + 仅 opacity 合成（性能版：已移除 backdrop-filter） ---- */
+    {
       const cssText2 = await readFile(join(ROOT, 'apps', 'web', 'src', 'styles.css'), 'utf8').catch(() => '');
+      const maskBlock = (cssText2.match(/\.reader-sheet-mask\s*\{[^}]*\}/) || [''])[0];
+      const flat = maskBlock.replace(/\s+/g, ' ');
       check(
-        'N4 遮罩含 backdrop-filter（取不到计算值，按源 CSS 断言）',
-        /\.reader-sheet-mask\s*\{[^}]*backdrop-filter:\s*blur/.test(cssText2),
+        'N4a 遮罩计算值不含 blur（已移除 backdrop-filter，避免每帧重算背景快照）',
+        typeof n3?.maskFilter === 'string' && !/blur/.test(n3.maskFilter),
         `maskFilter=${n3?.maskFilter}`,
       );
+      check('N4b 源 CSS .reader-sheet-mask 不再声明 backdrop-filter', !/backdrop-filter/.test(maskBlock.replace(/\/\*[\s\S]*?\*\//g, '')), `block=${flat.slice(0, 140)}`);
+      check(
+        'N4c 遮罩淡入淡出走 opacity transition（统一 --mask-* 令牌）',
+        /transition:\s*opacity\s+var\(--mask-duration\)\s+var\(--mask-ease\)/.test(maskBlock),
+        `block=${flat.slice(0, 140)}`,
+      );
+    }
+
+    /* ---- A 组：面板动画统一（单一 transform 过渡 / 无关键帧 / 无回弹 / 状态类驱动） ---- */
+    {
+      const A_PROBE = `(function(){
+        var sheet = document.querySelector('.reader-sheet');
+        var layer = document.querySelector('.reader-sheet-layer');
+        var mask  = document.querySelector('.reader-sheet-mask');
+        if(!sheet) return { ok:false };
+        var cs = getComputedStyle(sheet);
+        var mcs = mask ? getComputedStyle(mask) : null;
+        return {
+          ok:true,
+          animName: cs.animationName,
+          transProp: cs.transitionProperty,
+          transDur: cs.transitionDuration,
+          transEase: cs.transitionTimingFunction,
+          willChange: cs.willChange,
+          transform: cs.transform,
+          layerClass: layer ? layer.className : null,
+          maskTransDur: mcs ? mcs.transitionDuration : null,
+          maskOpacity: mcs ? mcs.opacity : null
+        };
+      })()`;
+      const a = await evaluate(A_PROBE);
+      /* matrix(a,b,c,d,tx,ty) → 取末位 ty，展开完成时应为 0 */
+      const tyOf = function (m) {
+        const mm = String(m || '').match(/matrix\(([^)]+)\)/);
+        if (!mm) return NaN;
+        const parts = mm[1].split(',').map((s) => Number(s.trim()));
+        return parts[parts.length - 1];
+      };
+      check('A1 面板不再使用 CSS 关键帧（animation-name = none）', a?.animName === 'none', `animName=${a?.animName}`);
+      check('A2 只过渡 transform（合成属性，不含 all/height/top）', a?.transProp === 'transform', `transProp=${a?.transProp}`);
+      check('A3 面板过渡时长统一 = 0.28s（--sheet-duration）', a?.transDur === '0.28s', `dur=${a?.transDur}`);
+      check(
+        'A4 入场曲线为缓动且无过冲（非 ease-spring 回弹）',
+        /^cubic-bezier\(0\.16, 1, 0\.3, 1\)$/.test(String(a?.transEase || '')),
+        `ease=${a?.transEase}`,
+      );
+      check('A5 面板开启硬件加速提示 will-change = transform', a?.willChange === 'transform', `willChange=${a?.willChange}`);
+      check('A6 入场结束后面板位移 = 0（已完全展开）', Math.abs(tyOf(a?.transform)) < 1, `transform=${a?.transform}`);
+      check('A7 展开后 layer 带 is-open 且遮罩 opacity = 1', /is-open/.test(String(a?.layerClass)) && a?.maskOpacity === '1', `class=${a?.layerClass} maskOpacity=${a?.maskOpacity}`);
+      check('A8 遮罩过渡时长统一 = 0.2s（--mask-duration）', a?.maskTransDur === '0.2s', `dur=${a?.maskTransDur}`);
+
+      /* 关闭：点遮罩，等一帧让 React 应用退场态后再采样
+         （点击→setState→重渲染是异步的，同步读会拿到入场态） */
+      const CLOSE_PROBE = `(async function(){
+        var sleep = function(ms){ return new Promise(function(r){setTimeout(r,ms);}); };
+        var mask = document.querySelector('.reader-sheet-mask');
+        if(!mask) return { ok:false };
+        mask.click();
+        await sleep(60);   /* 70ms：已进入退场（280ms 内），且足以走完一次 React 提交 */
+        var layer = document.querySelector('.reader-sheet-layer');
+        var sheet = document.querySelector('.reader-sheet');
+        if(!sheet) return { ok:false };
+        var cs = getComputedStyle(sheet);
+        return {
+          ok:true,
+          layerClass: layer ? layer.className : null,
+          transDur: cs.transitionDuration,
+          transEase: cs.transitionTimingFunction,
+          transform: cs.transform,
+          maskOpacity: (function(){ var m=document.querySelector('.reader-sheet-mask'); return m?getComputedStyle(m).opacity:null; })()
+        };
+      })()`;
+      const c = await evaluate(CLOSE_PROBE);
+      check('A9 关闭后 layer 带 is-closing（退场与父级同帧生效）', /is-closing/.test(String(c?.layerClass)), `class=${c?.layerClass}`);
+      check('A10 退场曲线 = ease-out 且无过冲', /^cubic-bezier\(0\.4, 0, 0\.9, 0\.2\)$/.test(String(c?.transEase || '')), `ease=${c?.transEase}`);
+      check('A11 退场时长与入场一致 = 0.28s', c?.transDur === '0.28s', `dur=${c?.transDur}`);
+      check(
+        'A11b 退场时面板已向下位移（ty > 0）且遮罩正在淡出（opacity < 1）',
+        tyOf(c?.transform) > 0 && Number(c?.maskOpacity) < 1,
+        `ty=${tyOf(c?.transform)} maskOpacity=${c?.maskOpacity}`,
+      );
+      await sleep(500);
+      const gone = await evaluate(`(function(){ return !!document.querySelector('.reader-sheet'); })()`);
+      check('A12 退场动画播完后面板已卸载（不残留 DOM）', gone === false, `present=${gone}`);
+
+      /* 重新打开，交还给后续 P5..P12 / 深色主题断言 */
+      await evaluate(OPEN_SETTINGS);
+      {
+        const deadline = Date.now() + 5000;
+        while (Date.now() < deadline) {
+          panel = await evaluate(PANEL_PROBE);
+          if (panel && panel.open) break;
+          await sleep(150);
+        }
+      }
+      await sleep(400);
     }
     check('P5 亮度行仅保留滑块（护眼模式已并入颜色行 sepia）', panel?.sepiaSelected === true, `sepiaSelected=${panel?.sepiaSelected}`);
     check('P6 字号行数字 = 当前 px（默认 20）', panel?.fontNum === '20', `fontNum=${panel?.fontNum}`);
@@ -678,6 +778,57 @@ try {
     check('S8 styles.css ::selection 规则含 #E8D3A2', /#E8D3A2/i.test(cssText), `cssLen=${cssText.length}`);
     check('S9 源 styles.css .dict-toast 背景 = #333333（浮层家族统一深色）', /\.dict-toast\s*\{[^}]*background:\s*#333333/i.test(cssText), `hit=${/\.dict-toast\s*\{[^}]*background:\s*#333333/i.test(cssText)}`);
     check('S10 源 styles.css 已清除废弃 reader-* 死类', !/\.reader-bg-thumb|\.reader-sheet-tools|\.reader-brightness-bar|\.reader-pos-mini|\.reader-tools\b/i.test(cssText), `deadLeft=${/\.reader-bg-thumb|\.reader-sheet-tools|\.reader-brightness-bar|\.reader-pos-mini|\.reader-tools\b/i.test(cssText)}`);
+
+    /* ---- W 组：详情页「字数」= 章节目录各行字数之和 ----
+       Bug 背景：此前 cover.word_count / item.w 只统计 entry.md 导读正文，
+       与下方逐章列出的字数总和对不上（hegel：1775 vs 8411）。
+       现核心 builder 与 UI 双重统一口径，这里在真实构建产物上回归验证。 ---- */
+    {
+      await client.send('Page.navigate', { url: `${baseUrl}#/entry-cover/hegel` });
+      const W_PROBE = `(function(){
+        var card = document.querySelector('.cover-meta-card');
+        if(!card) return { ok:false };
+        var cells = card.querySelectorAll('.meta-cell strong');
+        var rows = Array.prototype.slice.call(document.querySelectorAll('.cover-chapter-words'));
+        var nums = rows.map(function(r){ return Number(String(r.textContent||'').replace(/[^0-9]/g,'')); });
+        return {
+          ok:true,
+          metaWords: cells.length ? Number(String(cells[0].textContent||'').replace(/[^0-9]/g,'')) : null,
+          rowCount: rows.length,
+          rowSum: nums.reduce(function(a,b){ return a + b; }, 0),
+          rows: nums
+        };
+      })()`;
+      let w = null;
+      {
+        const deadline = Date.now() + 10000;
+        while (Date.now() < deadline) {
+          w = await evaluate(W_PROBE);
+          if (w && w.ok && w.rowCount > 0) break;
+          await sleep(200);
+        }
+      }
+      /* 磁盘上的同一份索引产物（构建期口径），与页面展示期口径对照 */
+      let idxWords = null;
+      try {
+        const j = JSON.parse(
+          await readFile(join(ROOT, 'apps', 'web', 'public', 'content', 'index', 'entries', 'h.json'), 'utf8'),
+        );
+        const it = (j.items || []).find((x) => x.s === 'hegel');
+        idxWords = it ? it.w : null;
+      } catch (e) {
+        idxWords = null;
+      }
+      check('W1 详情页元数据区可见且含字数', w?.ok === true && Number.isFinite(w?.metaWords), JSON.stringify(w));
+      check('W2 章节目录带字数列', (w?.rowCount ?? 0) > 0, `rowCount=${w?.rowCount}`);
+      check(
+        'W3 总字数 === 各章节字数之和（统一口径，核心回归）',
+        w?.metaWords === w?.rowSum,
+        `meta=${w?.metaWords} sum=${w?.rowSum} rows=${JSON.stringify(w?.rows)}`,
+      );
+      check('W4 展示期字数 === 索引 w（构建期与展示期同口径）', idxWords !== null && w?.metaWords === idxWords, `meta=${w?.metaWords} index=${idxWords}`);
+      check('W5 总字数大于导读正文量级（修复前仅统计 entry.md，hegel≈1775）', (w?.metaWords ?? 0) > 2000, `meta=${w?.metaWords}`);
+    }
   } catch (e) {
     check('step2-harness', false, String((e && e.stack) || e));
   }

@@ -19,6 +19,7 @@
  */
 import { useEffect, useState } from 'react';
 import { BaseSheet } from './sheet/BaseSheet';
+import { SubSheet } from './sheet/SubSheet';
 import type {
   AlignPref,
   AnimationPref,
@@ -235,6 +236,7 @@ export function ReaderSettingsSheet({
 /* ------------------------------------------------------------------ */
 
 interface ReaderFontSheetProps {
+  open: boolean;
   bg: BgColorPref;
   fontFamily: FontFamilyPref;
   onPick: (v: FontFamilyPref) => void;
@@ -242,36 +244,24 @@ interface ReaderFontSheetProps {
 }
 
 /** 字体子层：4 款实际可用字体，选中即应用并收起。 */
-export function ReaderFontSheet({ bg, fontFamily, onPick, onClose }: ReaderFontSheetProps): JSX.Element {
+export function ReaderFontSheet({ open, bg, fontFamily, onPick, onClose }: ReaderFontSheetProps): JSX.Element {
   return (
-    <div className="reader-more-layer">
-      <div className="reader-more-mask" onClick={onClose} />
-      <div className={`reader-more-sheet reader-sheet-bg-${bg}`} role="dialog" aria-label="字体">
-        <div className="reader-more-head">
-          <button type="button" className="reader-more-close" aria-label="收起" onClick={onClose}>
-            <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
-              <path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
-          </button>
-          <h3 className="reader-more-title">字体</h3>
-        </div>
-
-        <div className="reader-spacing-body">
-          <div className="reader-pill-group reader-pill-group-4">
-            {FAMILY_OPTIONS.map((o) => (
-              <button
-                key={o.value}
-                type="button"
-                className={`reader-pill${fontFamily === o.value ? ' is-on' : ''}`}
-                onClick={() => onPick(o.value)}
-              >
-                {o.label}
-              </button>
-            ))}
-          </div>
+    <SubSheet open={open} onClose={onClose} title="字体" bg={bg}>
+      <div className="reader-spacing-body">
+        <div className="reader-pill-group reader-pill-group-4">
+          {FAMILY_OPTIONS.map((o) => (
+            <button
+              key={o.value}
+              type="button"
+              className={`reader-pill${fontFamily === o.value ? ' is-on' : ''}`}
+              onClick={() => onPick(o.value)}
+            >
+              {o.label}
+            </button>
+          ))}
         </div>
       </div>
-    </div>
+    </SubSheet>
   );
 }
 
@@ -280,6 +270,7 @@ export function ReaderFontSheet({ bg, fontFamily, onPick, onClose }: ReaderFontS
 /* ------------------------------------------------------------------ */
 
 interface ReaderSpacingSheetProps {
+  open: boolean;
   bg: BgColorPref;
   align: AlignPref;
   onAlignChange: (v: AlignPref) => void;
@@ -293,7 +284,7 @@ interface ReaderSpacingSheetProps {
  *   - 对齐：两端对齐 / 左对齐（自第 2 步从主层迁入）
  * 选中状态写 localStorage + 立刻落到 html data-attr → CSS 即时生效。
  */
-export function ReaderSpacingSheet({ bg, align, onAlignChange, onClose }: ReaderSpacingSheetProps): JSX.Element {
+export function ReaderSpacingSheet({ open, bg, align, onAlignChange, onClose }: ReaderSpacingSheetProps): JSX.Element {
   // 第 3 轮：均为 4 档，默认「适中」（页面边距由 smart 改回 md）
   const [paraSpacing, setParaSpacing] = useLocalFlag('pks_pref_read_paraspacing', 'md');
   const [pageMargin, setPageMargin] = useLocalFlag('pks_pref_read_pagemargin', 'md');
@@ -305,19 +296,8 @@ export function ReaderSpacingSheet({ bg, align, onAlignChange, onClose }: Reader
   }, [paraSpacing, pageMargin]);
 
   return (
-    <div className="reader-more-layer">
-      <div className="reader-more-mask" onClick={onClose} />
-      <div className={`reader-more-sheet reader-sheet-bg-${bg}`} role="dialog" aria-label="间距设置">
-        <div className="reader-more-head">
-          <button type="button" className="reader-more-close" aria-label="收起" onClick={onClose}>
-            <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
-              <path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
-          </button>
-          <h3 className="reader-more-title">间距设置</h3>
-        </div>
-
-        <div className="reader-spacing-body">
+    <SubSheet open={open} onClose={onClose} title="间距设置" bg={bg}>
+      <div className="reader-spacing-body">
           {/* 行段间距：4 档（第 3 轮：删「自定义」及其滑块），选中橙底白字 */}
           <div className="reader-spacing-group">
             <div className="reader-spacing-label">行段间距</div>
@@ -368,9 +348,8 @@ export function ReaderSpacingSheet({ bg, align, onAlignChange, onClose }: Reader
               ))}
             </div>
           </div>
-        </div>
       </div>
-    </div>
+    </SubSheet>
   );
 }
 
@@ -379,6 +358,7 @@ export function ReaderSpacingSheet({ bg, align, onAlignChange, onClose }: Reader
 /* ------------------------------------------------------------------ */
 
 interface ReaderMoreSheetProps {
+  open: boolean;
   bg: BgColorPref;
   prefs: ReaderPrefs;
   onChange: <K extends keyof ReaderPrefs>(key: K, value: ReaderPrefs[K]) => void;
@@ -393,7 +373,7 @@ interface ReaderMoreSheetProps {
  *   - 「展示进度时间和电量」走 ReaderPrefs：控制底部信息条是否渲染。
  *   - 「自动翻页」走 ReaderPrefs：控制章节末尾是否自动加载下一章。
  */
-export function ReaderMoreSheet({ bg, prefs, onChange, onClose }: ReaderMoreSheetProps): JSX.Element {
+export function ReaderMoreSheet({ open, bg, prefs, onChange, onClose }: ReaderMoreSheetProps): JSX.Element {
   const [flags, setFlags] = useState<Record<MoreToggleKey, boolean>>(() => ({
     progress: prefs.showProgress,
     statusbar: prefs.statusbarPermanent,
@@ -415,37 +395,25 @@ export function ReaderMoreSheet({ bg, prefs, onChange, onClose }: ReaderMoreShee
   };
 
   return (
-    <div className="reader-more-layer">
-      <div className="reader-more-mask" onClick={onClose} />
-      <div className={`reader-more-sheet reader-sheet-bg-${bg}`} role="dialog" aria-label="更多设置">
-        <div className="reader-more-head">
-          <button type="button" className="reader-more-close" aria-label="收起" onClick={onClose}>
-            <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
-              <path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
-          </button>
-          <h3 className="reader-more-title">更多设置</h3>
-        </div>
-
-        <div className="reader-more-body">
-          {MORE_TOGGLE_KEYS.map((k) => (
-            <div key={k} className="reader-more-row">
-              <div className="reader-more-text">
-                <span className="reader-more-label">{MORE_TOGGLE_LABELS[k].label}</span>
-                <span className="reader-more-hint">{MORE_TOGGLE_LABELS[k].hint}</span>
-              </div>
-              <button
-                type="button"
-                className={`reader-switch${flags[k] ? ' is-on' : ''}`}
-                aria-pressed={flags[k]}
-                aria-label={MORE_TOGGLE_LABELS[k].label}
-                onClick={() => toggle(k)}
-              />
+    <SubSheet open={open} onClose={onClose} title="更多设置" bg={bg}>
+      <div className="reader-more-body">
+        {MORE_TOGGLE_KEYS.map((k) => (
+          <div key={k} className="reader-more-row">
+            <div className="reader-more-text">
+              <span className="reader-more-label">{MORE_TOGGLE_LABELS[k].label}</span>
+              <span className="reader-more-hint">{MORE_TOGGLE_LABELS[k].hint}</span>
             </div>
-          ))}
-        </div>
+            <button
+              type="button"
+              className={`reader-switch${flags[k] ? ' is-on' : ''}`}
+              aria-pressed={flags[k]}
+              aria-label={MORE_TOGGLE_LABELS[k].label}
+              onClick={() => toggle(k)}
+            />
+          </div>
+        ))}
       </div>
-    </div>
+    </SubSheet>
   );
 }
 

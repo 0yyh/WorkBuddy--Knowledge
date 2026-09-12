@@ -3027,10 +3027,25 @@ body.reader-no-statusbar {
   position: absolute;
   inset: 0;
   background: rgba(10, 14, 22, 0.36);
-  /* 第 3 轮：遮罩微模糊（番茄同款）；WebView 不支持 backdrop-filter 时自然降级为纯半透明，无副作用 */
-  backdrop-filter: blur(2px);
-  -webkit-backdrop-filter: blur(2px);
-  animation: fade-in 0.2s var(--ease);
+  /* 性能：已移除 backdrop-filter: blur(2px)。
+     该 2px 模糊观感几乎不可见，却会让遮罩每一帧重算一次背景快照——面板滑过遮罩
+     区域时触发全屏重绘，是面板动画掉帧的主要来源之一（Android WebView 上代价尤高）。
+     现改为纯半透明背景 + 仅 opacity 合成，视觉基本无差。
+     遮罩淡入淡出统一由 layer 上的状态类驱动（BaseSheet），时长/曲线走 --mask-* 令牌。 */
+  opacity: 0;
+  transition: opacity var(--mask-duration) var(--mask-ease);
+  will-change: opacity;
+}
+
+/* 入场：遮罩淡入；退场：遮罩淡出（此前遮罩随面板一起瞬间消失，观感突兀）。
+   两者共用同一时长/曲线，与面板位移解耦但同步。 */
+.reader-sheet-layer.is-open .reader-sheet-mask,
+.reader-more-layer.is-open .reader-more-mask {
+  opacity: 1;
+}
+.reader-sheet-layer.is-closing .reader-sheet-mask,
+.reader-more-layer.is-closing .reader-more-mask {
+  opacity: 0;
 }
 
 .reader-sheet {
@@ -3049,8 +3064,14 @@ body.reader-no-statusbar {
   overflow: auto;
   /* 面板本体保留纵向原生滚动；拖拽手柄单独 touch-action:none（见下） */
   touch-action: pan-y;
-  /* 指南 §3.2：面板弹簧滑入（ease-spring / duration-slow） */
-  animation: sheet-up var(--duration-slow) var(--ease-spring);
+  /* 滚动不冒泡到阅读区，避免"滚到底带动正文"造成的额外布局与滚动链 */
+  overscroll-behavior: contain;
+  /* 动画：只走 transform（合成属性），由 BaseSheet 的状态机以 inline style 驱动，
+     不再引用 @keyframes sheet-up —— 此前「CSS 关键帧 + inline transition」双机制
+     并存会互相覆盖（关键帧优先级高于 inline style），是入场抖动/掉帧的根因之一。
+     层提升：will-change + translate3d 让位移在合成层完成，不触发重排与重绘。 */
+  will-change: transform;
+  backface-visibility: hidden;
 }
 
 /* 阅读设置面板底色（第 2 步规范）：
@@ -3155,16 +3176,10 @@ body.reader-no-statusbar {
   border-bottom-color: rgba(255, 255, 255, 0.12);
 }
 
-@keyframes sheet-up {
-  from {
-    opacity: 0;
-    transform: translate3d(0, 100%, 0);
-  }
-  to {
-    opacity: 1;
-    transform: translate3d(0, 0, 0);
-  }
-}
+/* 注：此处原先有一份同名 `@keyframes sheet-up`（含 opacity + translate3d），
+   因 CSS 中同名关键帧「后者胜出」，它实际上被 styles.css 末尾的另一份定义覆盖，
+   一直是死代码。面板动画已改为 transform 过渡（见 .reader-sheet），故删除此份，
+   只保留末尾那一份全局定义。 */
 
 .reader-sheet-handle {
   width: 42px;
@@ -3594,7 +3609,12 @@ body.reader-no-statusbar {
   position: absolute;
   inset: 0;
   background: rgba(10, 14, 22, 0.36);
-  animation: fade-in 0.18s var(--ease);
+  /* 与主面板遮罩同款：纯半透明 + 仅 opacity 合成（同样已移除 backdrop-filter）。
+     淡入淡出由 .reader-more-layer 的 is-open / is-closing 状态类驱动，
+     时长/曲线统一走 --mask-* 令牌（原先为 fade-in 0.18s var(--ease)，与主面板不一致）。 */
+  opacity: 0;
+  transition: opacity var(--mask-duration) var(--mask-ease);
+  will-change: opacity;
 }
 
 .reader-more-sheet {
@@ -3607,7 +3627,12 @@ body.reader-no-statusbar {
   /* 放大子层：让间距设置里的「对齐」组无需下滑即可见 */
   max-height: 88%;
   overflow: auto;
-  animation: sheet-up 0.26s var(--ease-out-expo);
+  overscroll-behavior: contain;
+  /* 同 .reader-sheet：位移只走 transform（合成属性），由 SubSheet 状态机以
+     inline style 驱动，统一 --sheet-duration / --sheet-ease-in|out
+     （原先为 animation: sheet-up 0.26s var(--ease-out-expo)，与主面板不一致）。 */
+  will-change: transform;
+  backface-visibility: hidden;
 }
 
 .reader-more-head {
@@ -3880,6 +3905,11 @@ body.reader-no-statusbar {
 /* 章节目录行（参考 10.jpg：章节标题 + 读至N% + 字数/评论数） */
 .chapter-group {
   border-bottom: 1px solid var(--border);
+  /* 长目录（数百章）性能：视口外的章节组跳过布局与绘制，滚动到附近才渲染。
+     contain-intrinsic-size 为未渲染的组预留占位高度，避免滚动条长度与位置跳动。
+     不支持的旧 WebView 会整条声明忽略，行为回退为普通渲染，无副作用。 */
+  content-visibility: auto;
+  contain-intrinsic-size: auto 52px;
 }
 
 .chapter-group:last-child {

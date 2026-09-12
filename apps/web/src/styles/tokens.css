@@ -128,6 +128,18 @@
   --duration-slow: 350ms;
   --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
 
+  /* —— 弹出层动画统一令牌（阅读器面板 / 子层 / 遮罩共用）——
+     背景：此前各处时长与曲线互不统一（0.18s / 0.2s / 0.26s / 0.35s 与
+     ease / ease-out-expo / ease-spring 混用），且 ease-spring 为回弹曲线，
+     用于位移会 overshoot（面板上冲后回落、露出底缝）并多出一段绘制。
+     现统一为「入场快出慢收、退场加速离开」，全程无过冲，只走
+     transform / opacity 两个合成属性。改这一处即全站面板同步。 */
+  --sheet-duration: 280ms;                          /* 面板位移时长（入/退一致） */
+  --sheet-ease-in: cubic-bezier(0.16, 1, 0.3, 1);   /* 入场：ease-out-expo 型，无过冲 */
+  --sheet-ease-out: cubic-bezier(0.4, 0, 0.9, 0.2); /* 退场：加速离开，无过冲 */
+  --mask-duration: 200ms;                           /* 遮罩淡入淡出 */
+  --mask-ease: cubic-bezier(0.4, 0, 0.2, 1);        /* 遮罩：匀速淡变 */
+
   --z-reading: 1;
   --z-nav: 86;
   --z-sheet: 95;

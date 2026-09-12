@@ -103,6 +103,7 @@ export interface EntryCover {
   categories: CategoryPath[];
   tags: string[];
   original_title?: string;
+  /** 词条总字数（统一口径：各 content 章节正文之和；无章节单页词条为词条正文字数） */
   word_count: number;
   sources: SourceRef[];
   updated_at: IsoDate;
@@ -294,6 +295,7 @@ export interface EntryIndexItem {
   t: string;
   ty: EntryType;
   st: EntryStatus;
+  /** 词条总字数（与 cover.word_count 同口径：各 content 章节之和，无章节时回退正文） */
   w: number;
   ua: IsoDate;
   rv: number;
