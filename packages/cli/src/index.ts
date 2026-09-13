@@ -113,7 +113,7 @@ function printHelp(): void {
 `);
 }
 
-function main(): void {
+async function main(): Promise<void> {
   const { cmd, positional, flags } = parse(process.argv.slice(2));
   switch (cmd) {
     case 'build:index':
@@ -138,7 +138,7 @@ function main(): void {
       break;
     case 'search':
       if (positional.length < 1) { console.error('用法: search <query> [--level l1|l2]'); process.exit(1); }
-      searchCmd(contentDir(flags), positional.join(' '), searchLevel(flags.level));
+      await searchCmd(contentDir(flags), positional.join(' '), searchLevel(flags.level));
       break;
     case 'build:chardict':
       buildCharDictCmd(contentDir(flags));
@@ -151,4 +151,7 @@ function main(): void {
   }
 }
 
-main();
+main().catch((e) => {
+  console.error(e instanceof Error ? e.stack || e.message : String(e));
+  process.exit(1);
+});

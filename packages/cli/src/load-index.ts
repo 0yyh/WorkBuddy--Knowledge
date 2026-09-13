@@ -28,7 +28,7 @@ export function loadIndex(contentDir: string): SearchEngine | null {
     );
   }
 
-  const shardLoader = (s: number): ShardIndex | null => {
+  const shardLoader = async (s: number): Promise<ShardIndex | null> => {
     const p = join(idxDir, 'search', `s${String(s).padStart(2, '0')}.json`);
     if (!existsSync(p)) return null;
     try {

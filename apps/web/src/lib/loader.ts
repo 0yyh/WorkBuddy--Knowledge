@@ -4,7 +4,7 @@
  *  - 惰性：search/sNN.json（L2 全文检索按需拉取 + 缓存）
  * 全部通过 fetch 读取 public/content 下的静态资源。
  */
-import { SearchEngine, decodePostings, dfBucketOf, tokenize } from '@pks/core';
+import { SearchEngine, decodePostings, dfBucketOf, tokenize, LRUCache, SHARD_CACHE_CAPACITY } from '@pks/core';
 import type {
   DfBucket,
   EntryIndexItem,
@@ -101,7 +101,8 @@ export interface StationBundle {
   dfMap: Map<string, number>;
 }
 
-const shardCache = new Map<number, ShardIndex>();
+/** P0-2：主线程兜底检索的解码分片缓存，改 LRU 有界（检索完成后仅保留最近使用的有限个分片）。 */
+const shardCache = new LRUCache<number, ShardIndex>(SHARD_CACHE_CAPACITY);
 const shardInflight = new Map<number, Promise<void>>();
 /** P0-III：分片原始文本缓存（worker 与主线程共享，避免重复下载）。 */
 const shardTextCache = new Map<number, string>();
@@ -339,7 +340,11 @@ export function loadStation(): Promise<StationBundle> {
       df: dfMap,
     };
 
-    const engine = new SearchEngine(manifest, titleIndex, (shard: number): ShardIndex | null => {
+    const engine = new SearchEngine(manifest, titleIndex, async (shard: number): Promise<ShardIndex | null> => {
+      // P0-2：on-demand 加载——命中 LRU 直接返回；否则经 loadShard 拉取+解码后回填 LRU。
+      const hit = shardCache.get(shard);
+      if (hit) return hit;
+      await loadShard(shard);
       return shardCache.get(shard) ?? null;
     }, stats);
 
@@ -370,11 +375,11 @@ export async function fullTextSearch(
     // Worker 不可用或执行失败：静默降级到主线程，保证功能不回归。
   }
 
-  await ensureAllShards(bundle.manifest.search.shards);
   // ① df 分片化：兜底路径同样只懒加载查询词命中的 df 桶，合并进 engine.stats.df（同一引用），
   // 保持与 Worker 路径一致的全局 BM25 打分口径（否则退化为分片内 df）。
   const df = await loadDfForTerms(tokenize(q));
   for (const [term, count] of df) bundle.dfMap.set(term, count);
-  const hits: SearchHit[] = bundle.engine.searchL2(q);
+  // P0-2：searchL2 现 async，逐分片 on-demand 经引擎加载器加载（LRU 有界），不再预载全部分片。
+  const hits: SearchHit[] = await bundle.engine.searchL2(q);
   return bundle.engine.groupByEntry(hits);
 }

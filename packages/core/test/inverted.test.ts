@@ -75,7 +75,7 @@ describe('SearchEngine (L1/L2/groupByEntry)', () => {
     return new SearchEngine(
       { search: { shards: 16, docs: 2, terms: 3, avgDocLen: 6 } },
       titleIndex,
-      (s) => (s === 0 ? shard : null),
+      async (s) => (s === 0 ? shard : null),
     );
   }
 
@@ -85,9 +85,9 @@ describe('SearchEngine (L1/L2/groupByEntry)', () => {
     expect(hits[0].doc.slug).toBe('capital');
   });
 
-  it('searchL2 returns ranked full-text hits ordered by score desc', () => {
+  it('searchL2 returns ranked full-text hits ordered by score desc', async () => {
     const engine = makeEngine();
-    const hits = engine.searchL2('capital surplus');
+    const hits = await engine.searchL2('capital surplus');
     expect(hits.length).toBeGreaterThan(0);
     // doc 0 has higher tf for both terms -> should rank first.
     expect(hits[0].doc.id).toBe('e:capital');
@@ -95,9 +95,9 @@ describe('SearchEngine (L1/L2/groupByEntry)', () => {
     expect(hits[0].matchedTerms).toContain('capital');
   });
 
-  it('groupByEntry groups section hits under their entry', () => {
+  it('groupByEntry groups section hits under their entry', async () => {
     const engine = makeEngine();
-    const hits = engine.searchL2('labor');
+    const hits = await engine.searchL2('labor');
     const groups = engine.groupByEntry(hits);
     expect(groups.length).toBe(1);
     expect(groups[0].entry.slug).toBe('capital');
@@ -105,12 +105,12 @@ describe('SearchEngine (L1/L2/groupByEntry)', () => {
     expect(groups[0].hits.length).toBe(hits.length);
   });
 
-  it('searchL2 returns empty when no shard is loaded', () => {
+  it('searchL2 returns empty when no shard is loaded', async () => {
     const engine = new SearchEngine(
       { search: { shards: 16, docs: 0, terms: 0, avgDocLen: 0 } },
       [],
-      () => null,
+      async () => null,
     );
-    expect(engine.searchL2('anything')).toEqual([]);
+    expect(await engine.searchL2('anything')).toEqual([]);
   });
 });

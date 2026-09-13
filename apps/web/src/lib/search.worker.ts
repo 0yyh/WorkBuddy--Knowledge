@@ -15,7 +15,7 @@
 // 原因见 workerDocumentShim.ts（@pks/core 的 markdown 链含一处 module-scope `document.createElement`，
 // worker 无 document 会直接抛错导致 worker 启动失败）。不要调整下面这行的顺序。
 import './workerDocumentShim';
-import { SearchEngine, decodePostings } from '@pks/core';
+import { SearchEngine, decodePostings, LRUCache, SHARD_CACHE_CAPACITY } from '@pks/core';
 import type { ShardIndex } from '@pks/core';
 import type {
   SearchWorkerRequest,
@@ -40,8 +40,10 @@ const ctx = self as unknown as {
   onerror: ((e: unknown) => void) | null;
 };
 
-/** 解码后的分片表（与主线程 shardCache 同构） */
-const decoded = new Map<number, ShardIndex>();
+/** 解码后的分片表（与主线程 shardCache 同构）。P0-2：改 LRU 有界，检索完成后仅保留最近使用的有限个分片。 */
+const decoded = new LRUCache<number, ShardIndex>(SHARD_CACHE_CAPACITY);
+/** 主线程投喂的原始分片 JSON 文本（LRU 解码前的源；按 shard 唯一，总量=分片数，体积很小）。 */
+const shardTexts = new Map<number, string>();
 let engine: SearchEngine | null = null;
 
 /**
@@ -82,7 +84,16 @@ ctx.onmessage = (e: MessageEvent<SearchWorkerRequest>): void => {
         engine = new SearchEngine(
           msg.manifest,
           msg.titleIndex,
-          (shard: number): ShardIndex | null => decoded.get(shard) ?? null,
+          async (shard: number): Promise<ShardIndex | null> => {
+            // P0-2：on-demand 解码——命中 LRU 直接返回；否则从主线程投喂的原始文本解码后回填 LRU。
+            const hit = decoded.get(shard);
+            if (hit) return hit;
+            const text = shardTexts.get(shard);
+            if (text === undefined) return null;
+            const d = decodeWire(text);
+            decoded.set(shard, d);
+            return d;
+          },
           stats,
         );
         reply({ type: 'ready' });
@@ -98,8 +109,10 @@ ctx.onmessage = (e: MessageEvent<SearchWorkerRequest>): void => {
       }
 
       case 'shards': {
+        // P0-2：只暂存原始文本，解码推迟到 searchL2 逐分片 on-demand（LRU 有界）。
+        // 不再在此处全量解码，避免 256 分片常驻 +30–50MB。
         for (const item of msg.items) {
-          decoded.set(item.n, decodeWire(item.text));
+          shardTexts.set(item.n, item.text);
         }
         break;
       }
@@ -109,13 +122,20 @@ ctx.onmessage = (e: MessageEvent<SearchWorkerRequest>): void => {
           reply({ type: 'error', id: msg.id, message: '检索引擎尚未初始化' });
           break;
         }
-        // 分片可能尚未全部到达：SearchEngine.searchL2 对缺失分片返回 null 并跳过，
-        // 因此按已有分片尽力检索，不抛错。
-        const t0 = performance.now();
-        const hits = engine.searchL2(msg.query);
-        const groups = engine.groupByEntry(hits);
-        const tookMs = Math.round(performance.now() - t0);
-        reply({ type: 'result', id: msg.id, groups, hitCount: hits.length, tookMs });
+        // searchL2 现 async：逐分片 on-demand 解码（经 LRU）；缺失分片返回 null 并被跳过，不抛错。
+        // 用 async IIFE 包裹，保持 onmessage 同步签名（ctx 类型要求返回 void）。
+        void (async (): Promise<void> => {
+          try {
+            const t0 = performance.now();
+            const hits = await engine!.searchL2(msg.query);
+            const groups = engine!.groupByEntry(hits);
+            const tookMs = Math.round(performance.now() - t0);
+            reply({ type: 'result', id: msg.id, groups, hitCount: hits.length, tookMs });
+          } catch (err) {
+            const message = err instanceof Error ? err.message : String(err);
+            reply({ type: 'error', id: msg.id, message });
+          }
+        })();
         break;
       }
     }

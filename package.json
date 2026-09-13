@@ -10,7 +10,8 @@
   },
   "scripts": {
     "core:build": "tsc -p packages/core/tsconfig.json",
-    "build": "tsc -p packages/core/tsconfig.json && tsc -p packages/cli/tsconfig.json && npm run typecheck && npm --prefix apps/web run build",
+    "check:links": "node scripts/check-links.mjs",
+    "build": "node scripts/check-links.mjs && tsc -p packages/core/tsconfig.json && tsc -p packages/cli/tsconfig.json && npm run typecheck && npm --prefix apps/web run build",
     "typecheck": "tsc -p packages/core/tsconfig.json --noEmit && tsc -p packages/cli/tsconfig.json --noEmit && npm --prefix apps/web run typecheck",
     "test": "npm --prefix packages/core run test",
     "dev": "npm --prefix apps/web run dev",

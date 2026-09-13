@@ -22,8 +22,16 @@
 - Node ≥ 20.11；本仓库为 pnpm workspace（`pnpm-lock.yaml`），**依赖安装用 `pnpm install`**。
 - 依赖装好后，**所有任务脚本均通过根 `package.json` 调用**，不强制依赖 pnpm：
   `tsc` / `tsx` / `node` / `npm --prefix apps/web …`。若本机 pnpm 受限，直接用 `npm run <script>` 即可。
-- **切勿**执行 `npm install` / `pnpm prune` 之外的依赖变更：`apps/web` 的 `@pks/core` 依赖
-  通过 workspace 链接解析（`"workspace:*"`），npm 无法识别该协议，重建 `node_modules` 会断掉链接。
+
+> ## 🚫 红线（违反即断构建，务必遵守）
+> **禁止执行 `npm install` / `pnpm install` / `pnpm prune` / 任何会重建 `node_modules` 的依赖命令。**
+> 原因：`@pks/core` 在 web/cli 的 `package.json` 中声明为 `"workspace:*"`，但 npm 不识别该协议；
+> 实际依赖解析靠**手工文件系统 junction**（`apps/web/node_modules/@pks/core` 与
+> `packages/cli/node_modules/@pks/core` 均指向 `packages/core`）。一旦误跑上述命令，`node_modules`
+> 被重建，junction 即断链且无 git 回滚（node_modules 被忽略），web 构建会拉不到 `@pks/core` 的 dist。
+> - 运行 `npm run check:links` 可校验 junction 是否完好（`build` 脚本已内置该前置校验）。
+> - 若 junction 丢失，**不要重装依赖**，重建手工 junction 即可（见 `scripts/check-links.mjs` 输出提示）。
+> - 仅当确知在做什么、且准备手动恢复 junction 时才碰依赖命令。
 - Android 构建需 JDK 17+（AGP 8.7 / Gradle 8.11；本机用 `D:\JDK\jdk-19.0.1`）
   与 Android SDK（`compileSdk 35` / `targetSdk 34`）。
 

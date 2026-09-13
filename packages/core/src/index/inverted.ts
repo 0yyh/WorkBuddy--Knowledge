@@ -7,6 +7,7 @@
 import { tokenize, termFrequencies } from './tokenizer.js';
 import { bm25Term } from './bm25.js';
 import { shardOf } from '../util/fnv1a.js';
+import { LRUCache } from '../util/lru.js';
 import type { SearchDoc, SearchHit, SearchResultGroup, TitleIndexItem, EntryType } from '../types.js';
 
 export interface IndexingDoc {
@@ -148,36 +149,85 @@ export function searchTitleIndex(titleIndex: TitleIndexItem[], query: string, li
   return hits.sort((a, b) => b.score - a.score).slice(0, limit);
 }
 
+/** 预分词的标题项（P0-3）：消除 L1 每次按键对标题+别名的 O(N) 重分词。 */
+export interface TokenizedTitleItem {
+  item: TitleIndexItem;
+  tokens: Set<string>;
+}
+
+/**
+ * L1 轻量索引（预分词版，P0-3）：直接遍历预存 token 集合做重叠打分，
+ * 按键时零重分词（重分词只在 `loadStation`/引擎构造时发生一次）。
+ * 语义与 `searchTitleIndex` 完全一致，仅 haySet 改为预构建。
+ */
+export function searchTitleIndexPre(items: TokenizedTitleItem[], query: string, limit = 30): SearchHit[] {
+  const qTokens = new Set(tokenize(query));
+  if (qTokens.size === 0) return [];
+  const hits: SearchHit[] = [];
+  for (const { item, tokens: haySet } of items) {
+    let overlap = 0;
+    for (const t of qTokens) if (haySet.has(t)) overlap++;
+    // 标题直接包含查询串的强信号
+    const direct = item.title.toLowerCase().includes(query.toLowerCase()) ? 5 : 0;
+    if (overlap > 0) {
+      const score = overlap + direct;
+      const doc: SearchDoc = {
+        id: `e:${item.slug}`,
+        kind: 'entry',
+        slug: item.slug,
+        title: item.title,
+        words: item.words,
+      };
+      hits.push({ doc, score, matchedTerms: [...qTokens].filter((t) => haySet.has(t)) });
+    }
+  }
+  return hits.sort((a, b) => b.score - a.score).slice(0, limit);
+}
+
+/** 检索分片解码后常驻上限（P0-2）：跨全语料 BM25 一次检索只瞬时触达全部分片，
+ * 检索完成后仅保留最近使用的有限个解码分片，避免 256 分片（20M 字倒排）长期驻留 +30–50MB。
+ * 低于总分片数时，单轮检索的瞬态峰值仍是全部分片（被循环局部变量持有），检索后即回落到本上限。 */
+export const SHARD_CACHE_CAPACITY = 32;
+
 export class SearchEngine {
-  private shardCache = new Map<number, ShardIndex>();
+  private shardCache = new LRUCache<number, ShardIndex>(SHARD_CACHE_CAPACITY);
+  private titleTokens: TokenizedTitleItem[];
 
   constructor(
     private manifest: { search: { shards: number; docs: number; terms: number; avgDocLen: number } },
     private titleIndex: TitleIndexItem[],
-    private shardLoader: (shard: number) => ShardIndex | null,
+    private shardLoader: (shard: number) => Promise<ShardIndex | null>,
     /** P0-II 全局 BM25 统计；不传则退化为分片内 BM25（兼容旧产物/测试） */
     private stats?: GlobalSearchStats,
-  ) {}
+  ) {
+    // P0-3：L1 标题索引预分词一次（构造期），消除每次按键 O(N) 重分词。
+    this.titleTokens = titleIndex.map((item) => ({
+      item,
+      tokens: new Set(tokenize(item.title + ' ' + item.aliases.join(' '))),
+    }));
+  }
 
-  private loadShard(s: number): ShardIndex | null {
-    if (this.shardCache.has(s)) return this.shardCache.get(s)!;
-    const sh = this.shardLoader(s);
+  private async loadShard(s: number): Promise<ShardIndex | null> {
+    const cached = this.shardCache.get(s);
+    if (cached) return cached;
+    const sh = await this.shardLoader(s);
     if (sh) this.shardCache.set(s, sh);
     return sh;
   }
 
-  /** L1 仅标题/别名（零加载分片） */
+  /** L1 仅标题/别名（零加载分片，预分词秒开，P0-3） */
   searchL1(query: string): SearchHit[] {
-    return searchTitleIndex(this.titleIndex, query);
+    return searchTitleIndexPre(this.titleTokens, query);
   }
 
-  /** L2 全文：跨全部分片 BM25 合并（统一用全局统计，保证分片间可比） */
-  searchL2(query: string): SearchHit[] {
+  /** L2 全文：跨全部分片 BM25 合并（统一用全局统计，保证分片间可比）。
+   *  P0-2：改 async，逐分片 on-demand 加载（经 LRU 解码缓存），不再要求调用方预载全部分片。 */
+  async searchL2(query: string): Promise<SearchHit[]> {
     const q = tokenize(query);
     const m = this.manifest.search.shards;
     const merged = new Map<string, SearchHit>(); // docId(slug) 去重
     for (let s = 0; s < m; s++) {
-      const shard = this.loadShard(s);
+      const shard = await this.loadShard(s);
       if (!shard) continue;
       for (const hit of searchInShard(shard, q, this.stats)) {
         const key = hit.doc.id;
