@@ -51,4 +51,11 @@
 - **P2-10 常量表**（仅搬迁不改值）：`SWIPE_X 60` `STATUSBAR_H 30` `CHROME_REVEAL_DELAY_MS 1800` `AUTO_NEXT_DEBOUNCE_MS 400` `CLOCK_INTERVAL_MS 1000` `SWIPE_Y_RATIO 1.2` `TAP_LEFT_RATIO 0.26` `TAP_RIGHT_RATIO 0.74` `SCROLL_BOTTOM_THRESHOLD_PX 4` `HEADING_SCROLL_OFFSET 12`。
 - **@types/react 18.3.31 的 ref 坑**：`RefObject<T>` 已收紧为 `{current:T}`；子组件 prop 写 `RefObject<HTMLInputElement|null>` 再传给 DOM `ref=` 会报 TS2322。**照抄 `scrollRef` 写法：prop 用 `MutableRefObject<HTMLInputElement|null>`**。
 - **P2-13 文档治理**（`4c88dfe`）：`docs/02` 早写明纯 CSS 零 UI 框架（§10/144-146/818-819），无需再动。`docs/14` 漂移最重（原称「非 git 仓库、无回滚」已失效；文件清点 38→**49**＝components 14 / lib 18 / hooks 1 / pages 9 / state 2 / 根 5；`EntryReaderPage` 行号全失效），已在文首加**过期校正横幅**，并声明 §1 台账 / §2 高危点 Top1-10 / §3.4 巡检方法论仍有效。
-- **未完成**：**P2-11**（补 web/core 测试——agent 类型不可用 + 429 限流，未开始）、**P2-12**（OTA 清单签名 + `network_security_config` 收窄；仅在离开个人局域网时才需，暂缓）。
+- **P2-11 测试补齐**（`6180ef4`）：core **159→181**（+22）、web **0→36**（20 条新增 + 16 条既有但从未跑起来）。
+  - ⚠ **web 测试此前根本跑不起来**（两因叠加）：`apps/web/vitest.config.ts` 里 `import {defineConfig} from 'vitest/config'` —— vitest **只装在 `packages/core`**（`packages/core/node_modules/vitest` 存在，apps/web 与根目录都没有），从 apps/web 解析抛 `ERR_MODULE_NOT_FOUND` ⇒ **配置文件加载失败**；且 `environment:'jsdom'` 而本仓**未安装 jsdom**（`.pnpm` 下无 `jsdom@*`）。
+  - 修复：配置改导出**普通对象**（`defineConfig` 仅类型辅助，运行期不需要）；environment 改 `'node'`；新增 `apps/web/vitest.setup.ts` 补 localStorage/sessionStorage 内存垫片，并**把 `window` 指向 `globalThis`** —— `preferences.ts` 的 `safeStorage()` 取的是 `window.localStorage`，node 下无 `window` 会返回 `null`，令 `readSysPrefs` 静默回退默认值、**掩盖真实读写行为**（症状：写入 'dark' 却读回默认 'gray'）。
+  - **跑测试命令**：`node node_modules/.pnpm/vitest@2.1.9_@types+node@22.20.1/node_modules/vitest/vitest.mjs run --root apps/web`（core 换 `--root packages/core`）。**根 `npm run test` 只跑 core**，不覆盖 web。
+  - **`searchWorkerClient` 测试必坑**：该模块持有模块级状态（`degraded`/`initialized`/`sentShards`/`pending`/`seq`，且 `degraded` 一旦置位**永久**），**每个用例必须 `vi.resetModules()` + 动态 `import()` 取新实例**，否则互相污染。
+  - `loader.test.ts` 覆盖 `loadShard` 的**两种线上格式**：shardOf(gamma,2)=0 放新 base64 `postings`、shardOf(alpha|beta,2)=1 放旧内联 `index`，查 theory 同时命中两片——**缺任一条解码路径即失败**（已用变异测试验证非空洞：移除旧格式回退后 theory 丢 alpha、graph 返空数组）。
+  - 新增文件：`packages/core/test/{shard-codec.roundtrip,bm25.regression}.test.ts`、`apps/web/src/lib/{loader,searchWorkerClient}.test.ts`、`apps/web/vitest.setup.ts`。
+- **未完成**：**P2-12**（OTA 清单签名 + `network_security_config` 收窄；仅在离开个人局域网时才需，暂缓）。
