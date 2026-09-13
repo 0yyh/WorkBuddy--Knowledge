@@ -22,7 +22,7 @@
 
 ## 阅读页 & 校验
 - `#/entry-reader/{slug}?ch=<N>` 的 N=`docs` 数组下标（导读+非 container 章）；`EntryCoverPage` 传 ch 须**按内容章节计数**，toc 有「卷」不能用 i+1。
-- 校验：`npm run typecheck` / `npm run test`(vitest 仅 core) / `npm run lint`(内容)。诊断死代码用 `tsc --noUnusedLocals`（配置刻意关，勿改）。同文件多发 Edit 会部分静默未落盘，改完必回读/grep。
+- 校验：⚠ **`npm run <任意脚本>` 当前已不可用**（`/usr/bin/env: 'bash': No such file or directory`，exit **127**），必须绕过 npm 直接调 node 入口，命令见文末「2026-09-13 P2」节。诊断死代码用 `tsc --noUnusedLocals`（配置刻意关，勿改）。同文件多发 Edit 会部分静默未落盘，改完必回读/grep。
 
 ## 近期决策（2026-09-10）
 - **UI = 纯CSS + design token，严禁 MUI/Tailwind**（docs/02 §18 已于 37d9a79 更正）。
@@ -37,4 +37,18 @@
 - **设置面板互斥下钻 + 底栏番茄风**（`40fb715` / `5b30328`，2026-09-10/11）：面板四态(font/spacing/more/settings)存 `EntryReaderPage`，开任一必关其余（Portal 面板互斥靠 state 不靠 CSS）；`reader-no-statusbar` 须同时挂 `.reader-root` **和 body**（Portal 面板在 body 子树，否则关信息条后面板不跟沉）；**`--reader-nav-h` 必须在 `.reader-root, body` 上计算、不能放 `:root`**（CSS 变量在声明处替换后按计算值继承，`:root` 会把 statusbar-h=30px 烤进 nav-h → 关信息条后章节条/面板不下沉、裂 30px 露正文；凡子作用域覆写变量参与 calc 的，calc 须放同一作用域，`07472ce`）。切章滚隐竞态：`scrollTo(0)` 的异步 scroll 事件会晚于 `setChromeDismissed(false)` 触发 hideChrome → `chromeSuppressRef` 抑制 + 新章 load 后复位 + onSurfaceClick 唤起时强制清 dismissed。**底部 chrome（章节条/导航栏/信息条）一律实色 `var(--reading-bg)`**——半透明 `--reader-chrome-bg` 会透字（用户红框反馈），勿改回。底栏图标=番茄风细线 SVG(strokeWidth 1.5)：目录三横线/线框月牙/六角螺母，Tab 无竖线分隔，色用 `var(--rp-soft)`。`ReaderPrefs.autoLoad` 默认 **false**（「自动翻页」开关）。翻页胶囊无「无动画」(4 档)。**番茄参考图底栏有第 4 Tab 待用户定功能**（缓存/更多？），勿擅自加。
 - **字数口径唯一规则**（2026-09-13）：`builder.ts` 的 `w`/`cover.word_count`/`titleIndex.words`/`stats.words` 全由 `entryTotalWords` 派生 = **有内容章节时 `Σ(非 container 章节 words)`，否则回退 `entry.md` 正文**；container(卷) 不计入也不显示（防与子孙双算）。`EntryCoverPage` 的「字数」再按目录 content 行逐行求和做兜底，保证「总字数 === 各章节字数之和」在 UI 层恒成立。改字数逻辑须同时看 `packages/core/src/index/builder.ts` + `apps/web/src/pages/EntryCoverPage.tsx`。
 - **阅读器面板动画规范**（2026-09-13，性能版）：面板位移**只走单一 transform 过渡**，**禁止用 `@keyframes` 做面板位移**（与 inline transition 冲突，关键帧优先级更高）；令牌 `--sheet-duration(280ms)/-ease-in/-ease-out`、`--mask-duration(200ms)/-ease`（tokens.css）；`closing` 由 `open` **派生**而非 effect 滞后设置；拖拽走 `useSheetDrag` rAF 直写 `el.style.transform`（**禁止在 pointermove 里 setState**）；面板/子层加 `will-change:transform`；**阅读器遮罩不再用 `backdrop-filter`**（`.confirm-mask` 的 blur(4px) 保留，且 styles.css 末尾那份 `@keyframes sheet-up` 被 `.confirm-sheet` 使用，勿删）。三子层统一走 `components/sheet/SubSheet.tsx`（常驻渲染 + open 驱动，有收起动画）——**勿改回条件渲染**。React 样式对象键序固定 `{ transition, transform }`。
-- **e2e 断言数**：`scripts/tools/e2e-reader-refactor.mjs` 现 **93** 条（含 A 组面板动画、W 组详情页字数）。该脚本需先 `npm run build`（读 `apps/web/dist`），默认自动选空闲 CDP 端口。
+- **e2e 断言数**：`scripts/tools/e2e-reader-refactor.mjs` 现 **93** 条（含 A 组面板动画、W 组详情页字数）。该脚本需先构建（读 `apps/web/dist`），默认自动选空闲 CDP 端口。
+
+## 2026-09-13 · P2（评估 §四 9–13）
+- **绕过 npm 的可用命令**（仓库根执行，已验证）：
+  - core 重编 `node node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/bin/tsc -p packages/core/tsconfig.json`
+  - 建索引 `node node_modules/.pnpm/tsx@4.23.13/node_modules/tsx/dist/cli.mjs packages/cli/src/index.ts build:index`
+  - 投递内容 `node scripts/copy-content.mjs`（根脚本名 `content:copy`，web 下叫 `copy:content`）
+  - web 构建 `CODEBUDDY_SAFE_DELETE_ENABLED=0 node node_modules/.pnpm/vite@5.4.21_@types+node@22.20.1/node_modules/vite/bin/vite.js build apps/web`（**root 走位置参数**）
+  - web typecheck `node node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/bin/tsc -p apps/web/tsconfig.json --noEmit`
+  - 长输出一律 `> X.log 2>&1` 再 Read，**切勿 `| tail`**；日志用完 `node -e "require('fs').rmSync(f,{force:true})"` 删（否则污染 git status）。
+- **P2-9 阅读页拆分**（`4f9b3e0`）：`EntryReaderPage.tsx` **976→568 行**，成薄编排层。新增 `hooks/useReaderScroll.ts`（滚动/翻章/信息栏滚隐/章末自动加载；进度条 ref 直写 DOM、`chromeSuppressRef` 抑制切章 `scrollTo(0)` 的异步 scroll 竞态、`pendingScroll` 跳小节）、`components/ReaderChrome.tsx`（顶栏/章节条/3 等分导航/信息条，e2e 类名一个没改）、`components/ReaderToc.tsx`（目录搜索，卷不占章节号）、`lib/reader-constants.ts`。
+- **P2-10 常量表**（仅搬迁不改值）：`SWIPE_X 60` `STATUSBAR_H 30` `CHROME_REVEAL_DELAY_MS 1800` `AUTO_NEXT_DEBOUNCE_MS 400` `CLOCK_INTERVAL_MS 1000` `SWIPE_Y_RATIO 1.2` `TAP_LEFT_RATIO 0.26` `TAP_RIGHT_RATIO 0.74` `SCROLL_BOTTOM_THRESHOLD_PX 4` `HEADING_SCROLL_OFFSET 12`。
+- **@types/react 18.3.31 的 ref 坑**：`RefObject<T>` 已收紧为 `{current:T}`；子组件 prop 写 `RefObject<HTMLInputElement|null>` 再传给 DOM `ref=` 会报 TS2322。**照抄 `scrollRef` 写法：prop 用 `MutableRefObject<HTMLInputElement|null>`**。
+- **P2-13 文档治理**（`4c88dfe`）：`docs/02` 早写明纯 CSS 零 UI 框架（§10/144-146/818-819），无需再动。`docs/14` 漂移最重（原称「非 git 仓库、无回滚」已失效；文件清点 38→**49**＝components 14 / lib 18 / hooks 1 / pages 9 / state 2 / 根 5；`EntryReaderPage` 行号全失效），已在文首加**过期校正横幅**，并声明 §1 台账 / §2 高危点 Top1-10 / §3.4 巡检方法论仍有效。
+- **未完成**：**P2-11**（补 web/core 测试——agent 类型不可用 + 429 限流，未开始）、**P2-12**（OTA 清单签名 + `network_security_config` 收窄；仅在离开个人局域网时才需，暂缓）。
