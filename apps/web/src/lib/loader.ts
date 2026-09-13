@@ -4,7 +4,7 @@
  *  - 惰性：search/sNN.json（L2 全文检索按需拉取 + 缓存）
  * 全部通过 fetch 读取 public/content 下的静态资源。
  */
-import { SearchEngine, decodePostings, dfBucketOf, tokenize, LRUCache, SHARD_CACHE_CAPACITY } from '@pks/core';
+import { SearchEngine, decodePostings, dfBucketOf, tokenize, LRUCache, SHARD_CACHE_CAPACITY, inlineIndexToMap } from '@pks/core';
 import type {
   DfBucket,
   EntryIndexItem,
@@ -154,7 +154,7 @@ interface WireShardIndex {
   /** 新格式：base64(varint 差分 + zlib) 的倒排表 */
   postings?: string;
   /** 旧格式：内联展开的倒排表（向后兼容） */
-  index?: ShardIndex['index'];
+  index?: Record<string, Array<[number, number]>>;
 }
 
 /** 拉取单个检索分片（幂等 + 单飞） */
@@ -169,7 +169,7 @@ export function loadShard(shard: number): Promise<void> {
       // P0-I：优先解 base64 倒排；旧产物回落到内联 index（不崩）。
       const index: ShardIndex['index'] = wire.postings
         ? decodePostings(wire.postings)
-        : (wire.index ?? {});
+        : (wire.index ? inlineIndexToMap(wire.index) : {});
       const data: ShardIndex = {
         shard: wire.shard,
         docs: wire.docs,

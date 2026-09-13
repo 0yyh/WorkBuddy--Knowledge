@@ -13,7 +13,7 @@ import { toPlainText } from '../parse/markdown.js';
 import { countWords } from '../parse/words.js';
 import { buildShards, type IndexingDoc, type ShardIndex } from './inverted.js';
 import { buildDfBuckets } from './df.js';
-import { encodePostings, decodePostings } from './shard-codec.js';
+import { encodePostings, decodePostings, inlineIndexToMap } from './shard-codec.js';
 import { chooseShardCount } from './shards.js';
 import { deriveCrossTimeline, deriveTimelineDimensions } from '../track/parse.js';
 import { sha1 } from '../util/sha1.js';
@@ -120,9 +120,9 @@ function decodeShardText(text: string): ShardIndex {
     docs: ShardIndex['docs'];
     lengths: number[];
     postings?: string;
-    index?: ShardIndex['index'];
+    index?: Record<string, Array<[number, number]>>;
   };
-  const index = wire.postings ? decodePostings(wire.postings) : (wire.index ?? {});
+  const index = wire.postings ? decodePostings(wire.postings) : (wire.index ? inlineIndexToMap(wire.index) : {});
   return { shard: wire.shard, docs: wire.docs, lengths: wire.lengths, index };
 }
 

@@ -20,9 +20,10 @@ describe('buildShards', () => {
     const totalDocs = shards.reduce((a, s) => a + s.docs.length, 0);
     expect(totalDocs).toBe(2);
     // 'capital' postings reference a real doc.
-    const capitalShard = shards.find((s) => s.index['capital']?.length);
+    const capitalShard = shards.find((s) => s.index['capital']?.size);
     expect(capitalShard).toBeDefined();
-    const [docId, tf] = capitalShard!.index['capital'][0];
+    const postings = capitalShard!.index['capital']!;
+    const [docId, tf] = [...postings.entries()][0];
     expect(capitalShard!.docs[docId].slug).toBe('alpha'); // or beta, but must exist
     expect(tf).toBeGreaterThan(0);
   });
@@ -59,9 +60,9 @@ describe('SearchEngine (L1/L2/groupByEntry)', () => {
       docs,
       lengths: [6, 6],
       index: {
-        capital: [[0, 3], [1, 1]],
-        labor: [[0, 1], [1, 2]],
-        surplus: [[0, 2], [1, 3]],
+        capital: new Map<number, number>([[0, 3], [1, 1]]),
+        labor: new Map<number, number>([[0, 1], [1, 2]]),
+        surplus: new Map<number, number>([[0, 2], [1, 3]]),
       },
     };
   }

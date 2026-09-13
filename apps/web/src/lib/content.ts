@@ -106,7 +106,7 @@ export async function loadEntryDocument(
   const validated = validateEntryMeta(fm.data);
   const meta: EntryMeta = validated.value;
   const linkified = linkifyMarkdown(fm.body, knownSlugs);
-  const html = await renderMarkdown(linkified.md);
+  const html = await renderMarkdown(linkified.md, `entry:${slug}`);
 
   return {
     slug,
@@ -134,7 +134,7 @@ export async function loadChapterDocument(
     meta = validateSectionMeta(fm.data).value;
   }
   const linkified = linkifyMarkdown(body, knownSlugs);
-  const html = await renderMarkdown(linkified.md);
+  const html = await renderMarkdown(linkified.md, `chapter:${slug}:${key}`);
   return {
     key,
     slug,

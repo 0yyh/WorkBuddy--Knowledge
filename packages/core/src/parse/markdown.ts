@@ -10,6 +10,7 @@ import remarkMath from 'remark-math';
 import remarkRehype from 'remark-rehype';
 import rehypeSanitize, { defaultSchema } from 'rehype-sanitize';
 import rehypeStringify from 'rehype-stringify';
+import { LRUCache } from '../util/lru.js';
 
 const processor = unified()
   .use(remarkParse)
@@ -27,10 +28,21 @@ const processor = unified()
   })
   .use(rehypeStringify);
 
-/** 渲染 Markdown → 已 sanitize 的 HTML 字符串 */
-export async function renderMarkdown(md: string): Promise<string> {
+// 渲染结果 LRU 缓存（key 由调用方按 slug+章节 维度传入）：
+// 阅读页切章 / 退回重读 / TOC 重渲染都会重复装载同一章 Markdown，缓存避免重跑整条 unified 管线。
+const renderCache = new LRUCache<string, string>(64);
+
+/** 渲染 Markdown → 已 sanitize 的 HTML 字符串。
+ * @param cacheKey 可选；传入时按 key 走 LRU（如 `entry:${slug}` / `chapter:${slug}:${key}`），命中直接返回。 */
+export async function renderMarkdown(md: string, cacheKey?: string): Promise<string> {
+  if (cacheKey !== undefined) {
+    const hit = renderCache.get(cacheKey);
+    if (hit !== undefined) return hit;
+  }
   const file = await processor.process(md);
-  return String(file);
+  const html = String(file);
+  if (cacheKey !== undefined) renderCache.set(cacheKey, html);
+  return html;
 }
 
 /** 去除 Markdown 标记，得到可用于索引/摘要的纯文本 */

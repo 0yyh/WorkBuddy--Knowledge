@@ -11,12 +11,10 @@
  * 注意：本文件不引入 `/// <reference lib="webworker" />`（会与 tsconfig 的 DOM lib 冲突），
  * 改为用一个最小结构类型断言 `self`。
  */
-// ⚠️ 必须第一个 import：在任何 @pks/core 模块体求值前注入最小 document 垫片。
-// 原因见 workerDocumentShim.ts（@pks/core 的 markdown 链含一处 module-scope `document.createElement`，
-// worker 无 document 会直接抛错导致 worker 启动失败）。不要调整下面这行的顺序。
-import './workerDocumentShim';
-import { SearchEngine, decodePostings, LRUCache, SHARD_CACHE_CAPACITY } from '@pks/core';
-import type { ShardIndex } from '@pks/core';
+// 检索 Worker 只引入 @pks/core/search 子路径（纯检索内核，不含 markdown 渲染链），
+// 因此不再需要 workerDocumentShim：core 全程无 DOM 访问（sideEffects:false 下 markdown 链也不会被打进 worker）。
+import { SearchEngine, decodePostings, LRUCache, SHARD_CACHE_CAPACITY, inlineIndexToMap } from '@pks/core/search';
+import type { ShardIndex } from '@pks/core/search';
 import type {
   SearchWorkerRequest,
   SearchWorkerResponse,
@@ -30,7 +28,7 @@ interface WireShardIndex {
   /** 新格式：base64(varint 差分 + zlib) 的倒排表 */
   postings?: string;
   /** 旧格式：内联展开的倒排表（向后兼容） */
-  index?: ShardIndex['index'];
+  index?: Record<string, Array<[number, number]>>;
 }
 
 /** 不去引 webworker lib；用最小结构类型断言 worker 全局上下文。 */
@@ -62,7 +60,7 @@ function decodeWire(text: string): ShardIndex {
   const wire = JSON.parse(text) as WireShardIndex;
   const index: ShardIndex['index'] = wire.postings
     ? decodePostings(wire.postings)
-    : (wire.index ?? {});
+    : (wire.index ? inlineIndexToMap(wire.index) : {});
   return {
     shard: wire.shard,
     docs: wire.docs,

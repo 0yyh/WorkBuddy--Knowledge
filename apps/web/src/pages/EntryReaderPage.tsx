@@ -93,7 +93,8 @@ export function EntryReaderPage({ slug, chapterStart }: EntryReaderPageProps): J
   // 仍保留「点中央唤出/隐藏」的既有交互；二者叠加构成灵动显隐。
   const [chromeDismissed, setChromeDismissed] = useState<boolean>(false);
   // 章内阅读进度 0-100（拖动滑杆时也是这个值；切章时由 reset effect 归 0 并随 scroll 实时刷新）
-  const [chapterScrollPct, setChapterScrollPct] = useState<number>(0);
+  // 章节进度条：改用 ref 直写 DOM，避免每帧 setChapterScrollPct 触发整页 re-render
+  const sliderRef = useRef<HTMLInputElement>(null);
   // 目录二级小节：key(文档 key) → 该文档内的标题列表
   const [headingsMap, setHeadingsMap] = useState<Record<string, HeadingView[]>>({});
   // 点击小节后：跳到目标章并滚动到对应标题（载入完成后再执行滚动）
@@ -292,8 +293,12 @@ export function EntryReaderPage({ slug, chapterStart }: EntryReaderPageProps): J
     // 抑制随后 scrollTo(0) 触发的异步 scroll 事件把 chrome 重新滚隐（见 chromeSuppressRef 注释）
     chromeSuppressRef.current = true;
     scrollRef.current?.scrollTo({ top: 0, behavior: 'auto' });
-    // 切章时把滑杆归 0（随后随 scroll 实时刷新到正确百分比）
-    setChapterScrollPct(0);
+    // 切章时把滑杆归 0（随后 scroll/compute 实时刷新到正确百分比）
+    const slider0 = sliderRef.current;
+    if (slider0) {
+      slider0.value = '0';
+      slider0.setAttribute('aria-valuetext', '已读 0%');
+    }
     // 切章后取消可能悬置的滚隐计时，并恢复信息栏（若原本唤出）
     if (chromeRevealTimer.current !== null) {
       window.clearTimeout(chromeRevealTimer.current);
@@ -346,7 +351,13 @@ export function EntryReaderPage({ slug, chapterStart }: EntryReaderPageProps): J
       raf = 0;
       const max = el.scrollHeight - el.clientHeight;
       const pct = max <= 0 ? 100 : Math.max(0, Math.min(100, (el.scrollTop / max) * 100));
-      setChapterScrollPct(pct);
+      // 直写进度条 DOM，避免每帧 setChapterScrollPct 触发整页 re-render
+      const slider = sliderRef.current;
+      if (slider) {
+        const rounded = Math.round(pct);
+        slider.value = String(rounded);
+        slider.setAttribute('aria-valuetext', `已读 ${rounded}%`);
+      }
       // 章末自动加载：仅当「自动加载」开启、内容可滚动(max>0)且真正滚到底(距底≤4px)才触发，
       // 短章(max<=0)不自动跳，避免「装载即级联切章」；去抖 400ms 防惯性误触。
       const autoLoadOn = autoLoadRef.current;
@@ -600,6 +611,81 @@ export function EntryReaderPage({ slug, chapterStart }: EntryReaderPageProps): J
     [overlay, settingsOpen, chapterOpen, go],
   );
 
+  // 目录行：仅在目录打开时计算；依赖变化时重算，避免无关 re-render 重跑 docs.map
+  const tocRows = useMemo<React.ReactNode>(() => {
+    if (!chapterOpen) return null;
+    const cur = Math.min(index, docs.length - 1);
+    const q = tocQuery.trim().toLowerCase();
+    let chapterNo = 0;
+    const rows = docs.map((d, i) => {
+      const isMain = d.kind === 'main';
+      if (!isMain) chapterNo++;
+      const subs = (headingsMap[d.key] ?? []).filter(
+        (s) => !q || s.text.toLowerCase().includes(q),
+      );
+      const titleMatch = !q || d.title.toLowerCase().includes(q) || (isMain && entryTitle.toLowerCase().includes(q));
+      if (q && !titleMatch && subs.length === 0) return null;
+      const shownSubs = q ? subs : (headingsMap[d.key] ?? []);
+      const isActive = i === cur;
+      const readPercent = isActive ? 100 : i < cur ? 100 : 0;
+      return (
+        <div
+          key={`${d.kind}:${d.key}`}
+          className={`chapter-group${isActive ? ' is-active' : ''}`}
+        >
+          <div
+            className="chapter-row"
+            role="button"
+            tabIndex={0}
+            onClick={() => {
+              setIndex(i);
+              setChapterOpen(false);
+            }}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                setIndex(i);
+                setChapterOpen(false);
+              }
+            }}
+          >
+            <div className="chapter-row-main">
+              <span className="chapter-no">{isMain ? '序' : `第${chapterNo}章`}</span>
+              <span className="chapter-name">{isMain ? entryTitle : d.title}</span>
+              {isActive ? <span className="chapter-here">读到这里</span> : null}
+              {readPercent > 0 ? (
+                <span className="chapter-read">读至{readPercent}%</span>
+              ) : null}
+            </div>
+          </div>
+          {shownSubs.length > 0 ? (
+            <ul className="chapter-sublist">
+              {shownSubs.map((s, si) => (
+                <li key={`${d.key}:${si}`}>
+                  <button
+                    type="button"
+                    className="chapter-subitem"
+                    onClick={() => {
+                      setIndex(i);
+                      setPendingScroll({ index: i, text: s.text });
+                      setChapterOpen(false);
+                    }}
+                  >
+                    {s.text}
+                  </button>
+                </li>
+              ))}
+            </ul>
+          ) : null}
+        </div>
+      );
+    }).filter((r): r is JSX.Element => r !== null);
+    if (rows.length === 0) {
+      return <div className="toc-search-empty">未找到「{tocQuery}」相关章节</div>;
+    }
+    return rows;
+  }, [chapterOpen, docs, headingsMap, index, tocQuery, entryTitle]);
+
   if (!ready) {
     return (
       <div className="reader-root reader-state">
@@ -725,9 +811,9 @@ export function EntryReaderPage({ slug, chapterStart }: EntryReaderPageProps): J
             max={100}
             step={1}
             className="reader-chapter-slider"
-            value={Math.round(chapterScrollPct)}
+            ref={sliderRef}
+            defaultValue={0}
             aria-label="章节阅读进度"
-            aria-valuetext={`已读 ${Math.round(chapterScrollPct)}%`}
             onInput={(e) => {
               const pct = Number((e.target as HTMLInputElement).value);
               const el = scrollRef.current;
@@ -893,80 +979,7 @@ export function EntryReaderPage({ slug, chapterStart }: EntryReaderPageProps): J
                 ) : null}
               </div>
               <div className="toc-search-list">
-              {(() => {
-                const cur = Math.min(index, total - 1);
-                const q = tocQuery.trim().toLowerCase();
-                // 卷标题 kind='container' 在第一层 toc；这里 docs 已被剥掉，
-                // 故我们简化为单卷连续列表；如果数据有卷，请用原始 toc 渲染卷头。
-                let chapterNo = 0;
-                const rows = docs.map((d, i) => {
-                  const isMain = d.kind === 'main';
-                  if (!isMain) chapterNo++;
-                  const subs = (headingsMap[d.key] ?? []).filter(
-                    (s) => !q || s.text.toLowerCase().includes(q),
-                  );
-                  const titleMatch = !q || d.title.toLowerCase().includes(q) || (isMain && entryTitle.toLowerCase().includes(q));
-                  if (q && !titleMatch && subs.length === 0) return null; // 搜索时不命中则整组隐藏
-                  const shownSubs = q ? subs : (headingsMap[d.key] ?? []);
-                  const isActive = i === cur;
-                  const readPercent = isActive ? 100 : i < cur ? 100 : 0;
-                  return (
-                    <div
-                      key={`${d.kind}:${d.key}`}
-                      className={`chapter-group${isActive ? ' is-active' : ''}`}
-                    >
-                      <div
-                        className="chapter-row"
-                        role="button"
-                        tabIndex={0}
-                        onClick={() => {
-                          setIndex(i);
-                          setChapterOpen(false);
-                        }}
-                        onKeyDown={(e) => {
-                          if (e.key === 'Enter' || e.key === ' ') {
-                            e.preventDefault();
-                            setIndex(i);
-                            setChapterOpen(false);
-                          }
-                        }}
-                      >
-                        <div className="chapter-row-main">
-                          <span className="chapter-no">{isMain ? '序' : `第${chapterNo}章`}</span>
-                          <span className="chapter-name">{isMain ? entryTitle : d.title}</span>
-                          {isActive ? <span className="chapter-here">读到这里</span> : null}
-                          {readPercent > 0 ? (
-                            <span className="chapter-read">读至{readPercent}%</span>
-                          ) : null}
-                        </div>
-                      </div>
-                      {shownSubs.length > 0 ? (
-                        <ul className="chapter-sublist">
-                          {shownSubs.map((s, si) => (
-                            <li key={`${d.key}:${si}`}>
-                              <button
-                                type="button"
-                                className="chapter-subitem"
-                                onClick={() => {
-                                  setIndex(i);
-                                  setPendingScroll({ index: i, text: s.text });
-                                  setChapterOpen(false);
-                                }}
-                              >
-                                {s.text}
-                              </button>
-                            </li>
-                          ))}
-                        </ul>
-                      ) : null}
-                    </div>
-                  );
-                }).filter((r): r is JSX.Element => r !== null);
-                if (rows.length === 0) {
-                  return <div className="toc-search-empty">未找到「{tocQuery}」相关章节</div>;
-                }
-                return rows;
-              })()}
+              {tocRows}
               </div>
             </div>
       </BaseSheet>

@@ -1,7 +1,7 @@
 /** 从已构建的 .index/ 目录加载索引，构造可查询的 SearchEngine（CLI search / 验证用） */
 import { readFileSync, existsSync, readdirSync } from 'node:fs';
 import { join } from 'node:path';
-import { SearchEngine, decodePostings } from '@pks/core';
+import { SearchEngine, decodePostings, inlineIndexToMap } from '@pks/core';
 import type { TitleIndexItem, IndexManifest, ShardIndex, GlobalSearchStats } from '@pks/core';
 
 /**
@@ -34,7 +34,7 @@ export function loadIndex(contentDir: string): SearchEngine | null {
     try {
       const raw = JSON.parse(readFileSync(p, 'utf8'));
       // P0-I：倒排走 `postings`（base64(varint 差分 + zlib)）；旧产物回落到内联 `index`。
-      const index = raw.postings ? decodePostings(raw.postings) : (raw.index ?? {});
+      const index = raw.postings ? decodePostings(raw.postings) : (raw.index ? inlineIndexToMap(raw.index) : {});
       return { shard: raw.shard, docs: raw.docs, lengths: raw.lengths, index };
     } catch {
       // 单个分片损坏按「该分片不存在」处理：L2 少召回一部分，但不炸整个检索。

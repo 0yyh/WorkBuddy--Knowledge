@@ -51,7 +51,7 @@ export function buildDfBuckets(shards: ShardIndex[]): { meta: DfMeta; buckets: D
   const globalDf = new Map<string, number>();
   for (const sh of shards) {
     for (const term of Object.keys(sh.index)) {
-      globalDf.set(term, (globalDf.get(term) ?? 0) + sh.index[term].length);
+      globalDf.set(term, (globalDf.get(term) ?? 0) + sh.index[term].size);
     }
   }
 

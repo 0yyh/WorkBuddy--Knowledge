@@ -27,6 +27,11 @@
       "types": "./dist/index/builder.d.ts",
       "import": "./dist/index/builder.js",
       "default": "./dist/index/builder.js"
+    },
+    "./search": {
+      "types": "./dist/search.d.ts",
+      "import": "./dist/search.js",
+      "default": "./dist/search.js"
     }
   },
   "files": [

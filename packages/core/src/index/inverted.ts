@@ -28,7 +28,7 @@ export interface ShardIndex {
   shard: number;
   docs: SearchDoc[];
   lengths: number[]; // 与 docs 对齐的 token 长度
-  index: Record<string, Array<[number, number]>>; // term -> [docId, tf][]
+  index: Record<string, Map<number, number>>; // term -> Map<docId, tf>（P1-4，BM25 查找 O(1)）
 }
 
 /**
@@ -78,7 +78,7 @@ export function buildShards(docs: IndexingDoc[], m: number): ShardIndex[] {
     shard.lengths.push(length);
 
     for (const [term, tf] of tfs) {
-      (shard.index[term] ??= []).push([docId, tf]);
+      (shard.index[term] ??= new Map<number, number>()).set(docId, tf);
     }
   }
   return shards;
@@ -97,7 +97,7 @@ function searchInShard(shard: ShardIndex, queryTokens: string[], stats?: GlobalS
     const postings = shard.index[term];
     if (!postings) continue;
     // 全局 df（P0-II）；缺失时退回本分片 df，保证兼容
-    termDf.set(term, stats?.df.get(term) ?? postings.length);
+    termDf.set(term, stats?.df.get(term) ?? postings.size);
     for (const [docId] of postings) candidates.add(docId);
   }
   if (candidates.size === 0) return [];
@@ -109,9 +109,8 @@ function searchInShard(shard: ShardIndex, queryTokens: string[], stats?: GlobalS
     for (const term of queryTokens) {
       const postings = shard.index[term];
       if (!postings) continue;
-      const entry = postings.find((p) => p[0] === docId);
-      if (!entry) continue;
-      const tf = entry[1];
+      const tf = postings.get(docId);
+      if (tf === undefined) continue;
       score += bm25Term(tf, shard.lengths[docId], avgLen, termDf.get(term)!, totalDocs);
       matched.add(term);
     }

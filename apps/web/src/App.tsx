@@ -3,17 +3,20 @@
  * 启动引导：冷启动统一落到首页；深链（带 hash）被尊重；不做自动续读。
  * 路由切到 entry-reader 时把 isReader 置 true（AppShell 隐藏 chrome，阅读页全屏接管）。
  */
-import { useEffect } from 'react';
+import { useEffect, lazy, Suspense } from 'react';
 import { AppShell } from './components/AppShell';
-import { HomePage } from './pages/Home';
-import { BrowsePage } from './pages/BrowsePage';
-import { EntryCoverPage } from './pages/EntryCoverPage';
-import { EntryReaderPage } from './pages/EntryReaderPage';
-import { SearchPage } from './pages/SearchPage';
-import { TimelinePage } from './pages/TimelinePage';
-import { HistoryPage } from './pages/HistoryPage';
-import { SettingsPage } from './pages/SettingsPage';
-import { MePage } from './pages/MePage';
+
+// 路由级代码分割：页面组件按需加载，避免首屏打包全部页面。
+// AppShell / 路由 / 全局 Provider 保持静态（体积很小且首屏即用）。
+const HomePage = lazy(() => import('./pages/Home').then((m) => ({ default: m.HomePage })));
+const BrowsePage = lazy(() => import('./pages/BrowsePage').then((m) => ({ default: m.BrowsePage })));
+const EntryCoverPage = lazy(() => import('./pages/EntryCoverPage').then((m) => ({ default: m.EntryCoverPage })));
+const EntryReaderPage = lazy(() => import('./pages/EntryReaderPage').then((m) => ({ default: m.EntryReaderPage })));
+const SearchPage = lazy(() => import('./pages/SearchPage').then((m) => ({ default: m.SearchPage })));
+const TimelinePage = lazy(() => import('./pages/TimelinePage').then((m) => ({ default: m.TimelinePage })));
+const HistoryPage = lazy(() => import('./pages/HistoryPage').then((m) => ({ default: m.HistoryPage })));
+const SettingsPage = lazy(() => import('./pages/SettingsPage').then((m) => ({ default: m.SettingsPage })));
+const MePage = lazy(() => import('./pages/MePage').then((m) => ({ default: m.MePage })));
 import { useHashRoute, navigate } from './router';
 import { StationProvider } from './state/AppContext';
 import { ImmersiveProvider, useImmersive } from './state/ImmersiveContext';
@@ -126,7 +129,18 @@ function Router(): JSX.Element {
           并提供「重新加载」恢复入口，避免整页白屏。 */}
       <ErrorBoundary>
         <div key={routeKey(route)} className="route-fade">
-          {renderRoute(route)}
+          <Suspense
+            fallback={
+              <div className="page state-box">
+                <div className="error-card">
+                  <h2>加载中…</h2>
+                  <p className="error-msg">页面资源正在加载，请稍候</p>
+                </div>
+              </div>
+            }
+          >
+            {renderRoute(route)}
+          </Suspense>
         </div>
       </ErrorBoundary>
     </AppShell>

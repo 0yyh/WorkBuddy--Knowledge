@@ -26,8 +26,8 @@
 import { zlibSync, unzlibSync } from 'fflate';
 import { encodeVarint, decodeVarint } from '../util/varint.js';
 
-/** postings 表：term -> [docId, tf][] */
-export type PostingsTable = Record<string, Array<[number, number]>>;
+/** postings 表：term -> Map<docId, tf>（解码期即建成 Map，BM25 查找 O(1)，P1-4） */
+export type PostingsTable = Record<string, Map<number, number>>;
 
 /** 当前编码版本号 */
 const CODEC_VERSION = 1;
@@ -131,11 +131,9 @@ export function encodePostings(index: PostingsTable): string {
     w.writeBytes(termBytes);
 
     const postings = index[term]!;
-    w.writeVarint(postings.length);
+    w.writeVarint(postings.size);
     let prevDocId = 0;
-    for (const posting of postings) {
-      const docId = posting[0];
-      const tf = posting[1];
+    for (const [docId, tf] of postings) {
       w.writeVarint(docId - prevDocId); // 差分（升序 docId 下恒 >= 0）
       prevDocId = docId;
       w.writeVarint(tf);
@@ -177,7 +175,7 @@ export function decodePostings(b64: string): PostingsTable {
     offset = countRes.next;
     const postingCount = countRes.value;
 
-    const postings: Array<[number, number]> = new Array(postingCount);
+    const postings = new Map<number, number>();
     let prevDocId = 0;
     for (let j = 0; j < postingCount; j++) {
       const deltaRes = decodeVarint(raw, offset);
@@ -188,10 +186,24 @@ export function decodePostings(b64: string): PostingsTable {
       const tfRes = decodeVarint(raw, offset);
       offset = tfRes.next;
 
-      postings[j] = [docId, tfRes.value];
+      postings.set(docId, tfRes.value);
     }
     out[term] = postings;
   }
 
+  return out;
+}
+
+/**
+ * 旧内联倒排表（term -> [docId, tf][]）转 Map<docId, tf>。
+ * 用于解码旧产物 / 旧 wire 格式的 `index` 字段（新产物统一走 base64 `postings`，已由 decodePostings 建 Map）。
+ */
+export function inlineIndexToMap(index: Record<string, Array<[number, number]>>): PostingsTable {
+  const out: PostingsTable = {};
+  for (const term of Object.keys(index)) {
+    const m = new Map<number, number>();
+    for (const [docId, tf] of index[term]) m.set(docId, tf);
+    out[term] = m;
+  }
   return out;
 }
