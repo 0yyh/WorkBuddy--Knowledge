@@ -1,5 +1,6 @@
 package com.pks.app;
 
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.view.ActionMode;
 import android.view.View;
@@ -48,6 +49,20 @@ public class MainActivity extends BridgeActivity {
         // 默认非沉浸：保持"fit system windows"，状态栏正常显示、内容不被系统栏遮挡。
         WebView wv = (bridge != null) ? bridge.getWebView() : null;
         if (wv != null) {
+            // 版本升级时清一次 WebView 的 HTTP 缓存：
+            // WebView 缓存目录在应用升级后依然保留，而本地资源 URL（https://localhost/content/...）
+            // 不随内容变化，导致升级后仍命中旧缓存 —— 表现为「新装的 APK 看不到新增词条」。
+            // 以 versionCode 为界，变化时清一次缓存，强制重新读取随包资源。
+            try {
+                int currentVersion = getPackageManager().getPackageInfo(getPackageName(), 0).versionCode;
+                SharedPreferences sp = getSharedPreferences("pks_prefs", MODE_PRIVATE);
+                if (sp.getInt("webview_cache_version", -1) != currentVersion) {
+                    wv.clearCache(true);
+                    sp.edit().putInt("webview_cache_version", currentVersion).apply();
+                }
+            } catch (Exception ignored) {
+                // 取版本号失败时跳过，不影响主流程
+            }
             wv.addJavascriptInterface(new PksJsBridge(this), "PKS");
             // 离屏预栅格化：提升长按选区/滚动时的合成流畅度（动画平滑工作的一部分）。
             // API 23+ 才有，按版本守护。
