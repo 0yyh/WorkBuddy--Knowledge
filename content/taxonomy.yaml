@@ -69,9 +69,24 @@
         - id: west-analytic
           title: 英美与现当代哲学
           order: 4
+    - id: metaphysics
+      title: 形而上学
+      order: 5
+    - id: epistemology
+      title: 认识论
+      order: 6
+    - id: ethics
+      title: 伦理学
+      order: 7
+    - id: aesthetics
+      title: 美学
+      order: 8
+    - id: political-philosophy
+      title: 政治哲学
+      order: 9
     - id: logic-critical
       title: 逻辑与批判性思维
-      order: 4
+      order: 10
 - id: science
   title: 科学
   order: 3
