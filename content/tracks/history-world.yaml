@@ -3,97 +3,103 @@ title: 世界历史主线
 category: 历史/世界史
 order_mode: chronological
 timeline: world
-description: 从全球视角的历史主线，按时间顺序串联从古典帝国到当代的关键事件与思潮。
+description: 从全球视角的历史主线，按时间顺序串联从古典帝国到当代的关键事件与思潮。它呈现西方从城邦、帝国到民族国家的演进，科学革命与启蒙如何重塑理性，工业革命与大革命如何重构社会，以及冷战与全球化怎样连成一体。
 items:
   - order: "1"
     entry: ancient-egypt
     sort_date: -3100
     date_label: "约公元前3100年"
     era: "古代"
-    note: "上下埃及统一，古埃及王朝文明的开端"
+    note: "上下埃及统一，法老神权国家兴起，金字塔与象形文字标志着人类最早的文明之一。尼罗河的周期泛滥催生了稳定的农业官僚体系，为后世“治水的国家”提供原型。"
   - order: "2"
     entry: silk-road
     sort_date: -138
     date_label: "公元前138年"
     era: "古代"
-    note: "张骞凿空西域，贯通东西方的丝路网络，跨中国/世界双时间线"
+    note: "张骞凿空西域，贯通东西方的丝路网络首次将东亚、中亚与地中海连成贸易与文明走廊，与同期罗马共和国的东西呼应构成早期全球化雏形，故标注为跨中国/世界双时间线。"
     cross_timeline: true
   - order: "3"
     entry: roman-empire
     sort_date: -27
     date_label: "公元前27年"
     era: "古代"
-    note: "屋大维建元首制，罗马进入帝国时代"
+    note: "屋大维确立元首制，罗马由共和国转入帝国，以法律、道路与军团维系地中海世界的秩序。罗马法与现代共和制度的遗产，至今仍塑造着西方政治语言。"
   - order: "4"
     entry: crusades
     sort_date: 1096
     date_label: "约1096年"
     era: "中世纪"
-    note: "十字军东征拉开序幕，圣地与地中海局势剧变"
+    note: "十字军东征拉开宗教战争的序幕，圣地争夺牵动地中海与近东。它意外促进了东西方物资与知识的交流，重燃欧洲对古典与东方的兴趣，为后来的复兴埋下伏笔。"
   - order: "5"
     entry: renaissance
     sort_date: 1300
     date_label: "约14世纪"
     era: "中世纪"
-    note: "复兴古典、人文主义兴起，欧洲走向近代之桥"
+    note: "意大利城邦复兴古典、倡扬人文主义，以人为中心重估现世价值。艺术与学术的繁荣、印刷术的配合，使欧洲由中世纪走向近代，个体与理性的地位上升。"
   - order: "6"
     entry: age-of-discovery
     sort_date: 1492
     date_label: "1492年"
     era: "中世纪"
-    note: "新航路开辟，全球首次连成一体"
+    note: "哥伦布抵达美洲、达·伽马绕好望角，新航路将孤立的大陆首次连成一体。白银、作物与瘟疫在全球流动，殖民帝国兴起，世界史进入真正的“全球”阶段。"
   - order: "7"
+    entry: machiavelli
+    sort_date: 1513
+    date_label: "约1513年"
+    era: "中世纪"
+    note: "马基雅维利《君主论》以冷峻的眼光剥离道德与政治，主张“为保国可不必守德”。它开启政治学的现实主义传统，把统治术从神学与伦理中解放出来，成为近代国家理由学说的先声。"
+  - order: "8"
     entry: scientific-revolution
     sort_date: 1543
-    date_label: "约1543年"
+    date_label: "1543年"
     era: "近代"
-    note: "哥白尼到牛顿，现代科学方法的奠基"
-  - order: "8"
+    note: "哥白尼《天体运行论》到牛顿《原理》，自然被重新理解为可数学化、可检验的规律世界。实验与理性的结合奠定了现代科学方法，也动摇了神学对宇宙的垄断。"
+  - order: "9"
     entry: enlightenment
     sort_date: 1700
-    date_label: "约1700年"
+    date_label: "约18世纪"
     era: "近代"
-    note: "理性审视权威，倡自由平等与人权"
-  - order: "9"
+    note: "启蒙哲人高举理性，审视权威、教会与专制，倡自由、平等、人权与进步。洛克、伏尔泰、卢梭的思想为英美革命与法国大革命提供弹药，也塑造了现代价值观。"
+  - order: "10"
     entry: industrial-revolution
     sort_date: 1760
     date_label: "约1760年"
     era: "近代"
-    note: "生产力革命与资本主义世界体系扩张"
-  - order: "10"
+    note: "蒸汽机与工厂制引爆生产力革命，英国率先由农业社会转入工业社会。资本主义世界体系随之扩张，城市化、阶级分化与殖民加剧，现代经济的骨架就此搭成。"
+  - order: "11"
     entry: french-revolution
     sort_date: 1789
     date_label: "1789年"
     era: "近代"
-    note: "自由平等博爱，颠覆欧洲旧制度"
-  - order: "11"
+    note: "巴士底狱倒塌，“自由平等博爱”颠覆旧制度，封建特权被废除。革命以激进方式输出民族国家与公民理念，其回波震荡全欧，也警示了群众政治的暴力潜能。"
+  - order: "12"
     entry: opium-war
     sort_date: 1840
     date_label: "1840年"
     era: "近代"
-    note: "殖民扩张与东亚变局，跨中国/世界双时间线"
+    note: "鸦片战争是殖民扩张撞上东亚秩序的节点，清帝国战败被迫开国。它既是世界史中帝国竞逐的一幕，也把中国推入近代变局，故标注为跨中国/世界双时间线。"
     cross_timeline: true
-  - order: "12"
+  - order: "13"
     entry: first-world-war
     sort_date: 1914
     date_label: "1914年"
     era: "近代"
-    note: "一战爆发，总体战重塑世界格局"
-  - order: "13"
+    note: "一战以总体战重塑世界，帝国崩解、美国崛起、欧洲霸权松动。堑壕与工业化屠杀暴露了进步叙事的阴影，也为二战与革命埋下种子。"
+  - order: "14"
     entry: october-revolution
     sort_date: 1917
     date_label: "1917年"
     era: "近代"
-    note: "首个社会主义国家的建立，改变世界进程"
-  - order: "14"
+    note: "俄国爆发十月革命，建立第一个社会主义国家，以计划经济与无产阶级专政挑战资本主义体系。它改写了二十世纪的政治地图，与西方的冷战对峙由此发端。"
+  - order: "15"
     entry: cold-war
     sort_date: 1947
     date_label: "约1947年"
     era: "现当代"
-    note: "美苏两极对峙与核威慑下的长期冷战"
-  - order: "15"
+    note: "美苏两极以核威慑对峙，代理人战争与意识形态竞赛蔓延全球。它分割了世界也推动了科技与太空竞赛，1991年苏联解体后单极时刻降临。"
+  - order: "16"
     entry: globalization
     sort_date: 1990
     date_label: "约1990年"
     era: "现当代"
-    note: "冷战后的经贸与信息互联高速深化"
+    note: "冷战落幕，经贸、资本与信息以前所未有的速度互联，供应链全球铺开、互联网普及。全球化带来增长也加剧不平等，逆全球化与地缘张力在世纪之交重新抬头。"
