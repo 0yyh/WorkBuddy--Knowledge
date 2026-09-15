@@ -30,6 +30,7 @@ export function parseTrack(content: string, fileId?: string): { track: Track | n
     date_label: it.date_label ? String(it.date_label) : undefined,
     era: it.era ? String(it.era) : undefined,
     note: it.note ? String(it.note) : undefined,
+    title: it.title ? String(it.title) : undefined,
     cross_timeline: it.cross_timeline === true ? true : undefined,
     level: typeof it.level === 'number' ? it.level : undefined,
     school: it.school ? String(it.school) : undefined,

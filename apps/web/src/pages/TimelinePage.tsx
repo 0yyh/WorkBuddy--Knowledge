@@ -72,7 +72,7 @@ export function TimelinePage({ trackId }: TimelinePageProps): JSX.Element {
       const item = slugMap.get(it.entry);
       return {
         item: it,
-        title: item?.t ?? it.entry,
+        title: item?.t ?? it.title ?? it.entry,
         summary: item?.sm ?? '',
         exists: Boolean(item),
         cross: it.cross_timeline === true || item?.ctl === 1 || (item?.tl?.length ?? 0) > 1,

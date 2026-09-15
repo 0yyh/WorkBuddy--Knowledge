@@ -40,7 +40,7 @@ export function TimelineView({ rows, title, description }: TimelineViewProps): J
                 </div>
                 <div className="tl-body">
                   <div className="tl-title-row">
-                    {row.exists ? (
+                    {row.exists || row.item.title ? (
                       <span className="tl-title">{row.title}</span>
                     ) : (
                       <span className="tl-title is-missing">{row.title}（未录入）</span>

@@ -243,6 +243,8 @@ export type OrderMode = 'chronological' | 'difficulty' | 'dependency' | 'school_
 export interface TrackItem {
   order: string; // "C01-01" / "1.1"
   entry: Slug;
+  /** 时间线节点自定义显示名：无对应词条时用作标题，避免渲染 slug（未录入） */
+  title?: string;
   sort_date?: number;
   date_label?: string;
   era?: string;
