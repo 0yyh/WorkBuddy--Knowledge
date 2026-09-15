@@ -21,11 +21,10 @@ export interface StationState {
   tracks: TrackSummary[];
   categoryViews: CategoryView[];
   categoryCounts: Map<string, number>;
-  /** 类目 id → 其子树（含自身）内「主键归属」于此类的词条 slug（不相交并集） */
+  /** 类目 id → 该类目（含全部子孙）所引用的全部词条 slug（去重，标签语义；count == 该列表长度） */
   nodeSlugs: Map<string, string[]>;
-  /** 类目 id → 仅「主键归属」于此节点本身（不含后代）的词条 slug。
-   *  用于首页折叠树：混合节点（既有本类直接词条、又有子分类）展开时，
-   *  把这部分「本类词条」显式列出，使父级计数 = 本组 + 各子分类之和，肉眼可对账。 */
+  /** 类目 id → 仅该类目本身直接引用的词条 slug（不含后代）。
+   *  供首页折叠树把「本类直接词条」与「子分类」区分展示。 */
   nodeOwnSlugs: Map<string, string[]>;
   nodeById: Map<string, TaxonomyNode>;
   nodeByPath: Map<string, TaxonomyNode>;
@@ -60,56 +59,37 @@ const EMPTY_STATE: StationState = {
 const StationContext = createContext<StationState>(EMPTY_STATE);
 
 /**
- * 类目计数采用「主键分区」模型，彻底解决「词条数与子词条数不一致」：
- *  - 旧实现对每棵子树取 entrySlugs 并集去重，导致父级计数 < 各子级之和
- *    （例：「历史」父级 26，子级 15+12+1=28），首页父词条数与子词条数对不上。
- *  - 新模型：每个词条选定唯一「主键类目」= 引用它的层级最深（level 最大）的类目；
- *    同层多处引用时取 path 最小者，保证确定性。主键是全树的不相交划分，故
- *    父级 count == Σ 直接子级 count（可加、无重叠），且 BrowsePage 展示的列表
- *    恰好等于该 count，标签与条目数永远一致。
+ * 类目计数采用「标签语义」模型（并集去重）：
+ *  - 一个词条可同时归属多个类目——哲学分类存在两条交叉轴：主题轴
+ *    形而上学/认识论/伦理学/美学/政治哲学/逻辑与批判性思维 在 level 2，时期轴
+ *    中国哲学/西方哲学/{古希腊,中世纪,近代欧陆,英美与现当代}/思想史 在 level 2~3。
+ *  - 旧「主键分区」（每个词条只归层级最深的类目）会让时期轴永远压过主题轴，
+ *    导致 哲学/美学 显示 0 条（实际 11 条引用）、哲学/形而上学 1 条（实际 10 条）等失真。
+ *  - 新模型：类目计数 = 该类目（含全部子孙）所引用的全部词条 slug 去重，
+ *    与 BrowsePage 实际展示的列表完全一致：「点进去看到几条」==「树上写几条」。
+ *  - 代价：父类目计数可能 < 各直接子级之和（同一词条被多个轴引用，跨轴重叠），
+ *    这是多轴分类的固有属性，不再强制「父 = 子之和」。
  */
 
-/** slug → 主键类目 id（引用层级最深者；同层取 path 最小，确定性强） */
-function buildSlugPrimary(nodes: TaxonomyNode[]): Map<string, string> {
-  const best = new Map<string, { level: number; path: string; id: string }>();
-  const walk = (node: TaxonomyNode): void => {
-    const cand = { level: node.level, path: node.path, id: node.id };
-    for (const slug of node.entrySlugs ?? []) {
-      const ex = best.get(slug);
-      if (!ex || cand.level > ex.level || (cand.level === ex.level && cand.path < ex.path)) {
-        best.set(slug, cand);
-      }
-    }
-    for (const c of node.children ?? []) walk(c);
+/** 类目 id → 该类目（含全部子孙）引用的全部词条 slug（去重，标签语义） */
+function buildUnionSlugs(nodes: TaxonomyNode[]): Map<string, string[]> {
+  const out = new Map<string, string[]>();
+  const walk = (node: TaxonomyNode): Set<string> => {
+    const set = new Set<string>(node.entrySlugs ?? []);
+    for (const c of node.children ?? []) for (const s of walk(c)) set.add(s);
+    out.set(node.id, [...set]);
+    return set;
   };
   for (const n of nodes) walk(n);
-  const map = new Map<string, string>();
-  for (const [slug, { id }] of best) map.set(slug, id);
-  return map;
+  return out;
 }
 
-/** 类目 id → 主键归属于该类的词条 slug 列表 */
-function buildNodePrimarySlugs(slugPrimary: Map<string, string>): Map<string, string[]> {
-  const perNode = new Map<string, string[]>();
-  for (const [slug, id] of slugPrimary) {
-    const arr = perNode.get(id) ?? [];
-    arr.push(slug);
-    perNode.set(id, arr);
-  }
-  return perNode;
-}
-
-/** 类目 id → 其子树（含自身）全部主键词条 slug（不相交并集 → size == count） */
-function buildSubtreeSlugs(
-  nodes: TaxonomyNode[],
-  perNode: Map<string, string[]>,
-): Map<string, string[]> {
-  const out = new Map<string, string[]>();
-  const walk = (node: TaxonomyNode): string[] => {
-    const acc = [...(perNode.get(node.id) ?? [])];
-    for (const c of node.children ?? []) acc.push(...walk(c));
-    out.set(node.id, acc);
-    return acc;
+/** 扁平化所有节点，供派生「本类直接词条」使用 */
+function flattenNodes(nodes: TaxonomyNode[]): TaxonomyNode[] {
+  const out: TaxonomyNode[] = [];
+  const walk = (n: TaxonomyNode): void => {
+    out.push(n);
+    for (const c of n.children ?? []) walk(c);
   };
   for (const n of nodes) walk(n);
   return out;
@@ -195,15 +175,13 @@ export function StationProvider({ children }: { children: ReactNode }): JSX.Elem
     if (!bundle) {
       return { ...EMPTY_STATE, loading, error, tracks, reload };
     }
-    // 「主键分区」计数：保证父级 == 各直接子级之和，且浏览列表 == 该 count
-    const slugPrimary = buildSlugPrimary(bundle.taxonomy);
-    const perNode = buildNodePrimarySlugs(slugPrimary);
-    const nodeSlugs = buildSubtreeSlugs(bundle.taxonomy, perNode);
+    // 「标签语义」计数：类目计数 == 该类目（含子孙）引用的全部词条去重数 == 浏览列表长度
+    const nodeSlugs = buildUnionSlugs(bundle.taxonomy);
     const counts = new Map<string, number>();
     for (const [id, slugs] of nodeSlugs) counts.set(id, slugs.length);
-    // 仅本节点主键归属的词条（不含后代），供首页折叠树把混合节点的「本类词条」显式列出
+    // 每个节点自己直接引用的词条（不含后代），供首页折叠树区分「本类词条」与「子分类」
     const nodeOwnSlugs = new Map<string, string[]>();
-    for (const [id, arr] of perNode) nodeOwnSlugs.set(id, [...arr]);
+    for (const n of flattenNodes(bundle.taxonomy)) nodeOwnSlugs.set(n.id, [...(n.entrySlugs ?? [])]);
     const categoryViews = buildCategoryViews(bundle.taxonomy, counts);
     const { byId, byPath } = buildNodeMaps(bundle.taxonomy);
     const knownSlugs = new Set<string>(bundle.slugMap.keys());

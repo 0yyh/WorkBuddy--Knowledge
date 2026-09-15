@@ -13,7 +13,7 @@ interface BrowsePageProps {
 }
 
 export function BrowsePage({ catId }: BrowsePageProps): JSX.Element {
-  // nodeSlugs 与首页计数同源（主键分区）：浏览列表 == 类目计数，标签与条目数永远一致
+  // nodeSlugs 与首页计数同源（标签语义/并集去重）：浏览列表 == 类目计数，点进去看到几条 == 树上写几条
   const { nodeById, slugMap, categoryViews, categoryCounts, nodeSlugs } = useStation();
   const node = nodeById.get(catId);
 
