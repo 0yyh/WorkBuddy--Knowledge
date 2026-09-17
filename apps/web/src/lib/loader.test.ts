@@ -246,3 +246,28 @@ describe('loadStation 首字母推导兜底', () => {
     expect(a).toBe(b);
   });
 });
+
+describe('loadStation 哈希分片主路径（entryShards 已填充）', () => {
+  beforeEach(() => {
+    routes.clear();
+    const put = (rel: string, data: unknown): void => {
+      routes.set(`${CONTENT_ROOT}/${rel}`, JSON.stringify(data));
+    };
+    // 新产物：manifest 自带 entryShards（P1-2 哈希分桶名），无需首字母兜底。
+    put('index/manifest.json', { ...MANIFEST, entryShards: ['00', '01', '02'] });
+    put('index/taxonomy.json', []);
+    put('index/search/title.json', TITLE_INDEX);
+    put('index/search/df/meta.json', { totalDocs: 3, avgLen: 2 });
+    put('index/entries/00.json', { shard: '00', items: [entryItem('alpha', 'Alpha', 3)] });
+    put('index/entries/01.json', { shard: '01', items: [entryItem('beta', 'Beta', 1)] });
+    put('index/entries/02.json', { shard: '02', items: [entryItem('gamma', 'Gamma', 2)] });
+    put('index/search/s00.json', SHARD0);
+    put('index/search/s01.json', SHARD1);
+    vi.stubGlobal('fetch', fetchMock);
+  });
+
+  it('manifest 自带 entryShards 时直接按分片名装载，无需首字母兜底', async () => {
+    const bundle = await loadStation();
+    expect([...bundle.slugMap.keys()].sort()).toEqual(['alpha', 'beta', 'gamma']);
+  });
+});

@@ -32,6 +32,9 @@ export * from './index/df.js';
 export * from './index/lazy-loader.js';
 export * from './index/shard-codec.js';
 
+// 通用 JSON ↔ base64(zlib) 编解码（同构，复用 fflate 文本载体）
+export * from './util/compress.js';
+
 // 合并 / 打包 / 冲突
 export * from './merge/conflict.js';
 export * from './merge/bundle.js';

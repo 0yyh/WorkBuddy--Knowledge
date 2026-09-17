@@ -17,11 +17,18 @@
 ## 内容投递
 - core/cli 产出 `.index/`（builder 键被 47 单测断言，**勿改**）；cap sync(dot:false)+AGP 双重丢带点目录 → `scripts/copy-content.mjs` 改名 `.index`→`index`（仅投递边界）。
 - 构建：build:index→(改 core 则重编)→copy:content→vite build→cap sync→gradlew assembleDebug。`.gitignore` 已忽略 dist/android。
+- **索引产物格式（P1-2 起，改动需同步所有消费端）**：
+  - `entries/` 按 `fnv1a(slug)&63` 哈希分 64 桶，文件名两位补零 `00..3f`（**不再是 a..z 字母片**）；落盘 `manifest.entryShards` 现已非空（曾因序列化顺序 bug 恒为 `[]`，loader 靠 `letterOf` 首字母兜底，该兜底保留供旧产物过渡）。builder 写前会清空 `.index/entries` 防孤儿残留。
+  - `search/df/bucket-NNN.json` 为 **压缩的单行 base64(zlib) 文本**（`compressJson`），不再是 pretty JSON。消费端必须解压并回落旧明文：`apps/web/src/lib/loader.ts::fetchDfBucket` 与 `packages/cli/src/load-index.ts`；worker 不直读桶（主线程 `loadDfBuckets`→`dfb` 投递）。
+  - 压缩工具：`packages/core/src/util/compress.ts`（fflate zlib+base64，与 shard-codec 的 postings 同款文本载体，已由 barrel 导出）。
+  - 规模实况：当前 143 万词下 df 全量仅 ~1.33MB（压缩 1.06MB）；「48MB df」是 2000 万字目标规模推算，勿当现状。
 
 ## Shell / 工具陷阱（本机，已踩坑）
 - bash 缺 `grep/tail/head/cat/wc/tr`；`rm` 被坏 safe-delete 包装拦截(exit 127) → **删文件用 `node -e "require('fs').unlinkSync(f)"`**；`git status`/`git log` 在 bash 可跑（勿接 `|head`）。
 - PowerShell 输出被吞（连 echo 无回显）→ 用 bash 跑 git，用 Read/Grep 工具查内容。
 - ⚠ **同文件多次 Write/Edit 可能静默未落盘或落错内容**（laozi/moism/legalism 曾遇 ch-04、ch-01 写成旧/异版）→ 写后必 Read 回验标题与关键行。
+- **批量文件操作脚本（`copy-content.mjs` / `vite build`）在前台会被 SIGTERM**（无输出、非 JS 错误）→ 必须 `CODEBUDDY_SAFE_DELETE_ENABLED=0` 且用 `run_in_background`；后台可正常跑完再 Read 日志。单文件写/删不受影响。
+- 给 `node -e` 传 `/d/...` 绝对路径会被转成 `d:\d\...` 报 ENOENT → 用相对路径，或用 Read 工具读文件。
 
 ## Android APK 构建（本沙箱，已踩坑）
 - 沙箱 bash 缺 `uname`/`xargs` → `./gradlew`(shell) 失败；`java -jar gradle-wrapper.jar` 因 wrapper jar 缺 Main-Class 也失败（但 `gradlew.bat` 显式传 `org.gradle.wrapper.GradleWrapperMain`，真机可用）。

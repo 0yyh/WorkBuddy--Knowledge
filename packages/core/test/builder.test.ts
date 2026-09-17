@@ -1,8 +1,9 @@
 import { describe, it, expect } from 'vitest';
 import { buildIndex, writeIndexFiles } from '../src/index/builder.js';
 import { MemoryVfs } from '../src/vfs/memory.js';
-import { fnv1a } from '../src/util/fnv1a.js';
+import { fnv1a, shardOf } from '../src/util/fnv1a.js';
 import { DF_BUCKET_COUNT } from '../src/constants.js';
+import { decompressJson } from '../src/index.js';
 import { mkdtempSync, existsSync, readFileSync, rmSync } from 'node:fs';
 import { join } from 'node:path';
 import { tmpdir } from 'node:os';
@@ -114,7 +115,7 @@ describe('buildIndex', () => {
     // 至少存在一个非空 df 桶，且桶形状为 { n, df: Record<term, count> }。
     const bucketKeys = Object.keys(result.files).filter((k) => k.startsWith('.index/search/df/bucket-'));
     expect(bucketKeys.length).toBeGreaterThan(0);
-    const sample = JSON.parse(result.files[bucketKeys[0]]) as { n: number; df: Record<string, number> };
+    const sample = decompressJson<{ n: number; df: Record<string, number> }>(result.files[bucketKeys[0]]);
     expect(typeof sample.n).toBe('number');
     expect(Object.keys(sample.df).length).toBeGreaterThan(0);
     // 桶号与 term 哈希一致：桶内每个 term 的 dfBucketOf(term) === 该桶号。
@@ -122,6 +123,29 @@ describe('buildIndex', () => {
       const bucket = (fnv1a(term) & (DF_BUCKET_COUNT - 1)) as number;
       expect(bucket).toBe(sample.n);
     }
+  });
+
+  it('P1-2 entries 按哈希分桶，落盘 manifest.entryShards 非空且文件名两位补零', () => {
+    const vfs = makeContentVfs();
+    const result = buildIndex(vfs);
+
+    // 落盘 manifest 自带 entryShards（修复序列化顺序 bug：旧产物恒为 []）。
+    const manifest = JSON.parse(result.files['.index/manifest.json']);
+    expect(Array.isArray(manifest.entryShards)).toBe(true);
+    expect(manifest.entryShards.length).toBeGreaterThan(0);
+    // 每个分片名两位补零 00..3f（十六进制）。
+    for (const name of manifest.entryShards) {
+      expect(/^[0-9a-f]{2}$/.test(name)).toBe(true);
+    }
+    // 每个 entry 文件都存在，且文件名与 manifest 列的一致。
+    for (const name of manifest.entryShards) {
+      expect(result.files[`.index/entries/${name}.json`]).toBeDefined();
+    }
+    // 两个词条各自落入的分片可由 shardOf 复现，且都被 manifest 收录。
+    const barBucket = String(shardOf('bar', 64)).padStart(2, '0');
+    const fooBucket = String(shardOf('foo', 64)).padStart(2, '0');
+    expect(manifest.entryShards).toContain(barBucket);
+    expect(manifest.entryShards).toContain(fooBucket);
   });
 
   it('writes index files to a temp directory', () => {

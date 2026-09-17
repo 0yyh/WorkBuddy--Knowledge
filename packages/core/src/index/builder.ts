@@ -14,6 +14,7 @@ import { countWords } from '../parse/words.js';
 import { buildShards, type IndexingDoc, type ShardIndex } from './inverted.js';
 import { buildDfBuckets } from './df.js';
 import { encodePostings, decodePostings, inlineIndexToMap } from './shard-codec.js';
+import { compressJson } from '../util/compress.js';
 import { chooseShardCount } from './shards.js';
 import { deriveCrossTimeline, deriveTimelineDimensions } from '../track/parse.js';
 import { sha1 } from '../util/sha1.js';
@@ -368,21 +369,26 @@ export function buildIndex(vfs: Vfs, opts: BuildIndexOptions = {}): BuildResult 
 
   // 组装 files
   const files: Record<string, string> = {};
-  files['.index/manifest.json'] = JSON.stringify(manifest, null, 2);
 
-  // entries 分片（按 slug 首字母 26 片）
-  const alphaMap = new Map<string, EntryIndexItem[]>();
+  // entries 分片（P1-2：按 slug 哈希分桶，固定 64 桶；文件名两位补零 00..3f）。
+  // 哈希分桶使单片在词条数增长（>1000）时仍保持小而均衡，避免单字母片膨胀。
+  // 必须在序列化 manifest 之前完成，保证落盘 manifest.entryShards 非空（旧产物因序列
+  // 化顺序 bug 恒为 []，依赖 loader 首字母兜底；此处修正后新产物自带正确分片清单）。
+  const ENTRY_BUCKET_COUNT = 64;
+  const entryShardMap = new Map<string, EntryIndexItem[]>();
   for (const it of entryItems) {
-    const letter = (it.s[0] || 'z').toLowerCase();
-    if (!alphaMap.has(letter)) alphaMap.set(letter, []);
-    alphaMap.get(letter)!.push(it);
+    const bucket = String(shardOf(it.s, ENTRY_BUCKET_COUNT)).padStart(2, '0');
+    if (!entryShardMap.has(bucket)) entryShardMap.set(bucket, []);
+    entryShardMap.get(bucket)!.push(it);
   }
   const entryShards: string[] = [];
-  for (const [letter, items] of alphaMap) {
-    files[`.index/entries/${letter}.json`] = JSON.stringify({ shard: letter, items }, null, 2);
-    entryShards.push(letter);
+  for (const [bucket, items] of entryShardMap) {
+    files[`.index/entries/${bucket}.json`] = JSON.stringify({ shard: bucket, items }, null, 2);
+    entryShards.push(bucket);
   }
   manifest.entryShards = entryShards.sort();
+
+  files['.index/manifest.json'] = JSON.stringify(manifest, null, 2);
 
   // taxonomy
   files['.index/taxonomy.json'] = JSON.stringify(taxonomyWithSlugs, null, 2);
@@ -408,15 +414,15 @@ export function buildIndex(vfs: Vfs, opts: BuildIndexOptions = {}): BuildResult 
   files['.index/search/meta.json'] = JSON.stringify(manifest.search, null, 2);
   files['.index/search/title.json'] = JSON.stringify(titleIndex, null, 2);
   // ① df 分片化：meta(全局 {totalDocs, avgLen}) + 按 term 哈希分桶的多个小文件；
-  // Worker/CLI 只在查询时按需懒加载命中的桶，不再整表(约 48MB)加载进内存。
+  // Worker/CLI 只在查询时按需懒加载命中的桶，不再整表加载进内存。
+  // （注：早期笔记的「整表 48MB」是 2000 万字目标规模的推算；当前 143 万词实测全量 df
+  //   仅约 1.3MB —— 分片化的真实收益是「按需只取 1–3 个桶」，而非整表体积本身。）
   const { meta: dfMeta, buckets: dfBuckets } = buildDfBuckets(shards);
   files['.index/search/df/meta.json'] = JSON.stringify(dfMeta, null, 2);
+  // ① df 桶压缩（zlib + base64，复用 shard-codec 同款 fflate 文本载体）：桶内容压成单行
+  // base64 文本，查询时按需懒加载命中的少数桶并解压，随语料规模上升收益更明显。
   for (const b of dfBuckets) {
-    files[`.index/search/df/bucket-${String(b.n).padStart(3, '0')}.json`] = JSON.stringify(
-      { n: b.n, df: b.df },
-      null,
-      2,
-    );
+    files[`.index/search/df/bucket-${String(b.n).padStart(3, '0')}.json`] = compressJson({ n: b.n, df: b.df });
   }
   for (const sh of shards) {
     const key = `.index/search/s${String(sh.shard).padStart(2, '0')}.json`;

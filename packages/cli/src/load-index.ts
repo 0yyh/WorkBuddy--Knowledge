@@ -1,7 +1,7 @@
 /** 从已构建的 .index/ 目录加载索引，构造可查询的 SearchEngine（CLI search / 验证用） */
 import { readFileSync, existsSync, readdirSync } from 'node:fs';
 import { join } from 'node:path';
-import { SearchEngine, decodePostings, inlineIndexToMap } from '@pks/core';
+import { SearchEngine, decodePostings, inlineIndexToMap, decompressJson } from '@pks/core';
 import type { TitleIndexItem, IndexManifest, ShardIndex, GlobalSearchStats } from '@pks/core';
 
 /**
@@ -55,7 +55,14 @@ export function loadIndex(contentDir: string): SearchEngine | null {
       const df = new Map<string, number>();
       for (const f of readdirSync(dfDir)) {
         if (!/^bucket-\d{3}\.json$/.test(f)) continue;
-        const b = JSON.parse(readFileSync(join(dfDir, f), 'utf8')) as { df: Record<string, number> };
+        const raw = readFileSync(join(dfDir, f), 'utf8');
+        let b: { df: Record<string, number> };
+        try {
+          b = decompressJson<{ df: Record<string, number> }>(raw);
+        } catch {
+          // 旧产物：未压缩的 {n, df} JSON（OTA 升级过渡期可能存在）。
+          b = JSON.parse(raw) as { df: Record<string, number> };
+        }
         for (const [term, count] of Object.entries(b.df)) df.set(term, count);
       }
       stats = { totalDocs: meta.totalDocs, avgLen: meta.avgLen, df };

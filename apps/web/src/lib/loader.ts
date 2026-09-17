@@ -1,10 +1,10 @@
 /**
  * 索引装载期库（02 §3.4 / §18.2 秒开路径）：
- *  - 常驻：manifest.json、taxonomy.json、search/title.json、entries/<letter>.json
+ *  - 常驻：manifest.json、taxonomy.json、search/title.json、entries/<bucket>.json（P1-2 起按 slug 哈希分桶）
  *  - 惰性：search/sNN.json（L2 全文检索按需拉取 + 缓存）
  * 全部通过 fetch 读取 public/content 下的静态资源。
  */
-import { SearchEngine, decodePostings, dfBucketOf, tokenize, LRUCache, SHARD_CACHE_CAPACITY, inlineIndexToMap } from '@pks/core';
+import { SearchEngine, decodePostings, dfBucketOf, tokenize, LRUCache, SHARD_CACHE_CAPACITY, inlineIndexToMap, decompressJson } from '@pks/core';
 import type {
   DfBucket,
   EntryIndexItem,
@@ -251,7 +251,13 @@ function fetchDfBucket(n: number): Promise<DfBucket | null> {
 
   const task = fetchText(dfBucketPath(n))
     .then((text) => {
-      const bucket = JSON.parse(text) as DfBucket;
+      let bucket: DfBucket;
+      try {
+        bucket = decompressJson<DfBucket>(text);
+      } catch {
+        // 旧产物：未压缩的 {n, df} JSON（OTA 升级过渡期可能存在），直接解析。
+        bucket = JSON.parse(text) as DfBucket;
+      }
       dfBucketCache.set(n, bucket);
       dfBucketInflight.delete(n);
       return bucket;

@@ -1,6 +1,6 @@
 /** build:index —— 内容目录 → .index/ 分片索引（02 §15.3 T03mini） */
 import { resolve } from 'node:path';
-import { writeFileSync } from 'node:fs';
+import { existsSync, rmSync, writeFileSync } from 'node:fs';
 import { NodeFsVfs } from '@pks/core/node';
 import { buildIndex, writeIndexFiles, BUILD_STATE_FILE } from '@pks/core/build';
 import type { BuildResult } from '@pks/core/build';
@@ -14,6 +14,14 @@ export function buildIndexCmd(contentDir: string, opts: BuildIndexCmdOptions = {
   const vfs = new NodeFsVfs(contentDir);
   const incremental = opts.incremental !== false;
   const result = buildIndex(vfs, { incremental });
+  // P1-2：entries 分片改按 slug 哈希分桶后，旧的「首字母」分片（a.json..z.json）不再被
+  // manifest 收录，而 writeIndexFiles 只写不删 → 会残留成孤儿文件；更糟的是 loader 的
+  // 「entryShards 为空 → 按首字母兜底」路径会误取到这些**过期**分片（旧字数/旧元数据）。
+  // entries 每次构建都全量重建（不参与增量复用，增量只复用 search/sNN.json），
+  // 因此写前清空该目录是安全的；只清 entries，不动 .index 其它产物（如词典索引）。
+  const entriesDir = resolve(contentDir, '.index', 'entries');
+  if (existsSync(entriesDir)) rmSync(entriesDir, { recursive: true, force: true });
+
   // files 键以 '.index/' 开头，故落到 contentDir/.index/ 下
   writeIndexFiles(contentDir, result.files);
 
