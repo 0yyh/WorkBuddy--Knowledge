@@ -1,6 +1,6 @@
 {
   "name": "personal-knowledge-station",
-  "version": "0.1.0",
+  "version": "1.8.0",
   "private": true,
   "type": "module",
   "description": "个人本地知识学习站 —— 纯本地、零网络、内容与代码分离的双端阅读器",
