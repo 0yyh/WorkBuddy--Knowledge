@@ -537,7 +537,7 @@ App 默认可配置 `https://pks.example.com/release/latest/` 作为更新源。
 | Android `usesCleartextTraffic` | 必须 | 改 `AndroidManifest.xml` 并重新打包 |
 | 固定 PC IP / DHCP 静态租约 | 强烈建议 | 否则每次 PC 重连 WiFi IP 可能变化，需手动改 App 里的 URL |
 | 更新包生成脚本 `publish` | 编码阶段实现 | 在 `packages/cli` 增加命令：生成 `manifest.json` + `content.zip` |
-| sha256/size 校验 | 建议 | 局域网无 TLS，靠 sha256 防篡改；`manifest.json` 里写死校验值 |
+| sha256/size 校验 | 已落地（语义已修正） | ~~靠 sha256 防篡改~~ → 见 §4.9.6 修正：**sha1 主校验 + files_checksum 清单自校验**，仅防损坏 |
 | AP 隔离排查 | 注意 | 若手机浏览器访问 PC IP 失败，检查路由器是否开启「AP 隔离/客户端隔离」 |
 | 公共 WiFi 限制 | 注意 | 公共/校园 WiFi 通常禁止客户端互访，此方案只适用于家庭/个人局域网 |
 | 内容版本主键 | 沿用 | 仍用 `manifest.built_at`（ISO 时间）比较；新则更新 |
@@ -546,7 +546,12 @@ App 默认可配置 `https://pks.example.com/release/latest/` 作为更新源。
 
 - **网络环境**：仅限同一局域网；跨网/公网不可用；公共 WiFi 隔离可能连不通。
 - **设备兼容**：`DecompressionStream` 需 Android 10+ WebView（一般 OK）；旧机型需 polyfill。
-- **安全性**：局域网明文 HTTP 无 TLS，内容可被同网嗅探/篡改；sha256 能防篡改但不加密，不适宜公共/不可信网络。
+- **安全性**：局域网明文 HTTP 无 TLS，内容可被同网嗅探/篡改；**校验和只能防损坏，不能防篡改**（清单与内容同源下发，同网攻击者可一并改掉，校验和形同虚设）；不加密，不适宜公共/不可信网络。
+  - ✅ **落地修正（2026-09-18）**：原文「靠 sha256 防篡改」有两个硬伤：
+    1. 局域网是 http **非安全上下文**，浏览器不暴露 `crypto.subtle`，sha256 在真实 OTA 场景下**根本算不出来** —— 旧实现检测到 subtle 缺失后只是加一条 warning 就**跳过全部校验**，等于毫无保护。
+    2. 同源下发的校验和防不了篡改，只能防损坏。
+    现改为：sha1（`packages/core/src/util/sha1.ts` 纯 TS 实现，零依赖、**永不降级**）作主校验；sha256 仅在 subtle 可用时作附加校验；`files_checksum` 保护清单自身；失败即摘掉缓存激活标记、回退随包内容。详见 `apps/web/src/lib/contentUpdater.ts` 文件头注释。
+  - ⚠️ **仍未做**：防伪造需要签名（清单与内容分离信任），属 P2-12 遗留，可信局域网场景下可接受。
 - **依赖人工**：PC 必须开机且服务在运行；无法「用户自助随时更新」。
 - **无治理**：无鉴权、无并发、无日志，仅适合个人单机调试/自用。
 
