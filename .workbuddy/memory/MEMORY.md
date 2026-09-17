@@ -34,7 +34,11 @@
 - 沙箱 bash 缺 `uname`/`xargs` → `./gradlew`(shell) 失败；`java -jar gradle-wrapper.jar` 因 wrapper jar 缺 Main-Class 也失败（但 `gradlew.bat` 显式传 `org.gradle.wrapper.GradleWrapperMain`，真机可用）。
 - **本沙箱构建 APK**：直接调缓存的 Gradle 8.11.1 发行版 `bin\gradle.bat`（不需要 uname/xargs）：
   `cd /d D:\WorkBuddy--Knowledge\apps\web\android` → `set JAVA_HOME=D:\JDK\jdk-19.0.1` → `set ANDROID_HOME=D:\Android SDK` → `call "C:\Users\Yu\.gradle\wrapper\dists\gradle-8.11.1-all\2qik7nd48slq1ooc2496ixf4i\gradle-8.11.1\bin\gradle.bat" assembleDebug --no-daemon`。
-- `bash` 可跑 `.bat`（`./build-apk.bat` 不被安全策略拦，仅显式 `cmd /c` 被拦）；`.bat` 内 `> build_log.txt 2>&1` 后 Read 看结果。
+- ⚠ **不要用 bash 跑 `.bat`**：bash 会把 `.bat` 当** shell 脚本逐行解释**，cmd 语法的 `cd /d ...`、`set VAR=...` 全部失效（实测 `cd /d` 不生效 → gradle 跑在仓库根目录报 "does not contain a Gradle build"）。
+- ✅ **本沙箱构建 APK 的正确姿势 = PowerShell 工具**（`Set-Location` 是 PowerShell 原生，不受 bash shim 影响）：
+  `$env:JAVA_HOME='D:\JDK\jdk-19.0.1'` → `$env:ANDROID_HOME='D:\Android SDK'` → `$env:PATH=...bin;$env:PATH` →
+  `Set-Location 'D:\WorkBuddy--Knowledge\apps\web\android'` → `& '<缓存gradle>\bin\gradle.bat' assembleDebug --no-daemon --console=plain *>&1 | Out-File <log> -Encoding utf8` → Read 日志看结果。约 6 分钟，建议 `run_in_background`。
+- **`cap sync` 在本环境不可用**：`node_modules/.pnpm` 里**没有** `@capacitor/cli`（只有 `@capacitor/android`），而环境禁止 pnpm/npm install。等价替代：手工把 `apps/web/dist/**` 复制进 `apps/web/android/app/src/main/assets/public/`（**保留 `capacitor.config.json`**，先清旧再拷；约 1400 文件/17MB）。注意 Vite 把 `public/` 拷进 `dist/` 根，故内容路径是 `content/index/...` 而非 `index/...`。该目录已被 `apps/web/android/.gitignore` 忽略，不会污染 git。
 - 在线下载 wrapper jar 被代理返回坏副本，勿尝试；始终走缓存 gradle。
 
 ## 近期决策（指针，详据见 git log）
