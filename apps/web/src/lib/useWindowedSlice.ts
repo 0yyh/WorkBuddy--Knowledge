@@ -36,6 +36,47 @@ export interface WindowResult {
   enabled: boolean;
 }
 
+/** 计算可见切片所需的几何量（从 DOM 量得，见 hook 内 compute） */
+export interface WindowGeometry {
+  /** 列表顶部相对视口顶部的偏移（向上滚过为正、未滚到为负） */
+  offsetTop: number;
+  /** 列表自身高度（含 padding） */
+  listHeight: number;
+  viewportHeight: number;
+  /** 单行步距 = 实测行高 + gap */
+  stride: number;
+  overscan: number;
+  /** 列表总条数 */
+  total: number;
+}
+
+/**
+ * 可见切片区间（左闭右开）。**纯函数**，从 hook 里抽出来以便直接单测 ——
+ * 这段算术是虚拟化的全部正确性所在，藏在 useEffect 里就只能靠 DOM 环境测，
+ * 而本项目未引入 jsdom。
+ */
+export function computeWindow(g: WindowGeometry): { start: number; end: number } {
+  // stride <= 0 会让除法得到 Infinity：start 变 Infinity、end 被 clamp 成 total，
+  // 于是 start > end → slice 为空 → **整个列表渲染空白**。调用方传 rowHeight=0
+  // 且 gap=0 时会踩到；这里退化为「全量渲染」，宁可多渲染也不要空白。
+  if (!(g.stride > 0)) return { start: 0, end: g.total };
+
+  const visibleTop = Math.max(0, g.offsetTop);
+  const visibleBottom = Math.min(g.listHeight, g.offsetTop + g.viewportHeight);
+  let start = Math.floor(visibleTop / g.stride) - g.overscan;
+  let end = Math.ceil(visibleBottom / g.stride) + g.overscan;
+
+  // 两端都要 clamp 到 [0, total]：
+  //  - 上界：列表尚未进入视口时 offsetTop 为负 → visibleBottom 为负 → end 算出负数。
+  //    若不管，`slice(start, 负数)` 会被 JS 当作**倒数**语义，反而渲染出几乎全部条目
+  //    —— 虚拟化静默失效（页面越长越慢，且无任何报错）。
+  //  - 下界：列表已完全滚到视口上方（下方还有页脚等内容时可能发生）→ start 会超过
+  //    total，此时应渲染空，而不是让 start > end 产生「倒数」式切片。
+  start = Math.max(0, Math.min(g.total, start));
+  end = Math.min(g.total, Math.max(start, end));
+  return { start, end };
+}
+
 export function useWindowedSlice<T>(items: T[], opts: WindowOptions): WindowResult {
   const { rowHeight, gap = 0, overscan = 6, threshold = 60 } = opts;
   const listRef = useRef<HTMLUListElement>(null);
@@ -65,14 +106,15 @@ export function useWindowedSlice<T>(items: T[], opts: WindowOptions): WindowResu
     const compute = (): void => {
       const rect = el.getBoundingClientRect();
       const vh = window.innerHeight || document.documentElement.clientHeight;
-      const offsetTop = -rect.top; // 列表顶部相对视口顶部的偏移（已滚过为负）
-      const visibleTop = Math.max(0, offsetTop);
-      const visibleBottom = Math.min(rect.height, offsetTop + vh);
-      let start = Math.floor(visibleTop / stride) - overscan;
-      let end = Math.ceil(visibleBottom / stride) + overscan;
-      start = Math.max(0, start);
-      end = Math.min(items.length, end);
-      setRange((r) => (r.start === start && r.end === end ? r : { start, end }));
+      const next = computeWindow({
+        offsetTop: -rect.top, // 列表顶部相对视口顶部的偏移（已滚过为负）
+        listHeight: rect.height,
+        viewportHeight: vh,
+        stride,
+        overscan,
+        total: items.length,
+      });
+      setRange((r) => (r.start === next.start && r.end === next.end ? r : next));
     };
     const onScroll = (): void => {
       if (raf) return;
