@@ -26,7 +26,8 @@
     "build:update": "node scripts/build-update.mjs",
     "serve:lan": "node scripts/serve-lan.mjs",
     "android:sync": "npm --prefix apps/web run android:sync",
-    "android:build": "npm --prefix apps/web run android:build"
+    "android:build": "npm --prefix apps/web run android:build",
+    "version:bump": "node scripts/bump-version.mjs"
   },
   "devDependencies": {
     "tsx": "^4.19.2",

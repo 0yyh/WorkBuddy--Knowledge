@@ -216,4 +216,45 @@ describe('buildIndex 增量构建（②）', () => {
     expect(inc.buildState.version).toBe(1);
     expect(Object.keys(inc.buildState.entries).sort()).toEqual(['bar', 'foo']);
   });
+
+  it('删除一个词条 → 增量且被删词条消失、其旧分片变化、无关分片字节不变', () => {
+    const files = makeContentFiles();
+    const full = buildIndex(new MemoryVfs(files));
+    expect(full.titleIndex.find((t) => t.slug === 'bar')).toBeDefined();
+
+    // 仅删除 bar（移除其 entry 文件；track 仍引用 bar 不影响构建）
+    const changed: Record<string, string> = {};
+    for (const [k, v] of Object.entries(files)) {
+      if (k === 'entries/bar/entry.md') continue;
+      changed[k] = v;
+    }
+    const inc = buildIndex(seedVfs(changed, full), { incremental: true });
+    expect(inc.incrementalUsed).toBe(true);
+
+    // 被删词条从标题索引消失，foo 仍在
+    expect(inc.titleIndex.find((t) => t.slug === 'bar')).toBeUndefined();
+    expect(inc.titleIndex.find((t) => t.slug === 'foo')).toBeDefined();
+
+    const barShards = new Set(full.buildState.entries['bar'].shards);
+    const fooShards = new Set(full.buildState.entries['foo'].shards);
+
+    let barChanged = 0;
+    for (const key of Object.keys(full.files)) {
+      const m = key.match(/^\.index\/search\/s(\d{2})\.json$/);
+      if (!m) continue;
+      const s = Number(m[1]);
+      const same = inc.files[key] === full.files[key];
+      if (barShards.has(s)) {
+        if (!same) barChanged++;
+      } else if (!fooShards.has(s)) {
+        // 既不涉及 bar 也不涉及 foo 的分片必须字节级不变
+        expect(same, `无关分片 s${m[1]} 应字节不变`).toBe(true);
+      }
+    }
+    // 被删词条命中的分片至少有一个确实重建（其内容被移除）
+    expect(barChanged).toBeGreaterThan(0);
+
+    // build-state 不再登记已删词条
+    expect(inc.buildState.entries['bar']).toBeUndefined();
+  });
 });

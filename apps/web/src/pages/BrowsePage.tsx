@@ -6,6 +6,7 @@
 import { Link, navigate } from '../router';
 import { CategoryTree } from '../components/CategoryTree';
 import { useStation } from '../state/AppContext';
+import { useWindowedSlice } from '../lib/useWindowedSlice';
 import type { EntryIndexItem } from '@pks/core';
 
 interface BrowsePageProps {
@@ -37,6 +38,14 @@ export function BrowsePage({ catId }: BrowsePageProps): JSX.Element {
   const items: EntryIndexItem[] = slugs
     .map((s) => slugMap.get(s))
     .filter((x): x is EntryIndexItem => Boolean(x));
+
+  // P1-3：超阈值才虚拟化；小类目走旧全量渲染路径（零回归）。
+  const { listRef, start, end, padTop, padBottom } = useWindowedSlice(items, {
+    rowHeight: 132,
+    gap: 14,
+    overscan: 6,
+    threshold: 60,
+  });
 
   // 直接子类目：首页 L1 卡片点进来先看到主题下的分支，再逐层下钻
   const children = node.children ?? [];
@@ -78,8 +87,12 @@ export function BrowsePage({ catId }: BrowsePageProps): JSX.Element {
         {items.length === 0 ? (
           <p className="empty">该类目暂无已发布词条</p>
         ) : (
-          <ul className="card-list">
-            {items.map((item) => (
+          <ul
+            ref={listRef}
+            className="card-list"
+            style={padTop || padBottom ? { paddingTop: padTop, paddingBottom: padBottom } : undefined}
+          >
+            {items.slice(start, end).map((item) => (
               <li key={item.s} className="card card-hover entry-card">
                 <Link to={`/entry/${encodeURIComponent(item.s)}`} className="entry-card-link">
                   <span className="card-title link-strong">{item.t}</span>

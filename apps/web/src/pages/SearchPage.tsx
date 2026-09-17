@@ -13,6 +13,7 @@ import { SearchBox } from '../components/SearchBox';
 import { Spinner } from '../components/Spinner';
 import { Link, navigate } from '../router';
 import { useStation } from '../state/AppContext';
+import { useWindowedSlice } from '../lib/useWindowedSlice';
 
 const RECENT_KEY = 'pks_recentSearches';
 const RECENT_LIMIT = 8;
@@ -128,6 +129,11 @@ export function SearchPage({ query, full }: SearchPageProps): JSX.Element {
 
   const total = groups.reduce((sum, g) => sum + g.total, 0);
 
+  // P1-3：超阈值才虚拟化；结果少时走旧全量渲染路径（零回归）。
+  // result-list 为块级列表（分隔线代替 gap），故 gap=0，步距由首个 <li> 实测回校。
+  const groupWin = useWindowedSlice(groups, { rowHeight: 64, gap: 0, overscan: 8, threshold: 60 });
+  const titleWin = useWindowedSlice(titleHits, { rowHeight: 64, gap: 0, overscan: 8, threshold: 60 });
+
   return (
     <div className="page">
       <SearchBox size="large" initialQuery={q} />
@@ -197,8 +203,12 @@ export function SearchPage({ query, full }: SearchPageProps): JSX.Element {
           ) : groups.length === 0 ? (
             <p className="empty">没有命中结果，试试更短的关键词</p>
           ) : (
-            <ul className="result-list">
-              {groups.map((g) => {
+            <ul
+              ref={groupWin.listRef}
+              className="result-list"
+              style={groupWin.padTop || groupWin.padBottom ? { paddingTop: groupWin.padTop, paddingBottom: groupWin.padBottom } : undefined}
+            >
+              {groups.slice(groupWin.start, groupWin.end).map((g) => {
                 const meta = slugMap.get(g.entry.slug);
                 return (
                   <li key={g.entry.slug} className="card result-card">
@@ -224,8 +234,12 @@ export function SearchPage({ query, full }: SearchPageProps): JSX.Element {
       {showTitleSection ? (
         <section className="card">
           <h2 className="section-title">标题匹配（{titleHits.length}）</h2>
-          <ul className="result-list">
-            {titleHits.map((h) => {
+          <ul
+            ref={titleWin.listRef}
+            className="result-list"
+            style={titleWin.padTop || titleWin.padBottom ? { paddingTop: titleWin.padTop, paddingBottom: titleWin.padBottom } : undefined}
+          >
+            {titleHits.slice(titleWin.start, titleWin.end).map((h) => {
               const meta = slugMap.get(h.doc.slug);
               return (
                 <li key={h.doc.id} className="result-group">

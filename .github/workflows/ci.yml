@@ -1,0 +1,61 @@
+name: CI
+
+on:
+  push:
+    branches: [master, main]
+  pull_request:
+    branches: [master, main]
+
+# 防止并发重复运行：同一 ref 只保留最新一次。
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  gate:
+    name: 构建 / 类型 / 测试门禁
+    runs-on: ubuntu-latest
+    steps:
+      - name: 检出代码
+        uses: actions/checkout@v4
+
+      - name: 安装 pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9.15.9
+
+      - name: 安装 Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+
+      # pnpm workspace 会自动把 apps/web/node_modules/@pks/core 软链到 packages/core，
+      # 因此 web 构建前必须先 emit 出 core 的 dist（web 经 package.json main 解析到 dist）。
+      - name: 安装依赖（frozen lockfile）
+        run: pnpm install --frozen-lockfile
+
+      - name: 链接检查（check:links）
+        run: node scripts/check-links.mjs
+
+      - name: 构建 core（emit dist）
+        run: pnpm --filter @pks/core build
+
+      - name: 构建 cli（emit dist）
+        run: pnpm --filter @pks/cli build
+
+      - name: core 类型检查（--noEmit）
+        run: pnpm --filter @pks/core typecheck
+
+      - name: cli 类型检查（--noEmit）
+        run: pnpm --filter @pks/cli typecheck
+
+      - name: core 单元测试（vitest）
+        run: pnpm --filter @pks/core test
+
+      - name: web 类型检查（--noEmit）
+        run: pnpm --filter @pks/web typecheck
+
+      # web build 会消费 core 的 dist；前面已 emit。
+      - name: web 生产构建（vite build）
+        run: pnpm --filter @pks/web build
