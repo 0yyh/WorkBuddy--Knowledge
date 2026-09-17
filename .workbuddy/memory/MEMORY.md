@@ -62,6 +62,6 @@
 - 哲学分类已扩充：6 个分支总纲(形而上学/认识论/伦理学/美学/政治哲学/自由意志)+人物学派(苏格拉底/孟子/朱熹/斯宾诺莎/洛克/阿奎那/荀子/老子/墨家/法家)+深化(经验/理性主义)。
 - **web 测试/类型检查直调**：`node node_modules/.pnpm/vitest@2.1.9_@types+node@22.20.1/node_modules/vitest/vitest.mjs run --root apps/web`（67/67）；web tsc 用 `node_modules/.pnpm/typescript@5.9.3/.../bin/tsc -p apps/web/tsconfig.json --noEmit`（**apps/web/node_modules 下没有 typescript**）。
 - 提交信息里含 "PowerShell" 字样会被安全策略拦截 → 改写避开。
-- CI 门禁（.github/workflows/ci.yml）14 步，含内容 lint + web 单测；根 `test` = core+web 串联。
+- **无 CI（2026-09-18 起）**：按用户要求删除 `.github/`（仓库只托管 Gitee，GitHub Actions 永不生效；且其 `pnpm install --frozen-lockfile` 与本项目「禁 install」铁律冲突）。所有校验一律本地手工跑。若日后要在 Gitee 做 CI，用 `.gitee/workflows/`（Gitee Go），不要再用 `.github/`。
 - P2-12 **防损坏已完成**（sha1 主校验 + files_checksum + 原子激活）；**防伪造签名**仍空白（可信局域网下可接受，如需再评估）。
-- 未完成：`useWindowedSlice`/`compress`/`df.ts` 缺直接单测；builder.ts 469 行 + df 桶每次全量重算压缩；CI 不构建 Android。
+- 未完成：`useWindowedSlice`/`compress`/`df.ts` 缺直接单测；builder.ts 469 行 + df 桶每次全量重算压缩。
