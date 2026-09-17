@@ -13,7 +13,7 @@
     "check:links": "node scripts/check-links.mjs",
     "build": "node scripts/check-links.mjs && tsc -p packages/core/tsconfig.json && tsc -p packages/cli/tsconfig.json && npm run typecheck && npm --prefix apps/web run build",
     "typecheck": "tsc -p packages/core/tsconfig.json --noEmit && tsc -p packages/cli/tsconfig.json --noEmit && npm --prefix apps/web run typecheck",
-    "test": "npm --prefix packages/core run test",
+    "test": "npm --prefix packages/core run test && npm --prefix apps/web run test:web",
     "dev": "npm --prefix apps/web run dev",
     "pks": "tsc -p packages/core/tsconfig.json && tsx packages/cli/src/index.ts",
     "build:index": "tsc -p packages/core/tsconfig.json && tsx packages/cli/src/index.ts build:index",

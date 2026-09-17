@@ -38,6 +38,11 @@ jobs:
       - name: 链接检查（check:links）
         run: node scripts/check-links.mjs
 
+      # 内容 lint：校验全部词条/章节的 frontmatter（slug/tldr 字数/see_also 存在性等）。
+      # 只做 typecheck 不跑 lint 的话，内容层的格式错误只能靠人工发现。
+      - name: 内容 lint（0 error / 0 warn 基线）
+        run: pnpm lint
+
       - name: 构建 core（emit dist）
         run: pnpm --filter @pks/core build
 
@@ -55,6 +60,11 @@ jobs:
 
       - name: web 类型检查（--noEmit）
         run: pnpm --filter @pks/web typecheck
+
+      # web 单测：覆盖 loader（分片解码 / df 桶解压 / 主线程兜底）、searchWorkerClient 等。
+      # 缺了这一步，web 侧改动（如 df 桶压缩的消费端）在 CI 里是**完全不设防**的。
+      - name: web 单元测试（vitest）
+        run: pnpm --filter @pks/web test:web
 
       # web build 会消费 core 的 dist；前面已 emit。
       - name: web 生产构建（vite build）
