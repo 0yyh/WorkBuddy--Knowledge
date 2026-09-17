@@ -23,6 +23,20 @@
   - 压缩工具：`packages/core/src/util/compress.ts`（fflate zlib+base64，与 shard-codec 的 postings 同款文本载体，已由 barrel 导出）。
   - 规模实况：当前 143 万词下 df 全量仅 ~1.33MB（压缩 1.06MB）；「48MB df」是 2000 万字目标规模推算，勿当现状。
 
+## OTA 内容更新完整性校验（2026-09-18 落地，防损坏路线）
+- **局域网不是安全上下文**：OTA 走 `http://<局域网IP>`，浏览器不暴露 `crypto.subtle`
+  ⇒ **sha256 在真实 OTA 下算不出来**（旧实现因此静默跳过全部校验）。主校验改用
+  `packages/core/src/util/sha1.ts`（纯 TS 零依赖，已由 barrel 导出），**永不降级**；
+  sha256 仅作 https 场景附加校验。校验和**只能防损坏、不能防篡改**（同源下发）。
+- `scripts/build-update.mjs` 产物 manifest 新格式：`files[].sha1`（新增，必填）、
+  `files[].sha256`（保留）、`files[].size`（= 文本 UTF-8 字节数）、
+  `files_checksum: "sha1:<hex>"`（对 `files.map(f=>path\nsha1\nsize).join('\n')` 取 sha1，
+  不含自身）。⚠ 摘要格式**两侧必须同步改**，否则互相判为损坏。
+- `applyContentUpdate` **动手前先置 `ACTIVATED=false`**，失败保持 false → 回退随包内容
+  （修掉了「上一轮已激活 + 本轮部分失败 → loader 读到半新半旧」的真实 bug）。
+- 实测：1401 文件 / 16.42MB 全量校验 **810ms**（sha1 的 toBytes 已改用原生 TextEncoder）。
+- `packages/core/src/util/sha1.ts` 的 toBytes 优先走 TextEncoder，手写实现仅作回退。
+
 ## Shell / 工具陷阱（本机，已踩坑）
 - bash 缺 `grep/tail/head/cat/wc/tr`；`rm` 被坏 safe-delete 包装拦截(exit 127) → **删文件用 `node -e "require('fs').unlinkSync(f)"`**；`git status`/`git log` 在 bash 可跑（勿接 `|head`）。
 - PowerShell 输出被吞（连 echo 无回显）→ 用 bash 跑 git，用 Read/Grep 工具查内容。
@@ -49,4 +63,5 @@
 - **web 测试/类型检查直调**：`node node_modules/.pnpm/vitest@2.1.9_@types+node@22.20.1/node_modules/vitest/vitest.mjs run --root apps/web`（67/67）；web tsc 用 `node_modules/.pnpm/typescript@5.9.3/.../bin/tsc -p apps/web/tsconfig.json --noEmit`（**apps/web/node_modules 下没有 typescript**）。
 - 提交信息里含 "PowerShell" 字样会被安全策略拦截 → 改写避开。
 - CI 门禁（.github/workflows/ci.yml）14 步，含内容 lint + web 单测；根 `test` = core+web 串联。
-- 未完成：P2-12 OTA 清单签名（暂缓，唯一安全项）；`useWindowedSlice`/`compress`/`df.ts` 缺直接单测；builder.ts 469 行 + df 桶每次全量重算压缩；CI 不构建 Android。
+- P2-12 **防损坏已完成**（sha1 主校验 + files_checksum + 原子激活）；**防伪造签名**仍空白（可信局域网下可接受，如需再评估）。
+- 未完成：`useWindowedSlice`/`compress`/`df.ts` 缺直接单测；builder.ts 469 行 + df 桶每次全量重算压缩；CI 不构建 Android。
