@@ -12,6 +12,8 @@ export * from './types.js';
 // 通用工具
 export * from './util/version.js';
 export * from './util/lru.js';
+// 纯 TS SHA-1（不依赖 node:crypto / crypto.subtle），供同构端做完整性校验
+export * from './util/sha1.js';
 
 // 解析层
 export * from './parse/frontmatter.js';

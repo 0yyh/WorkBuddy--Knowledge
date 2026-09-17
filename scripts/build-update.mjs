@@ -4,11 +4,20 @@
  *
  * 产物结构（serve 根目录即 release/latest）：
  *   release/latest/
- *   ├── manifest.json      ← { built_at, content_url, files:[{path,sha256,size}] }
+ *   ├── manifest.json      ← { built_at, content_url, files:[{path,sha256,sha1,size}],
+ *   │                          files_checksum: "sha1:<hex>" }
  *   ├── index/             ← 从 apps/web/public/content 拷贝
  *   ├── entries/
  *   ├── tracks/
  *   └── dict/
+ *
+ * 完整性校验为什么同时给 sha256 和 sha1：
+ *   OTA 走 http://<局域网IP>，浏览器只在**安全上下文**（https / localhost）暴露
+ *   `crypto.subtle`，所以 sha256 在真实 OTA 场景下根本算不出来 —— 只剩 sha1 可用。
+ *   sha1 用 core 的纯 TS 实现（`packages/core/src/util/sha1.ts`，同构、零依赖），
+ *   在客户端永远可算。防损坏场景下 160bit 摘要与 sha256 等价可靠；
+ *   sha256 保留给 https 场景做更强的附加校验。
+ *   两者均基于**同一份规范化 UTF-8 文本**计算（见下方 BOM 处理）。
  *
  * 为什么是「逐文件清单」而不是单个 zip：
  *   客户端（Android WebView）当前没有任何解压库，且禁止新增依赖；
@@ -51,10 +60,6 @@ async function walk(dir, root) {
   return out;
 }
 
-function sha256File(absPath) {
-  return readFile(absPath).then((buf) => createHash('sha256').update(buf).digest('hex'));
-}
-
 function humanSize(bytes) {
   if (bytes < 1024) return `${bytes} B`;
   if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`;
@@ -76,20 +81,41 @@ async function main() {
   const relPaths = (await walk(OUT_DIR, OUT_DIR)).sort();
 
   const files = [];
+  const bomFiles = [];
   let totalBytes = 0;
   for (const rel of relPaths) {
     const abs = join(OUT_DIR, rel);
-    const info = await stat(abs);
-    const sha256 = await sha256File(abs);
-    totalBytes += info.size;
-    files.push({ path: rel, sha256, size: info.size });
+    // 统一以「UTF-8 文本」为校验基准：客户端拿到的是 `res.text()` 解码后的字符串，
+    // 只有生成侧与消费端基于同一份文本求哈希，两端才可能算出一致的结果。
+    let text = await readFile(abs, 'utf8');
+    if (text.charCodeAt(0) === 0xfeff) {
+      // 浏览器 UTF-8 decode 同样会剥离 BOM，此处对齐该行为，保持两端一致。
+      bomFiles.push(rel);
+      text = text.slice(1);
+    }
+    const buf = Buffer.from(text, 'utf8');
+    totalBytes += buf.length;
+    files.push({
+      path: rel,
+      sha256: createHash('sha256').update(buf).digest('hex'),
+      // 与 packages/core/src/util/sha1.ts 的纯 TS 实现等价（同为 UTF-8 输入，
+      // 已由 packages/core/test/sha1.test.ts 与 node:crypto 对拍验证）。
+      sha1: createHash('sha1').update(text, 'utf8').digest('hex'),
+      size: buf.length,
+    });
   }
+
+  // 清单自校验：对 files 列表的规范摘要取 sha1，不含 files_checksum 自身（避免自引用）。
+  // 消费端据此发现「清单被截断 / 少了几个文件 / 哈希或大小被改」这类损坏 ——
+  // 否则一个少了几项的清单会合法通过校验，并在清理阶段误删本机缓存。
+  const filesSummary = files.map((f) => `${f.path}\n${f.sha1}\n${f.size}`).join('\n');
 
   const manifest = {
     built_at: new Date().toISOString(),
     content_url: './',
     note: '由 scripts/build-update.mjs 生成；用 scripts/serve-lan.mjs 托管后，在 App「我的 → 内容更新」填入地址即可更新。',
     files,
+    files_checksum: `sha1:${createHash('sha1').update(filesSummary, 'utf8').digest('hex')}`,
   };
 
   await writeFile(join(OUT_DIR, 'manifest.json'), `${JSON.stringify(manifest, null, 2)}\n`, 'utf8');
@@ -105,8 +131,14 @@ async function main() {
   process.stdout.write(` 输出目录  ${OUT_DIR}\n`);
   process.stdout.write(` built_at  ${manifest.built_at}\n`);
   process.stdout.write(` 文件数    ${files.length}（${humanSize(totalBytes)}）\n`);
+  process.stdout.write(` 清单自校验 ${manifest.files_checksum}\n`);
   for (const [top, count] of byTop) {
     process.stdout.write(`   - ${top.padEnd(10)} ${count}\n`);
+  }
+  if (bomFiles.length > 0) {
+    process.stdout.write(` ⚠ ${bomFiles.length} 个文件带 UTF-8 BOM，已剥离后计算校验和：\n`);
+    for (const rel of bomFiles.slice(0, 5)) process.stdout.write(`   - ${rel}\n`);
+    if (bomFiles.length > 5) process.stdout.write(`   - …等共 ${bomFiles.length} 个\n`);
   }
   process.stdout.write('--------------------------------------------------\n');
   process.stdout.write(' 托管命令：node scripts/serve-lan.mjs release/latest 8080\n');

@@ -7,7 +7,26 @@ function rotl(n: number, s: number): number {
   return (n << s) | (n >>> (32 - s));
 }
 
+/** 惰性持有的原生编码器；`undefined` = 尚未探测，`null` = 环境不支持 */
+let sharedEncoder: { encode(input: string): Uint8Array } | null | undefined;
+
+/**
+ * 字符串 → UTF-8 字节。
+ *
+ * 优先走原生 `TextEncoder`：手写循环是逐字符 `push`，对 MB 级输入既慢又吃内存
+ * （OTA 场景下有 4.7MB 的词典索引要校验）。两者对合法 UTF-8 文本结果一致，
+ * 由 `test/sha1.test.ts` 与 node:crypto 的对拍用例保证。
+ */
 function toBytes(str: string): Uint8Array {
+  if (sharedEncoder === undefined) {
+    sharedEncoder = typeof TextEncoder === 'function' ? new TextEncoder() : null;
+  }
+  if (sharedEncoder) return sharedEncoder.encode(str);
+  return toBytesManual(str);
+}
+
+/** 无 TextEncoder 时的回退实现（保持原有朴素写法，仅供极老环境） */
+function toBytesManual(str: string): Uint8Array {
   const bytes: number[] = [];
   for (let i = 0; i < str.length; i++) {
     let code = str.charCodeAt(i);

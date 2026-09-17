@@ -14,11 +14,24 @@
  * 流程：
  *   1. GET {baseUrl}/manifest.json          → UpdateManifest
  *   2. 与本机已应用的 built_at 比较          → hasUpdate
- *   3. 并发（默认 6）fetch 每个文件 → sha256 校验 → 写入 IndexedDB
- *   4. 全部成功 → 记录 built_at + 激活缓存层；清空不在清单里的旧缓存
- *   5. UI 提示「重新加载」→ location.reload() 后 loader 走缓存优先，内容即生效
+ *   3. 校验清单自身完整性（files_checksum）
+ *   4. 并发（默认 6）fetch 每个文件 → size / sha1 / sha256 校验 → 写入 IndexedDB
+ *   5. 全部成功 → 记录 built_at + 激活缓存层；清空不在清单里的旧缓存
+ *   6. UI 提示「重新加载」→ location.reload() 后 loader 走缓存优先，内容即生效
+ *
+ * 完整性校验（防损坏，非防伪造）：
+ *   OTA 走 http://<局域网IP>，**不是安全上下文**，`crypto.subtle` 不可用，
+ *   所以 sha256 在真实 OTA 场景下算不出来 —— 早期版本因此在局域网下**完全跳过校验**，
+ *   只留一条 warning，等于没有保护。现改为：
+ *     - sha1（core 的纯 TS 实现，零依赖、同构）为**主校验，永不降级**；
+ *     - sha256 仅在 subtle 可用时做**附加**校验（https 场景更强）；
+ *     - size 作为便宜的预检，先挡掉截断；
+ *     - files_checksum 保护清单自身，挡住「清单被截断/少了几项」。
+ *   SHA-1 的抗碰撞性弱于 SHA-256，但此处防的是**随机损坏**而非蓄意伪造，
+ *   160bit 摘要对这类错误的检出率与 SHA-256 等价。切勿把它当身份验证用。
  */
 
+import { sha1 } from '@pks/core';
 import {
   ACTIVATED_KEY,
   BUILT_AT_KEY,
@@ -41,6 +54,9 @@ export interface UpdateFileEntry {
   /** 相对 content 根的路径，如 `index/manifest.json` */
   path: string;
   sha256: string;
+  /** 纯 JS 可算的 SHA-1（小写 hex）—— 非安全上下文下的主校验手段 */
+  sha1: string;
+  /** 文本的 UTF-8 字节数（与 `res.text()` 重新编码后的长度一致） */
   size: number;
 }
 
@@ -50,6 +66,8 @@ export interface UpdateManifest {
   /** 内容根相对 manifest 的 URL，默认 './' */
   content_url?: string;
   note?: string;
+  /** 清单自校验：`sha1:<hex>`，覆盖 files 列表的规范摘要（不含本字段自身） */
+  files_checksum?: string;
 }
 
 export interface UpdateCheckResult {
@@ -143,18 +161,66 @@ function isManifestShaped(raw: unknown): raw is UpdateManifest {
   });
 }
 
-/** 把任意 manifest 形态规整为 UpdateManifest（缺 size 时补 0，不阻断） */
+/** 把任意 manifest 形态规整为 UpdateManifest */
 function normalizeManifest(raw: UpdateManifest): UpdateManifest {
   return {
     built_at: raw.built_at,
     content_url: typeof raw.content_url === 'string' ? raw.content_url : './',
     ...(typeof raw.note === 'string' ? { note: raw.note } : {}),
+    ...(typeof raw.files_checksum === 'string' ? { files_checksum: raw.files_checksum } : {}),
     files: raw.files.map((f) => ({
       path: f.path.replace(/\\/g, '/').replace(/^\/+/, ''),
       sha256: f.sha256.toLowerCase(),
+      sha1: typeof f.sha1 === 'string' ? f.sha1.toLowerCase() : '',
       size: typeof f.size === 'number' ? f.size : 0,
     })),
   };
+}
+
+/**
+ * 计算清单自校验值：对 files 列表的规范摘要取 SHA-1。
+ *
+ * 摘要格式必须与 `scripts/build-update.mjs` **逐字一致**（字段顺序、分隔符、连接符），
+ * 否则新旧两端会互相判为损坏。改动一侧就必须改另一侧。
+ */
+export function computeFilesChecksum(files: readonly UpdateFileEntry[]): string {
+  const summary = files.map((f) => `${f.path}\n${f.sha1}\n${f.size}`).join('\n');
+  return `sha1:${sha1(summary)}`;
+}
+
+/** 文本 → UTF-8 字节数（与生成侧 Buffer.byteLength(text,'utf8') 对齐） */
+export function byteLengthOf(text: string): number {
+  return new TextEncoder().encode(text).length;
+}
+
+/**
+ * 校验单个文件：返回 null 表示通过，否则返回失败原因（供 UI 展示 / 测试断言）。
+ *
+ * 校验顺序按成本从低到高：size → sha1 → sha256。
+ * 只要有一项不通过就判定损坏 —— **不可校验的文件同样按损坏处理**（sha1 缺失时），
+ * 否则「跳过校验」会重新变成本模块的老问题。
+ */
+export async function verifyEntryText(
+  entry: UpdateFileEntry,
+  text: string,
+  opts: { canSha256: boolean },
+): Promise<string | null> {
+  if (entry.size > 0 && byteLengthOf(text) !== entry.size) {
+    return `大小不符（期望 ${entry.size} 字节，实际 ${byteLengthOf(text)}）`;
+  }
+  if (!entry.sha1) {
+    return '清单缺少 sha1，无法校验';
+  }
+  if (sha1(text) !== entry.sha1) {
+    return 'SHA-1 不符';
+  }
+  if (opts.canSha256 && entry.sha256) {
+    const actual = await sha256Hex(text);
+    if (actual !== null && actual !== entry.sha256) {
+      return 'SHA-256 不符';
+    }
+  }
+  return null;
 }
 
 /* ------------------------------ 拉取与校验 ------------------------------ */
@@ -178,7 +244,27 @@ export async function fetchUpdateManifest(baseUrl: string): Promise<UpdateManife
   if (!isManifestShaped(raw)) {
     throw new Error('更新清单格式不符（需包含 built_at 与非空 files[].path/sha256/size）');
   }
-  return normalizeManifest(raw);
+
+  const files = (raw as UpdateManifest).files;
+  const missingSha1 = files.filter((f) => typeof f.sha1 !== 'string' || f.sha1.length === 0).length;
+  if (missingSha1 > 0) {
+    // 局域网是 http（非安全上下文），sha256 算不出来；缺了 sha1 就等于完全没有校验。
+    throw new Error(
+      `更新清单缺少 sha1 字段（${missingSha1}/${files.length} 个文件）。` +
+        `请用新版 scripts/build-update.mjs 重新生成更新包 —— 否则局域网下无法校验完整性`,
+    );
+  }
+
+  const manifest = normalizeManifest(raw);
+  if (manifest.files_checksum) {
+    // 挡住「清单被截断 / 少了几项 / 某项的哈希或大小被改」：
+    // 这类损坏仍能通过逐项格式校验，却会让下面的「清理不在清单里的旧缓存」误删本机内容。
+    const actual = computeFilesChecksum(manifest.files);
+    if (actual !== manifest.files_checksum) {
+      throw new Error('更新清单自校验失败（files_checksum 不符）：清单可能已损坏或被截断');
+    }
+  }
+  return manifest;
 }
 
 /**
@@ -255,9 +341,14 @@ export async function applyContentUpdate(
   let updated = 0;
   let failed = 0;
 
-  const canHash = await sha256Available();
-  if (!canHash) {
-    warnings.push('当前环境不支持 SHA-256（非安全上下文），已跳过完整性校验');
+  const canSha256 = await sha256Available();
+  if (!canSha256) {
+    // 局域网 OTA 走 http，不是安全上下文，subtle 一定拿不到 —— 但这只意味着
+    // 少了附加校验：sha1 是纯 JS 实现，主校验照常生效，绝不是「跳过校验」。
+    warnings.push('当前环境不支持 SHA-256（非安全上下文），已改用 SHA-1 校验完整性');
+  }
+  if (!manifest.files_checksum) {
+    warnings.push('更新清单未提供 files_checksum（旧版生成），已跳过清单自校验');
   }
 
   // 空清单直接拒绝：否则下面的「清理不在清单里的旧缓存」会把整份缓存清空 ——
@@ -267,6 +358,13 @@ export async function applyContentUpdate(
     return { updated: 0, failed: 0, warnings, activated: false };
   }
 
+  // 原子激活：动手之前先摘掉激活标记。
+  // 否则「上一轮已激活 + 本轮部分失败」时，loader 仍会走缓存优先，读到
+  // 本轮下载成功的新文件与上一轮残留旧文件的**混合内容** —— 也就是本模块注释
+  // 曾声称避免了、但实际并未避免的「半新半旧」。摘掉标记后，失败即回退随包内容。
+  await setMeta(ACTIVATED_KEY, false);
+  invalidateContentCacheFlag();
+
   const queue: UpdateFileEntry[] = [...manifest.files];
   const worker = async (): Promise<void> => {
     for (;;) {
@@ -274,12 +372,10 @@ export async function applyContentUpdate(
       if (!entry) return;
       try {
         const text = await fetchOneFile(baseUrl, entry);
-        if (canHash) {
-          const actual = await sha256Hex(text);
-          if (actual !== null && actual !== entry.sha256) {
-            failed += 1;
-            continue;
-          }
+        const bad = await verifyEntryText(entry, text, { canSha256 });
+        if (bad) {
+          failed += 1;
+          continue;
         }
         const ok = await putCached(entry.path, text);
         if (ok) updated += 1;
@@ -296,7 +392,9 @@ export async function applyContentUpdate(
   await Promise.all(workers);
 
   if (failed > 0) {
-    // 部分失败：不更新 built_at、不激活，保证不会出现「半新半旧」被当作最新
+    // 部分失败：不更新 built_at、不激活（ACTIVATED 已在开头置 false），
+    // 于是 loader 回退到随包内容，不会出现「半新半旧」被当作最新。
+    warnings.push(`${failed} 个文件未通过完整性校验，已放弃本次更新并回退到随包内容`);
     return { updated, failed, warnings, activated: false };
   }
 
