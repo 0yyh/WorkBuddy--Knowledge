@@ -60,8 +60,12 @@
 - 2000万字优化 P0-I/II/III 完成；搜索 worker 优先+主线程永久降级兜底。
 - 阅读器「番茄小说」风重构、面板动画规范、P2 阅读页拆分/测试补齐（2026-09-10~13 提交，本文件不赘述）。
 - 哲学分类已扩充：6 个分支总纲(形而上学/认识论/伦理学/美学/政治哲学/自由意志)+人物学派(苏格拉底/孟子/朱熹/斯宾诺莎/洛克/阿奎那/荀子/老子/墨家/法家)+深化(经验/理性主义)。
-- **web 测试/类型检查直调**：`node node_modules/.pnpm/vitest@2.1.9_@types+node@22.20.1/node_modules/vitest/vitest.mjs run --root apps/web`（67/67）；web tsc 用 `node_modules/.pnpm/typescript@5.9.3/.../bin/tsc -p apps/web/tsconfig.json --noEmit`（**apps/web/node_modules 下没有 typescript**）。
+- **web 测试/类型检查直调**：`node node_modules/.pnpm/vitest@2.1.9_@types+node@22.20.1/node_modules/vitest/vitest.mjs run --root apps/web`（**7 文件 / 95 测试**）；web tsc 用 `node_modules/.pnpm/typescript@5.9.3/.../bin/tsc -p apps/web/tsconfig.json --noEmit`（**apps/web/node_modules 下没有 typescript**）。
+- **core 测试直调**：同 vitest，`--root packages/core`（**28 文件 / 229 测试**）。
+- **web 测试环境是 `node` 而非 jsdom**，且**禁止新增依赖**（无 jsdom/@testing-library）。代价：React hook 的运行时行为无法直接测 → 需把纯算术抽成导出函数再测（见 `useWindowedSlice.computeWindow` 的做法）。
 - 提交信息里含 "PowerShell" 字样会被安全策略拦截 → 改写避开。
 - **无 CI（2026-09-18 起）**：按用户要求删除 `.github/`（仓库只托管 Gitee，GitHub Actions 永不生效；且其 `pnpm install --frozen-lockfile` 与本项目「禁 install」铁律冲突）。所有校验一律本地手工跑。若日后要在 Gitee 做 CI，用 `.gitee/workflows/`（Gitee Go），不要再用 `.github/`。
 - P2-12 **防损坏已完成**（sha1 主校验 + files_checksum + 原子激活）；**防伪造签名**仍空白（可信局域网下可接受，如需再评估）。
-- 未完成：`useWindowedSlice`/`compress`/`df.ts` 缺直接单测；builder.ts 469 行 + df 桶每次全量重算压缩。
+- **`docs/system_design.md` 的 T01–T05 全部完成**（T05 于 2026-09-18 补：df/compress/hash/useWindowedSlice 直接单测，提交 `e20fb5e`）。
+- 未完成：builder.ts 469 行 + df 桶每次全量重算压缩（规模期才成问题）。
+- ⚠ **判断项目进度别看 team 任务状态**（paused/idle 可能是陈旧的），一律 `git log` + 实地核查；抽查内容时注意 slug 可能与我猜测的不同。
