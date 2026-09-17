@@ -458,7 +458,7 @@ L0 知识库 Root
 | C-03 | **AI 内容录入工作流** | **P0** | 见 §7：选题 → 检索 → 起草 → 切分 → 校验 → 审校 → 入库 |
 | C-04 | 待录入词条 Backlog | **P0** | 由类目体系自动生成词条清单，标记状态（未开始/起草中/待审校/已发布） |
 | C-05 | 审校工作台 | **P0** | 逐条审校：显示正文、来源列表、置信度、疑似重复；一键通过/打回/打开源文件 |
-| C-06 | 内容索引构建（Build） | **P0** | 扫描内容目录 → 构建分片索引 `index/`（按 02 §3.4）：`manifest.json` + `taxonomy.json` + `entries/a.json…z.json`（首字母 26 片）+ `search/meta.json` + `search/s00.bin…s15.bin`（倒排）+ `search/s00.json…s15.json`（doc 表）+ `search/title.bin\|json`（L1）；**不再产出单文件 `search-index.bin`**；`graph.json` 仍为可选单文件 |
+| C-06 | 内容索引构建（Build） | **P0** | 扫描内容目录 → 构建分片索引 `index/`（按 02 §3.4）：`manifest.json` + `taxonomy.json` + `entries/00.json…3f.json`（slug 哈希分 64 桶，文件名两位补零）+ `search/meta.json` + `search/s00.bin…s15.bin`（倒排）+ `search/s00.json…s15.json`（doc 表）+ `search/title.bin\|json`（L1）；**不再产出单文件 `search-index.bin`**；`graph.json` 仍为可选单文件 |
 | C-07 | 重复检测 | P1 | 基于标题相似度 + 别名 + 来源 URL 指纹；输出疑似重复对 |
 | C-08 | 质量报告 | P1 | 统计：无来源词条、正文 < 300 字词条、断链数、未归类词条、license 缺失 |
 | C-09 | Web 端轻量编辑（File System Access API） | P1 | Chrome/Edge 下可直接读写本地内容目录，实现"网页里改一行立刻生效"；不支持的浏览器降级为导出 patch |
@@ -893,7 +893,7 @@ knowledge-pack-20250112-1430.zip
 | --- | --- |
 | **内容与用户数据分离** | 内容包与 `userdata.json` 是两个文件，换设备时可只传内容不覆盖自己的阅读进度 |
 | **预构建索引随包携带** | 手机导入 1 万章节时不必重建索引（省几十秒 + 省电）；导入仅覆盖 `bundle.json.index_shards` 对应片，无索引片时才在 Worker 后台重建 1/16 ≈ 3–5s |
-| **★ 索引分片化（C3 / 02 §3.4）** | 搜索倒排按 `fnv1a(slug) & 15` 分 **16 片**（`search/s00.bin…s15.bin` + `s00.json…s15.json`），**分片是最小替换单位**：导入时只覆盖本包所属分片，其他分片不动；entries 索引按 slug 首字母分 26 片（`entries/a.json…z.json`）。标题/别名/摘要另出 L1 轻量索引 `title.bin\|json`（~400KB），冷启动 0.3s 就绪兜底 80% 查询 |
+| **★ 索引分片化（C3 / 02 §3.4）** | 搜索倒排按 `fnv1a(slug) & 15` 分 **16 片**（`search/s00.bin…s15.bin` + `s00.json…s15.json`），**分片是最小替换单位**：导入时只覆盖本包所属分片，其他分片不动；entries 索引按 `fnv1a(slug) & 63` 哈希分 **64 桶**（`entries/00.json…3f.json`）。标题/别名/摘要另出 L1 轻量索引 `title.bin\|json`（~400KB），冷启动 0.3s 就绪兜底 80% 查询 |
 | **★ 基线随包（C2）** | `base_snapshot` 记录"这个包是从哪个版本分叉出去的"，配合本地 `.pks/imports.json` 与词条 `rev` 做三方比对，才能判定"双方都改过"。详见 §8.4 |
 | **修正层 + feedback 随包** | `overlay/`（修正层）与 `feedback.json`（标记问题回传）随包走，物理分离（见 04 §2.2 / §2.6） |
 | **zip 而非自定义格式** | 任何设备都能解压；内容永不锁定（G3） |
