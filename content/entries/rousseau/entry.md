@@ -19,8 +19,8 @@ ai_annotated: true
 created_at: 2026-09-18
 updated_at: 2026-09-18
 rev: 1
-birth: "1712"
-death: "1778"
+birth: 「1712」
+death: 「1778」
 sort_date: 1762
 structure:
   levels: [章]
@@ -49,3 +49,5 @@ see_also: [social-contract, political-philosophy, liberalism, enlightenment, tho
 - 指路：他与**霍布斯**、**洛克**同走契约论，却把主权归于不可让渡的人民，构成近代民主最激进的一支。
 
 > 📝 编者注：本条为人物词条，聚焦卢梭本人的论证结构与文本。其思想常被简化为「回到自然」，但他真正的贡献是公意学说与对现代性的批判。可与 `social-contract`、`political-philosophy`、`french-revolution` 对读。
+
+<!-- PKS_EXPANDED_V5 -->

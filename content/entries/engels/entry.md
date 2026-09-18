@@ -19,8 +19,8 @@ ai_annotated: true
 created_at: 2026-09-13
 updated_at: 2026-09-13
 rev: 1
-birth: "1820"
-death: "1895"
+birth: 「1820」
+death: 「1895」
 sort_date: 1848
 structure:
   levels: [章]
@@ -49,3 +49,5 @@ see_also: [karl-marx, communism, communist-manifesto, chinese-marxism, das-kapit
 - 指路：他与**马克思**的合作与分工，构成「理论家—组织者/阐释者」的原型，也引发后世关于「两人思想是否完全一致」的长期争论。
 
 > 📝 编者注：本条是人物词条，聚焦恩格斯本人。站内有 `karl-marx`（马克思）、`communist-manifesto`（共产党宣言）、`das-kapital`（资本论）、`german-ideology`（德意志意识形态）、`anti-duhring`（反杜林论）可对读；恩格斯的晚期著作（尤其是《起源》）常被与摩尔根人类学对照，阅读时宜注意其人类学材料的年代局限。
+
+<!-- PKS_EXPANDED_V5 -->

@@ -19,8 +19,8 @@ ai_annotated: true
 created_at: 2026-09-18
 updated_at: 2026-09-18
 rev: 1
-birth: "1921"
-death: "2002"
+birth: 「1921」
+death: 「2002」
 sort_date: 1971
 structure:
   levels: [章]
@@ -48,3 +48,5 @@ see_also: [political-philosophy, liberalism, utilitarianism, ethics, democracy, 
 - 指路：他与**功利主义**的对立、与**社群主义**的争执，构成了当代政治哲学两条基本张力线。
 
 > 📝 编者注：本条是**人物**词条，聚焦罗尔斯本人的论证结构与文本脉络。站内另有 `political-philosophy`（政治哲学）与 `utilitarianism`（功利主义）词条呈现流派线索，可与本词条对读，看清罗尔斯如何在反功利主义的前提下重建自由主义。注意译名统一用「罗尔斯」，不用「罗尔斯」以外的写法。
+
+<!-- PKS_EXPANDED_V5 -->

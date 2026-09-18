@@ -19,8 +19,8 @@ ai_annotated: true
 created_at: 2026-09-18
 updated_at: 2026-09-18
 rev: 1
-birth: "1588"
-death: "1679"
+birth: 「1588」
+death: 「1679」
 sort_date: 1651
 structure:
   levels: [章]
@@ -49,3 +49,5 @@ see_also: [social-contract, john-locke, sovereignty, political-philosophy, liber
 - 指路：他与**洛克**共享「社会契约」的框架，却一个通向绝对主权、一个通向反抗权，这一对照构成近代政治思想的基本张力。
 
 > 📝 编者注：本条为人物词条，聚焦霍布斯本人的论证结构与其文本（《利维坦》为主，兼及《论公民》《法之要素》）。其「自然状态」常被误读为对史前人类的经验描述，实则是一项**思想实验**：用来显明没有共同权威时，理性会推导出什么结果。与之对读可参 `social-contract`（社会契约）、`sovereignty`（主权）、`john-locke`（洛克）与 `liberalism`（自由主义）。
+
+<!-- PKS_EXPANDED_V5 -->

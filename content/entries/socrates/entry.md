@@ -20,8 +20,8 @@ ai_annotated: true
 created_at: 2026-09-11
 updated_at: 2026-09-13
 rev: 2
-birth: "-470"
-death: "-399"
+birth: 「-470」
+death: 「-399」
 sort_date: -430
 structure:
   levels: [章]
@@ -53,4 +53,4 @@ see_also: [plato, ancient-greek-philosophy, aristotle, critical-thinking, the-re
 
 > 📝 编者注：读苏格拉底最大的陷阱，是把「柏拉图主义」直接算在苏格拉底头上。柏拉图成熟期的理念论、灵魂三分、回忆说，是柏拉图自己的体系，他只是借老师之名发言。我们能在多大程度上辨认「历史上的苏格拉底」，本身就是古典学数百年争论的焦点。想顺着这条线往下读，可与 `plato`（`the-republic` 的理念论）和 `aristotle`（对老师的修正）对读。
 
-<!-- PKS_EXPANDED_V6 -->
+<!-- PKS_EXPANDED_V5 -->

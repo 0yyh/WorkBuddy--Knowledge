@@ -49,4 +49,4 @@ see_also: [confucianism, xunzi, moism, machiavelli, political-philosophy, confuc
 
 > 📝 编者注：评价法家最忌平面化。它的可贵在「制度思维」——承认人性好利，于是用可预期、可操作的规则替代血统与任意；它的危险也在「制度思维」——当规则只服务于单一主权者、且不被任何更高的法所约束，制度便沦为最精密的压迫机器。法家留给中国的，是一套高效却缺乏「限权」基因的治理传统，这恰是近代「法治」转型最难的关节。
 
-<!-- PKS_EXPANDED_V6 -->
+<!-- PKS_EXPANDED_V5 -->

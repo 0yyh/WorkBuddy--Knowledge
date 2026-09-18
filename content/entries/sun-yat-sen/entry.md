@@ -19,8 +19,8 @@ ai_annotated: true
 created_at: 2026-09-18
 updated_at: 2026-09-18
 rev: 1
-birth: "1866"
-death: "1925"
+birth: 「1866」
+death: 「1925」
 sort_date: 1911
 structure:
   levels: [章]
@@ -49,3 +49,5 @@ see_also: [xinhai-revolution, prc-founding, democracy, nationalism, self-strengt
 - 指路：他与**毛泽东**、**列宁**构成二十世纪革命谱系的不同支线——一个从资产阶级共和起步，一个从无产阶级专政落地。
 
 > 📝 编者注：本条是**人物**词条，聚焦孙中山本人的思想结构与革命实践，不替代 `xinhai-revolution`（辛亥革命事件）或 `nationalism`（民族主义）等专门词条。对历史人物的评价应力求客观：既写其推动共和的功绩，也写其方案中的理想主义与未竟之处，并区分不同立场的解读。
+
+<!-- PKS_EXPANDED_V5 -->

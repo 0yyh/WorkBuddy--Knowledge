@@ -19,8 +19,8 @@ ai_annotated: true
 created_at: 2026-09-18
 updated_at: 2026-09-18
 rev: 1
-birth: "1748"
-death: "1832"
+birth: 「1748」
+death: 「1832」
 sort_date: 1789
 structure:
   levels: [章]
@@ -48,3 +48,5 @@ see_also: [utilitarianism, liberalism, john-locke, political-philosophy, ethics]
 - 密尔以**高级快乐**修正其平等化倾向，后世**权利话语**回潮则补其个性与尊严之缺。
 
 > 📝 编者注：边沁常被视为冷酷的「快乐计算器」，但对其而言功利主义本是解放性的：它把权威从神授与血统拉回到可公开检验的后果上。理解他，应先看其反专制的一面，再看其被批评的一面。
+
+<!-- PKS_EXPANDED_V5 -->

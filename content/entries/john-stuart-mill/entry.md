@@ -19,8 +19,8 @@ ai_annotated: true
 created_at: 2026-09-18
 updated_at: 2026-09-18
 rev: 1
-birth: "1806"
-death: "1873"
+birth: 「1806」
+death: 「1873」
 sort_date: 1859
 structure:
   levels: [章]
@@ -49,3 +49,5 @@ see_also: [utilitarianism, bentham, liberalism, political-philosophy, democracy,
 - 指路：他与**边沁**的功利主义同源而分流——一个重计算，一个重品质与自由，这条张力见 `utilitarianism`。
 
 > 📝 编者注：本站译名统一用「**密尔**」而非「穆勒」（见 PHILO_SPEC §5 译名表），全文一律从之。密尔常被简单归类为自由主义者，但他晚年同时亲近社会主义、支持土地国有与劳工合作，其内部张力恰是十九世纪自由主义自我更新的缩影，本词条第五章专门梳理。建议与 `bentham`、`liberalism`、`feminism`（站内相关条目）对读。
+
+<!-- PKS_EXPANDED_V5 -->

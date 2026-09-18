@@ -47,3 +47,5 @@ see_also: [karl-marx, chinese-marxism, communist-manifesto, das-kapital, surplus
 - **共产主义须区分作为理想与作为制度史**：自由人联合体是规范性理想，二十世纪的成败是经验性历史——二者不可混为一谈，构成与资本主义长期并存的基本张力。
 
 > 📝 编者注：本词条采取五章结构，刻意把「理想」与「制度史」拆开叙述——前者见第一、二章与第五章末，后者见第四、五章。站内可与 `chinese-marxism`、`communist-manifesto`、`das-kapital`、`surplus-value` 对读，分别看中国化的展开、纲领原文、经济学解剖与剥削机制；亦可与 `social-contract`、`october-revolution` 对照其政治哲学与革命史脉络。
+
+<!-- PKS_EXPANDED_V5 -->

@@ -20,8 +20,8 @@ ai_annotated: true
 created_at: 2026-09-11
 updated_at: 2026-09-13
 rev: 2
-birth: "-372"
-death: "-289"
+birth: 「-372」
+death: 「-289」
 sort_date: -320
 structure:
   levels: [章]
@@ -53,4 +53,4 @@ see_also: [confucius, confucianism, zhu-xi, mind-learning]
 
 > 📝 编者注：读孟子最易犯两种误读。一是把他读成天真乐观的「人性全善论」，其实他反复说「求其放心」「牛山之木」——善是需被护养的嫩芽；二是把「民贵君轻」读成近代民权思想，忽略了它仍以「圣君行仁政」为理想形态。想看孟子如何被后世体系化，可与 `zhu-xi`（四书章句）与 `confucius`（仁学的起点）对读。
 
-<!-- PKS_EXPANDED_V6 -->
+<!-- PKS_EXPANDED_V5 -->

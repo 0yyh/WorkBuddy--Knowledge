@@ -19,8 +19,8 @@ ai_annotated: true
 created_at: 2026-09-18
 updated_at: 2026-09-18
 rev: 1
-birth: "1805"
-death: "1859"
+birth: 「1805」
+death: 「1859」
 sort_date: 1835
 structure:
   levels: [章]
@@ -48,3 +48,5 @@ see_also: [democracy, liberalism, american-revolution, french-revolution, montes
 - 指路：他与**孟德斯鸠**的承继、与**法国大革命**叙事的纠葛，构成了理解现代国家形成的双轴。
 
 > 📝 编者注：本条是**人物**词条，聚焦托克维尔的考察方法与核心诊断。站内 `democracy`（民主）、`french-revolution`（法国大革命）、`separation-of-powers`（分权）等词条呈现相关制度线索，可与本词条对读。托克维尔的著作多基于实地观察而非纯粹演绎，阅读时应区分他「记录的现象」与「做出的判断」。
+
+<!-- PKS_EXPANDED_V5 -->

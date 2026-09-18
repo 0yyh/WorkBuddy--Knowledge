@@ -19,8 +19,8 @@ ai_annotated: true
 created_at: 2026-09-13
 updated_at: 2026-09-13
 rev: 1
-birth: "1909"
-death: "1997"
+birth: 「1909」
+death: 「1997」
 sort_date: 1958
 structure:
   levels: [章]
@@ -48,3 +48,5 @@ see_also: [political-philosophy, liberalism, rawls, arendt, ethics, enlightenmen
 - 指路：他与**密尔**对「个性」的辩护、与**罗尔斯**对「唯一正义秩序」的追寻，构成自由主义内部「多元」与「一元」的基本张力。
 
 > 📝 编者注：本条是人物词条，聚焦伯林本人的思想结构与文本。站内有 `political-philosophy`（政治哲学）、`liberalism`（自由主义）、`rawls`（罗尔斯）可对读；伯林的两种自由概念常被与密尔《论自由》的「涉己/涉他」之分对照，但二者的问题意识并不完全相同，阅读时勿直接等同。
+
+<!-- PKS_EXPANDED_V5 -->

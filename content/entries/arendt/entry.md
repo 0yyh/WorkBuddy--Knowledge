@@ -19,8 +19,8 @@ ai_annotated: true
 created_at: 2026-09-18
 updated_at: 2026-09-18
 rev: 1
-birth: "1906"
-death: "1975"
+birth: 「1906」
+death: 「1975」
 sort_date: 1951
 structure:
   levels: [章]
@@ -52,3 +52,5 @@ see_also: [political-philosophy, liberalism, nationalism, ethics, kant]
 - 指路：她与**自由主义**的张力贯穿始终——她怀疑把政治奠基在权利或利益之上，而坚持政治必须建立在「共同世界」与「自由行动」之上。
 
 > 📝 编者注：本条是**人物**词条，聚焦阿伦特本人的思想结构与文本，不替代 `political-philosophy`（政治哲学流派）或 `liberalism`（自由主义）等专门词条。正文刻意区分「阿伦特自己怎么说」与「后人如何批评」：她的极权主义理论、行动理论与平庸之恶都各自引发了重大争论，本词条均给出双方的论证结构。
+
+<!-- PKS_EXPANDED_V5 -->

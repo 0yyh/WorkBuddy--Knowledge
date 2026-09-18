@@ -19,8 +19,8 @@ ai_annotated: true
 created_at: 2026-09-18
 updated_at: 2026-09-18
 rev: 1
-birth: "1689"
-death: "1755"
+birth: 「1689」
+death: 「1755」
 sort_date: 1748
 structure:
   levels: [章]
@@ -49,3 +49,5 @@ see_also: [separation-of-powers, republic, democracy, liberalism, enlightenment,
 - 指路：他与**卢梭**的分歧构成启蒙政治思想的轴心张力——一个从制度与民情出发守护自由，一个从公意与平等出发重塑自由。
 
 > 📝 编者注：本条是人物词条，聚焦孟德斯鸠的文本与论证结构。气候决定论等具体论断今天备受质疑（见第五章），但它们服务于一个仍具生命力的核心问题：制度如何与具体的社会条件相适配。可与 `separation-of-powers`、`liberalism` 对读。
+
+<!-- PKS_EXPANDED_V5 -->

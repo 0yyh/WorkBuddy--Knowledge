@@ -115,4 +115,4 @@ see_also: [das-kapital, surplus-value, labour-theory-of-value]
 
 > 📜 「至今一切社会的历史都是阶级斗争的历史。」 —— 马克思、恩格斯《共产党宣言》第一章
 
-<!-- PKS_EXPANDED_V4 -->
+<!-- PKS_EXPANDED_V5 -->

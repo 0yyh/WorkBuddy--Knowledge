@@ -20,8 +20,8 @@ ai_annotated: true
 created_at: 2026-09-11
 updated_at: 2026-09-13
 rev: 1
-birth: "1632"
-death: "1704"
+birth: 「1632」
+death: 「1704」
 sort_date: 1689
 structure:
   levels: [章]
@@ -50,3 +50,5 @@ see_also: [empiricism, social-contract, liberalism, enlightenment, descartes, ka
 - 指路：他与**霍布斯**的差别构成近代契约论的基本张力——同为契约论，一个通向绝对主权，一个通向反抗权。
 
 > 📝 编者注：本条是**人物**词条，聚焦洛克本人的思想结构与文本。站内另有 `empiricism`（经验主义）词条讲流派线索（培根—洛克—贝克莱—休谟的整体走向），另可与 `social-contract`（社会契约）与 `liberalism`（自由主义）对读，看他的论证如何被后人改写。
+
+<!-- PKS_EXPANDED_V5 -->

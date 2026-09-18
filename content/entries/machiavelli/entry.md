@@ -44,3 +44,5 @@ see_also: [john-locke, social-contract, plato, renaissance, liberalism, republic
 - **他的方法比他的结论更长寿**：历史比较法、国家理性、剑桥学派的「新罗马」自由观、现实主义国际关系，乃至管理学中的「黑暗三人格」，都从他这里发端。
 
 > 📝 编者注：本词条分「君主」与「共和」两面，二者张力常被误读为矛盾，实为同一把「以结果论政治」尺子的两面。可与其对读的站内词条包括 `plato`（哲人王的应然政治）、`social-contract`（规范意义上的契约论）、`republic`（共和政体的制度谱系）与 `liberalism`（自由主义的后续展开）；他的国家理性与现实主义脉络，又与 `renaissance`（文艺复兴的时代背景）相连。
+
+<!-- PKS_EXPANDED_V5 -->

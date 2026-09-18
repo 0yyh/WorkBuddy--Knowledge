@@ -18,8 +18,8 @@ ai_annotated: true
 created_at: 2026-09-18
 updated_at: 2026-09-18
 rev: 1
-birth: "1870"
-death: "1924"
+birth: 「1870」
+death: 「1924」
 sort_date: 1917
 structure:
   levels: [章]
@@ -51,3 +51,5 @@ see_also: [karl-marx, communism, october-revolution, engels, chinese-marxism, di
 - 指路：他与**考茨基**的决裂，构成马克思主义内部「革命派」与「改良派」的基本张力，并直接影响后来的**马克思主义中国化**。
 
 > 📝 编者注：本词条聚焦列宁本人的思想脉络与文本（尤其四大政治哲学著作：《怎么办》《帝国主义论》《国家与革命》与《四月提纲》）。关于马克思主义的一般框架，请对读 `karl-marx` 与 `communism`；关于革命具体进程，见 `october-revolution`；关于苏联的终点，见 `dissolution-of-ussr`；关于理论如何被中国接受，见 `chinese-marxism`。评价历史人物时，本词条区分「列宁本人怎么主张」与「后人如何批评其实践后果」。
+
+<!-- PKS_EXPANDED_V5 -->
