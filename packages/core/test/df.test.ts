@@ -13,7 +13,9 @@
  *     「全量/增量产出字节一致」的前提，增量复用依赖它）。
  */
 import { describe, it, expect } from 'vitest';
-import { dfBucketOf, buildDfBuckets } from '../src/index/df.js';
+import { dfBucketOf, buildDfBuckets, decodeDfBucket } from '../src/index/df.js';
+import type { DfBucket } from '../src/index/df.js';
+import { compressJson } from '../src/util/compress.js';
 import { DF_BUCKET_COUNT } from '../src/constants.js';
 import type { ShardIndex } from '../src/index/inverted.js';
 
@@ -161,5 +163,32 @@ describe('buildDfBuckets（聚合 + 分桶）', () => {
       Object.assign({}, ...r.buckets.map((b) => b.df));
     expect(flat(three)['alpha']).toBe(flat(one)['alpha']);
     expect(three.meta).toEqual(one.meta);
+  });
+});
+
+describe('decodeDfBucket（压缩优先 + 旧明文回落）', () => {
+  it('新产物：单行 base64(zlib) 压缩桶可正确解回', () => {
+    const bucket: DfBucket = { n: 7, df: { 知识: 12, BM25: 3, philosophy: 5 } };
+    const text = compressJson(bucket);
+    // 契约：压缩载体必须是纯 base64（无换行/空白），才能零改动穿过 contentCache / OTA 文本管线
+    expect(text).not.toMatch(/[\r\n\s]/);
+    expect(decodeDfBucket(text)).toEqual(bucket);
+  });
+
+  it('旧产物：未压缩的 {n, df} 明文 JSON 仍可解（回落路径）', () => {
+    const text = JSON.stringify({ n: 3, df: { alpha: 9, beta: 2 } });
+    expect(decodeDfBucket(text)).toEqual({ n: 3, df: { alpha: 9, beta: 2 } });
+  });
+
+  it('与 buildDfBuckets 产出闭环：build 出的压缩桶经 decodeDfBucket 还原一致', () => {
+    const shards = [shard(0, 5, [1], { alpha: 1, gamma: 1, delta: 1 })];
+    const { buckets } = buildDfBuckets(shards);
+    for (const b of buckets) {
+      expect(decodeDfBucket(compressJson(b))).toEqual(b);
+    }
+  });
+
+  it('真正损坏的文本（既非合法 zlib 也非合法 JSON）抛错，交由调用方按坏桶处理', () => {
+    expect(() => decodeDfBucket('这不是合法的桶数据 %%')).toThrow();
   });
 });

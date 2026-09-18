@@ -1,8 +1,8 @@
 /** 从已构建的 .index/ 目录加载索引，构造可查询的 SearchEngine（CLI search / 验证用） */
 import { readFileSync, existsSync, readdirSync } from 'node:fs';
 import { join } from 'node:path';
-import { SearchEngine, decodePostings, inlineIndexToMap, decompressJson } from '@pks/core';
-import type { TitleIndexItem, IndexManifest, ShardIndex, GlobalSearchStats } from '@pks/core';
+import { SearchEngine, decodePostings, inlineIndexToMap, decodeDfBucket } from '@pks/core';
+import type { TitleIndexItem, IndexManifest, ShardIndex, GlobalSearchStats, DfBucket } from '@pks/core';
 
 /**
  * 从已构建的 .index/ 目录加载索引，构造可查询的 SearchEngine（CLI search / 验证用）。
@@ -56,12 +56,12 @@ export function loadIndex(contentDir: string): SearchEngine | null {
       for (const f of readdirSync(dfDir)) {
         if (!/^bucket-\d{3}\.json$/.test(f)) continue;
         const raw = readFileSync(join(dfDir, f), 'utf8');
-        let b: { df: Record<string, number> };
+        let b: DfBucket;
         try {
-          b = decompressJson<{ df: Record<string, number> }>(raw);
+          b = decodeDfBucket(raw);
         } catch {
-          // 旧产物：未压缩的 {n, df} JSON（OTA 升级过渡期可能存在）。
-          b = JSON.parse(raw) as { df: Record<string, number> };
+          // 桶文本既非合法压缩也非合法明文：按「该桶损坏」跳过（L2 仅少召回该桶的词，不炸整个检索）。
+          continue;
         }
         for (const [term, count] of Object.entries(b.df)) df.set(term, count);
       }

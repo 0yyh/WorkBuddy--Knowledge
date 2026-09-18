@@ -4,7 +4,7 @@
  *  - 惰性：search/sNN.json（L2 全文检索按需拉取 + 缓存）
  * 全部通过 fetch 读取 public/content 下的静态资源。
  */
-import { SearchEngine, decodePostings, dfBucketOf, tokenize, LRUCache, SHARD_CACHE_CAPACITY, inlineIndexToMap, decompressJson } from '@pks/core';
+import { SearchEngine, decodePostings, dfBucketOf, tokenize, LRUCache, SHARD_CACHE_CAPACITY, inlineIndexToMap, decodeDfBucket } from '@pks/core';
 import type {
   DfBucket,
   EntryIndexItem,
@@ -251,13 +251,9 @@ function fetchDfBucket(n: number): Promise<DfBucket | null> {
 
   const task = fetchText(dfBucketPath(n))
     .then((text) => {
-      let bucket: DfBucket;
-      try {
-        bucket = decompressJson<DfBucket>(text);
-      } catch {
-        // 旧产物：未压缩的 {n, df} JSON（OTA 升级过渡期可能存在），直接解析。
-        bucket = JSON.parse(text) as DfBucket;
-      }
+      // decodeDfBucket：优先解压 base64(zlib)，失败回落到未压缩 {n, df} 明文（旧产物 / OTA 过渡期）。
+      // 两者都失败（文本损坏）则抛错，由外层 .catch 当作空桶返回 null，不打断检索。
+      const bucket = decodeDfBucket(text);
       dfBucketCache.set(n, bucket);
       dfBucketInflight.delete(n);
       return bucket;

@@ -13,6 +13,7 @@
  */
 import { fnv1a } from '../util/fnv1a.js';
 import { DF_BUCKET_COUNT } from '../constants.js';
+import { decompressJson } from '../util/compress.js';
 import type { ShardIndex } from './inverted.js';
 
 /** 全局检索统计里的全局参数部分（原 df.json 的 {totalDocs, avgLen}） */
@@ -78,4 +79,24 @@ export function buildDfBuckets(shards: ShardIndex[]): { meta: DfMeta; buckets: D
     meta: { totalDocs, avgLen },
     buckets: nonEmpty,
   };
+}
+
+/**
+ * 解码单个 df 桶文本：优先按 base64(zlib) 解压（新产物），
+ * 失败则回落到未压缩的 `{n, df}` 明文 JSON（旧产物 / OTA 升级过渡期）。
+ *
+ * 这是 web `fetchDfBucket` 与 CLI `load-index.ts` 共用的**唯一**解码入口：
+ * 把「压缩优先 + 明文回落」契约集中到一处，避免两端各自实现、悄然分叉。
+ * 一旦某端的回落逻辑坏掉，检索会静默降级（少召回一批词）却无人察觉 ——
+ * 正是 防损坏 要消灭的失效模式。
+ *
+ * 两者都失败时（文本既非合法 zlib 也非合法 JSON）抛错，交由调用方按
+ * 「该桶损坏/缺失」处理（CLI 跳过该桶、web 视为空桶返回 null）。
+ */
+export function decodeDfBucket(text: string): DfBucket {
+  try {
+    return decompressJson<DfBucket>(text);
+  } catch {
+    return JSON.parse(text) as DfBucket;
+  }
 }
