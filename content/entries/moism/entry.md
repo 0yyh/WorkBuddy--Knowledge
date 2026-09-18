@@ -48,4 +48,4 @@ see_also: [confucianism, mencius, legalism, confucius, ancient-greek-philosophy]
 
 > 📝 编者注：读墨家最易犯的错，是把它读成「中国的基督教」或「早期社会主义」——这两种比附都过度。墨家的「天志」确有宗教外壳，但其内核是理性功利；其「兼爱」虽平等，却以「交相利」为动力而非牺牲。想看墨家逻辑被重新估价，可与 `ancient-greek-philosophy`（亚里士多德逻辑）对读；想看它与法家的分合，可参 `legalism`。
 
-<!-- PKS_EXPANDED_V6 -->
+<!-- PKS_EXPANDED_V5 -->

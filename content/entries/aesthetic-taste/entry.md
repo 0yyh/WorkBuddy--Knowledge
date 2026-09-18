@@ -52,3 +52,5 @@ see_also: [aesthetics, kant, empiricism, rationalism, social-contract, psycholog
 - 本词条与「审美判断」交叉最深，其经验主义基础则来自**休谟**所在的英国经验论传统。
 
 > 📝 编者注：全站统一使用译名「休谟」，不用「休姆」。另需区分两个词：本词条讲的「审美趣味」是 Taste，而康德术语「鉴赏」（Geschmack）在德语里本义也是「口味」，中文通常译为「鉴赏」以避免日常联想——二者指同一个哲学问题，但理论负担不同。
+
+<!-- PKS_EXPANDED_V5 -->

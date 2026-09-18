@@ -52,3 +52,5 @@ see_also: [aesthetics, kant, psychology, emotion, mind-learning, nietzsche]
 - 本词条与「表现说」「形式主义美学」构成三角关系，其心理学基础则连着**心理学**与**情感**研究。
 
 > 📝 编者注：「移情」这个中文译名容易与「同情」「共情」混淆。本词条严格区分三层：**移情**（Einfühlung，审美中把感受移入对象）、**同情**（sympathy，对他者处境的关怀）、**共情**（empathy，当代心理学与哲学中对他者内心状态的把握）。三者在历史上纠缠不清，但含义不同。
+
+<!-- PKS_EXPANDED_V5 -->

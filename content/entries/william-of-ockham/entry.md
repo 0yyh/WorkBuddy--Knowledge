@@ -53,3 +53,5 @@ see_also: [scholasticism, thomas-aquinas, formal-logic, empiricism, epistemology
 - 指路：与 `scholasticism`（经院哲学）是内部批判关系；与 `thomas-aquinas`（托马斯·阿奎那）是主要论敌；与 `empiricism`（经验论）、`formal-logic`（形式逻辑）是承接关系。
 
 > 📝 编者注：奥卡姆常被称为「中世纪的休谟」或「近代的先驱」，这两种说法都半对半错。他确实是经验论传统的先驱（直接实在论、对抽象实体的怀疑、对经验证据的强调），但他的**神学动机**完全是中世纪的——他的唯名论来自一个虔诚的理由：**如果共相是事物，那么上帝的全能就被逻辑结构所限制**。理解这个动机，才能理解他为什么把清除实体当成一件宗教上的义务，而不只是方法上的偏好。
+
+<!-- PKS_EXPANDED_V5 -->

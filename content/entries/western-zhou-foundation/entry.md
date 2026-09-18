@@ -47,3 +47,5 @@ see_also: [qin-han-unification, confucius, confucianism, mencius]
 - 西周之亡始于内部失德与外戚（犬戎）乘隙，平王东迁标志着封建宗法黄金时代的落幕，却也开启了春秋战国的制度竞争。
 
 > 📝 编者注：西周属「先秦至秦汉」子类中「秦以前」的时段，与秦汉共用同一子类；若日后细分「先秦」与「秦汉」两个子类，本条可再下沉。礼乐与儒家思想史仅作交叉引用，不展开，相关讨论请见 confucius 与 confucianism 词条。
+
+<!-- PKS_EXPANDED_V5 -->

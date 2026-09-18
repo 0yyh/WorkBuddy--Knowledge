@@ -51,4 +51,4 @@ see_also: [daoism, confucius, zhu-xi, ancient-greek-philosophy, mencius]
 
 > 📝 编者注：读老子最易犯的两种误读，一是把「无为」读成「躺平不为」，忽略了它背后是「为而无以为」的高度主动；二是把《道德经》读成一套权谋阴谋（如「将欲取之必固与之」），这其实是战国术士对老子辩证法的工具化挪用，并非其本旨。想看这条「自然」路线如何被后学发挥，可与 `daoism`（庄子）对读；想看它与西方辩证法的可比性，可参 `ancient-greek-philosophy`。
 
-<!-- PKS_EXPANDED_V6 -->
+<!-- PKS_EXPANDED_V5 -->

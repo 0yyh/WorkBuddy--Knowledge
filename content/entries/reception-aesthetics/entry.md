@@ -52,3 +52,5 @@ see_also: [aesthetics, kant, hegel, historiography, psychology, mind-learning, a
 - 本词条与「审美判断」「游戏说」共享伽达默尔解释学的前提；其历史维度则连着**史学理论**。
 
 > 📝 编者注：中文文献常把「接受美学」与英美的「读者反应批评」（reader-response criticism，费什、霍兰德等）混为一谈。二者有相近的问题意识，但传统不同：接受美学出自德语解释学与现象学，强调文本结构与历史性；读者反应批评更偏心理学与主观性。本词条第四章会处理这个区分。
+
+<!-- PKS_EXPANDED_V5 -->

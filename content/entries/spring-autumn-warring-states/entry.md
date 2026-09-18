@@ -47,3 +47,5 @@ see_also: [confucius, laozi, moism, legalism, mencius, xunzi, qin-han-unificatio
 - 铁器牛耕与土地私有瓦解了井田与宗族，士阶层从贵族附庸变为可流动的人力资源，官僚制由此萌芽，统一的条件悄然成熟。
 
 > 📝 编者注：本词条主线是政治与社会制度演变；百家争鸣（儒、墨、道、法）的思想内容不在展开之列，仅在第五章顺带提及，并交叉引用 confucius、laozi、moism、legalism、mencius、xunzi 等哲学词条，以免与既有条目重复。前 770—前 221 明确属「先秦至秦汉」子类，无争议。
+
+<!-- PKS_EXPANDED_V5 -->
