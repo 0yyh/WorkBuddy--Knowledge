@@ -2,6 +2,7 @@
  * lint —— 内容规范校验（02 §9.5 / 08 报告）。M0 实现 8 条核心规则：
  * L001 slug 唯一 · L002 类目存在 · L003 章节≤20000字 · L004 tldr≤120
  * L005 cross_timeline 双维度 · L006 see_also 目标存在 · L007 section slug 唯一 · L008 published 有摘要
+ * L009 每文件单一 PKS_EXPANDED_V5 标记（约定层，全局双标记审计收口后强制）
  *
  * 复用：核心规则抽成 `lintEntryRules`，被 `lintCmd`（全量）与 `lintEntryDir`（单条目，T03 生成回路）共用，
  * 不重复造轮子。
@@ -28,6 +29,65 @@ function collectPaths(nodes: TaxonomyNode[], acc: Set<string>): void {
  * 单条词条的 8 规则校验（L002/L003/L004/L005/L006/L008）。
  * 供 lintCmd 全量与 lintEntryDir 单条目复用。
  */
+/**
+ * L009 —— 每文件（entry.md 与其 chapters/*.md）必须含有且仅有一个规范的
+ * `<!-- PKS_EXPANDED_V5 -->` 标记（02 §9.5 约定层；全局双标记审计收口后强制）。
+ * 避免出现：缺标记（MISSING）、残留旧版本（V1~V4/V6）、多重标记（MULTI）、
+ * 双重注释包裹（DOUBLE）或裸 token（未包在 <!-- --> 内）。
+ *
+ * `lintMarkerText` 是纯函数（便于单测，不依赖 vfs）；`lintMarkerRule` 走 vfs 读取原始文件，
+ * 被 `lintCmd`（全量）与 `lintEntryDir`（单条目）共用。
+ */
+
+const MARKER_COMMENT_RE = /<!--\s*PKS_EXPANDED_V(\d+)\s*-->/g;
+const MARKER_BARE_RE = /PKS_EXPANDED_V\d+/;
+const MARKER_DOUBLE_RE = /<!--\s*<!--[\s\S]*?PKS_EXPANDED_V\d+[\s\S]*?-->\s*-->/;
+const MARKER_ANY_COMMENT_RE = /<!--[\s\S]*?-->/g;
+
+export function lintMarkerText(text: string, label: string): string[] {
+  const problems: string[] = [];
+  const doubleWrap = MARKER_DOUBLE_RE.test(text);
+  if (doubleWrap) problems.push(`${label} 标记被双重注释包裹（double-wrapped）`);
+  const commented = [...text.matchAll(MARKER_COMMENT_RE)].map((m) => m[1]);
+  const withoutComments = text.replace(MARKER_ANY_COMMENT_RE, '');
+  const hasBare = MARKER_BARE_RE.test(withoutComments);
+  if (hasBare) {
+    problems.push(`${label} 存在裸 PKS_EXPANDED 标记（未包在 <!-- --> 内）`);
+  }
+  if (commented.length === 0 && !doubleWrap && !hasBare) {
+    problems.push(`${label} 缺少 PKS_EXPANDED 标记`);
+  }
+  if (commented.length > 1) {
+    problems.push(`${label} 存在多个标记（${commented.length} 个）`);
+  }
+  const wrong = commented.filter((v) => v !== '5');
+  if (wrong.length > 0) {
+    problems.push(`${label} 标记版本错误：V${wrong.join('/')}（应为 V5）`);
+  }
+  return problems;
+}
+
+export function lintMarkerRule(vfs: Vfs, slug: string): Issue[] {
+  const issues: Issue[] = [];
+  const entryPath = `entries/${slug}/entry.md`;
+  if (vfs.exists(entryPath)) {
+    for (const p of lintMarkerText(vfs.readText(entryPath), `词条 ${slug} entry.md`)) {
+      issues.push({ rule: 'L009', severity: 'error', message: p });
+    }
+  }
+  const chDir = `entries/${slug}/chapters`;
+  if (vfs.exists(chDir)) {
+    for (const name of vfs.listDir(chDir)) {
+      if (!name.endsWith('.md')) continue;
+      const text = vfs.readText(`${chDir}/${name}`);
+      for (const p of lintMarkerText(text, `词条 ${slug} chapters/${name}`)) {
+        issues.push({ rule: 'L009', severity: 'error', message: p });
+      }
+    }
+  }
+  return issues;
+}
+
 export function lintEntryRules(
   entry: Entry,
   secs: SectionMeta[],
@@ -82,6 +142,7 @@ export function lintCmd(contentDir: string): { issues: Issue[]; errorCount: numb
 
   for (const e of snapshot.entries) {
     issues.push(...lintEntryRules(e, snapshot.sections[e.slug] ?? [], validPaths, allSlugs, snapshot.tracks));
+    issues.push(...lintMarkerRule(vfs, e.slug));
   }
 
   // L001 / L007 唯一性（全局）
@@ -133,6 +194,7 @@ export function lintEntryDir(vfs: Vfs, slug: string): { issues: Issue[]; errorCo
   collectPaths(snapshot.taxonomy, validPaths);
   const allSlugs = new Set(snapshot.entries.map((e) => e.slug));
   issues.push(...lintEntryRules(entry, snapshot.sections[slug] ?? [], validPaths, allSlugs, snapshot.tracks));
+  issues.push(...lintMarkerRule(vfs, slug));
 
   const errorCount = issues.filter((i) => i.severity === 'error').length;
   if (errorCount > 0) {

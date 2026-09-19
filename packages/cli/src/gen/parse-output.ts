@@ -15,6 +15,22 @@ const FILE_HASH_RE = /^\s*#\s*file:\s*(\S+)\s*$/;
 const FILE_DASH_RE = /^\s*---\s*(\S+)\s*---\s*$/;
 const CH_RE = /^ch-\d+\.md$/;
 
+/**
+ * 规范化每文件的 PKS_EXPANDED 标记：剥离所有残留形态（double-wrap / 单注释 / 裸 token，含 V1~V6），
+ * 追加单一 `<!-- PKS_EXPANDED_V5 -->`。生成管线产出即合规，使 lint L009 通过（否则每篇生成稿都会被判缺标记）。
+ */
+const MARKER_STRIP_RE = [
+  /<!--\s*<!--\s*PKS_EXPANDED_V\d+\s*-->\s*-->/g,
+  /<!--\s*PKS_EXPANDED_V\d+\s*-->/g,
+  /PKS_EXPANDED_V\d+/g,
+];
+export function normalizeMarker(content: string): string {
+  let s = content;
+  for (const re of MARKER_STRIP_RE) s = s.replace(re, '');
+  s = s.replace(/\s+$/, '');
+  return s + '\n\n<!-- PKS_EXPANDED_V5 -->\n';
+}
+
 export function parseOutput(text: string): Map<string, string> {
   const trimmed = text.trim();
   if (trimmed.startsWith('{')) {
@@ -43,7 +59,7 @@ function fromJson(obj: Record<string, unknown>): Map<string, string> {
     throw new Error('parseOutput: JSON 缺少 entry 对象');
   }
   const entryBody = typeof obj.body === 'string' ? obj.body : '';
-  files.set('entry.md', `---\n${yamlDump(entry)}\n---\n${entryBody}`);
+  files.set('entry.md', normalizeMarker(`---\n${yamlDump(entry)}\n---\n${entryBody}`));
 
   const chapters = Array.isArray(obj.chapters) ? (obj.chapters as unknown[]) : [];
   for (const raw of chapters) {
@@ -53,7 +69,7 @@ function fromJson(obj: Record<string, unknown>): Map<string, string> {
     const key = name.includes('/') ? name : CH_RE.test(name) ? `chapters/${name}` : name;
     const fm = ch.frontmatter && typeof ch.frontmatter === 'object' ? yamlDump(ch.frontmatter) : '';
     const body = typeof ch.body === 'string' ? ch.body : '';
-    files.set(key, `---\n${fm}\n---\n${body}`);
+    files.set(key, normalizeMarker(`---\n${fm}\n---\n${body}`));
   }
   if (files.size === 0) {
     throw new Error('parseOutput: JSON 未产生任何文件');
@@ -71,7 +87,7 @@ function fromMarkers(text: string): Map<string, string> {
       let content = buf.join('\n');
       content = content.replace(/^\n+/, '').replace(/\n+$/, '') + '\n';
       const key = curName.includes('/') ? curName : CH_RE.test(curName) ? `chapters/${curName}` : curName;
-      files.set(key, content);
+      files.set(key, normalizeMarker(content));
     }
     buf = [];
   };
