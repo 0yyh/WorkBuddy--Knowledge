@@ -87,6 +87,9 @@
     - id: logic-critical
       title: 逻辑与批判性思维
       order: 10
+    - id: sociology
+      title: 社会学
+      order: 11
 - id: science
   title: 科学
   order: 3
