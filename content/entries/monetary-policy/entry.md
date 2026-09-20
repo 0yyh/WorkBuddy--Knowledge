@@ -30,7 +30,7 @@ sources:
   - title: 货币政策 - 大英百科全书
     url: https://www.britannica.com/topic/monetary-policy
     license: Fair-Use
-see_also: [money, central-banking, interest-rate, inflation, fiscal-policy, keynesian-economics]
+see_also: [money, central-banking, interest-rate, inflation, fiscal-policy, keynesian-economics, velocity-of-money, monetary-base, credit-creation]
 ---
 
 # 货币政策

@@ -27,7 +27,7 @@ sources:
     url: https://zh.wikipedia.org/wiki/利率
     license: CC-BY-SA-4.0
     fetched_at: 2026-09-09
-see_also: [labour-theory-of-value, industrial-revolution, inflation, exchange-rate, law-of-supply-demand, money]
+see_also: [labour-theory-of-value, industrial-revolution, inflation, exchange-rate, law-of-supply-demand, money, velocity-of-money, monetary-base, credit-creation]
 ---
 
 # 利率

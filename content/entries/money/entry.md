@@ -25,7 +25,7 @@ sources:
   - title: 货币 - Investopedia
     url: https://www.investopedia.com/terms/m/money.asp
     license: Fair-Use
-see_also: [interest-rate, inflation, exchange-rate, surplus-value, law-of-supply-demand, fiscal-policy, keynesian-economics, stock-market, central-banking, monetary-policy]
+see_also: [interest-rate, inflation, exchange-rate, surplus-value, law-of-supply-demand, fiscal-policy, keynesian-economics, stock-market, central-banking, monetary-policy, velocity-of-money, monetary-base, credit-creation]
 ---
 
 # 货币

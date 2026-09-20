@@ -25,7 +25,7 @@ sources:
   - title: 通货膨胀 - 维基百科
     url: https://zh.wikipedia.org/wiki/通货膨胀
     license: CC-BY-SA-4.0
-see_also: [interest-rate, cognitive-bias, exchange-rate, law-of-supply-demand, money]
+see_also: [interest-rate, cognitive-bias, exchange-rate, law-of-supply-demand, money, velocity-of-money, monetary-base, credit-creation]
 ---
 
 # 通货膨胀
