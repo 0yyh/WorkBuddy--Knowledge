@@ -38,7 +38,7 @@ sources:
   - title: 互联网哲学百科全书 - 政治哲学
     url: https://iep.utm.edu/polphil/
     license: Fair-Use
-see_also: [plato, the-republic, aristotle, john-locke, social-contract, liberalism, democracy, utilitarianism, karl-marx, republic, separation-of-powers, rule-of-law, sovereignty, enlightenment, ancient-greek-philosophy]
+see_also: [plato, the-republic, aristotle, john-locke, social-contract, liberalism, rawls, democracy, utilitarianism, karl-marx, republic, separation-of-powers, rule-of-law, sovereignty, enlightenment, ancient-greek-philosophy]
 ---
 
 # 政治哲学
@@ -56,6 +56,6 @@ see_also: [plato, the-republic, aristotle, john-locke, social-contract, liberali
 - 罗尔斯《正义论》（1971）以「无知之幕」重置了正义问题，而诺齐克、社群主义与全球正义的讨论，至今仍在与那道幕布后的设计者辩论。
 - 它与本站《社会契约论》《自由主义》《民主》是「地图与路线」的关系：那些词条是具体理论，本词条是统摄它们的总纲。
 
-> 📝 编者注：本词条刻意不写成「各学派列一张表」的拼盘，而让五章沿「先问问题 → 再追古典 → 再立现代契约 → 再遇资本主义批判 → 最后看当代争论」推进。它涉及本站《社会契约论》《自由主义》《民主》《功利主义》《马克思》等条目，但只取它们作为具体路线来分析，不复述其历史细节；相关深入讨论请交叉阅读这些词条。本站现已收录 `hume`、`augustine` 等人物词条可对读；`rawls`（罗尔斯）等尚未独立建条，相关讨论暂集中在本词条。交叉阅读建议见上述具体理论词条。
+> 📝 编者注：本词条刻意不写成「各学派列一张表」的拼盘，而让五章沿「先问问题 → 再追古典 → 再立现代契约 → 再遇资本主义批判 → 最后看当代争论」推进。它涉及本站《社会契约论》《自由主义》《民主》《功利主义》《马克思》等条目，但只取它们作为具体路线来分析，不复述其历史细节；相关深入讨论请交叉阅读这些词条。本站现已收录 `hume`、`augustine`、`rawls`（罗尔斯）等人物词条可对读，其中 `rawls` 聚焦当代正义论（原初状态、无知之幕、差别原则），与本词条第五章直接呼应，可交叉阅读。交叉阅读建议亦见上述具体理论词条。
 
 <!-- PKS_EXPANDED_V5 -->
