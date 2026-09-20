@@ -36,7 +36,7 @@ sources:
   - title: 世说新语 - 刘义庆
     url: https://zh.wikipedia.org/wiki/世说新语
     license: Fair-Use
-see_also: [three-kingdoms, northern-southern-dynasties, sui-dynasty, han-dynasty, sui-tang]
+see_also: [three-kingdoms, northern-southern-dynasties, sui-dynasty, han-dynasty, sui-tang, western-jin, eastern-jin]
 ---
 
 # 晋朝
@@ -53,6 +53,6 @@ see_also: [three-kingdoms, northern-southern-dynasties, sui-dynasty, han-dynasty
 - **淝水保全**：淝水之战（383）东晋以少胜多击退前秦，保住江南，奠定南北长期对峙之局。
 - **门阀与文化**：九品中正制使士族垄断仕途，玄学清谈与书法文学则在乱世中绽放异彩，影响隋唐。
 
-> 📝 编者注：晋朝常被误解为「昏庸短命」的代名词，但其制度遗产——士族门阀、九品中正、玄学思潮——深刻影响了南北朝乃至隋唐。理解晋，应与本库「三国」「南北朝」「隋唐」「两汉」等词条连贯阅读。
+> 📝 编者注：晋朝常被误解为「昏庸短命」的代名词，但其制度遗产——士族门阀、九品中正、玄学思潮——深刻影响了南北朝乃至隋唐。理解晋，应与本库「三国」「南北朝」「隋唐」「两汉」等词条连贯阅读。西晋、东晋现已各有独立词条 western-jin 与 eastern-jin，本词条作为「两晋」总览与之互补，建议对读。
 
 <!-- PKS_EXPANDED_V5 -->
