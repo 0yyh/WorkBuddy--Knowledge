@@ -38,7 +38,7 @@ sources:
   - title: 互联网哲学百科全书 - 政治哲学
     url: https://iep.utm.edu/polphil/
     license: Fair-Use
-see_also: [plato, the-republic, aristotle, john-locke, social-contract, liberalism, rawls, democracy, utilitarianism, karl-marx, republic, separation-of-powers, rule-of-law, sovereignty, enlightenment, ancient-greek-philosophy]
+see_also: [plato, the-republic, aristotle, john-locke, social-contract, liberalism, rawls, nozick, communitarianism, democracy, utilitarianism, karl-marx, republic, separation-of-powers, rule-of-law, sovereignty, enlightenment, ancient-greek-philosophy]
 ---
 
 # 政治哲学

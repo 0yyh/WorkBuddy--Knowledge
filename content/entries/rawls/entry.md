@@ -30,7 +30,7 @@ sources:
   - title: John Rawls - Stanford Encyclopedia of Philosophy
     url: https://plato.stanford.edu/entries/rawls/
     license: Fair-Use
-see_also: [political-philosophy, liberalism, utilitarianism, ethics, democracy, kant]
+see_also: [political-philosophy, liberalism, utilitarianism, ethics, democracy, kant, nozick, communitarianism]
 ---
 
 # 约翰·罗尔斯
