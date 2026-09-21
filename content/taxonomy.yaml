@@ -200,6 +200,9 @@
         - id: marx-pe
           title: 马克思主义政治经济学
           order: 2
+    - id: international-relations
+      title: 国际关系
+      order: 5
 - id: technology
   title: 技术
   order: 6
