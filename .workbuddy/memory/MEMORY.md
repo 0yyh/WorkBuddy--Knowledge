@@ -13,6 +13,9 @@
 - YAML 坑：列表项勿引号开头；值含 `: `/`#` 须引号；`summary.tldr` ≤120字（否则报错）；`order` 为数组；`see_also` slug 必须真实存在（lint 校验）；`categories` 用 `content/taxonomy.yaml` 标题路径。
 - 译名：密尔(非穆勒)、休谟、贝克莱、斯宾诺莎、阿奎那、罗尔斯；正文「」内层“”，不用英文引号。
 - 哲学内容规格见 `PHILO_SPEC.md`（四段式 entry、章节 frontmatter、质量标准、译名表、YAML 陷阱、lint 命令）。
+- **entry 与每章末行必须有 `<!-- PKS_EXPANDED_V5 -->`**（L009 硬校验；PHILO_SPEC 已补记，漏写即 79 错返工）。
+- **内置词典义项**：直接编辑 `content/dict/dictionary.json`（entries 按词键控，追加到末尾、更新 count/built_at；用 node 脚本 merge 避免手改大文件；copy-content 随 `dict/` 子树自动投递，无需 build）。现有 248 条，经济学义项（含发展/制度/劳动/环境/卫生分支术语）已覆盖。
+- **经济学 taxonomy L2 全景**（2026-09-20/21 两批后）：微观/宏观/金融(货币银行·资本市场)/学说流派/计量/国际/发展/制度/劳动/环境/卫生（order 1–11）。批次产出模式＝统一 AUTHORING_BRIEF + 并行作者 worker（默认模型撞 429 时 `model:"lite"` 可用）＋主理人 lint/build/commit。
 
 ## 内容投递
 - core/cli 产出 `.index/`（builder 键被 47 单测断言，**勿改**）；cap sync(dot:false)+AGP 双重丢带点目录 → `scripts/copy-content.mjs` 改名 `.index`→`index`（仅投递边界）。
