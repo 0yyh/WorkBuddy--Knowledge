@@ -16,6 +16,7 @@
 - **entry 与每章末行必须有 `<!-- PKS_EXPANDED_V5 -->`**（L009 硬校验；PHILO_SPEC 已补记，漏写即 79 错返工）。
 - **内置词典义项**：直接编辑 `content/dict/dictionary.json`（entries 按词键控，追加到末尾、更新 count/built_at；用 node 脚本 merge 避免手改大文件；copy-content 随 `dict/` 子树自动投递，无需 build）。现有 248 条，经济学义项（含发展/制度/劳动/环境/卫生分支术语）已覆盖。
 - **经济学 taxonomy L2 全景**（2026-09-20/21 两批后）：微观/宏观/金融(货币银行·资本市场)/学说流派/计量/国际/发展/制度/劳动/环境/卫生（order 1–11）。批次产出模式＝统一 AUTHORING_BRIEF + 并行作者 worker（默认模型撞 429 时 `model:"lite"` 可用）＋主理人 lint/build/commit。
+- **政治类第二轮（2026-09-21，提交 969143b）**：+20 词条（政体类型 4 / 选举政党 4 / 国际关系 4 / 规范概念 4 / 基础概念 4），taxonomy 政治理论下新增 L2「国际关系」（order 5）；全站 297 词条 / 1465 章 / 约 211 万字。**Agent 子代理本环境不可靠**（"Agent not found"、探测任务假成功但未执行）→ 大批次内容需主理人直写，或先小任务探测验证；派发前必须跑全量 slug 查重防覆写。可复用校验脚本已入库：`scripts_lint.mjs`（lint）、`scripts_build.mjs`（build:index，copy:content 是 `node scripts/copy-content.mjs` 非 CLI 子命令）、`scripts_full_audit.mjs`（20 项条目完整性/标记/see_also 检查）+ `AUTHORING_BRIEF.md`。
 - **批次规划铁律**：派发作者前必须对**全量 slug** 查重（不能只按目标分类前缀普查——industrial-revolution 旧分类属历史/世界史曾被漏查，遭覆写丢事件元数据）；brief 的 see_also 白名单要包含**所有历史批次**的 slug；brief 必须写明 L009 末行标记与 sources title 加引号。
 
 ## 内容投递

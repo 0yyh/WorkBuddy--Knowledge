@@ -14,6 +14,6 @@ function run(label, args) {
 const ok1 = run('build:index', [tsx, 'packages/cli/src/index.ts', 'build:index']);
 if (!ok1) { console.log('BUILD_INDEX_FAILED'); process.exit(1); }
 
-const ok2 = run('copy:content', [tsx, 'packages/cli/src/index.ts', 'copy:content']);
+const ok2 = run('copy-content', ['scripts/copy-content.mjs']);
 console.log(ok2 ? 'ALL_DONE' : 'COPY_FAILED');
 process.exit(ok2 ? 0 : 1);
