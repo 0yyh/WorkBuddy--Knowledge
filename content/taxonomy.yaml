@@ -156,6 +156,12 @@
     - id: econ-thought
       title: 经济学说与流派
       order: 4
+    - id: econometrics
+      title: 计量经济学
+      order: 5
+    - id: international-economics
+      title: 国际经济学
+      order: 6
 - id: politics
   title: 政治理论
   order: 5
