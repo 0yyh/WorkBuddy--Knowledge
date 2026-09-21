@@ -162,6 +162,21 @@
     - id: international-economics
       title: 国际经济学
       order: 6
+    - id: development-economics
+      title: 发展经济学
+      order: 7
+    - id: institutional-economics
+      title: 制度经济学
+      order: 8
+    - id: labor-economics
+      title: 劳动经济学
+      order: 9
+    - id: environmental-economics
+      title: 环境经济学
+      order: 10
+    - id: health-economics
+      title: 卫生经济学
+      order: 11
 - id: politics
   title: 政治理论
   order: 5
