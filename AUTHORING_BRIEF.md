@@ -1,4 +1,4 @@
-# PKS 内容作者统一规范（本轮：卫生/发展经济学 + 科学薄弱项 + 历史方法·古代文明 + 马政经）
+# PKS 内容作者统一规范（本轮：计量经济学 + 天文地球 + 中世纪 + 国际关系）
 
 你是 PKS 知识站词条作者。本文件是你**唯一规范依据**。先完整读完，再开始写。
 
@@ -13,7 +13,7 @@
 - 章节正文内可自由使用多个 `##` 小节标题。
 - 章节 frontmatter 的 `order` **必须是数组** `order: [1]`（标量会触发 C6 报错）。
 - 引号规范：外层「」，内层 ""，不用英文直引号。
-- 译名：马克思、恩格斯、庇古、科斯、诺斯、皮亚杰、尤努斯、森等用标准译名。
+- 译名：李嘉图、弗里德曼、安斯康姆、韦格纳、哈丁、修昔底德、沃尔兹、温特等用标准译名。
 - 引文格式：`> 📜 「……」 —— 作者《著作名》`，每章 0–2 处，**不能确证出处宁可不引（可改为 📝 编者注）**。
 
 ## 3. entry.md 四段式（封面页）
@@ -31,51 +31,31 @@ frontmatter：schema(=1), slug(`<slug>/ch-NN`), work(`<slug>`), key(ch-NN), titl
 - `summary.tldr` ≤120 字；`keyPoints` 每条 ≤80 字；`order`/`structure` 用数组。
 - `see_also` 只能引用「已存在 slug ∪ 本组同批 slug」。
 
-## 6. 本轮 28 条明细（slug 固定，不得改动）
+## 6. 本轮 16 条明细（slug 固定，不得改动）
 
-### 组 W1 · 卫生经济学（分类：经济学/卫生经济学，×3）
-1. `health-insurance`（医疗保险）—— 风险池与大数定律；道德风险与逆选择；单一支付 vs 多元竞争；奥巴马医改与中国医保。see_also 可用：[health-economics, healthcare-moral-hazard, cost-effectiveness-analysis, market-failure]
-2. `qaly`（质量调整生命年）—— 效用测量（EQ-5D、时间权衡法）；成本效用比与阈值；年龄/残疾权重的伦理争议。see_also：[cost-effectiveness-analysis, health-economics, healthcare-moral-hazard]
-3. `health-inequality`（健康不平等）—— 社会梯度（Marmot 白厅研究）；健康的社会决定因素；度量与政策。see_also：[health-economics, human-capital, development-economics]
+### 组 M1 · 计量经济学（分类：经济学/计量经济学，×4）
+1. `causal-inference`（因果推断）—— 潜在结果框架（Rubin）；相关≠因果；混杂、选择偏误；随机试验与准实验的统一视角。see_also：[econometrics, instrumental-variables, ordinary-least-squares, time-series-analysis]
+2. `difference-in-differences`（双重差分法）—— 前后×处理组对照组；平行趋势假设；Ashenfelter 卡 card 最低工资研究；事件研究与交错 DID 的新批评。see_also：[causal-inference, econometrics, instrumental-variables, ordinary-least-squares]
+3. `panel-data`（面板数据）—— 个体/时间双维；固定效应与随机效应；组内估计；面板的优势与局限。see_also：[econometrics, ordinary-least-squares, time-series-analysis, instrumental-variables]
+4. `maximum-likelihood`（最大似然估计）—— 似然函数与估计量性质（一致性/渐近正态/有效）；Probit/Logit；与 OLS 的关系。see_also：[econometrics, ordinary-least-squares, probability, time-series-analysis]
 
-### 组 W2 · 发展经济学（分类：经济学/发展经济学，×4）
-1. `structural-change`（结构转型）—— 刘易斯二元经济与无限劳动供给；库兹涅茨结构变迁；农业→工业→服务业；过早去工业化。see_also：[development-economics, development-theory, economic-growth, labor-productivity]
-2. `microfinance`（小额信贷）—— 尤努斯与格莱珉银行；团体贷款与同伴监督；RCT 证据的修正；商业化争议。see_also：[development-economics, poverty-trap, credit-creation, development-theory]
-3. `human-development-index`（人类发展指数）—— Sen 能力方法；HDI 三维构造；与 GDP 的分歧；批评与 HDI 家族。see_also：[development-economics, economic-growth, national-accounts, green-gdp]
-4. `foreign-aid`（对外援助）—— 援助类型与渠道；Sachs 大推力 vs Easterly 批评；援助依赖与治理；成效证据。see_also：[development-economics, poverty-trap, development-theory, capital-mobility]
+### 组 M2 · 天文与地球科学（分类：科学/自然科学基础/天文与地球科学，×4）
+1. `stellar-evolution`（恒星演化）—— 主序、红巨星、超新星；赫罗图；核聚变与元素合成；白矮星/中子星/黑洞。see_also：[astronomy, big-bang, galaxy, solar-system]
+2. `plate-tectonics`（板块构造）—— 韦格纳大陆漂移；海底扩张与磁条带；三大边界类型；地震火山带与构造地貌。see_also：[astronomy, solar-system, big-bang, geologic-time]
+3. `geologic-time`（地质年代）—— 均变论 vs 灾变论；放射性测年；地质年代表（宙代纪世）；寒武纪大爆发与五次大灭绝。see_also：[plate-tectonics, astronomy, solar-system, evolution-theory]
+4. `exoplanet`（系外行星）—— 视向速度法与凌星法；开普勒与 TESS；宜居带；热木星与超级地球。see_also：[astronomy, solar-system, stellar-evolution, galaxy]
 
-### 组 W3 · 系统与复杂性（分类：科学/数学与系统科学/系统与复杂性，×3）
-1. `self-organization`（自组织）—— 耗散结构（普里高津）；贝纳德对流、BZ 反应、图灵斑图；远离平衡态；序参量。see_also：[complexity, emergence, chaos-theory]
-2. `network-science`（网络科学）—— 随机图（ER）vs 小世界（Watts-Strogatz）vs 无标度（Barabási-Albert）；枢纽节点与鲁棒-脆弱性；应用。see_also：[complexity, emergence, chaos-theory, game-theory]
-3. `feedback-loop`（反馈回路）—— 负反馈与稳态、正反馈与增长/崩溃；时滞与振荡；系统动力学（福瑞斯特、梅多斯）。see_also：[chaos-theory, complexity, emergence]
+### 组 M3 · 中世纪（分类：历史/世界史/中世纪，×4）
+1. `feudalism`（封建制度）—— 采邑/附庸/领主契约；封建金字塔与王权；中日学者「封建」译名的错位；布洛赫《封建社会》与布代尔批评。see_also：[byzantine-empire, crusades, black-death, arab-empire]
+2. `holy-roman-empire`（神圣罗马帝国）—— 奥托复兴；帝国与教皇的授职权之争；选帝侯与松散联邦；伏尔泰评语再审视。see_also：[byzantine-empire, crusades, feudalism, black-death]
+3. `hundred-years-war`（百年战争）—— 王位继承与封建义务；长弓与骑士衰落；民族认同萌芽；圣女贞德与战争余波。see_also：[feudalism, holy-roman-empire, crusades, black-death]
+4. `mongol-empire`（蒙古帝国）—— 成吉思汗统一与扩张；驿站与治理；四大汗国；对欧亚贸易与疾病传播的影响。see_also：[arab-empire, byzantine-empire, silk-road, crusades]
 
-### 组 W4 · 数学基础（分类：科学/数学与系统科学/数学基础，×3）
-1. `set-theory`（集合论）—— 康托尔对角线与无穷等级；ZFC 公理化；选择公理与连续统假设的独立性。see_also：[godels-incompleteness-theorems, russell-paradox, euclidean-geometry, probability]
-2. `infinity`（无穷）—— 潜无穷 vs 实无穷；希尔伯特旅馆；极限与收敛；不同大小的无穷。see_also：[set-theory, euclidean-geometry, godels-incompleteness-theorems]
-3. `computability`（可计算性）—— 图灵机与邱奇-图灵论题；停机问题；可判定性与不可判定性；与不完备定理的联系。see_also：[godels-incompleteness-theorems, computer, set-theory]
-
-### 组 W5 · 心理学分支（分类：科学/人类认知与心理/心理学分支，×4）
-1. `developmental-psychology`（发展心理学）—— 皮亚杰阶段理论；维果茨基最近发展区；依恋理论；毕生发展。see_also：[psychology, emotion, memory, attention]
-2. `social-psychology`（社会心理学）—— 从众（阿希）、服从（米尔格拉姆）、斯坦福实验及其批评；群际关系；可重复性危机。see_also：[psychology, cognitive-bias, emotion, heuristics]
-3. `clinical-psychology`（临床心理学与心理治疗）—— 诊断与 DSM；CBT、精神分析、人本主义疗法；循证治疗；心身问题。see_also：[psychology, emotion, mental-model]
-4. `behavioral-genetics`（行为遗传学）—— 双生子设计与遗传度；GWAS 与多基因评分；基因-环境交互；争议与伦理。see_also：[psychology, genetics, evolution-theory, memory]
-
-### 组 W6 · 历史方法与概念（分类：历史/历史方法与概念，×4）
-1. `periodization`（历史分期）—— 古代/中世纪/近代三分法的来历；分期的人为性与跨文化难题；全球史对分期的挑战。see_also：[historiography, historical-source, historical-causation]
-2. `historical-causation`（历史因果）—— 一因多果与多因一果；近因/远因；结构 vs 事件（布罗代尔长时段）；偶然性的作用。see_also：[historiography, historical-source, periodization]
-3. `counterfactual-history`（反事实历史）—— 「假如没有……」的史学价值；Ferguson《虚拟的历史》；决定论批评；计量史学中的反事实（铁路与经济增长）。see_also：[historiography, historical-causation, historical-source]
-4. `archive`（档案与史料库）—— 档案的定义与权力（「档案暴力」）；档案馆的拣选与沉默；数字档案与开放获取。see_also：[historical-source, historiography, periodization]
-
-### 组 W7 · 古代文明（分类：历史/世界史/古代文明，×4）
-1. `ancient-india`（古印度文明）—— 印度河流域（哈拉帕）；吠陀时代与种姓秩序；孔雀王朝与阿育王；数学与天文学遗产。see_also：[mesopotamia, ancient-egypt, ancient-greece, buddhism]
-2. `mesoamerica`（中美洲文明）—— 奥尔梅克；玛雅历法与文字；特奥蒂瓦坎；阿兹特克与西班牙征服前的美洲。see_also：[ancient-egypt, mesopotamia, ancient-greece, roman-empire]
-3. `persian-empire`（波斯帝国）—— 居鲁士与大流士；行省制度与御道；希波战争；对希腊与西亚文明的影响。see_also：[mesopotamia, ancient-greece, roman-empire, arab-empire]
-4. `bronze-age-collapse`（青铜时代晚期崩溃）—— 前1200年前后东地中海体系崩溃；海上民族；赫梯消亡与埃及衰落；复杂系统脆弱性的古代案例。see_also：[mesopotamia, ancient-egypt, persian-empire]
-
-### 组 W8 · 马克思主义政治经济学（分类：政治理论/马克思主义/马克思主义政治经济学，×3）
-1. `mode-of-production`（生产方式）—— 生产力与生产关系；亚细亚/古代/封建/资本主义诸形态；唯物史观的分析单元。see_also：[capitalism, karl-marx, das-kapital, german-ideology]
-2. `commodity-fetishism`（商品拜物教）—— 《资本论》第一章第四节；使用价值/交换价值/价值形式；拜物教的批判锋芒；卢卡奇物化。see_also：[das-kapital, karl-marx, surplus-value, capitalism]
-3. `primitive-accumulation`（原始积累）—— 圈地运动；殖民与掠夺；《资本论》第八篇；当代新生积累（哈维）。see_also：[capitalism, karl-marx, das-kapital, german-ideology]
+### 组 M4 · 国际关系（分类：政治理论/国际关系，×4）
+1. `deterrence`（威慑）—— 威慑的逻辑（能力×意志×信号）；核威慑与相互确保摧毁；扩展威慑；威慑失败案例。see_also：[realism-ir, balance-of-power, hegemony, international-relations]
+2. `security-dilemma`（安全困境）—— 赫茨与 Jervis；防御/进攻性武器模糊性；螺旋模型；缓解机制（透明、军控）。see_also：[realism-ir, balance-of-power, deterrence, international-relations]
+3. `liberalism-ir`（自由制度主义）—— 康德永久和平与民主和平论；复合相互依存（Keohane-Nye）；制度降低交易成本；对现实主义的回应。see_also：[international-relations, realism-ir, hegemony, democracy]
+4. `constructivism-ir`（建构主义）—— 温特「无政府是国家造就的」；观念/身份/规范；规范扩散与变迁；与理性主义的辩论。see_also：[international-relations, realism-ir, liberalism-ir, hegemony]
 
 ## 7. 备注
 - 引文、人名、年代、著作名务必准确；不能确证的宁可泛化或编者注，不要伪造。
