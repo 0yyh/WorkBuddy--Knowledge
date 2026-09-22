@@ -1,59 +1,147 @@
-# AUTHORING_BRIEF · 技术类精细化补充批次
+# PKS 内容作者统一规范（本轮：经济学应用分支 + 科学 + 历史 补强）
 
-仓库根：`D:\WorkBuddy--Knowledge`。内容源唯一目录：`content/entries/<slug>/`。
-`.index/`、`content/index/`、`apps/web/public/content/` 是构建产物，**不要手改、不要提交**。
+你是 PKS 知识站词条作者。本文件是你**唯一规范依据**。先完整读完，再开始写。
 
-本批目标：弥补技术类子类缺口——技术史仅 3 条、能源与动力 3 条、交通与制造 2 条。共 16 条新词条，每条 5 章、每章 1200–2400 中文字。
+## 1. 文件结构
+每个词条目录 `content/entries/<slug>/`：
+- `entry.md` —— 封面页（四段式，见 §3）
+- `chapters/ch-01.md … ch-05.md` —— 5 章正文
 
-本文件是作者唯一依据（格式硬规则与哲学批次相同，此处仅列技术批分配）。
+## 2. 硬性格式（lint 会拦截，务必遵守）
+- **每个文件（entry.md 与每个 ch-NN.md）的最后一行必须是 `<!-- PKS_EXPANDED_V5 -->`**（其前一行是空行）。Write 工具偶尔吞末行标记——写完后用 Read 工具回读每个文件末 3 行逐一确认。
+- `entry.md` 除「导读」外不得有第二个 `##` 标题（封面只有「导读」这一个 `##`）。
+- 章节正文内可自由使用多个 `##` 小节标题。
+- 章节 frontmatter 的 `order` **必须是数组** `order: [1]`（不能是标量 `order: 1`，否则 C6 规则报错）。
+- 引号规范：外层「」，内层 ""，不用英文直引号。
+- 译名：马克思、罗尔斯、伯林、密尔、凯恩斯、科斯、诺斯、达尔文、牛顿、爱因斯坦等用标准译名；正文「」内可再用 "" 引次级。
+- 引文格式：`> 📜 「……」 —— 作者《著作名》`，每章 0–2 处，不能确证出处宁可不引。
 
-## 本批 16 条分配
+## 3. entry.md 四段式（封面页）
+```
+---
+schema: 1
+slug: <slug>
+title: <中文标题>
+original_title: <English Title 或留空>
+aliases: [别名1, 别名2]
+type: concept | person | event | work | term
+categories:
+  - <真实存在的分类路径，见 taxonomy.yaml>
+tags: [标签1, 标签2]
+summary: >-
+  <定位段：80–300 字，概述该词条是什么、为何重要、核心张力>
+status: published
+confidence: high
+license: CC-BY-SA-4.0
+ai_generated: true
+ai_annotated: true
+created_at: 2026-09-22
+updated_at: 2026-09-22
+rev: 1
+structure:
+  levels: [章]
+  total_sections: 5
+  total_words: 8000
+sources:
+  - title: "英文书名/文献名（含 : 或 # 必须双引号包裹）"
+    url: https://...
+    license: Fair-Use
+see_also: [已存在的 slug1, 已存在的 slug2]
+---
 
-### 组 T1 — 技术史（cat: 技术/技术史）
-- **digital-revolution 数字革命**：第三次工业革命界定(晶体管/计算机/互联网) → 数字化vs信息化 → 关键节点(PC/万维网/移动) → 对经济与社会的重塑 → 争议(数字鸿沟/隐私)
-  see_also: [industrial-revolution, second-industrial-revolution, computer, internet]
-- **green-revolution 绿色革命**：背景(战后粮食危机) → 良种/化肥/灌溉技术包 → 成效与分布(亚墨 vs 非洲) → 批评(生态/社会分化) → 当代启示(可持续农业)
-  see_also: [industrial-revolution, globalization, development-theory]
-- **spaceflight 航天**：从 V-2 到卫星 → 太空竞赛(冷战后加加林/阿波罗) → 航天技术体系(火箭/卫星/测控) → 应用时代(通信/导航/遥感) → 商业航天与新竞赛
-  see_also: [cold-war, second-world-war, computer, semiconductor]
+# <中文标题>
 
-### 组 T2 — 能源与动力（cat: 技术/能源与动力）
-- **internal-combustion-engine 内燃机**：原理(四冲程/压燃点燃) → 发明谱系(奥托/狄塞尔) → 与汽车飞机的耦合 → 能源-交通革命效应 → 排放与电动化挑战
-  see_also: [automobile, steam-engine, oil-industry, aviation]
-- **oil-industry 石油工业**：勘探开采炼化产业链 → 现代石油业诞生(洛克菲勒/标准石油) → 石油与地缘政治(石油危机/OPEC) → 石油美元与全球化 → 能源转型下的前景
-  see_also: [internal-combustion-engine, automobile, globalization, renewable-energy]
-- **renewable-energy 可再生能源**：类型谱系(风/光/水/生物质) → 技术演进与成本曲线 → 政策驱动(补贴/碳价) → 电网整合挑战(间歇性/储能) → 能源转型展望
-  see_also: [electricity-grid, battery, carbon-pricing, oil-industry]
-- **battery 电池与储能**：电化学原理 → 铅酸→镍氢→锂离子演进 → 电池产业(消费/动力/储能) → 技术前沿(固态/钠离子) → 电气化社会的关键拼图
-  see_also: [electricity-grid, renewable-energy, automobile, semiconductor]
+<定位段：150–250 字，与 summary 衔接但不重复，说明本词条在知识地图中的位置>
 
-### 组 T3 — 信息技术（cat: 技术/信息技术）
-- **world-wide-web 万维网**：从互联网到 Web(TimBL/CERN) → 三基石(URL/HTTP/HTML) → 浏览器战争与标准化 → Web1.0→2.0→移动 → 开放与平台化之辩
-  see_also: [internet, http, computer, smartphone]
-- **machine-learning 机器学习**：从规则到学习(统计学习) → 三大范式(监督/无监督/强化) → 深度学习革命(神经网络/GPU/大数据) → 应用与产业效应 → 局限与伦理(可解释/偏见)
-  see_also: [artificial-intelligence, semiconductor, computer, smartphone]
-- **smartphone 智能手机**：从功能机到智能机(iPhone 2007) → 触屏/芯片/传感器技术包 → 移动互联网生态(App/应用商店) → 社会重塑(即时连接/平台经济) → 屏幕时代的反思
-  see_also: [world-wide-web, semiconductor, computer, internet]
-- **cloud-computing 云计算**：虚拟化与数据中心 → IaaS/PaaS/SaaS 模式 → 规模经济与弹性 → 云原生与产业迁移 → 安全/主权/锁定之争
-  see_also: [internet, computer, relational-database, machine-learning]
+本词条按「<章一主题> → <章二主题> → …… → <章五主题>」五章展开。
 
-### 组 T4 — 交通与制造（cat: 技术/交通与制造）
-- **aviation 航空**：从滑翔到动力飞行(莱特兄弟) → 两战推动与喷气革命 → 民航全球化(宽体/枢纽) → 技术体系(空气动力/发动机/航电) → 可持续航空的挑战
-  see_also: [internal-combustion-engine, second-world-war, railway, globalization]
-- **assembly-line 流水线**：从手工到分工( interchangeable parts) → 福特流水线(1913) → 大规模生产范式 → 精益生产(丰田) → 自动化与柔性制造
-  see_also: [automobile, industrial-revolution, second-industrial-revolution, artificial-intelligence]
-- **containerization 集装箱运输**：标准化箱体发明(麦克莱恩1956) → 多式联运与港口机械 → 成本塌缩与全球供应链 → 集装箱全球化的社会效应 → 韧性争议(疫情/堵塞)
-  see_also: [globalization, railway, automobile, international-trade]
-- **steamship 蒸汽船与远洋航运**：从帆到蒸汽(明轮→螺旋桨) → 苏伊士/巴拿马与航线革命 → 客运移民潮与货运时代 → 造船工业与安全规范 → 当代航运与减排
-  see_also: [steam-engine, railway, industrial-revolution, globalization]
+## 导读
+- <核心要点 bullet，3–6 条>
+- <……>
 
-## see_also 白名单补充（本批新增，可互引）
-digital-revolution, green-revolution, spaceflight, internal-combustion-engine, oil-industry, renewable-energy, battery, world-wide-web, machine-learning, smartphone, cloud-computing, aviation, assembly-line, containerization, steamship
+> 📝 编者注：<每章≤1 处编者注；可选，放在章末或封面>
 
-注意：`big-data`、`development-theory`、`international-trade`、`carbon-pricing`、`scientific-revolution` 等为站内既有 slug，可引用；白名单之外的 slug 禁止引用（lint 校验）。如引用前不确定，先查 `content/entries/` 目录是否存在同名目录。
+<!-- PKS_EXPANDED_V5 -->
+```
 
-## 硬规则（同哲学批次）
-- entry.md 四段结构 + `## 导读`；最后一行 `<!-- PKS_EXPANDED_V5 -->`（前空一行）。
-- 每 ch-NN.md 末行同标记；`sources[].title` 一律双引号；`summary.tldr` ≤120 字；`keyPoints` 每条 ≤80 字。
-- 引号「」外层、""内层；引文 `> 📜 「……」 —— 作者《著作名》`，不能确证宁可不引。
-- 每章 1200–2400 中文字；论证有结构；区分「自陈」与「批评」。
+## 4. chapters/ch-NN.md 模板
+```
+---
+schema: 1
+slug: <slug>/ch-<NN>
+work: <slug>
+key: ch-<NN>
+title: <第N章 标题>
+order: [<N>]
+path: [<第N章 标题>]
+depth: 1
+status: published
+license: CC-BY-SA-4.0
+ai_generated: true
+ai_annotated: true
+sources:
+  - title: "英文书名（含 : 必须双引号）"
+    url: https://...
+summary:
+  tldr: <≤120 字的本章摘要>
+  keyPoints:
+    - <≤80 字要点>
+    - <……>
+---
+
+# <第N章 标题>
+
+<正文：1200–2400 中文字，论证有结构（前提→推理→结论→反驳），区分「自陈」与「批评」，给具体文本（著作名+年代）>
+
+<!-- PKS_EXPANDED_V5 -->
+```
+
+## 5. YAML 陷阱（必读，违反即 lint 报错）
+- `sources` 每条 `title` **一律用双引号包裹**（英文书名含 `: ` 或 `#` 会炸 YAML）。
+- `summary.tldr` **≤120 字**（YAML 折叠 `>-` 也计入，中文按字符数）。
+- `keyPoints` 每条 **≤80 字**。
+- `order`/`structure` 用数组写法。
+- `see_also` **只能引用本文件第 6 节白名单里的真实 slug**（不得自创、不得引用不存在的 slug）。
+
+## 6. 本轮 24 条明细（slug 固定，不得改动；分类与建议 see_also 见各组）
+
+### 组 E1 · 环境经济学（分类：经济学/环境经济学）
+1. `tragedy-of-commons`（公地悲剧，concept）—— 哈丁 1968《公地的悲剧》；非排他性与过度使用；与产权、国家管制的关系；反例与批评。see_also: [environmental-economics, externalities, carbon-pricing, property-rights]
+2. `pigouvian-tax`（庇古税/环境税，concept）—— 庇古《福利经济学》外部性内部化；与配额/可交易许可证对比；双重红利假说；实践（碳税）。see_also: [environmental-economics, externalities, carbon-pricing, welfare-economics]
+3. `green-gdp`（绿色GDP，concept）—— 对传统 GDP 的资源环境扣减；核算方法（SEEA）；中国的绿色GDP试点；局限与争议。see_also: [environmental-economics, national-accounts, economic-growth, carbon-pricing]
+4. `ecological-economics`（生态经济学，concept）—— 戴利、科斯坦扎；稳态经济；自然资本；与主流环境经济学的分歧。see_also: [environmental-economics, economic-growth, sustainability]
+
+### 组 E2 · 国际经济学（分类：经济学/国际经济学）
+1. `comparative-advantage`（比较优势，concept）—— 李嘉图《政治经济学及赋税原理》1817；相对成本；赫克歇尔-俄林要素禀赋；对发展政策的含义与批评。see_also: [international-trade, protectionism, balance-of-payments, exchange-rate]
+2. `capital-mobility`（资本流动，concept）—— 跨境资本流动的类型与驱动；资本账户开放；热钱与资本管制；蒙代尔-弗莱明模型。see_also: [international-trade, balance-of-payments, exchange-rate, monetary-policy]
+3. `wto`（世界贸易组织，concept/term）—— 1995 取代 GATT；最惠国/国民待遇原则；争端解决机制；多哈回合停滞与批评。see_also: [international-trade, protectionism, balance-of-payments, globalization]
+4. `current-account`（经常账户，concept）—— 经常账户构成（货物、服务、初次/二次收入）；与资本账户、外汇储备的关系；顺差逆差的含义。see_also: [balance-of-payments, exchange-rate, international-trade, monetary-policy]
+
+### 组 E3 · 劳动经济学（分类：经济学/劳动经济学）
+1. `wage`（工资，concept）—— 边际生产力工资理论；效率工资；最低工资；工资与生产率。see_also: [labor-economics, labor-market, human-capital, unemployment]
+2. `labor-unions`（工会与集体谈判，concept）—— 工会的经济效应（工资溢价 vs 就业）；集体谈判；罢工；劳动力市场制度。see_also: [labor-economics, labor-market, unemployment, institutional-economics]
+3. `labor-supply`（劳动供给，concept）—— 收入效应与替代效应；劳动力参与率；家庭生产；弹性。see_also: [labor-economics, labor-market, human-capital, wage]
+4. `labor-productivity`（劳动生产率，concept）—— 定义与测度；与工资、增长的关系；技术进步的驱动；国别差异。see_also: [labor-economics, economic-growth, technological-progress]
+
+### 组 E4 · 制度经济学（分类：经济学/制度经济学）
+1. `coase-theorem`（科斯定理，concept）—— 科斯《社会成本问题》1960；零交易成本下谈判达帕累托最优；交易成本与产权界定；对庇古税的冲击。see_also: [institutional-economics, transaction-cost, property-rights, externalities]
+2. `new-institutional-economics`（新制度经济学，concept）—— 诺斯、威廉姆森；制度作为约束；交易成本经济学；路径依赖。see_also: [institutional-economics, transaction-cost, property-rights, economic-history]
+3. `institutional-change`（制度变迁，concept）—— 诺斯制度变迁理论；正式/非正式制度；诱致性 vs 强制性变迁；路径依赖。see_also: [institutional-economics, new-institutional-economics, property-rights, economic-history]
+4. `informal-institutions`（非正式制度，concept）—— 习俗、规范、信任；与正式制度互补或冲突；发展中国家治理；社会资本。see_also: [institutional-economics, property-rights, social-capital, development-economics]
+
+### 组 S1 · 科学（化学+天文）
+1. `chemical-bond`（化学键，concept）—— 离子键、共价键、金属键；路易斯结构；键能与分子形状。see_also: [periodic-table, chemistry, atoms, molecular-structure]
+2. `chemical-reaction`（化学反应，concept）—— 反应物/产物；速率与平衡（勒夏特列）；催化；能量变化（放热/吸热）。see_also: [periodic-table, chemical-bond, thermodynamics, catalysis]
+3. `solar-system`（太阳系，concept）—— 行星分类（类地/巨行星）；轨道与开普勒定律；形成（星云假说）；太阳。see_also: [astronomy, big-bang, earth-science, planetary-science]
+4. `galaxy`（星系，concept）—— 旋涡/椭圆/不规则星系；银河系结构；哈勃分类；星系形成与演化。see_also: [astronomy, big-bang, solar-system, cosmology]
+
+### 组 S2 · 科学/历史 交叉薄弱项
+1. `emergence`（涌现，concept）—— 整体大于部分之和；还原论局限；实例（蚁群、意识、生命）；复杂系统。分类：科学/数学与系统科学/系统与复杂性。see_also: [complexity, chaos-theory, systems-theory, network-science]
+2. `attention`（注意（认知），concept）—— 选择性注意；注意资源有限性；自上而下/自下而上；认知负荷。分类：科学/人类认知与心理/认知过程。see_also: [cognitive-bias, heuristics, memory, mental-model]
+3. `historical-source`（史料与史料批判，concept）—— 一手/二手史料；考据与内/外证；史料批判方法（伯伦汉、朗格诺瓦）；数字史学。分类：历史/历史方法与概念。see_also: [historiography, periodization, historical-causation, archive]
+4. `ancient-greece`（古希腊文明，concept/event）—— 城邦、民主（雅典）、哲学（苏格拉底-柏拉图-亚里士多德）、科学渊源；对西方的影响。分类：历史/世界史/古代文明。see_also: [ancient-egypt, mesopotamia, roman-empire, classical-antiquity]
+
+## 7. 备注
+- 引文、人名、年代、著作名务必准确；不能确证的宁可泛化表述，不要编造具体引文。
+- 章与章之间要有逻辑递进，避免重复；每章给出可验证的史实/文献锚点。
+- 写完自查：① sources.title 双引号；② tldr ≤120 字；③ 末行标记；④ see_also 只在白名单内。
