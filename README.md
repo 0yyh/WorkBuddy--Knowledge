@@ -3,6 +3,18 @@
 > 纯本地、离线优先、内容永不锁定的个人知识阅读器。
 > Web + Android（Capacitor）一套代码；正文 = 只读 md 文件（VFS），索引 = 构建期派生产物，用户数据 = 极小 KV。
 
+## 环境准备 / Setup
+
+先决条件：Node ≥ 20.11、JDK 19（`D:\JDK\jdk-19.0.1`）、Android SDK（`D:\Android SDK`）。
+克隆后**不要跑 `npm/pnpm install`**（会破坏 `@pks/core` 手工 junction，见下文红线），直接：
+
+```bash
+node scripts/setup-env.mjs   # 自检环境并兜底重建 @pks/core junction
+```
+
+> ⚠️ 关键约定：`apps/web/node_modules/@pks/core` 与 `packages/cli/node_modules/@pks/core` 是指向 `packages/core` 的**手工文件系统 junction**，非 npm 安装产物。误跑依赖安装命令会断链；若丢失，跑 `node scripts/setup-env.mjs` 或 `npm run check:links` 即可重建，无需重装。
+> 完整贡献者 / 运维指南见 [`docs/contributing.md`](docs/contributing.md)（含内容铁律、直调命令、一键 APK 与故障速查）。
+
 ## 目录结构
 
 | 路径 | 说明 |
