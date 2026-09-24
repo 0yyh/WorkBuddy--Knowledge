@@ -219,3 +219,79 @@
     - id: transport-manufacturing
       title: 交通与制造
       order: 4
+- id: literature
+  title: 文学
+  order: 7
+  children:
+    - id: lit-china
+      title: 中国文学
+      order: 1
+      children:
+        - id: lit-china-classical
+          title: 古代文学
+          order: 1
+        - id: lit-china-modern
+          title: 近现代文学
+          order: 2
+    - id: lit-world
+      title: 世界文学
+      order: 2
+      children:
+        - id: lit-europe
+          title: 欧美文学
+          order: 1
+        - id: lit-asia-africa
+          title: 亚非文学
+          order: 2
+    - id: lit-theory
+      title: 文学理论
+      order: 3
+      children:
+        - id: lit-narratology
+          title: 叙事学
+          order: 1
+        - id: lit-poetics
+          title: 诗学
+          order: 2
+    - id: lit-genre
+      title: 文体与体裁
+      order: 4
+      children:
+        - id: lit-novel
+          title: 小说
+          order: 1
+        - id: lit-poetry
+          title: 诗歌
+          order: 2
+        - id: lit-drama
+          title: 戏剧
+          order: 3
+- id: art
+  title: 艺术
+  order: 8
+  children:
+    - id: art-history
+      title: 艺术史
+      order: 1
+    - id: art-visual
+      title: 视觉艺术
+      order: 2
+      children:
+        - id: art-painting
+          title: 绘画
+          order: 1
+        - id: art-sculpture
+          title: 雕塑
+          order: 2
+    - id: art-music
+      title: 音乐
+      order: 3
+    - id: art-architecture
+      title: 建筑
+      order: 4
+    - id: art-film
+      title: 影视与新媒体
+      order: 5
+    - id: art-design
+      title: 设计
+      order: 6
