@@ -27,6 +27,7 @@
     "serve:lan": "node scripts/serve-lan.mjs",
     "android:sync": "npm --prefix apps/web run android:sync",
     "android:build": "npm --prefix apps/web run android:build",
+    "apk": "node scripts/build-apk.mjs",
     "version:bump": "node scripts/bump-version.mjs"
   },
   "devDependencies": {
