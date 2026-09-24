@@ -38,8 +38,11 @@
 - `node -e` 传 `/d/...` 路径会被转成 `d:\d\...` 报 ENOENT → 用相对路径或 Read 工具。
 
 ## Android APK（本沙箱）
-- 用 **PowerShell 工具**：`Set-Location apps/web/android` → 设 JAVA_HOME/ANDROID_HOME → `& 'C:\Users\Yu\.gradle\wrapper\dists\gradle-8.11.1-all\2qik7nd48slq1ooc2496ixf4i\gradle-8.11.1\bin\gradle.bat' assembleDebug --no-daemon --console=plain *>&1 | Out-File <log>`（约 6 分钟，后台）。勿用 bash 跑 .bat。
-- cap sync 不可用（无 @capacitor/cli）：手工拷 `dist/**` 到 `android/app/src/main/assets/public/`（保留 capacitor.config.json；内容路径是 `content/index/...`）。
+- **完整流程**：① `node scripts_build.mjs`（build:index+copy:content，加 `CODEBUDDY_SAFE_DELETE_ENABLED=0`，后台）→ ② `cd apps/web && CODEBUDDY_SAFE_DELETE_ENABLED=0 npm run build`（vite 把 public/content 打进 dist/，后台）→ ③ 把 `dist/**` 同步进 `android/app/src/main/assets/public/`（保留 `capacitor.config.json`）→ ④ PowerShell 跑 gradle `assembleDebug`。
+- dist→android 同步用仓库根 `scripts_sync_android_assets.mjs`（删 android public 除 capacitor.config.json 外全部，再拷 dist/*）。
+- **PowerShell 跑 gradle 必须用原生 `*>` 重定向，禁用 `| Out-File`/`| Tee-Object`**：管道会吞掉 gradle.bat 退出码，导致 BUILD 实际成功却被报成 failed（假失败）。正确：`& '<gradle.bat>' assembleDebug --no-daemon --console=plain *> '<log>'`；`cmd.exe` 在 PowerShell 工具里被禁，勿用。`cmd /c` 同理禁用。
+- gradle 路径：`C:\Users\Yu\.gradle\wrapper\dists\gradle-8.11.1-all\2qik7nd48slq1ooc2496ixf4i\gradle-8.11.1\bin\gradle.bat`；设 `JAVA_HOME=D:\JDK\jdk-19.0.1`、`ANDROID_HOME=D:\Android SDK`；`Set-Location apps/web/android`。产物 `app/build/outputs/apk/debug/app-debug.apk`（约 6 分钟）。
+- 校验 APK：node 读 EOCD(0x06054b50) 确认 PK 头 + central dir entries；unzip -l 看 `assets/public/` 是否含新 content。2026-09-23 实测 23MB / 3349 条目，含 backfill 后内容。
 
 ## 近期决策（详据 git log）
 - 无 CI（删 `.github/`；Gitee CI 用 `.gitee/workflows/`）；提交信息避开 "PowerShell" 字样。
