@@ -1,0 +1,138 @@
+id: politics-history
+title: 政治思想与制度演进
+category: 政治理论
+order_mode: chronological
+description: 从雅典民主到国际关系理论的三大范式，这条主线串联政治思想与制度的关键转折。它呈现人类如何追问权力的来源与边界——从城邦到主权国家，从社会契约到分权制衡，从极权的教训到人权与福利国家，思想与制度彼此成就。
+items:
+  - order: "1"
+    entry: democracy
+    sort_date: -508
+    date_label: "约公元前508年"
+    era: "古代"
+    note: "克里斯提尼改革确立雅典民主，“人民的统治”首次落地。主权在民的理念经代议制在现代复活，成为政治正当性的通用标尺。"
+  - order: "2"
+    entry: rule-of-law
+    sort_date: -350
+    date_label: "约公元前4世纪"
+    era: "古代"
+    note: "亚里士多德称“法治优于人治”，法律至上观念在城邦中萌芽。它经近代宪政发扬光大，约束权力由此成为政治文明的核心命题。"
+  - order: "3"
+    entry: machiavelli
+    sort_date: 1513
+    date_label: "约1513年"
+    era: "中世纪"
+    note: "《君主论》剥离道德与统治，政治现实主义登场。国家理由独立于伦理，为近代主权国家的诞生清理了地基。"
+  - order: "4"
+    entry: sovereignty
+    sort_date: 1576
+    date_label: "1576年"
+    era: "近代"
+    note: "博丹《国家六论》首次系统阐述主权——对内最高、对外独立。主权成为现代国家的根本属性，与半个世纪后的威斯特伐利亚体系相互确认。"
+  - order: "5"
+    entry: nation-state
+    sort_date: 1648
+    date_label: "1648年"
+    era: "近代"
+    note: "威斯特伐利亚和约确立主权平等的国家体系，民族国家由此兴起。领土、主权与民族认同绑合，成为此后世界的基本政治单元。"
+  - order: "6"
+    entry: thomas-hobbes
+    sort_date: 1651
+    date_label: "1651年"
+    era: "近代"
+    note: "《利维坦》以社会契约论证绝对主权，助人走出自然状态的恐惧。它把国家奠基于个体同意之上，开启近代契约论传统。"
+  - order: "7"
+    entry: john-locke
+    sort_date: 1689
+    date_label: "1689年"
+    era: "近代"
+    note: "《政府论》为光荣革命辩护，政府因同意而立、以保护生命自由财产为限。自然权利与有限政府，点亮了启蒙与宪政之路。"
+  - order: "8"
+    entry: enlightenment
+    sort_date: 1700
+    date_label: "约18世纪"
+    era: "近代"
+    note: "启蒙运动以理性审视权威，自由、平等与契约成为政治语言。洛克与卢梭的思想点燃欧美革命，现代政治价值的源头在此。"
+  - order: "9"
+    entry: separation-of-powers
+    sort_date: 1748
+    date_label: "1748年"
+    era: "近代"
+    note: "孟德斯鸠《论法的精神》倡分权制衡，以权力约束权力。它成为现代宪政的结构骨架，在美国宪法中首次全面落地。"
+  - order: "10"
+    entry: rousseau
+    sort_date: 1762
+    date_label: "1762年"
+    era: "近代"
+    note: "《社会契约论》以公意重立合法性——人生而自由，却无往不在枷锁之中。人民主权说直接滋养了法国大革命。"
+  - order: "11"
+    entry: federalism
+    sort_date: 1787
+    date_label: "1787年"
+    era: "近代"
+    note: "美国宪法确立联邦制，中央与各州分权而治。它回答了大国如何既统一又自由的难题，是分权原则在空间上的延伸。"
+  - order: "12"
+    entry: french-revolution
+    sort_date: 1789
+    date_label: "1789年"
+    era: "近代"
+    note: "《人权宣言》与主权在民原则震撼欧洲旧制度。民族国家与公民理念由此输出，保守主义的自我防卫也应声而起。"
+  - order: "13"
+    entry: conservatism
+    sort_date: 1790
+    date_label: "1790年"
+    era: "近代"
+    note: "柏克《法国革命论》反思激进变革，传统、秩序与渐进改良自成一派。保守主义与自由主义在此后两百年互相角力、彼此塑形。"
+  - order: "14"
+    entry: liberalism
+    sort_date: 1830
+    date_label: "约1830年"
+    era: "近代"
+    note: "“自由主义”作为政治标识进入词汇，宪政、法治、市场与个人自由成为其纲领。它是现代政治光谱的中间基调，也为社会主义提供了对话对手。"
+  - order: "15"
+    entry: socialism
+    sort_date: 1848
+    date_label: "1848年"
+    era: "近代"
+    note: "《共产党宣言》发表，社会主义从空想走向系统叙事。它挑战私有制与自由市场，深刻塑造了二十世纪的制度竞争与福利妥协。"
+  - order: "16"
+    entry: international-relations
+    sort_date: 1919
+    date_label: "1919年"
+    era: "现当代"
+    note: "一战后的巴黎和会催生国际关系学科，威尔逊的理想主义首登舞台。无政府状态下的战争与和平，自此成为系统的学问。"
+  - order: "17"
+    entry: totalitarianism
+    sort_date: 1933
+    date_label: "1933年"
+    era: "现当代"
+    note: "极权政体在欧洲登场，以单一意识形态全面控制公共与私人生活。它与传统专制的分野，成为二十世纪政治最沉重的教训。"
+  - order: "18"
+    entry: realism-ir
+    sort_date: 1939
+    date_label: "1939年"
+    era: "现当代"
+    note: "卡尔《二十年危机》批判理想主义，现实主义范式确立。权力与安全成为国际政治的主词汇，呼应马基雅维利与霍布斯的古老洞见。"
+  - order: "19"
+    entry: welfare-state
+    sort_date: 1942
+    date_label: "1942年"
+    era: "现当代"
+    note: "贝弗里奇报告规划战后社会保障，福利国家蓝图成形。公民权利从政治扩展到社会与经济，资本主义与社会主义在中间地带达成妥协。"
+  - order: "20"
+    entry: human-rights
+    sort_date: 1948
+    date_label: "1948年"
+    era: "现当代"
+    note: "《世界人权宣言》通过，人权超越国界成为普遍语言。它为战后国际秩序提供道德地基，也持续叩问主权与干预的边界。"
+  - order: "21"
+    entry: liberalism-ir
+    sort_date: 1975
+    date_label: "约1970年代"
+    era: "现当代"
+    note: "复合相互依存与民主和平论复兴自由主义传统，制度合作被证明普遍可能。它与现实主义分庭抗礼，重构了冷战后国际秩序的想象。"
+  - order: "22"
+    entry: constructivism-ir
+    sort_date: 1992
+    date_label: "1992年"
+    era: "现当代"
+    note: "温特提出“无政府状态是国家造就的”，观念与身份进入理论核心。建构主义使范式三分，提醒国际政治的现实由共有观念构成。"

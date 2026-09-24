@@ -1,0 +1,156 @@
+id: science-history
+title: 科学发现之旅
+category: 科学
+order_mode: chronological
+description: 从几何原本到系外行星，这条主线串联科学发现的关键里程碑。它呈现人类如何以数学与实验把握自然——从公理演绎到可检验规律，从牛顿力学到量子与相对论，从细胞与原子到 DNA 与混沌，认识世界的边界不断被推开。
+items:
+  - order: "1"
+    entry: euclidean-geometry
+    sort_date: -300
+    date_label: "约公元前300年"
+    era: "古代"
+    note: "《几何原本》以少数公理演绎出恢廓体系，确立证明化的知识理想。从牛顿到爱因斯坦，理性科学都延续这一范式。"
+  - order: "2"
+    entry: astronomy
+    sort_date: 150
+    date_label: "约2世纪"
+    era: "古代"
+    note: "托勒密《天文学大成》以本轮—均轮体系总结古代宇宙观，支配千年。地心体系既是观测与几何的集大成，也是后来革命的对象。"
+  - order: "3"
+    entry: scientific-revolution
+    sort_date: 1543
+    date_label: "1543年"
+    era: "近代"
+    note: "哥白尼《天体运行论》把太阳置于中心，宇宙观范式转换启动。开普勒与伽利略接力，自然开始被理解为可检验的规律世界。"
+  - order: "4"
+    entry: scientific-method
+    sort_date: 1620
+    date_label: "1620年"
+    era: "近代"
+    note: "培根《新工具》倡归纳与实验，“知识即力量”。它与笛卡尔的演绎互补，构成现代科学方法的两翼。"
+  - order: "5"
+    entry: cell
+    sort_date: 1665
+    date_label: "1665年"
+    era: "近代"
+    note: "胡克以显微镜命名“细胞”，生命的基本单位进入视野。细胞学说在十九世纪确立，为生物学奠定结构与发育的基础。"
+  - order: "6"
+    entry: newtonian-mechanics
+    sort_date: 1687
+    date_label: "1687年"
+    era: "近代"
+    note: "牛顿三定律与万有引力统一天上地下，力学体系大成。决定论的宇宙观就此确立，为工业时代提供理论引擎。"
+  - order: "7"
+    entry: photosynthesis
+    sort_date: 1779
+    date_label: "1779年"
+    era: "近代"
+    note: "英格豪斯证明绿色植物在光下释放氧气，光合作用机制初现。它揭示能量与物质在生命中的流动，衔接化学与生物学。"
+  - order: "8"
+    entry: atom
+    sort_date: 1803
+    date_label: "约1803年"
+    era: "近代"
+    note: "道尔顿以原子说解释定比与倍比定律，物质由原子构成重获科学形态。微观粒子从哲学猜想变为可定量研究的基础。"
+  - order: "9"
+    entry: conservation-of-energy
+    sort_date: 1842
+    date_label: "1842年"
+    era: "近代"
+    note: "迈尔与焦耳确立能量守恒，热功当量打通机械、热与化学。物理学第一次获得贯穿各分支的普适原理。"
+  - order: "10"
+    entry: origin-of-species
+    sort_date: 1859
+    date_label: "1859年"
+    era: "近代"
+    note: "达尔文以自然选择解释物种演变，把历史引入生命科学。神创与目的论退场，人在自然中的位置被重写。"
+  - order: "11"
+    entry: entropy
+    sort_date: 1865
+    date_label: "1865年"
+    era: "近代"
+    note: "克劳修斯命名熵，揭示能量退化与过程的不可逆。热力学第二定律带来“时间之箭”，也把概率引入物理学的核心。"
+  - order: "12"
+    entry: electromagnetism
+    sort_date: 1865
+    date_label: "1865年"
+    era: "近代"
+    note: "麦克斯韦方程组统一电、磁与光，“场”的概念登上舞台。它预言电磁波，为无线电与现代通信铺平道路。"
+  - order: "13"
+    entry: periodic-table
+    sort_date: 1869
+    date_label: "1869年"
+    era: "近代"
+    note: "门捷列夫按原子量排布元素并预言未知者，物质深处的节律显现。化学获得系统秩序，原子结构之谜呼之欲出。"
+  - order: "14"
+    entry: genetics
+    sort_date: 1900
+    date_label: "约1900年"
+    era: "现当代"
+    note: "孟德尔定律被重新发现，基因作为遗传单位登场。它与进化论汇流，通向分子生物学的世纪。"
+  - order: "15"
+    entry: quantum-mechanics
+    sort_date: 1900
+    date_label: "1900年"
+    era: "现当代"
+    note: "普朗克提出能量量子化，微观世界告别连续图景。玻尔与海森堡接力，实在、测量与因果被重新理解。"
+  - order: "16"
+    entry: relativity
+    sort_date: 1905
+    date_label: "1905年"
+    era: "现当代"
+    note: "爱因斯坦重写时间、空间与引力，质能等价重塑物质观。牛顿的绝对时空让位于弯曲的几何，宇宙学随之新生。"
+  - order: "17"
+    entry: neuron
+    sort_date: 1906
+    date_label: "1906年"
+    era: "现当代"
+    note: "卡哈尔证明神经元是独立单元，神经系统由分立细胞构成。神经元学说为神经科学奠基，大脑自此有了细胞学的语言。"
+  - order: "18"
+    entry: big-bang
+    sort_date: 1929
+    date_label: "1929年"
+    era: "现当代"
+    note: "哈勃发现宇宙膨胀，大爆炸模型获得观测支点。宇宙有了起源与年龄，“我们从何而来”成为可检验的科学问题。"
+  - order: "19"
+    entry: computer
+    sort_date: 1936
+    date_label: "1936年"
+    era: "现当代"
+    note: "图灵提出可计算性理论，逻辑运算得以物化为机器。电子计算机随之落地，信息时代的地基就此浇铸。"
+  - order: "20"
+    entry: dna
+    sort_date: 1953
+    date_label: "1953年"
+    era: "现当代"
+    note: "沃森与克里克揭示双螺旋结构，遗传信息有了分子载体。生命密码可读可写，分子生物学时代开启。"
+  - order: "21"
+    entry: artificial-intelligence
+    sort_date: 1956
+    date_label: "1956年"
+    era: "现当代"
+    note: "达特茅斯会议命名“人工智能”，机器模拟智能成为学科。从符号推理到深度学习，它持续重塑人类对心智与机器的理解。"
+  - order: "22"
+    entry: stellar-evolution
+    sort_date: 1957
+    date_label: "1957年"
+    era: "现当代"
+    note: "伯比奇夫妇等人阐明恒星核合成，元素在恒星内部诞生。生命所需的碳与铁皆来自星辰，宇宙的化学演化图景就此贯通。"
+  - order: "23"
+    entry: chaos-theory
+    sort_date: 1963
+    date_label: "1963年"
+    era: "现当代"
+    note: "洛伦兹发现混沌，初始条件的微小差异放大为迥异的未来。确定性系统也有不可预测性，决定论的宇宙观被温柔修正。"
+  - order: "24"
+    entry: plate-tectonics
+    sort_date: 1968
+    date_label: "约1968年"
+    era: "现当代"
+    note: "板块构造理论确立，大陆漂移获得动力学机制。地震、火山与山脉被统一解释，地球科学完成自己的范式革命。"
+  - order: "25"
+    entry: exoplanet
+    sort_date: 1995
+    date_label: "1995年"
+    era: "现当代"
+    note: "首颗围绕类太阳恒星的系外行星被发现，太阳系不再是孤例。数千颗系外行星接踵而至，寻找宜居世界成为前沿。"

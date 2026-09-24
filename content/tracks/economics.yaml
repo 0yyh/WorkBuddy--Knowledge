@@ -1,0 +1,114 @@
+id: economics-history
+title: 经济思想与制度演进
+category: 经济学
+order_mode: chronological
+description: 从货币的诞生到行为经济学的兴起，这条主线串联经济思想与经济制度的关键转折。它呈现人类如何理解财富、市场与国家——从重商主义到看不见的手，从边际革命到凯恩斯主义，从中央银行到改革开放，思想与现实彼此塑造。
+items:
+  - order: "1"
+    entry: money
+    sort_date: -600
+    date_label: "约公元前6世纪"
+    era: "古代"
+    note: "吕底亚铸币问世，货币从一般等价物走向标准化符号。作为交换与价值的起点，此后的银行、通胀与货币政策皆由此展开。"
+  - order: "2"
+    entry: international-trade
+    sort_date: 1500
+    date_label: "约16世纪"
+    era: "中世纪"
+    note: "重商主义主导欧洲，贸易被视作国家致富之道。从绝对优势到比较优势再到多边贸易体系，国际贸易理论由此发端。"
+  - order: "3"
+    entry: central-banking
+    sort_date: 1694
+    date_label: "1694年"
+    era: "近代"
+    note: "英格兰银行成立，现代中央银行登场。它从发钞与国债起步，逐步演化为最后贷款人与货币政策的执行者。"
+  - order: "4"
+    entry: adam-smith
+    sort_date: 1776
+    date_label: "1776年"
+    era: "近代"
+    note: "《国富论》问世，经济学作为独立学科奠基。“看不见的手”调和私利与公益，分工与市场成为增长之源，回应了重商主义。"
+  - order: "5"
+    entry: comparative-advantage
+    sort_date: 1817
+    date_label: "1817年"
+    era: "近代"
+    note: "李嘉图证明即使全面落后亦可从贸易中获益，比较优势成为经济学最坚固的洞见之一，为自由贸易奠定理论基石。"
+  - order: "6"
+    entry: surplus-value
+    sort_date: 1867
+    date_label: "1867年"
+    era: "近代"
+    note: "马克思《资本论》以剩余价值解剖资本主义，揭示利润来源与分配冲突。它与边际革命几乎同时，塑造了二十世纪的思潮分野。"
+  - order: "7"
+    entry: marginal-utility
+    sort_date: 1871
+    date_label: "1871年"
+    era: "近代"
+    note: "杰文斯与门格尔掀起边际革命，价值由主观效用而非劳动决定。微观经济学的分析骨架自此确立，与《资本论》同年而生。"
+  - order: "8"
+    entry: institutional-economics
+    sort_date: 1899
+    date_label: "约1899年"
+    era: "近代"
+    note: "凡勃伦以“制度”挑战新古典的理性人假设，制度经济学登场。经由科斯到新制度经济学，它与产权理论一脉相承。"
+  - order: "9"
+    entry: welfare-economics
+    sort_date: 1920
+    date_label: "1920年"
+    era: "现当代"
+    note: "庇古《福利经济学》出版，以帕累托效率与外部性衡量社会福利。市场失灵由此成为公共政策的理论依据，呼应边际分析的传统。"
+  - order: "10"
+    entry: keynes
+    sort_date: 1936
+    date_label: "1936年"
+    era: "现当代"
+    note: "《就业、利息和货币通论》出版，有效需求不足解释失业与危机。凯恩斯为政府干预打开大门，动摇了自由放任的经典信条。"
+  - order: "11"
+    entry: keynesian-economics
+    sort_date: 1936
+    date_label: "1936年"
+    era: "现当代"
+    note: "由《通论》发展而来的宏观范式主导战后政策，乘数与 IS-LM 分析使财政货币调控工具化，直至滞胀降临方受重估。"
+  - order: "12"
+    entry: development-economics
+    sort_date: 1954
+    date_label: "1954年"
+    era: "现当代"
+    note: "刘易斯二元经济模型问世，发展经济学成为独立分支。它追问穷国为何落后、如何起飞，与后发国家的工业化实践相互交织。"
+  - order: "13"
+    entry: economic-growth
+    sort_date: 1956
+    date_label: "1956年"
+    era: "现当代"
+    note: "索洛模型将资本、劳动与技术纳入增长核算，技术进步成为长期增长的主角。增长研究自此成为宏观经济学的另一支柱。"
+  - order: "14"
+    entry: property-rights
+    sort_date: 1960
+    date_label: "1960年"
+    era: "现当代"
+    note: "科斯论社会成本问题，产权界定与交易成本决定资源配置。新制度经济学由此奠基，也修正了庇古传统对外部性的处理。"
+  - order: "15"
+    entry: monetary-policy
+    sort_date: 1963
+    date_label: "1963年"
+    era: "现当代"
+    note: "弗里德曼与施瓦茨《美国货币史》重申货币之重，单一规则挑战相机抉择。央行独立性与通胀目标制在此后渐成共识。"
+  - order: "16"
+    entry: inflation
+    sort_date: 1973
+    date_label: "1973年"
+    era: "现当代"
+    note: "石油危机引爆滞胀，高通胀与高失业并行击穿菲利普斯曲线。凯恩斯主义受挫，货币主义与理性预期借势而起。"
+  - order: "17"
+    entry: reform-and-opening
+    sort_date: 1978
+    date_label: "1978年12月"
+    era: "现当代"
+    note: "十一届三中全会开启改革开放，中国由计划经济转向社会主义市场经济。数亿人脱贫的增长征程，为转型经济学写下最大样本。"
+  - order: "18"
+    entry: behavioral-economics
+    sort_date: 1979
+    date_label: "1979年"
+    era: "现当代"
+    note: "卡尼曼与特沃斯基提出前景理论，理性人假设遭遇实验挑战。行为经济学兴起，把心理学的现实感注入经济分析，修正边际传统。"
