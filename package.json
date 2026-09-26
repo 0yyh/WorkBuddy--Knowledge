@@ -19,6 +19,7 @@
     "build:index": "tsc -p packages/core/tsconfig.json && tsx packages/cli/src/index.ts build:index",
     "build:chardict": "tsc -p packages/core/tsconfig.json && tsx packages/cli/src/index.ts build:chardict",
     "lint": "tsc -p packages/core/tsconfig.json && tsx packages/cli/src/index.ts lint",
+    "ci": "pnpm run lint && pnpm run typecheck && pnpm --filter @pks/core test && pnpm --filter @pks/web test:web",
     "bundle": "tsc -p packages/core/tsconfig.json && tsx packages/cli/src/index.ts bundle",
     "rename": "tsc -p packages/core/tsconfig.json && tsx packages/cli/src/index.ts rename",
     "browse:gen": "tsc -p packages/core/tsconfig.json && tsx packages/cli/src/index.ts browse:gen",

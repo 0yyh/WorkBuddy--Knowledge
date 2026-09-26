@@ -1,0 +1,23 @@
+# PKS 知识站 · 最小化 CI（Gitee Go）
+# 范围：lint + typecheck（core/cli/web）+ 单测（core/web）。不构建 APK（需 Android SDK/JDK，单独流水线）。
+# 说明：Gitee Go 会自动 clone 仓库，故无需 checkout action；仅用 shell 步骤避免依赖 marketplace action。
+# 假设：runner 提供 Node（脚本内装 pnpm）；如需固定 Node 版本可加 nvm 步骤。
+
+name: ci
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install pnpm
+        run: npm install -g pnpm@9.15.9
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+      - name: Run CI checks (lint + typecheck + unit tests)
+        run: pnpm run ci
