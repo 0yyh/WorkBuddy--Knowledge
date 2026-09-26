@@ -177,3 +177,20 @@
 ## 8. 一句话总结
 
 PKS 在**内容质量、索引/检索架构、三大性能优化**上已相当成熟；最该优先补的是**工程可复现性（包解析 + 一键构建 + CI）**与**离线形态一致性（web PWA）**，其次是**内容域均衡**与**单点运维去风险**。上述 P0/P1 落地后，项目可从「个人精修站」稳妥迈向「可协作、可规模化、可分发」的知识产品。
+
+---
+
+## 9. P2 收尾状态（2026-09-26）
+
+| 项 | 状态 | 提交 | 说明 |
+|----|------|------|------|
+| A2 最小化 CI | ✅ 完成 | `a7ed1a9` | `pnpm run ci` + `.gitee/workflows/ci.yml`；补 apps/web 缺失 vitest |
+| T1 样式体系 | ✅ 完成（判完成态） | — | `styles/tokens.css` 已为完整 design tokens 且全站消费 |
+| T4 Context 拆分 | ⏸ 暂缓 | — | `value` 已 memoized；检索跑 Worker、结果不在 Context；R3 证延迟非瓶颈，不引入 zustand |
+| T5 检索增强 | ✅ 完成 | `1eea74c` | 编辑距离模糊召回（查询扩展，热路径不变）；`packages/core/src/index/fuzzy.ts` + 单测 |
+| R3 规模化压测 | ✅ 完成 | `5f0d6b7` | `scripts/bench_scale.mjs`；2000万字 searchL2 p95≈6.8ms（3.3×），非瓶颈 |
+| R4 事实核查 lint | ✅ 完成 | `d406fcf` | L010 可核验引用规则 + 修复 CI lint 退出码；真实缺口 14 词条/158 sources |
+| B2 发布签名 | ✅ 完成（脚手架） | `6d25410` | gradle release 签名脚手架；真实 keystore 待维护者按模板填凭证（未擅自生成） |
+| B3 分发多样化 | ✅ 完成（文档） | `6d25410` | `docs/release.md`：Gitee Releases / OTA / 直传 三分发渠道 + 校验 |
+
+> 遗留 P1 项（T2 PWA、C2/C3 内容域均衡、Q1 集成测试、R1/R2 文档化）不在本 P2 收尾范围，按路线图后续推进。
