@@ -3,13 +3,14 @@
  * L001 slug 唯一 · L002 类目存在 · L003 章节≤20000字 · L004 tldr≤120
  * L005 cross_timeline 双维度 · L006 see_also 目标存在 · L007 section slug 唯一 · L008 published 有摘要
  * L009 每文件单一 PKS_EXPANDED_V5 标记（约定层，全局双标记审计收口后强制）
+ * L010 sources 可核验引用（R4，warn，--citations 开启）：每条 source 应带 url/doi/isbn/ref 之一
  *
  * 复用：核心规则抽成 `lintEntryRules`，被 `lintCmd`（全量）与 `lintEntryDir`（单条目，T03 生成回路）共用，
  * 不重复造轮子。
  */
 import { NodeFsVfs } from '@pks/core/node';
 import { loadSnapshot } from '@pks/core';
-import type { TaxonomyNode, ContentSnapshot, Entry, SectionMeta, Vfs } from '@pks/core';
+import type { TaxonomyNode, ContentSnapshot, Entry, SectionMeta, SourceRef, Vfs } from '@pks/core';
 import { SECTION_WORD_LIMIT, TLDR_MAX } from '@pks/core';
 
 export interface Issue {
@@ -94,6 +95,7 @@ export function lintEntryRules(
   validPaths: Set<string>,
   allSlugs: Set<string>,
   tracks: ContentSnapshot['tracks'],
+  citations = false,
 ): Issue[] {
   const issues: Issue[] = [];
   for (const c of entry.categories) {
@@ -125,10 +127,31 @@ export function lintEntryRules(
   if (cross && (entry.timeline?.length ?? 0) < 2) {
     issues.push({ rule: 'L005', severity: 'warn', message: `词条 ${entry.slug} 标记 cross_timeline 但 timeline 维度 <2` });
   }
+
+  // L010 —— sources 可核验引用（R4）。默认关闭（--citations 开启），避免对既有 2000+ 章
+  //  corpus 造成海量告警；当前约 68% 的 source 仅含 title（无 url/doi/isbn/ref），
+  //  全量 error 级会直接击穿 0-error 基线。故为 warn，且聚合为每条词条一行。
+  if (citations) {
+    let missing = 0;
+    const scan = (srcs?: SourceRef[]) => {
+      for (const s of srcs ?? []) {
+        if (!(s.url || s.doi || s.isbn || s.ref)) missing++;
+      }
+    };
+    scan(entry.sources);
+    for (const sec of secs) scan(sec.sources);
+    if (missing > 0) {
+      issues.push({
+        rule: 'L010',
+        severity: 'warn',
+        message: `词条 ${entry.slug} 有 ${missing} 条 sources 缺可核验引用（url/doi/isbn/ref）`,
+      });
+    }
+  }
   return issues;
 }
 
-export function lintCmd(contentDir: string): { issues: Issue[]; errorCount: number } {
+export function lintCmd(contentDir: string, opts: { citations?: boolean } = {}): { issues: Issue[]; errorCount: number } {
   const vfs = new NodeFsVfs(contentDir);
   const { snapshot, errors, warnings } = loadSnapshot(vfs);
   const issues: Issue[] = [];
@@ -141,7 +164,7 @@ export function lintCmd(contentDir: string): { issues: Issue[]; errorCount: numb
   const allSlugs = new Set(snapshot.entries.map((e) => e.slug));
 
   for (const e of snapshot.entries) {
-    issues.push(...lintEntryRules(e, snapshot.sections[e.slug] ?? [], validPaths, allSlugs, snapshot.tracks));
+    issues.push(...lintEntryRules(e, snapshot.sections[e.slug] ?? [], validPaths, allSlugs, snapshot.tracks, opts.citations ?? false));
     issues.push(...lintMarkerRule(vfs, e.slug));
   }
 
@@ -173,7 +196,7 @@ export function lintCmd(contentDir: string): { issues: Issue[]; errorCount: numb
  * L002/L003/L004/L005/L006/L008 以及 validateEntryMeta/validateSectionMeta 的致命错误
  * （loadSnapshot 的 errors 已含这些致命错误）。返回 { issues, errorCount }。
  */
-export function lintEntryDir(vfs: Vfs, slug: string): { issues: Issue[]; errorCount: number } {
+export function lintEntryDir(vfs: Vfs, slug: string, opts: { citations?: boolean } = {}): { issues: Issue[]; errorCount: number } {
   const { snapshot, errors } = loadSnapshot(vfs);
   const issues: Issue[] = [];
 
@@ -193,7 +216,7 @@ export function lintEntryDir(vfs: Vfs, slug: string): { issues: Issue[]; errorCo
   const validPaths = new Set<string>();
   collectPaths(snapshot.taxonomy, validPaths);
   const allSlugs = new Set(snapshot.entries.map((e) => e.slug));
-  issues.push(...lintEntryRules(entry, snapshot.sections[slug] ?? [], validPaths, allSlugs, snapshot.tracks));
+  issues.push(...lintEntryRules(entry, snapshot.sections[slug] ?? [], validPaths, allSlugs, snapshot.tracks, opts.citations ?? false));
   issues.push(...lintMarkerRule(vfs, slug));
 
   const errorCount = issues.filter((i) => i.severity === 'error').length;

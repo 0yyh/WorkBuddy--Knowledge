@@ -98,6 +98,8 @@ export function validateEntryMeta(obj: Record<string, unknown>): ValidationResul
         edition: asString(sm.edition),
         fetched_at: asString(sm.fetched_at),
         fingerprint: asString(sm.fingerprint),
+        doi: asString(sm.doi),
+        isbn: asString(sm.isbn),
       };
     });
     if (srcs.some((s) => !s.title)) errors.push('sources 中存在空 title');

@@ -119,9 +119,13 @@ async function main(): Promise<void> {
     case 'build:index':
       buildIndexCmd(contentDir(flags), { incremental: !flags.full });
       break;
-    case 'lint':
-      lintCmd(contentDir(flags));
+    case 'lint': {
+      const { errorCount } = lintCmd(contentDir(flags), { citations: flags.citations === true });
+      // 非零退出：让 CI（A2 `pnpm run ci` 的 lint 步骤）在规范 error 时真正失败，
+      // 而非静默通过。L010 为 warn 级，不计入 errorCount，不会误伤基线。
+      if (errorCount > 0) process.exit(1);
       break;
+    }
     case 'bundle':
       bundleCmd(contentDir(flags), {
         level: packLevel(flags.level),

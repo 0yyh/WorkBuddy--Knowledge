@@ -29,6 +29,10 @@ export interface SourceRef {
   fetched_at?: IsoDate;
   /** sha1:<hex> 内容指纹，用于去重/溯源（04 §2.4.5） */
   fingerprint?: string;
+  /** 数字对象唯一标识（DOI），可核验引用之一（R4） */
+  doi?: string;
+  /** 国际标准书号（ISBN），可核验引用之一（R4） */
+  isbn?: string;
 }
 
 // ============================================================
