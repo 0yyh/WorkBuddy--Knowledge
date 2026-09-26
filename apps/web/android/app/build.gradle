@@ -1,5 +1,18 @@
 apply plugin: 'com.android.application'
 
+// ---------------------------------------------------------------------------
+// B2 发布签名（脚手架，不生成真实密钥）：
+// 仅当仓库根 android 目录存在 keystore.properties 时才启用 release 签名，
+// 否则 signingConfigs.release 为空、assembleRelease 产出未签名包（不会崩溃）。
+// 真实密钥由维护者按 keystore.properties.example 填好后放入（已 gitignore，不入库）。
+// ---------------------------------------------------------------------------
+def keystorePropsFile = rootProject.file('keystore.properties')
+def keystoreProps = new Properties()
+if (keystorePropsFile.exists()) {
+    keystoreProps.load(new FileInputStream(keystorePropsFile))
+}
+
+
 android {
     namespace "com.pks.app"
     compileSdk rootProject.ext.compileSdkVersion
@@ -16,8 +29,22 @@ android {
             ignoreAssetsPattern '!.svn:!.git:!.ds_store:!*.scc:.*:!CVS:!thumbs.db:!picasa.ini:!*~'
         }
     }
+    signingConfigs {
+        release {
+            if (keystorePropsFile.exists()) {
+                storeFile file(keystoreProps['STORE_FILE'])
+                storePassword keystoreProps['STORE_PASSWORD']
+                keyAlias keystoreProps['KEY_ALIAS']
+                keyPassword keystoreProps['KEY_PASSWORD']
+            }
+        }
+    }
     buildTypes {
         release {
+            // 存在 keystore.properties 时自动启用签名；否则为未签名 release 包
+            if (keystorePropsFile.exists()) {
+                signingConfig signingConfigs.release
+            }
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }

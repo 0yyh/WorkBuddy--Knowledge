@@ -57,6 +57,11 @@ captures/
 #*.jks
 #*.keystore
 
+# B2 发布凭证（绝不入库）：真实 keystore 属性与密钥文件
+keystore.properties
+*.keystore
+*.jks
+
 # External native build folder generated in Android Studio 2.2 and later
 .externalNativeBuild
 .cxx/
