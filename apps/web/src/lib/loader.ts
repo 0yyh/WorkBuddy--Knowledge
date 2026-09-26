@@ -4,7 +4,7 @@
  *  - 惰性：search/sNN.json（L2 全文检索按需拉取 + 缓存）
  * 全部通过 fetch 读取 public/content 下的静态资源。
  */
-import { SearchEngine, decodePostings, dfBucketOf, tokenize, LRUCache, SHARD_CACHE_CAPACITY, inlineIndexToMap, decodeDfBucket } from '@pks/core';
+import { SearchEngine, decodePostings, dfBucketOf, tokenize, LRUCache, SHARD_CACHE_CAPACITY, inlineIndexToMap, decodeDfBucket, buildFuzzyIndex, expandQueryFuzzy, DF_BUCKET_COUNT } from '@pks/core';
 import type {
   DfBucket,
   EntryIndexItem,
@@ -362,6 +362,9 @@ export function loadStation(): Promise<StationBundle> {
 /**
  * L2 全文检索：worker 优先（解码 + BM25 全在 worker），失败/不可用则安静降级到主线程。
  * 签名保持不变：SearchPage / AppContext 依赖 `(bundle, query) => Promise<SearchResultGroup[]>`。
+ *
+ * T5 模糊兜底：精确检索零命中时，才用编辑距离把查询词扩展为近词并重搜一次
+ * （经同一 worker/主线程路径，不改 SearchEngine 热路径）。召回形近/繁简/笔误词。
  */
 export async function fullTextSearch(
   bundle: StationBundle,
@@ -370,6 +373,22 @@ export async function fullTextSearch(
   const q = query.trim();
   if (!q) return [];
 
+  const exact = await searchOnce(bundle, q);
+  if (exact.length > 0) return exact;
+
+  // T5 兜底：仅零命中时做模糊扩展（一次精确检索），不污染热路径、不影响既有排序
+  try {
+    const idx = await loadDfVocab();
+    const expanded = expandQueryFuzzy(q, idx);
+    if (expanded.length > tokenize(q).length) return await searchOnce(bundle, expanded.join(' '));
+  } catch {
+    // 模糊词表不可用（df 桶缺失等）不影响精确检索
+  }
+  return exact;
+}
+
+/** 单次精确检索：worker 优先，失败降级主线程（df 按需懒加载）。 */
+async function searchOnce(bundle: StationBundle, q: string): Promise<SearchResultGroup[]> {
   try {
     const viaWorker = await searchViaWorker(bundle, q);
     if (viaWorker) return viaWorker; // 成功即返回（含空结果）
@@ -384,4 +403,29 @@ export async function fullTextSearch(
   // P0-2：searchL2 现 async，逐分片 on-demand 经引擎加载器加载（LRU 有界），不再预载全部分片。
   const hits: SearchHit[] = await bundle.engine.searchL2(q);
   return bundle.engine.groupByEntry(hits);
+}
+
+/**
+ * T5 模糊词表：从全部 df 桶抽取 term 键，构建「首字→词表」索引（一次性、缓存）。
+ * 仅在精确检索零命中时才惰性构建，不增加首屏/常规检索成本。
+ */
+let fuzzyIndexCache: Promise<Map<string, string[]>> | null = null;
+async function loadDfVocab(): Promise<Map<string, string[]>> {
+  if (fuzzyIndexCache) return fuzzyIndexCache;
+  fuzzyIndexCache = (async (): Promise<Map<string, string[]>> => {
+    const terms = new Set<string>();
+    const proms: Array<Promise<void>> = [];
+    for (let n = 0; n < DF_BUCKET_COUNT; n++) {
+      proms.push(
+        fetchDfBucket(n)
+          .then((b) => {
+            if (b) for (const t of Object.keys(b.df)) terms.add(t);
+          })
+          .catch(() => undefined),
+      );
+    }
+    await Promise.all(proms);
+    return buildFuzzyIndex(terms);
+  })();
+  return fuzzyIndexCache;
 }
