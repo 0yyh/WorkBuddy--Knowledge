@@ -295,3 +295,93 @@
     - id: art-design
       title: 设计
       order: 6
+      children:
+        - id: art-design-graphic
+          title: 平面与视觉传达
+          order: 1
+        - id: art-design-product
+          title: 产品与工业
+          order: 2
+- id: religion
+  title: 宗教
+  order: 9
+  children:
+    - id: rel-history
+      title: 宗教史
+      order: 1
+    - id: rel-world
+      title: 世界宗教
+      order: 2
+      children:
+        - id: rel-christianity
+          title: 基督教
+          order: 1
+        - id: rel-islam
+          title: 伊斯兰教
+          order: 2
+        - id: rel-buddhism
+          title: 佛教
+          order: 3
+        - id: rel-hinduism
+          title: 印度教
+          order: 4
+        - id: rel-judaism
+          title: 犹太教
+          order: 5
+    - id: rel-chinese
+      title: 中国宗教
+      order: 3
+      children:
+        - id: rel-ruism
+          title: 儒教与儒家祭祀
+          order: 1
+        - id: rel-daoism
+          title: 道教
+          order: 2
+        - id: rel-folk
+          title: 民间信仰
+          order: 3
+    - id: rel-philosophy
+      title: 宗教哲学
+      order: 4
+- id: linguistics
+  title: 语言学
+  order: 10
+  children:
+    - id: ling-general
+      title: 普通语言学
+      order: 1
+    - id: ling-phon
+      title: 语音与音系
+      order: 2
+    - id: ling-syntax-sem
+      title: 句法与语义
+      order: 3
+    - id: ling-historical
+      title: 历史语言学
+      order: 4
+    - id: ling-socio-psy
+      title: 社会与心理语言学
+      order: 5
+- id: law
+  title: 法学
+  order: 11
+  children:
+    - id: law-juris
+      title: 法理学
+      order: 1
+    - id: law-constitutional
+      title: 宪法与公法
+      order: 2
+    - id: law-civil
+      title: 民法
+      order: 3
+    - id: law-criminal
+      title: 刑法
+      order: 4
+    - id: law-international
+      title: 国际法
+      order: 5
+    - id: law-history
+      title: 法律史
+      order: 6
