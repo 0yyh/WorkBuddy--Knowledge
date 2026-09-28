@@ -83,7 +83,7 @@ for (const slug of slugs) {
 // 输出
 console.log(`# 词条总数: ${slugs.length}  未分类: ${uncategorized}`);
 console.log('\n## L1 分布（词条数 / 章节数 / 均章/词条）');
-const order = ['history','philosophy','science','economics','politics','technology','literature','art'];
+const order = ['history','philosophy','science','economics','politics','technology','literature','art','religion','linguistics','law'];
 const idToTitle = {};
 for (const t of tax) if (t.id) idToTitle[t.id] = t.title;
 const rows = [];
@@ -98,7 +98,7 @@ console.log(`L1 去重合计(词条-类目映射): ${totalE}  (注: 一词条可
 
 // L2 缺口（每 L1 下哪些 L2 无词条）
 console.log('\n## L2 覆盖缺口（literature/art/science/technology 重点）');
-for (const id of ['science','technology','literature','art','economics','politics','history','philosophy']) {
+for (const id of ['science','technology','literature','art','religion','linguistics','law','economics','politics','history','philosophy']) {
   const t = tax.find(x=>x.id===id);
   if (!t) continue;
   const empty = [];
