@@ -12,7 +12,7 @@
  * 只让 fetch 走可控路由，从而把被测面收敛到 loader 自身。
  */
 import { describe, it, expect, beforeEach, vi } from 'vitest';
-import { encodePostings } from '@pks/core';
+import { encodePostings } from '@pks/core/search';
 
 // —— 依赖打桩（vi.mock 会被提升，必须在 import 被测模块前声明）——
 vi.mock('./contentCache', () => ({

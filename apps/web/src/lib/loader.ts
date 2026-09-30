@@ -4,7 +4,7 @@
  *  - 惰性：search/sNN.json（L2 全文检索按需拉取 + 缓存）
  * 全部通过 fetch 读取 public/content 下的静态资源。
  */
-import { SearchEngine, decodePostings, dfBucketOf, tokenize, LRUCache, SHARD_CACHE_CAPACITY, inlineIndexToMap, decodeDfBucket, buildFuzzyIndex, expandQueryFuzzy, DF_BUCKET_COUNT } from '@pks/core';
+import { SearchEngine, decodePostings, dfBucketOf, tokenize, LRUCache, SHARD_CACHE_CAPACITY, inlineIndexToMap, decodeDfBucket, buildFuzzyIndex, expandQueryFuzzy, DF_BUCKET_COUNT } from '@pks/core/search';
 import type {
   DfBucket,
   EntryIndexItem,

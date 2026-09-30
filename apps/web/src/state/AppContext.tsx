@@ -31,7 +31,8 @@ import type {
   TaxonomyNode,
   Track,
 } from '@pks/core';
-import { fullTextSearch, loadStation, warmSearchShards, type StationBundle } from '../lib/loader';
+import { loadStation, warmSearchShards, type StationBundle } from '../lib/loader';
+import { cachedFullTextSearch } from '../lib/searchCache';
 import { warmSearchWorker } from '../lib/searchWorkerClient';
 import { fetchTrack, fetchTrackSummaries } from '../lib/content';
 import type { CategoryView, TrackSummary } from '../types';
@@ -290,12 +291,14 @@ export function StationProvider({ children }: { children: ReactNode }): JSX.Elem
 
   // searchFullText：依赖 bundle（用 closure 捕获当前 bundle 引用）；bundle 变化时引用变。
   // getTrack：reload 与 fetchTrack 都是无状态模块函数，无依赖 → 引用永远稳定。
+  // P2-F：走 cachedFullTextSearch，重复 query 命中 LRU（key = q#contentHash），
+  // bundle 变更（OTA / reload）让 contentHash 变 → 缓存自然失效。
   const searchFullText = useCallback(
     (query: string): Promise<SearchResultGroup[]> => {
       // bundle 为 null 时理论上不会调到这里（Provider 装配完才渲染 children），
       // 这里做兜底：避免 binding 在初始态被调时崩。
       if (!bundle) return Promise.resolve([]);
-      return fullTextSearch(bundle, query);
+      return cachedFullTextSearch(bundle, query);
     },
     [bundle],
   );

@@ -25,15 +25,9 @@ export * from './parse/words.js';
 // VFS（不含 node:fs 实现）
 export * from './vfs/index.js';
 
-// 索引 / 搜索
-export * from './index/tokenizer.js';
-export * from './index/bm25.js';
-export * from './index/shards.js';
-export * from './index/inverted.js';
-export * from './index/fuzzy.js';
-export * from './index/df.js';
-export * from './index/lazy-loader.js';
-export * from './index/shard-codec.js';
+// 内容仓储
+export * from './content/repository.js';
+export * from './content/hash.js';
 
 // 通用 JSON ↔ base64(zlib) 编解码（同构，复用 fflate 文本载体）
 export * from './util/compress.js';
@@ -45,9 +39,42 @@ export * from './merge/bundle.js';
 // Track
 export * from './track/parse.js';
 
-// 内容仓储
-export * from './content/repository.js';
-export * from './content/hash.js';
+// ============================================================
+// 检索相关（SearchEngine / df / bm25 / tokenizer / shard-codec 等）
+// 已迁出主 barrel 到 `@pks/core/search` 子路径——搜索调用方一律从
+// `@pks/core/search` 引入，避免 vite 把整条检索链打进 vendor-core /
+// 误拉进 worker chunk。
+// 旧 import 兼容：以下 8 行再 export 保留到 2026-12；之后会删除。
+// （web 端本次已迁移；core 测试全用相对路径，无影响；CLI 不依赖）
+// ============================================================
+export {
+  SearchEngine,
+  SHARD_CACHE_CAPACITY,
+  buildShards,
+  decodePostings,
+  inlineIndexToMap,
+  encodePostings,
+  tokenize,
+  termFrequencies,
+  bm25Term,
+  dfBucketOf,
+  buildDfBuckets,
+  decodeDfBucket,
+  buildFuzzyIndex,
+  expandQueryFuzzy,
+  editDistance,
+  chooseShardCount,
+  assignShard,
+  LRUCache,
+  DF_BUCKET_COUNT,
+} from './search.js';
+export type {
+  ShardIndex,
+  IndexingDoc,
+  GlobalSearchStats,
+  PostingsTable,
+  DfBucket,
+} from './search.js';
 
 // 词典类型（仅供类型引用；数据与查询逻辑走 @pks/core/dict 子路径）
 export type {
