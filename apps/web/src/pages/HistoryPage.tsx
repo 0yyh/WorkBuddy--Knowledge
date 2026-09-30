@@ -70,12 +70,10 @@ export function HistoryPage(): JSX.Element {
                   <li
                     key={`${it.slug}-${it.timestamp}`}
                     className="history-item"
-                    style={{ display: 'flex', alignItems: 'center' }}
                   >
                     <Link
                       to={`/entry/${encodeURIComponent(it.slug)}`}
                       className="history-link"
-                      style={{ flex: '1 1 auto', minWidth: 0 }}
                     >
                       <span className="history-title">{it.title}</span>
                       <span className="history-meta">
@@ -85,27 +83,15 @@ export function HistoryPage(): JSX.Element {
                         </span>
                       </span>
                     </Link>
-                    {/* P3-2：单条删除。刻意放在 <Link> 外层，避免 <button> 嵌 <a> 的非法结构 */}
+                    {/* P3-2：单条删除。刻意放在 <Link> 外层，避免 <button> 嵌 <a> 的非法结构。
+                       P0-perf：原内联 style 对象已在 styles.css 提到 .history-item-del 类，
+                       删除一条不再让其它 199 条的 style 引用全部重分配。 */}
                     <button
                       type="button"
                       className="history-item-del"
                       aria-label={`删除《${it.title}》的阅读记录`}
                       title="删除这条记录"
                       onClick={() => setItems(removeFromHistory(it.slug, it.timestamp))}
-                      style={{
-                        flex: '0 0 auto',
-                        width: 32,
-                        height: 32,
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        background: 'transparent',
-                        border: 'none',
-                        color: 'var(--text-dim)',
-                        fontSize: 18,
-                        lineHeight: 1,
-                        cursor: 'pointer',
-                      }}
                     >
                       ×
                     </button>

@@ -28,26 +28,43 @@ export function assetUrl(relPath: string): string {
 }
 
 /**
- * 内容缓存是否已激活。
- *
- * 只有**成功应用过一次局域网更新**后才会为 true。这样保证：
- *  - 从未更新过的设备行为与改造前完全一致（直接读随包资源，不碰 IndexedDB）；
- *  - 不会因为旧的 IndexedDB 缓存把「新装的 APK 里的新内容」盖住。
- * 结果做进程内记忆，避免每个文件都查一次 IndexedDB；更新生效后由
- * `invalidateContentCacheFlag()` 重置。
+ * 内容缓存激活状态（fire-and-forget）：
+ *  - 立即同步返回**当前已确定**的状态（首次返回 false，与历史行为一致）；
+ *  - 未就绪时返回 false（**首个**后端异步跑查询），首次解析完成后 cacheActive
+ *    被写定，之后的 fetchText 都直接走 `Promise.resolve(cacheActive)`，省掉
+ *    67+ 次重复 IndexedDB roundtrip（manifest 4 + 64 entry 分片）。
+ *  - `cacheActivePromise` 充当并发去重：68 次并发也只跑一次 getMeta。
+ *  - 不会因为旧的 IndexedDB 缓存把「新装的 APK 里的新内容」盖住：cacheActive
+ *    落定后才会进 getCached 路径；首次默认 false 时直读随包资源，不写回。
  */
 let cacheActive: boolean | null = null;
+let cacheActivePromise: Promise<void> | null = null;
 
-export async function isContentCacheActive(): Promise<boolean> {
-  if (cacheActive === null) {
-    cacheActive = (await getMeta<boolean>(ACTIVATED_KEY)) === true;
+export function isContentCacheActive(): Promise<boolean> {
+  if (cacheActive !== null) return Promise.resolve(cacheActive);
+  if (cacheActivePromise === null) {
+    cacheActivePromise = getMeta<boolean>(ACTIVATED_KEY)
+      .then((v) => {
+        cacheActive = v === true;
+      })
+      .catch(() => {
+        cacheActive = false;
+      });
   }
-  return cacheActive;
+  return Promise.resolve(false);
 }
 
-/** 内容缓存激活状态变化后调用（applyContentUpdate / resetContentCache 内部已调用） */
-export function invalidateContentCacheFlag(): void {
-  cacheActive = null;
+/**
+ * 内容缓存激活状态变化后调用（applyContentUpdate / resetContentCache 内部已调用）。
+ *
+ * 接受可选 next：调用方若已知下一态（如刚 setMeta(ACTIVATED_KEY, true)），传 true
+ * 即可**同步**让下次 isContentCacheActive 返回 true，省掉一次 async 解析延迟，
+ * 也保证「刚激活后立即 fetchText」的语义不破（测试 contentUpdater.integration 覆盖）。
+ * 不传则把 cacheActive 重置为 null，下次 isContentCacheActive 走 IDB 异步查（reset 场景）。
+ */
+export function invalidateContentCacheFlag(next?: boolean): void {
+  cacheActive = next === undefined ? null : next;
+  cacheActivePromise = null;
 }
 
 /** 统一文本读取（缓存优先：命中 IndexedDB 直接用，未命中回落到随包资源顺带写回） */
@@ -61,7 +78,10 @@ export async function fetchText(relPath: string): Promise<string> {
   const url = assetUrl(relPath);
   let res: Response;
   try {
-    res = await fetch(url, { cache: 'no-cache' });
+    // 'default' 让浏览器走标准 HTTP 缓存语义（Cache-Control / etag / last-modified）。
+    // 局域网 HTTP 是非安全上下文，原 'no-cache' 强制每次 revalidate，既无安全意义也
+    // 浪费首屏网络往返；改 'default' 后 manifest/df-meta 等 entry 静态件会走 304。
+    res = await fetch(url, { cache: 'default' });
   } catch (e) {
     throw new Error(`无法读取 ${url}（${e instanceof Error ? e.message : String(e)}）`);
   }

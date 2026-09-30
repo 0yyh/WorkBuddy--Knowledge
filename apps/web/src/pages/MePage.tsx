@@ -44,6 +44,11 @@ export function MePage(): JSX.Element {
   const [progress, setProgress] = useState<{ done: number; total: number } | null>(null);
   const [localBuilt, setLocalBuilt] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
+  // P0-perf：OTA 进度 setState 节流 —— 一次更新 1401 个文件时回调 ~642 次，
+  // 之前每次都触发 React 渲染；现在合并到下一帧（约每 16ms 一次），
+  // 既保持进度条视觉流畅，又把 setState 次数降一个数量级。
+  const progressRaf = useRef<number | null>(null);
+  const progressPending = useRef<{ done: number; total: number } | null>(null);
 
   useEffect(() => {
     let alive = true;
@@ -107,9 +112,20 @@ export function MePage(): JSX.Element {
     setProgress({ done: 0, total: pending.files.length });
     setStatus('正在下载…');
     try {
-      const result = await applyContentUpdate(target, pending, (done, total) => {
-        setProgress({ done, total });
-      });
+      const flushProgress = (): void => {
+        progressRaf.current = null;
+        if (progressPending.current) {
+          setProgress(progressPending.current);
+          progressPending.current = null;
+        }
+      };
+      const onProgress = (done: number, total: number): void => {
+        progressPending.current = { done, total };
+        if (progressRaf.current === null) {
+          progressRaf.current = window.requestAnimationFrame(flushProgress);
+        }
+      };
+      const result = await applyContentUpdate(target, pending, onProgress);
       const warn = result.warnings.length > 0 ? `（${result.warnings.join('；')}）` : '';
       if (result.activated) {
         setStatus(`更新完成：已更新 ${result.updated} 个文件${warn}。请点「重新加载」生效。`);
@@ -122,6 +138,14 @@ export function MePage(): JSX.Element {
     } catch (e) {
       setStatus(`更新失败：${e instanceof Error ? e.message : String(e)}`);
     } finally {
+      if (progressRaf.current !== null) {
+        window.cancelAnimationFrame(progressRaf.current);
+        progressRaf.current = null;
+      }
+      if (progressPending.current) {
+        setProgress(progressPending.current);
+        progressPending.current = null;
+      }
       setProgress(null);
       setBusy(false);
     }

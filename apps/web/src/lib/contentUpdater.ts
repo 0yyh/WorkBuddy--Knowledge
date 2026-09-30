@@ -363,7 +363,8 @@ export async function applyContentUpdate(
   // 本轮下载成功的新文件与上一轮残留旧文件的**混合内容** —— 也就是本模块注释
   // 曾声称避免了、但实际并未避免的「半新半旧」。摘掉标记后，失败即回退随包内容。
   await setMeta(ACTIVATED_KEY, false);
-  invalidateContentCacheFlag();
+  // P0-perf：明确下一态 = false，省掉一次异步 IDB 解析（isContentCacheActive 改 fire-and-forget 后）。
+  invalidateContentCacheFlag(false);
 
   const queue: UpdateFileEntry[] = [...manifest.files];
   const worker = async (): Promise<void> => {
@@ -407,7 +408,8 @@ export async function applyContentUpdate(
 
   await setMeta(BUILT_AT_KEY, manifest.built_at);
   await setMeta(ACTIVATED_KEY, true);
-  invalidateContentCacheFlag();
+  // P0-perf：明确下一态 = true，让刚激活后立即 fetchText 同步走缓存优先（不走 IDB roundtrip）。
+  invalidateContentCacheFlag(true);
 
   return { updated, failed, warnings, activated: true };
 }
@@ -470,7 +472,8 @@ export async function importLocalFiles(files: readonly File[]): Promise<LocalImp
 
   if (imported > 0) {
     await setMeta(ACTIVATED_KEY, true);
-    invalidateContentCacheFlag();
+    // P0-perf：明确下一态 = true，同步让 loader 走缓存优先。
+    invalidateContentCacheFlag(true);
   }
   return { imported, skipped, paths };
 }

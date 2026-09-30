@@ -1,7 +1,11 @@
 /**
  * 搜索框：输入即时 L1（title/aliases，零分片加载），回车/按钮触发 L2 全文（惰性拉分片）。
+ *
+ * P0-perf：input 值 → 立即 setQuery 保持输入响应；suggest 由 `useDeferredValue`
+ * 把 query 降为低优先级 + 100ms debounce 节流，避免每个按键都跑 searchL1 + 全 setState，
+ * 中文 IME 候选连击 / 物理键盘连按时尤其有效。
  */
-import { useCallback, useRef, useState } from 'react';
+import { useCallback, useDeferredValue, useEffect, useRef, useState } from 'react';
 import type { SearchHit } from '@pks/core';
 import { navigate } from '../router';
 import { useStation } from '../state/AppContext';
@@ -12,13 +16,17 @@ interface SearchBoxProps {
 }
 
 const SUGGEST_LIMIT = 8;
+/** suggest 节流：每次按键后至少等 100ms 才跑一次 searchL1；高频输入自动合并。 */
+const SUGGEST_DEBOUNCE_MS = 100;
 
 export function SearchBox({ size = 'compact', initialQuery = '' }: SearchBoxProps): JSX.Element {
   const { engine } = useStation();
   const [query, setQuery] = useState<string>(initialQuery);
+  const deferredQuery = useDeferredValue(query);
   const [suggestions, setSuggestions] = useState<SearchHit[]>([]);
   const [open, setOpen] = useState<boolean>(false);
   const blurTimer = useRef<number | null>(null);
+  const suggestTimer = useRef<number | null>(null);
 
   const runSuggest = useCallback(
     (value: string) => {
@@ -34,6 +42,18 @@ export function SearchBox({ size = 'compact', initialQuery = '' }: SearchBoxProp
     },
     [engine],
   );
+
+  // P0-perf：deferredQuery + 100ms debounce → suggest 在高频输入时合并执行，
+  // input 仍由 query 立即更新（受控输入不卡顿）。
+  useEffect(() => {
+    if (suggestTimer.current !== null) window.clearTimeout(suggestTimer.current);
+    suggestTimer.current = window.setTimeout(() => {
+      runSuggest(deferredQuery);
+    }, SUGGEST_DEBOUNCE_MS);
+    return () => {
+      if (suggestTimer.current !== null) window.clearTimeout(suggestTimer.current);
+    };
+  }, [deferredQuery, runSuggest]);
 
   const goFull = useCallback(() => {
     const q = query.trim();
@@ -66,8 +86,9 @@ export function SearchBox({ size = 'compact', initialQuery = '' }: SearchBoxProp
           placeholder={size === 'large' ? '搜索全文检索' : '搜索词条'}
           aria-label="搜索"
           onChange={(e) => {
+            // P0-perf：受控输入立即更新 query（input 响应不延迟），
+            // suggest 由 useEffect(deferredQuery) 接管 + 100ms debounce 节流。
             setQuery(e.target.value);
-            runSuggest(e.target.value);
           }}
           onFocus={() => {
             if (suggestions.length > 0) setOpen(true);

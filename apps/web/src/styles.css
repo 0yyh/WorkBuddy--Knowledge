@@ -31,7 +31,9 @@ body {
   line-height: 1.68;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
-  transition: background 0.25s var(--ease);
+  /* P0-perf：移除 background 0.25s 过渡。设置页切深色/sepia 时直接刷新背景色即可，
+     过渡对纯色切换无视觉效果，却会触发额外重排 + 强制 GPU 合成层 keep-alive，
+     在长列表/阅读页滚动里表现为可感知的掉帧。 */
 }
 
 /* 系统字体/背景偏好（设置页 data-sys-*） */
@@ -1903,6 +1905,10 @@ html[data-pagemargin='custom'] .reader-doc { padding: 1.25rem max(1.25rem, env(s
 
 .history-item {
   border-bottom: 1px solid var(--border);
+  /* P0-perf：抽内联 style 到类。原先每个 li 上挂 `style={{ display: 'flex', alignItems: 'center' }}`，
+     200 条历史下每次 re-render（删除 / 清空）都会重新分配对象并触发 style diff。 */
+  display: flex;
+  align-items: center;
 }
 
 .history-item:last-child {
@@ -1917,6 +1923,9 @@ html[data-pagemargin='custom'] .reader-doc { padding: 1.25rem max(1.25rem, env(s
   padding: 12px 6px;
   color: var(--text);
   transition: background 0.16s var(--ease);
+  /* P0-perf：占满 li 剩余宽度，与 .history-item-del 共占一行；min-width:0 让长标题可截断。 */
+  flex: 1 1 auto;
+  min-width: 0;
 }
 
 .history-link:hover {
@@ -1934,6 +1943,23 @@ html[data-pagemargin='custom'] .reader-doc { padding: 1.25rem max(1.25rem, env(s
   font-size: 0.7813rem;
   flex: 0 0 auto;
   font-variant-numeric: tabular-nums;
+}
+
+/* P0-perf：单条删除按钮样式（原在 tsx 内联 style 对象里，201 次 react-re-render 重新分配）。 */
+.history-item-del {
+  flex: 0 0 auto;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  color: var(--text-dim);
+  font-size: 18px;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0;
 }
 
 /* ------------------------------- 设置（阅读偏好） ------------------------------- */
