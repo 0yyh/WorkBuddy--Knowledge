@@ -14,10 +14,19 @@ bootstrapRoute();
 
 // 离线优先：注册手写 Service Worker（public/sw.js 会被 Vite 原样拷到 dist 根），仅在 web 端生效。
 // 使用 import.meta.env.BASE_URL 拼接，兼容子路径部署（Vite base 为 './'）；注册失败静默忽略。
+// P0-perf：把注册时机从 `load`（所有资源下载完成后）提前到 DOMContentLoaded，
+// 通常早 1-2s，让 install 阶段预缓存首屏三件套尽早开始下载。
 if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register(import.meta.env.BASE_URL + 'sw.js').catch(() => undefined);
-  });
+  const register = (): void => {
+    navigator.serviceWorker
+      .register(import.meta.env.BASE_URL + 'sw.js')
+      .catch(() => undefined);
+  };
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', register, { once: true });
+  } else {
+    register();
+  }
 }
 
 const container = document.getElementById('root');

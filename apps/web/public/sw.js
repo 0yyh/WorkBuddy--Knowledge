@@ -13,7 +13,7 @@
  * 注意：本文件位于 public/，Vite 会原样拷贝到 dist 根；不进 TS 编译，故用原生 SW JS 书写。
  * 仅 web 端生效，不影响 Android APK 既有的内置资产 + 局域网 OTA 离线路径。
  */
-const CACHE = 'pks-cache-v1';
+const CACHE = 'pks-cache-v2';
 const CORE = [
   './index.html',
   './favicon.ico',
@@ -21,6 +21,12 @@ const CORE = [
   './favicon-192.png',
   './favicon-512.png',
   './apple-touch-icon.png',
+  // P0-perf：首屏三件套（manifest / taxonomy / title.json）。冷启动完全离线
+  // 也能直接装载索引、不再 fetch 失败导致 Station 上下文抛错。
+  // 升级 manifest 三件套的版本号 → sw.js 也能感知（fetch 命中后 stale-while-revalidate 自动刷新）。
+  './content/index/manifest.json',
+  './content/index/taxonomy.json',
+  './content/index/search/title.json',
 ];
 
 self.addEventListener('install', (event) => {

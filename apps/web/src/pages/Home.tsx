@@ -8,7 +8,7 @@
  * 数据来源不变：manifest.stats 与 useStation().categoryViews / tracks。
  * components/CategoryTree 仍保留给 BrowsePage 侧栏。
  */
-import { useEffect, useState, type CSSProperties } from 'react';
+import { useMemo, type CSSProperties } from 'react';
 import { Link } from '../router';
 import { useStation } from '../state/AppContext';
 import { getLastRead } from '../lib/history';
@@ -67,7 +67,7 @@ interface StatCell {
 }
 
 export function HomePage(): JSX.Element {
-  const { manifest, categoryViews, tracks, getTrack, slugMap } = useStation();
+  const { manifest, categoryViews, tracks, slugMap } = useStation();
   const stats = manifest?.stats;
 
   // 续读卡片：取上次阅读位置；标题/章节总数来自 slugMap 分片。
@@ -77,35 +77,17 @@ export function HomePage(): JSX.Element {
   const lastTotalCh = lastItem?.sc ?? 0;
   const lastPct = lastRead && lastTotalCh > 0 ? Math.round((lastRead.chapterIndex / lastTotalCh) * 100) : 0;
 
-  // 时间线双轨条目数：TrackSummary 不含 count，按需拉一次序列取 items.length
-  const [trackCounts, setTrackCounts] = useState<{ china: number | null; world: number | null }>({
-    china: null,
-    world: null,
-  });
-
-  useEffect(() => {
-    let alive = true;
-    const load = async (): Promise<void> => {
-      let china: number | null = null;
-      let world: number | null = null;
-      for (const summary of tracks) {
-        if (summary.timeline !== 'china' && summary.timeline !== 'world') continue;
-        try {
-          const track = await getTrack(summary.id);
-          const n = track.items.length;
-          if (summary.timeline === 'china') china = (china ?? 0) + n;
-          else world = (world ?? 0) + n;
-        } catch {
-          /* 单条序列读取失败不影响首页渲染 */
-        }
-      }
-      if (alive) setTrackCounts({ china, world });
-    };
-    void load();
-    return () => {
-      alive = false;
-    };
-  }, [tracks, getTrack]);
+  // P0-perf：TrackSummary 已含条目数（content.ts fetchTrackSummaries 派生），
+  // 首页直接读 summary.itemCount 求和 → 零 await、零额外网络往返。
+  const trackCounts = useMemo(() => {
+    let china = 0;
+    let world = 0;
+    for (const s of tracks) {
+      if (s.timeline === 'china') china += s.itemCount;
+      else if (s.timeline === 'world') world += s.itemCount;
+    }
+    return { china, world };
+  }, [tracks]);
 
   const statCells: StatCell[] = stats
     ? [

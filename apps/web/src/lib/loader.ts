@@ -28,30 +28,35 @@ export function assetUrl(relPath: string): string {
 }
 
 /**
- * 内容缓存激活状态（fire-and-forget）：
- *  - 立即同步返回**当前已确定**的状态（首次返回 false，与历史行为一致）；
- *  - 未就绪时返回 false（**首个**后端异步跑查询），首次解析完成后 cacheActive
- *    被写定，之后的 fetchText 都直接走 `Promise.resolve(cacheActive)`，省掉
- *    67+ 次重复 IndexedDB roundtrip（manifest 4 + 64 entry 分片）。
- *  - `cacheActivePromise` 充当并发去重：68 次并发也只跑一次 getMeta。
- *  - 不会因为旧的 IndexedDB 缓存把「新装的 APK 里的新内容」盖住：cacheActive
- *    落定后才会进 getCached 路径；首次默认 false 时直读随包资源，不写回。
+ * 内容缓存是否已激活。
+ *
+ * 只有**成功应用过一次局域网更新**后才会为 true。这样保证：
+ *  - 从未更新过的设备行为与改造前完全一致（直接读随包资源，不碰 IndexedDB）；
+ *  - 不会因为旧的 IndexedDB 缓存把「新装的 APK 里的新内容」盖住。
+ * 结果做进程内记忆，避免每个文件都查一次 IndexedDB；更新生效后由
+ * `invalidateContentCacheFlag()` 重置。
+ *
+ * P0-perf：把首屏 68 次并发的 IDB roundtrip 降到 1 次（promise 缓存 + 并发去重）。
+ * 首屏 4 个常驻件（manifest/taxonomy/title/df-meta）并发都走 fetchText → 都
+ * 调 isContentCacheActive → 第 1 次真查 IDB、其余 67 次直接复用 in-flight promise，
+ * resolve 时一起把 cacheActive 写定。生产里一次冷启动只读一次 ACTIVATED_KEY。
  */
 let cacheActive: boolean | null = null;
-let cacheActivePromise: Promise<void> | null = null;
+let cacheActivePromise: Promise<boolean> | null = null;
 
 export function isContentCacheActive(): Promise<boolean> {
   if (cacheActive !== null) return Promise.resolve(cacheActive);
-  if (cacheActivePromise === null) {
-    cacheActivePromise = getMeta<boolean>(ACTIVATED_KEY)
-      .then((v) => {
-        cacheActive = v === true;
-      })
-      .catch(() => {
-        cacheActive = false;
-      });
-  }
-  return Promise.resolve(false);
+  if (cacheActivePromise !== null) return cacheActivePromise;
+  cacheActivePromise = getMeta<boolean>(ACTIVATED_KEY)
+    .then((v) => {
+      cacheActive = v === true;
+      return cacheActive;
+    })
+    .catch(() => {
+      cacheActive = false;
+      return false;
+    });
+  return cacheActivePromise;
 }
 
 /**
@@ -215,27 +220,38 @@ export async function ensureAllShards(shards: number): Promise<void> {
 }
 
 /**
- * 仅预热全部分片的**原始文本**（不解码）。
+ * 仅预热分片的**原始文本**（不解码）。
  * P0-III：worker 可用时解码只在 worker 内发生一次；若 worker 降级，主线程兜底检索时
  * 会经 loadShard → fetchShardText 命中本缓存后再按需解码。避免「主线程 + worker 各解一遍」。
+ *
+ * P0-perf：`cap` 限定只预热前 N 个分片（按搜索经验 0..cap-1 覆盖最常见词条分布）。
+ * 不传则预热全部（保留旧语义）；首屏不再被 17 MB 全量分片阻塞。传 0 表示「不预热任何分片」。
  */
-export async function ensureAllShardTexts(shards: number): Promise<void> {
+export async function ensureAllShardTexts(shards: number, cap?: number): Promise<void> {
+  const limit = cap === undefined ? shards : Math.min(shards, Math.max(0, cap));
   const tasks: Array<Promise<string>> = [];
-  for (let i = 0; i < shards; i++) tasks.push(fetchShardText(i).catch(() => ''));
+  for (let i = 0; i < limit; i++) tasks.push(fetchShardText(i).catch(() => ''));
   await Promise.all(tasks);
 }
 
 /**
- * 空闲预热：把全部分片文本在浏览器空闲期提前 fetch（+ 交给 Worker 解码），
+ * 空闲预热：把分片文本在浏览器空闲期提前 fetch（+ 交给 Worker 解码），
  * 使首次全文检索无需等待下载/解码（实测首搜秒级 → 预热后 <50ms）。
  * P0-III：只预热**文本**（不再在主线程预解码），解码交由 Worker 完成；
  * worker 不可用时主线程兜底仍会按需解码，且文本已缓存、不会二次下载。
  * 幂等：shardTextCache / shardTextInflight / sentShards 均保证不重复。
+ *
+ * P0-perf：默认只预热前 `WARM_SHARD_CAP` 个分片（按字母序对应最常被搜词条所在分片）；
+ * 其余分片仍会随首次检索按需懒加载。降低首屏网络空载，避免移动端在空闲期占用带宽。
  */
+const WARM_SHARD_CAP = 8;
+
 export function warmSearchShards(): void {
   const run = (): void => {
     void loadStation()
-      .then((b) => ensureAllShardTexts(b.manifest.search.shards).then(() => warmSearchWorker(b)))
+      .then((b) =>
+        ensureAllShardTexts(b.manifest.search.shards, WARM_SHARD_CAP).then(() => warmSearchWorker(b)),
+      )
       .catch(() => undefined);
   };
   const ric = (globalThis as {

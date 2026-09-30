@@ -66,6 +66,9 @@ export interface TrackSummary {
   id: string;
   title: string;
   timeline?: 'world' | 'china';
+  /** P0-perf：序列条目数。Home 原来要 await getTrack(id) 才能拿到 items.length，
+   *  现在随 TrackSummary 直接吐出，省掉一次 fetchTrack + 一次 await。 */
+  itemCount: number;
 }
 
 /** 时间轴行：TrackItem + 词条标题/摘要 + 跨轨标记 */

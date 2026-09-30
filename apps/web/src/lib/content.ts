@@ -196,6 +196,8 @@ export async function fetchTrackSummaries(): Promise<TrackSummary[]> {
       id: t.id,
       title: t.title,
       timeline: t.timeline,
+      // P0-perf：随 TrackSummary 吐出 itemCount；Home 等展示列表数时不再 await getTrack。
+      itemCount: t.items.length,
     }));
   } catch {
     summariesCache = [];

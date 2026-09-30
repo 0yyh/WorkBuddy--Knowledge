@@ -1,10 +1,10 @@
 /* ==========================================================================
    个人知识学习站 · Web 阅读端样式入口
    - 纯 CSS + CSS 变量设计令牌（零 UI 框架，无 Tailwind / MUI / Emotion）
-   - 设计令牌集中于 styles/tokens.css；本文件承载布局与组件样式
+   - 设计令牌集中于 styles/tokens.css；该文件由 vite.config.ts 的
+     `inlineTokensPlugin` 在编译时直接注入到 index.html <head>，首屏不再
+     多一次 CSS 请求（省一次 roundtrip）。本文件不再 @import tokens.css。
    ========================================================================== */
-
-@import './styles/tokens.css';
 
 * {
   box-sizing: border-box;
