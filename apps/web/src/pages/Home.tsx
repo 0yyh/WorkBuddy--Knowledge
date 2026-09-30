@@ -33,6 +33,12 @@ const L1_VISUAL: Record<string, L1Visual> = {
   科学: { icon: '理', bg: 'var(--l1-color-science-soft)', fg: 'var(--l1-color-science)' },
   经济学: { icon: '经', bg: 'var(--l1-color-economics-soft)', fg: 'var(--l1-color-economics)' },
   政治理论: { icon: '政', bg: 'var(--l1-color-politics-soft)', fg: 'var(--l1-color-politics)' },
+  技术: { icon: '技', bg: 'var(--l1-color-technology-soft)', fg: 'var(--l1-color-technology)' },
+  文学: { icon: '文', bg: 'var(--l1-color-literature-soft)', fg: 'var(--l1-color-literature)' },
+  艺术: { icon: '美', bg: 'var(--l1-color-art-soft)', fg: 'var(--l1-color-art)' },
+  宗教: { icon: '宗', bg: 'var(--l1-color-religion-soft)', fg: 'var(--l1-color-religion)' },
+  语言学: { icon: '语', bg: 'var(--l1-color-linguistics-soft)', fg: 'var(--l1-color-linguistics)' },
+  法学: { icon: '法', bg: 'var(--l1-color-law-soft)', fg: 'var(--l1-color-law)' },
 };
 
 /** 未收录的 L1 用中性灰，避免出现"没配色"的裸卡片 */

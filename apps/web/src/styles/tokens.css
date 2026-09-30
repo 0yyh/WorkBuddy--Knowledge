@@ -95,6 +95,19 @@
   --l1-color-politics-soft: #faece7;
   --l1-color-theory: var(--l1-color-politics);
   --l1-color-theory-soft: var(--l1-color-politics-soft);
+  /* 2026-09-30 阶段二收官补齐：技术 / 文学 / 艺术 / 宗教 / 语言学 / 法学 */
+  --l1-color-technology: #2c6e8a;
+  --l1-color-technology-soft: #e3f0f5;
+  --l1-color-literature: #b03a6b;
+  --l1-color-literature-soft: #fae6ee;
+  --l1-color-art: #a93a83;
+  --l1-color-art-soft: #fae6f0;
+  --l1-color-religion: #6b3a78;
+  --l1-color-religion-soft: #f0e3f0;
+  --l1-color-linguistics: #1a8870;
+  --l1-color-linguistics-soft: #e3f5ee;
+  --l1-color-law: #1a4a8a;
+  --l1-color-law-soft: #e3eaf5;
 
   /* —— 阅读器规范令牌（对齐 reader-ui-spec.md / reader-modernization-guide.md）——
      颜色 / 圆角 / 时长 / 缓动 / 层级统一命名，组件只消费 var(--xxx)，禁止硬编码。
@@ -162,4 +175,17 @@ body[data-sys-bg='dark'] {
   --l1-color-politics-soft: #3a241a;
   --l1-color-theory: var(--l1-color-politics);
   --l1-color-theory-soft: var(--l1-color-politics-soft);
+  /* 深色覆写（2026-09-30 阶段二收官补齐） */
+  --l1-color-technology: #6ab8d8;
+  --l1-color-technology-soft: #14323d;
+  --l1-color-literature: #f08ab0;
+  --l1-color-literature-soft: #3d1d28;
+  --l1-color-art: #f08ac0;
+  --l1-color-art-soft: #3d1d2e;
+  --l1-color-religion: #c89ae0;
+  --l1-color-religion-soft: #2e1d3d;
+  --l1-color-linguistics: #6ad8b8;
+  --l1-color-linguistics-soft: #143d2e;
+  --l1-color-law: #80b8f8;
+  --l1-color-law-soft: #14283d;
 }
