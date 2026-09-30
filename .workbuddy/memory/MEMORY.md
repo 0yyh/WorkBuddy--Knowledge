@@ -1,6 +1,14 @@
 # PKS 项目长期记忆 · 个人知识学习站
 
-纯本地离线优先知识站。Web(React18+Vite5+TS strict, 纯CSS零UI框架)+Android(Capacitor7 同套代码)。monorepo: packages/core(@pks/core)/packages/cli/apps/web。git master @ gitee SSH。现状（2026-09-22）381 词条 / 1873 章，**薄章清零：全部章节正文 ≥1200 纯汉字**。
+纯本地离线优先知识站。Web(React18+Vite5+TS strict, 纯CSS零UI框架)+Android(Capacitor7 同套代码)。monorepo: packages/core(@pks/core)/packages/cli/apps/web。git master @ gitee SSH。现状（2026-09-30）**598 词条 / 2947 章 / 509 万字**，**薄章清零（全站正文 ≥1200 纯汉字，多数 ≥1350）**，lint 0/0。C2/C3 内容域均衡已收官：文学 40 / 艺术 40 / 科学 90 / 技术 64 / 宗教 25 / 语言学 20 / 法学 20（commit 3402f38）。
+
+**首页 L1 类目图标（11 个）：** 历史 / 哲学 / 科学 / 经济学 / 政治理论 / 技术 / 文学 / 艺术 / 宗教 / 语言学 / 法学。每个 L1 在 Home.tsx `L1_VISUAL` 与 tokens.css `--l1-color-*-{fg,soft}` 有独立图标字 + 浅深主题色板。**新增 L1 必须同步在两处登记**，否则卡片 fallback 到「类」字符 + 灰底。新增时配色按"色相分散 + 与暖底色和谐"原则，不复用已有 fg 色。
+
+## Lint 口径补充（2026-09-30 实测）
+- **L004 tldr ≤120 的口径是 frontmatter 里 tldr 字符串总长（含标点/数字）**，非纯汉字——写 tldr 按 ≤115 总长最稳。
+- 文体与体裁类目正确路径：`文学/文体与体裁`（L2 直属），**不是** `文学/文学理论/文体与体裁`。
+- entry.md 缺 `status/confidence/rev` 会让整个词条解析失败 → 连带 L006 误报「see_also 指向不存在的 slug」（bajin 案例）。
+- copy-content 偶发 EPERM unlink（瞬时文件锁）→ 直接重试即可；scripts_build.mjs wrapper 偶发 exit=null 假失败 → 直跑 CLI build:index 确认。
 
 ## 环境铁律
 - 禁 pnpm/npm install/prune：@pks/core 靠 junction 解析，重装即断。web 消费 core **dist**；改 packages/core/src 后须在 packages/core 下 `node node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/bin/tsc -p tsconfig.json` 重编。
