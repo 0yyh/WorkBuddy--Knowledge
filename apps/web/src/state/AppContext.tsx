@@ -2,13 +2,42 @@
  * 全局应用状态（React Context）。
  * 负责：装载索引束（秒开三件套）→ 暴露 { ready/loading/error, taxonomy, slugMap, engine, tracks }。
  * 派生：类目计数、id/path → 节点映射、已知 slug 集合、L2 全文检索入口。
+ *
+ * P0-perf：把 StationState 拆成 3 个独立 context，按数据变化频率分组：
+ *  - DataContext：稳定但大的数据（懒变更：一次 loadStation 后基本不变）
+ *    → 内部用 useMemo + 严格依赖列表，bundle/tracks 引用未变时整个 value 引用稳定。
+ *  - StatusContext：高频变化（小、订阅广：loading/ready/error）
+ *    → 仅 reload 流程或错误捕获时变化。
+ *  - ActionsContext：稳定引用（useCallback + useMemo 锁住）
+ *    → reload/searchFullText/getTrack 引用跨渲染稳定，依赖项最小化。
+ *
+ * 旧 caller 用 `useStation()`（内部合并三个 context）保持行为不变；
+ * 新代码推荐 `useStationData()` / `useStationStatus()` / `useStationActions()` 精订阅。
  */
-import { createContext, useCallback, useContext, useEffect, useMemo, useState, type ReactNode } from 'react';
-import type { EntryIndexItem, IndexManifest, SearchEngine, SearchResultGroup, TaxonomyNode, Track } from '@pks/core';
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+  type ReactNode,
+} from 'react';
+import type {
+  EntryIndexItem,
+  IndexManifest,
+  SearchEngine,
+  SearchResultGroup,
+  TaxonomyNode,
+  Track,
+} from '@pks/core';
 import { fullTextSearch, loadStation, warmSearchShards, type StationBundle } from '../lib/loader';
 import { fetchTrack, fetchTrackSummaries } from '../lib/content';
 import type { CategoryView, TrackSummary } from '../types';
 
+/* ------------------------------------------------------------------ *
+ * 公开接口：useStation() 的返回类型保持不变（19 字段），所有旧 caller 无需改。
+ * ------------------------------------------------------------------ */
 export interface StationState {
   loading: boolean;
   ready: boolean;
@@ -33,30 +62,108 @@ export interface StationState {
   reload: () => void;
 }
 
-const EMPTY_STATE: StationState = {
+/* ------------------------------------------------------------------ *
+ * 三个 context 的拆分值类型（按变化频率分组）。
+ *  DataContext：稳定大块 + 派生。
+ *  StatusContext：高频小信号（loading/ready/error）。
+ *  ActionsContext：稳定引用，闭包依赖最小化。
+ * ------------------------------------------------------------------ */
+export interface DataContextValue {
+  manifest: IndexManifest | null;
+  taxonomy: TaxonomyNode[];
+  slugMap: Map<string, EntryIndexItem>;
+  knownSlugs: Set<string>;
+  engine: SearchEngine | null;
+  /** 全局 BM25 参数（{totalDocs, avgLen}）；与 loader 输出的 bundle.dfMeta 同源。 */
+  dfMeta: { totalDocs: number; avgLen: number } | null;
+  /** 主线程兜底检索用的全局 df Map（与 engine.stats.df 同引用）；按需填充。 */
+  dfMap: Map<string, number>;
+  tracks: TrackSummary[];
+  categoryViews: CategoryView[];
+  categoryCounts: Map<string, number>;
+  nodeSlugs: Map<string, string[]>;
+  nodeOwnSlugs: Map<string, string[]>;
+  nodeById: Map<string, TaxonomyNode>;
+  nodeByPath: Map<string, TaxonomyNode>;
+}
+
+export interface StatusContextValue {
+  loading: boolean;
+  /** 与原 useStation().ready 同语义：bundle 装载完成即 true（不计空、不计 error）。 */
+  ready: boolean;
+  error: string | null;
+}
+
+export interface ActionsContextValue {
+  reload: () => void;
+  searchFullText: (query: string) => Promise<SearchResultGroup[]>;
+  getTrack: (trackId: string) => Promise<Track>;
+}
+
+/* ------------------------------------------------------------------ *
+ * Fallback 默认值：必须是 module-level 单例。
+ *
+ * ⚠️  React Context Provider 比较走 Object.is，若 fallback 在每次调用时新建对象，
+ *    会让 useContext 返回不同引用、误触发 consumer 重渲染。所以 EMPTY_* 一律
+ *    在文件顶层创建一次，下游所有 fallback 都引用同一对象。
+ *
+ * EMPTY_DATA：把 Map/Set 字段也都提到顶层，避免每次解构时新建空 Map/Set。
+ * EMPTY_STATUS：基础类型字段，单例足够。
+ * EMPTY_ACTIONS：searchFullText/getTrack/reload 都是「尚未初始化」的占位实现；
+ *   reload = noop；searchFullText 直接返回空数组；getTrack 抛错（与原 EMPTY_STATE 语义一致）。
+ * ------------------------------------------------------------------ */
+const EMPTY_SLUG_MAP: Map<string, EntryIndexItem> = new Map();
+const EMPTY_KNOWN_SLUGS: Set<string> = new Set();
+const EMPTY_CATEGORY_COUNTS: Map<string, number> = new Map();
+const EMPTY_NODE_SLUGS: Map<string, string[]> = new Map();
+const EMPTY_NODE_OWN_SLUGS: Map<string, string[]> = new Map();
+const EMPTY_NODE_BY_ID: Map<string, TaxonomyNode> = new Map();
+const EMPTY_NODE_BY_PATH: Map<string, TaxonomyNode> = new Map();
+const EMPTY_DF_MAP: Map<string, number> = new Map();
+const EMPTY_TRACKS: TrackSummary[] = [];
+const EMPTY_CATEGORY_VIEWS: CategoryView[] = [];
+const EMPTY_TAXONOMY: TaxonomyNode[] = [];
+
+const EMPTY_DATA: DataContextValue = {
+  manifest: null,
+  taxonomy: EMPTY_TAXONOMY,
+  slugMap: EMPTY_SLUG_MAP,
+  knownSlugs: EMPTY_KNOWN_SLUGS,
+  engine: null,
+  dfMeta: null,
+  dfMap: EMPTY_DF_MAP,
+  tracks: EMPTY_TRACKS,
+  categoryViews: EMPTY_CATEGORY_VIEWS,
+  categoryCounts: EMPTY_CATEGORY_COUNTS,
+  nodeSlugs: EMPTY_NODE_SLUGS,
+  nodeOwnSlugs: EMPTY_NODE_OWN_SLUGS,
+  nodeById: EMPTY_NODE_BY_ID,
+  nodeByPath: EMPTY_NODE_BY_PATH,
+};
+
+const EMPTY_STATUS: StatusContextValue = {
   loading: true,
   ready: false,
   error: null,
-  manifest: null,
-  taxonomy: [],
-  slugMap: new Map<string, EntryIndexItem>(),
-  knownSlugs: new Set<string>(),
-  engine: null,
-  tracks: [],
-  categoryViews: [],
-  categoryCounts: new Map<string, number>(),
-  nodeSlugs: new Map<string, string[]>(),
-  nodeOwnSlugs: new Map<string, string[]>(),
-  nodeById: new Map<string, TaxonomyNode>(),
-  nodeByPath: new Map<string, TaxonomyNode>(),
-  searchFullText: async () => [],
-  getTrack: async () => {
-    throw new Error('尚未初始化');
-  },
-  reload: () => undefined,
 };
 
-const StationContext = createContext<StationState>(EMPTY_STATE);
+const EMPTY_ACTIONS: ActionsContextValue = {
+  reload: (): void => undefined,
+  searchFullText: async (): Promise<SearchResultGroup[]> => [],
+  getTrack: async (): Promise<Track> => {
+    throw new Error('尚未初始化');
+  },
+};
+
+/* ------------------------------------------------------------------ *
+ * 三个独立 context 实例。createContext 默认值显式为 null：
+ *  - 类型为 ContextType | null，下游用 `useContext(...) ?? EMPTY_*` 兜底。
+ *  - 真正的「无 Provider」场景（理论上不会发生，因为根组件一定有 StationProvider）
+ *    也能安全 fallback，不破坏 hook 顺序与重渲染语义。
+ * ------------------------------------------------------------------ */
+const DataContext = createContext<DataContextValue | null>(null);
+const StatusContext = createContext<StatusContextValue | null>(null);
+const ActionsContext = createContext<ActionsContextValue | null>(null);
 
 /**
  * 类目计数采用「标签语义」模型（并集去重）：
@@ -133,7 +240,7 @@ function buildNodeMaps(nodes: TaxonomyNode[]): {
 
 export function StationProvider({ children }: { children: ReactNode }): JSX.Element {
   const [bundle, setBundle] = useState<StationBundle | null>(null);
-  const [tracks, setTracks] = useState<TrackSummary[]>([]);
+  const [tracks, setTracks] = useState<TrackSummary[]>(EMPTY_TRACKS);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [reloadToken, setReloadToken] = useState<number>(0);
@@ -167,13 +274,39 @@ export function StationProvider({ children }: { children: ReactNode }): JSX.Elem
     };
   }, [reloadToken]);
 
-  const reload = useCallback(() => {
+  // reload：稳定引用，依赖项空；只通过 reloadToken 触发 useEffect 重启装载。
+  const reload = useCallback((): void => {
     setReloadToken((n) => n + 1);
   }, []);
 
-  const value = useMemo<StationState>(() => {
+  // searchFullText：依赖 bundle（用 closure 捕获当前 bundle 引用）；bundle 变化时引用变。
+  // getTrack：reload 与 fetchTrack 都是无状态模块函数，无依赖 → 引用永远稳定。
+  const searchFullText = useCallback(
+    (query: string): Promise<SearchResultGroup[]> => {
+      // bundle 为 null 时理论上不会调到这里（Provider 装配完才渲染 children），
+      // 这里做兜底：避免 binding 在初始态被调时崩。
+      if (!bundle) return Promise.resolve([]);
+      return fullTextSearch(bundle, query);
+    },
+    [bundle],
+  );
+  const getTrack = useCallback((trackId: string): Promise<Track> => fetchTrack(trackId), []);
+
+  // StatusContext value：loading/ready/error 都是高频信号。
+  // 单独 useMemo 锁住，依赖项最小；StatusContext 消费者（AppShell/EntryReaderPage 等）
+  // 只在装载/重载过程中重渲染，不会被 DataContext 大对象拖动。
+  const statusValue = useMemo<StatusContextValue>(
+    () => ({ loading, ready: bundle !== null, error }),
+    [loading, bundle, error],
+  );
+
+  // DataContext value：稳定大块 + 派生。
+  // bundle 不变时整个 value 引用稳定 → DataContext 消费者（Home/BrowsePage 等）
+  // 不会因 reload 调用本身重渲染，仅在 bundle/tracks 真正变化时才重渲染。
+  const dataValue = useMemo<DataContextValue>(() => {
     if (!bundle) {
-      return { ...EMPTY_STATE, loading, error, tracks, reload };
+      // bundle 未到 → 直接返回单例 EMPTY_DATA；tracks 留 EMPTY（EMPTY_TRACKS 同引用）。
+      return EMPTY_DATA;
     }
     // 「标签语义」计数：类目计数 == 该类目（含子孙）引用的全部词条去重数 == 浏览列表长度
     const nodeSlugs = buildUnionSlugs(bundle.taxonomy);
@@ -187,14 +320,13 @@ export function StationProvider({ children }: { children: ReactNode }): JSX.Elem
     const knownSlugs = new Set<string>(bundle.slugMap.keys());
 
     return {
-      loading,
-      ready: true,
-      error,
       manifest: bundle.manifest,
       taxonomy: bundle.taxonomy,
       slugMap: bundle.slugMap,
       knownSlugs,
       engine: bundle.engine,
+      dfMeta: bundle.dfMeta,
+      dfMap: bundle.dfMap,
       tracks,
       categoryViews,
       categoryCounts: counts,
@@ -202,16 +334,80 @@ export function StationProvider({ children }: { children: ReactNode }): JSX.Elem
       nodeOwnSlugs,
       nodeById: byId,
       nodeByPath: byPath,
-      searchFullText: (query: string) => fullTextSearch(bundle, query),
-      getTrack: (trackId: string) => fetchTrack(trackId),
-      reload,
     };
-  }, [bundle, tracks, loading, error, reload]);
+  }, [bundle, tracks]);
 
-  return <StationContext.Provider value={value}>{children}</StationContext.Provider>;
+  // ActionsContext value：三个 callback 全部 useCallback 锁住 → 整体 useMemo 引用稳定
+  // （searchFullText 因依赖 bundle 会随 bundle 变化而变，这是预期行为）。
+  const actionsValue = useMemo<ActionsContextValue>(
+    () => ({ reload, searchFullText, getTrack }),
+    [reload, searchFullText, getTrack],
+  );
+
+  return (
+    <DataContext.Provider value={dataValue}>
+      <StatusContext.Provider value={statusValue}>
+        <ActionsContext.Provider value={actionsValue}>{children}</ActionsContext.Provider>
+      </StatusContext.Provider>
+    </DataContext.Provider>
+  );
 }
 
-/** 读取全局状态 */
+/* ------------------------------------------------------------------ *
+ * Selector hooks（新 caller 推荐使用；细粒度订阅，按 context 各自订阅）。
+ *  - 用 `useContext(...) ?? EMPTY_*` 兜底：若 Provider 不在树上（理论不会发生），
+ *    也返回稳定单例，hook 顺序与重渲染语义不变。
+ * ------------------------------------------------------------------ */
+
+/** 只订阅稳定大块数据（manifest/slugMap/engine/tracks/派生类目树）。 */
+export function useStationData(): DataContextValue {
+  return useContext(DataContext) ?? EMPTY_DATA;
+}
+
+/** 只订阅高频小信号（loading/ready/error）。 */
+export function useStationStatus(): StatusContextValue {
+  return useContext(StatusContext) ?? EMPTY_STATUS;
+}
+
+/** 只订阅稳定引用 actions（reload/searchFullText/getTrack）。 */
+export function useStationActions(): ActionsContextValue {
+  return useContext(ActionsContext) ?? EMPTY_ACTIONS;
+}
+
+/**
+ * 读取全局状态（兼容旧 caller）：内部合并三个 context，返回完整 StationState。
+ *
+ * ⚠️  注意：这个 hook 合并的 value 引用在 DataContext/StatusContext/ActionsContext
+ *    任一变化时都会变。**旧 caller 若关心重渲染频率，应迁移到三个 selector hook 之一**。
+ *    本函数保留的唯一目的是不强制 caller 改 main。
+ */
 export function useStation(): StationState {
-  return useContext(StationContext);
+  const data = useStationData();
+  const status = useStationStatus();
+  const actions = useStationActions();
+
+  // 把三个 context 合并为 StationState 形状；显式列字段（避免带 DataContext 内部的 dfMeta/dfMap 漏到 StationState）。
+  return useMemo<StationState>(
+    () => ({
+      loading: status.loading,
+      ready: status.ready,
+      error: status.error,
+      manifest: data.manifest,
+      taxonomy: data.taxonomy,
+      slugMap: data.slugMap,
+      knownSlugs: data.knownSlugs,
+      engine: data.engine,
+      tracks: data.tracks,
+      categoryViews: data.categoryViews,
+      categoryCounts: data.categoryCounts,
+      nodeSlugs: data.nodeSlugs,
+      nodeOwnSlugs: data.nodeOwnSlugs,
+      nodeById: data.nodeById,
+      nodeByPath: data.nodeByPath,
+      searchFullText: actions.searchFullText,
+      getTrack: actions.getTrack,
+      reload: actions.reload,
+    }),
+    [data, status, actions],
+  );
 }
