@@ -36,7 +36,7 @@ import {
   type ReaderPrefs,
 } from '../lib/preferences';
 import { CLOCK_INTERVAL_MS, TAP_LEFT_RATIO, TAP_RIGHT_RATIO } from '../lib/reader-constants';
-import { useStation } from '../state/AppContext';
+import { useStationData, useStationStatus } from '../state/AppContext';
 import type { HeadingView } from '../types';
 
 interface EntryReaderPageProps {
@@ -53,7 +53,10 @@ function formatClock(d: Date): string {
 }
 
 export function EntryReaderPage({ slug, chapterStart }: EntryReaderPageProps): JSX.Element {
-  const { ready, slugMap, knownSlugs } = useStation();
+  // P1-C：精订阅 — ready 来自 StatusContext（reload 时变化触发本组件 re-render），
+  // slugMap / knownSlugs 来自 DataContext（基本不变）。不再订阅 actions/engine/taxonomy。
+  const { ready } = useStationStatus();
+  const { slugMap, knownSlugs } = useStationData();
   const item = slugMap.get(slug);
   const entryTitle = item?.t ?? slug;
 

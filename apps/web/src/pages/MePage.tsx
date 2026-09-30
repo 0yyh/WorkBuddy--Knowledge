@@ -6,7 +6,7 @@
  */
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { Link } from '../router';
-import { useStation } from '../state/AppContext';
+import { useStationData } from '../state/AppContext';
 import {
   applyContentUpdate,
   checkForContentUpdate,
@@ -33,7 +33,9 @@ function formatBuiltAt(value: string | null): string {
 }
 
 export function MePage(): JSX.Element {
-  const { manifest } = useStation();
+  // P1-C：只订阅 manifest（DataContext）。不订阅 tracks / engine / taxonomy — 这页用不到。
+  // status / actions 变化也不会让本组件 re-render。
+  const { manifest } = useStationData();
   const built = manifest?.built_at.slice(0, 10) ?? '—';
   const stats = manifest?.stats;
 

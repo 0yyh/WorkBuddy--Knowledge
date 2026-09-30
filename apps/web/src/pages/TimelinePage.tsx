@@ -9,7 +9,7 @@ import { TimelineView } from '../components/TimelineView';
 import { Spinner } from '../components/Spinner';
 import { Link } from '../router';
 import { fetchTrackSummaries } from '../lib/content';
-import { useStation } from '../state/AppContext';
+import { useStationActions, useStationData } from '../state/AppContext';
 import type { TimelineRow, TrackSummary } from '../types';
 
 interface TimelinePageProps {
@@ -17,7 +17,10 @@ interface TimelinePageProps {
 }
 
 export function TimelinePage({ trackId }: TimelinePageProps): JSX.Element {
-  const { slugMap, getTrack } = useStation();
+  // P1-C：精订阅 — slugMap（DataContext，词条元数据）+ getTrack（ActionsContext）。
+  // 不订阅 status / engine / taxonomy / categoryViews。
+  const { slugMap } = useStationData();
+  const { getTrack } = useStationActions();
   const [track, setTrack] = useState<Track | null>(null);
   const [allTracks, setAllTracks] = useState<Array<{ summary: TrackSummary; track: Track }>>([]);
   const [loading, setLoading] = useState<boolean>(true);

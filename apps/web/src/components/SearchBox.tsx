@@ -8,7 +8,7 @@
 import { useCallback, useDeferredValue, useEffect, useRef, useState } from 'react';
 import type { SearchHit } from '@pks/core';
 import { navigate } from '../router';
-import { useStation } from '../state/AppContext';
+import { useStationData } from '../state/AppContext';
 
 interface SearchBoxProps {
   size?: 'compact' | 'large';
@@ -20,7 +20,8 @@ const SUGGEST_LIMIT = 8;
 const SUGGEST_DEBOUNCE_MS = 100;
 
 export function SearchBox({ size = 'compact', initialQuery = '' }: SearchBoxProps): JSX.Element {
-  const { engine } = useStation();
+  // P1-C：精订阅 — 仅 DataContext.engine。input 输入变化不会让父组件因 status/actions 重渲染。
+  const { engine } = useStationData();
   const [query, setQuery] = useState<string>(initialQuery);
   const deferredQuery = useDeferredValue(query);
   const [suggestions, setSuggestions] = useState<SearchHit[]>([]);

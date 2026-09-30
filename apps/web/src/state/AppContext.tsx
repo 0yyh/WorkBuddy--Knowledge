@@ -32,6 +32,7 @@ import type {
   Track,
 } from '@pks/core';
 import { fullTextSearch, loadStation, warmSearchShards, type StationBundle } from '../lib/loader';
+import { warmSearchWorker } from '../lib/searchWorkerClient';
 import { fetchTrack, fetchTrackSummaries } from '../lib/content';
 import type { CategoryView, TrackSummary } from '../types';
 
@@ -258,6 +259,14 @@ export function StationProvider({ children }: { children: ReactNode }): JSX.Elem
         if (!alive) return;
         setTracks(list);
         setLoading(false);
+        // P1-B：search worker 提前启动。不等 requestIdleCallback（约 1.2 s 延迟），
+        // loadStation 一完成就 fire-and-forget 触发 init worker；
+        // 用户首次搜全文时 worker 已 ready，省掉 50-200 ms 启动延迟。
+        // warmSearchWorker 内部 ensureInitialized + ensureShardsSent 都用 readyPromise
+        // / sentShards 去重，与下面 warmSearchShards 内的二次调用幂等。
+        void warmSearchWorker(b);
+        // 兜底场景（worker 不可用）仍走主线程检索；预热前 8 个分片文本避免首次
+        // 主线程 BM25 等待 fetch + decode。
         warmSearchShards();
       })
       .catch((e: unknown) => {

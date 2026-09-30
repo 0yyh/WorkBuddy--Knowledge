@@ -6,7 +6,11 @@
 import { useEffect, useRef, useState, type ReactNode } from 'react';
 import { Link, navigate } from '../router';
 import { SearchBox } from './SearchBox';
-import { useStation } from '../state/AppContext';
+import {
+  useStationActions,
+  useStationData,
+  useStationStatus,
+} from '../state/AppContext';
 import { useImmersive } from '../state/ImmersiveContext';
 import { TabBar } from './TabBar';
 import { Spinner } from './Spinner';
@@ -16,7 +20,12 @@ interface AppShellProps {
 }
 
 export function AppShell({ children }: AppShellProps): JSX.Element {
-  const { loading, error, tracks, manifest, reload } = useStation();
+  // P1-C：按数据变化频率订阅：StatusContext（loading/error 高频）+ DataContext（tracks/manifest
+  // 稳定大块）+ ActionsContext（reload 稳定引用）。reload 按钮 / 顶栏 track 列表 / 底部 footer
+  // 三处互不串扰：loading 变化不重渲染 footer，tracks 变化不重渲染 spinner 状态。
+  const { loading, error } = useStationStatus();
+  const { tracks, manifest } = useStationData();
+  const { reload } = useStationActions();
   const { isImmersive, isReader } = useImmersive();
   const showChrome = !isReader;
 

@@ -10,7 +10,7 @@
  */
 import { useMemo, type CSSProperties } from 'react';
 import { Link } from '../router';
-import { useStation } from '../state/AppContext';
+import { useStationData } from '../state/AppContext';
 import { getLastRead } from '../lib/history';
 
 interface L1Visual {
@@ -67,7 +67,9 @@ interface StatCell {
 }
 
 export function HomePage(): JSX.Element {
-  const { manifest, categoryViews, tracks, slugMap } = useStation();
+  // P1-C：精订阅 — manifest/categoryViews/tracks/slugMap（DataContext）。status/actions
+  // 变化不再让本组件 re-render。
+  const { manifest, categoryViews, tracks, slugMap } = useStationData();
   const stats = manifest?.stats;
 
   // 续读卡片：取上次阅读位置；标题/章节总数来自 slugMap 分片。

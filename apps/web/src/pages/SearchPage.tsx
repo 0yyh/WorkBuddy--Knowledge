@@ -12,7 +12,7 @@ import type { SearchHit, SearchResultGroup } from '@pks/core';
 import { SearchBox } from '../components/SearchBox';
 import { Spinner } from '../components/Spinner';
 import { Link, navigate } from '../router';
-import { useStation } from '../state/AppContext';
+import { useStationActions, useStationData } from '../state/AppContext';
 import { useWindowedSlice } from '../lib/useWindowedSlice';
 
 const RECENT_KEY = 'pks_recentSearches';
@@ -73,7 +73,10 @@ interface SearchPageProps {
 }
 
 export function SearchPage({ query, full }: SearchPageProps): JSX.Element {
-  const { engine, searchFullText, slugMap } = useStation();
+  // P1-C：精订阅 — engine / slugMap（DataContext）+ searchFullText（ActionsContext）。
+  // 不订阅 status / taxonomy / categoryViews 等本组件用不到的字段。
+  const { engine, slugMap } = useStationData();
+  const { searchFullText } = useStationActions();
   const [groups, setGroups] = useState<SearchResultGroup[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);

@@ -5,6 +5,7 @@
  * 安全约定（05 §2）：本应用从不拼接未净化的 HTML，UI 层仅渲染本模块返回的 html 字段。
  */
 import {
+  LRUCache,
   parseYamlFrontmatter,
   renderMarkdown,
   resolveWikiLinks,
@@ -17,6 +18,34 @@ import type { ChapterDocument, EntryDocument, HeadingView, TrackSummary } from '
 
 const WIKILINK_RE = /\[\[([^\]|]+)(?:\|([^\]]+))?\]\]/g;
 const ENTRY_LINK_RE = /\[([^\]]+)\]\(entry:\/\/([^)\s]+)\)/g;
+
+/* ------------------------------- 文档 LRU ------------------------------- */
+/**
+ * P1-A：阅读页二次访问（最近阅读 / 搜索结果回点 / 收藏）的「整篇文档」LRU。
+ *
+ * @pks/core 内部的 `renderMarkdown` 已对最终 HTML 字符串按 `entry:<slug>` /
+ * `chapter:<slug>:<key>` 做 LRU(64)；本模块在外层再叠加一层「完整 EntryDocument /
+ * ChapterDocument」缓存，把**入口外的 fetchText + parseYamlFrontmatter +
+ * validateMeta + renderMarkdown**（YAML 解析、schema 校验、wiki link 转换）
+ * 整段全部跳过，命中即同步返回对象引用（~0 ms）。
+ *
+ * 失效：cacheKey 用 `slug#knownSlugs.size`。新词条录入会让 size 同步增长 →
+ * key 变化 → 旧缓存自然失效，无需显式 clear。reload / OTA 后 App 上下文重建
+ * 新的 knownSlugs（Set 新引用），size 会变化，同样触发自然失效。
+ * 重置场景（OTA 失败回退随包内容、debug 主动清空）调 `clearDocumentCaches`。
+ *
+ * 容量估算：entry 80（80 个词条全量正文，每词条平均 30 KB markdown → ~2.4 MB
+ * 渲染后 HTML 缓存）+ chapter 200（80 词条 × 平均 2.5 章 / 篇，热点阅读深度的
+ * 全部覆盖）= ~10 MB 内存上限，移动端可接受。
+ */
+const entryDocCache = new LRUCache<string, EntryDocument>(80);
+const chapterDocCache = new LRUCache<string, ChapterDocument>(200);
+
+/** 清空文档 LRU（reload / 调试用） */
+export function clearDocumentCaches(): void {
+  entryDocCache.clear();
+  chapterDocCache.clear();
+}
 
 export interface LinkifyResult {
   md: string;
@@ -99,6 +128,15 @@ export async function loadEntryDocument(
   knownSlugs: Set<string>,
   toc: TocNode[] = [],
 ): Promise<EntryDocument> {
+  // P1-A：文档 LRU 命中检查（knownSlugs.size 作为失效标识：新增词条会让 size 同步增长）。
+  const cacheKey = `${slug}#${knownSlugs.size}`;
+  const hit = entryDocCache.get(cacheKey);
+  if (hit) {
+    // toc 由调用方传入（每次可能不同：reader / cover / browse 三处各自的 toc）
+    // 其余字段全部来自缓存命中，省 fetchText + parseYamlFrontmatter + validateMeta + renderMarkdown。
+    return { ...hit, toc };
+  }
+
   const raw = await fetchText(`entries/${slug}/entry.md`);
   const fm = parseYamlFrontmatter(raw);
   if (!fm.data) throw new Error(`词条 ${slug} 缺少 front-matter：${fm.error ?? '未知原因'}`);
@@ -108,7 +146,7 @@ export async function loadEntryDocument(
   const linkified = linkifyMarkdown(fm.body, knownSlugs);
   const html = await renderMarkdown(linkified.md, `entry:${slug}`);
 
-  return {
+  const doc: EntryDocument = {
     slug,
     meta,
     html,
@@ -118,6 +156,8 @@ export async function loadEntryDocument(
     unresolved: linkified.unresolved,
     warnings: [...validated.errors, ...validated.warnings],
   };
+  entryDocCache.set(cacheKey, doc);
+  return doc;
 }
 
 /** 装载并渲染单章正文 */
@@ -126,6 +166,11 @@ export async function loadChapterDocument(
   key: string,
   knownSlugs: Set<string>,
 ): Promise<ChapterDocument> {
+  // P1-A：文档 LRU 命中检查。
+  const cacheKey = `${slug}#${key}#${knownSlugs.size}`;
+  const hit = chapterDocCache.get(cacheKey);
+  if (hit) return hit;
+
   const raw = await fetchText(`entries/${slug}/chapters/${key}.md`);
   const fm = parseYamlFrontmatter(raw);
   let meta: SectionMeta | null = null;
@@ -135,7 +180,7 @@ export async function loadChapterDocument(
   }
   const linkified = linkifyMarkdown(body, knownSlugs);
   const html = await renderMarkdown(linkified.md, `chapter:${slug}:${key}`);
-  return {
+  const doc: ChapterDocument = {
     key,
     slug,
     meta,
@@ -146,6 +191,8 @@ export async function loadChapterDocument(
     title: meta?.title ?? key,
     unresolved: linkified.unresolved,
   };
+  chapterDocCache.set(cacheKey, doc);
+  return doc;
 }
 
 /**

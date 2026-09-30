@@ -10,7 +10,7 @@ import { Spinner } from '../components/Spinner';
 import { Link } from '../router';
 import { fetchCover } from '../lib/cover';
 import { flattenChapterList } from '../lib/content';
-import { useStation } from '../state/AppContext';
+import { useStationData } from '../state/AppContext';
 import { navigate } from '../router';
 
 const TYPE_LABEL: Record<string, string> = {
@@ -58,7 +58,9 @@ function formatDate(iso: string): string {
 }
 
 export function EntryCoverPage({ slug }: EntryCoverPageProps): JSX.Element {
-  const { slugMap, nodeByPath, knownSlugs } = useStation();
+  // P1-C：只订阅 DataContext（slugMap / nodeByPath / knownSlugs），不订阅 status。
+  // 详情页不需要监听 loading/ready（已由 AppShell 在路由层拦截）。
+  const { slugMap, nodeByPath, knownSlugs } = useStationData();
   const item = slugMap.get(slug);
 
   const [cover, setCover] = useState<EntryCover | null>(null);

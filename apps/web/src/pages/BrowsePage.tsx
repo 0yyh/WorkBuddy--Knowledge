@@ -5,7 +5,7 @@
  */
 import { Link, navigate } from '../router';
 import { CategoryTree } from '../components/CategoryTree';
-import { useStation } from '../state/AppContext';
+import { useStationData } from '../state/AppContext';
 import { useWindowedSlice } from '../lib/useWindowedSlice';
 import type { EntryIndexItem } from '@pks/core';
 
@@ -14,8 +14,8 @@ interface BrowsePageProps {
 }
 
 export function BrowsePage({ catId }: BrowsePageProps): JSX.Element {
-  // nodeSlugs 与首页计数同源（标签语义/并集去重）：浏览列表 == 类目计数，点进去看到几条 == 树上写几条
-  const { nodeById, slugMap, categoryViews, categoryCounts, nodeSlugs } = useStation();
+  // P1-C：只订阅 DataContext 的类目树大块（不变热数据）。status 变化不再让本组件 re-render。
+  const { nodeById, slugMap, categoryViews, categoryCounts, nodeSlugs } = useStationData();
   const node = nodeById.get(catId);
 
   if (!node) {
