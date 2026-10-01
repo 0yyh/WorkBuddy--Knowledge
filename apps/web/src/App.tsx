@@ -5,18 +5,21 @@
  */
 import { useEffect, lazy, Suspense } from 'react';
 import { AppShell } from './components/AppShell';
+import { PageSkeleton } from './components/PageSkeleton';
+import { routeChunks, prefetchRoute } from './lib/routeChunks';
 
 // 路由级代码分割：页面组件按需加载，避免首屏打包全部页面。
 // AppShell / 路由 / 全局 Provider 保持静态（体积很小且首屏即用）。
-const HomePage = lazy(() => import('./pages/Home').then((m) => ({ default: m.HomePage })));
-const BrowsePage = lazy(() => import('./pages/BrowsePage').then((m) => ({ default: m.BrowsePage })));
-const EntryCoverPage = lazy(() => import('./pages/EntryCoverPage').then((m) => ({ default: m.EntryCoverPage })));
-const EntryReaderPage = lazy(() => import('./pages/EntryReaderPage').then((m) => ({ default: m.EntryReaderPage })));
-const SearchPage = lazy(() => import('./pages/SearchPage').then((m) => ({ default: m.SearchPage })));
-const TimelinePage = lazy(() => import('./pages/TimelinePage').then((m) => ({ default: m.TimelinePage })));
-const HistoryPage = lazy(() => import('./pages/HistoryPage').then((m) => ({ default: m.HistoryPage })));
-const SettingsPage = lazy(() => import('./pages/SettingsPage').then((m) => ({ default: m.SettingsPage })));
-const MePage = lazy(() => import('./pages/MePage').then((m) => ({ default: m.MePage })));
+// thunk 集中到 routeChunks（单一来源），prefetchRoute 复用同一份，避免重复加载。
+const HomePage = lazy(routeChunks.home);
+const BrowsePage = lazy(routeChunks.browse);
+const EntryCoverPage = lazy(routeChunks.entryCover);
+const EntryReaderPage = lazy(routeChunks.entryReader);
+const SearchPage = lazy(routeChunks.search);
+const TimelinePage = lazy(routeChunks.timeline);
+const HistoryPage = lazy(routeChunks.history);
+const SettingsPage = lazy(routeChunks.settings);
+const MePage = lazy(routeChunks.me);
 import { useHashRoute, navigate } from './router';
 import { StationProvider } from './state/AppContext';
 import { ImmersiveProvider, useImmersive } from './state/ImmersiveContext';
@@ -123,22 +126,49 @@ function Router(): JSX.Element {
     return () => setReader(false);
   }, [route.name, setReader]);
 
+  // 路由预取（Sprint 3 · 首屏/启动资源与预取优化）：
+  // 用户在「详情页」时极可能进入「阅读页」，提前下载阅读页 chunk（含 reader + markdown 重链），
+  // 不抢首屏带宽（首页已加载完成），使「详情 → 阅读」瞬时。
+  useEffect(() => {
+    if (route.name === 'entry' || route.name === 'entry-cover') {
+      prefetchRoute('entryReader');
+    }
+  }, [route.name]);
+
+  // 首屏之后空闲预取轻量路由 chunk（仅依赖已加载的 vendor-core），
+  // 让标签栏 / 搜索 / 时间线等导航瞬时打开，不拖累首屏下载量。
+  useEffect(() => {
+    // requestIdleCallback 在 Safari 等环境缺失，做特征检测（TS DOM lib 将其标为必现，
+    // 故用最小 cast 取得可选类型，避免 if 恒真告警）。
+    const w = window as Window & {
+      requestIdleCallback?: (cb: IdleRequestCallback, opts?: { timeout: number }) => number;
+      cancelIdleCallback?: (id: number) => void;
+    };
+    const schedule = (cb: () => void): number => {
+      if (w.requestIdleCallback) return w.requestIdleCallback(cb, { timeout: 1200 });
+      return window.setTimeout(cb, 800);
+    };
+    const cancel = (id: number): void => {
+      if (w.cancelIdleCallback) w.cancelIdleCallback(id);
+      else window.clearTimeout(id);
+    };
+    const id = schedule(() => {
+      prefetchRoute('browse');
+      prefetchRoute('search');
+      prefetchRoute('timeline');
+      prefetchRoute('history');
+      prefetchRoute('me');
+    });
+    return () => cancel(id);
+  }, []);
+
   return (
     <AppShell>
       {/* 错误边界包裹路由主体：阅读页 / 搜索页等渲染异常时显示中文兜底 UI，
           并提供「重新加载」恢复入口，避免整页白屏。 */}
       <ErrorBoundary>
         <div key={routeKey(route)} className="route-fade">
-          <Suspense
-            fallback={
-              <div className="page state-box">
-                <div className="error-card">
-                  <h2>加载中…</h2>
-                  <p className="error-msg">页面资源正在加载，请稍候</p>
-                </div>
-              </div>
-            }
-          >
+          <Suspense fallback={<PageSkeleton />}>
             {renderRoute(route)}
           </Suspense>
         </div>

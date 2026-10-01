@@ -2063,6 +2063,123 @@ html[data-pagemargin='custom'] .reader-doc { padding: 1.25rem max(1.25rem, env(s
   font-size: 0.75rem;
 }
 
+/* ------------------------------- 骨架屏（Sprint 3） -------------------------------
+ * 路由懒加载兜底：用微光卡片栅格替代空白/「加载中…」，降低感知等待。
+ * 全部消费 token：深浅主题自适应；shimmer 用低透明度品牌色，避免硬编码。
+ */
+.page-skeleton {
+  padding: var(--space-4);
+  max-width: var(--maxw);
+  margin: 0 auto;
+}
+
+.sk-hero {
+  height: 128px;
+  border-radius: var(--radius);
+  background: var(--surface-2);
+  margin-bottom: var(--space-5);
+}
+
+.sk-grid {
+  display: grid;
+  gap: var(--space-4);
+}
+
+.sk-grid.sk-grid {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.sk-grid.sk-list {
+  grid-template-columns: 1fr;
+}
+
+.sk-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: var(--space-4);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.sk-thumb {
+  height: 54px;
+  border-radius: var(--radius-sm);
+  background: var(--surface-2);
+}
+
+.sk-line {
+  height: 12px;
+  border-radius: var(--radius-pill);
+  background: var(--surface-2);
+}
+
+.sk-w70 {
+  width: 70%;
+}
+
+.sk-w45 {
+  width: 45%;
+}
+
+/* 阅读页长文骨架 */
+.reader-skeleton {
+  padding: var(--space-5) var(--space-4);
+  max-width: 760px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.sk-title {
+  height: 22px;
+  margin-bottom: 6px;
+}
+
+.sk-para {
+  height: 12px;
+}
+
+/* 微光层：在 base 色上扫过一道低透明度品牌色高光 */
+.sk-thumb,
+.sk-line,
+.sk-hero {
+  position: relative;
+  overflow: hidden;
+}
+
+.sk-thumb::after,
+.sk-line::after,
+.sk-hero::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  transform: translateX(-100%);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(207, 95, 43, 0.14),
+    transparent
+  );
+  animation: sk-shimmer 1.4s var(--ease) infinite;
+}
+
+@keyframes sk-shimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sk-thumb::after,
+  .sk-line::after,
+  .sk-hero::after {
+    animation: none;
+  }
+}
+
 /* ------------------------------- 状态 / 加载 ------------------------------- */
 
 .state-box {
