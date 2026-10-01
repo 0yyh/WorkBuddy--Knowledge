@@ -6,7 +6,7 @@
  * 直接测 `lintEntryRules`（被 lintCmd 全量与 lintEntryDir 单条目共用），避免触碰真实 content/。
  */
 import { describe, expect, it } from 'vitest';
-import { lintEntryRules, buildInterlinkIndex } from '../src/commands/lint.js';
+import { lintEntryRules, buildInterlinkIndex, countCjkChars, lintThinChapterText, compareTaxonomyTitles } from '../src/commands/lint.js';
 import type { ContentSnapshot, Entry, SectionMeta, SourceRef } from '@pks/core';
 
 const VALID_PATH = '根/概念';
@@ -137,5 +137,44 @@ describe('lint L011 interlink (CT-3)', () => {
     expect(idx.get('a')).toBe(1); // 仅 b 引 a；a 自引用不计
     expect(idx.get('b')).toBe(1); // a 引 b
     expect(idx.get('missing') ?? 0).toBe(0);
+  });
+});
+
+describe('lint 纯函数工具（CT-2 / CT-1）', () => {
+  it('countCjkChars：仅计纯汉字，不含标点/全角符号/拉丁字母', () => {
+    expect(countCjkChars('资本主义生产方式。')).toBe(8); // 8 个汉字，句号不计
+    expect(countCjkChars('ABC 一二三')).toBe(3);
+    expect(countCjkChars('')).toBe(0);
+  });
+
+  it('lintThinChapterText：低于下限 1300 纯汉字时告警，达标不报', () => {
+    const thin = '---\ntitle: x\n---\n正文只有很短的内容。<!-- PKS_EXPANDED_V5 -->';
+    const problems = lintThinChapterText(thin, '词条 t 章节 ch-01');
+    expect(problems).toHaveLength(1);
+    expect(problems[0]).toContain('低于下限 1300');
+
+    const long = `---
+title: x
+---
+${'知'.repeat(1600)}<!-- PKS_EXPANDED_V5 -->`;
+    expect(lintThinChapterText(long, '词条 t 章节 ch-01')).toHaveLength(0);
+  });
+
+  it('compareTaxonomyTitles：标题被改即报 L012，未变/新增不报', () => {
+    const nodes = [
+      { id: 'history', title: '历史', children: [{ id: 'world', title: '世界史' }] },
+      { id: 'philosophy', title: '哲学' },
+    ] as never;
+    const baseline = { history: '历史', world: '世界史', philosophy: '哲學' }; // philosophy 基线为繁体
+    const issues = compareTaxonomyTitles(nodes, baseline);
+    expect(issues).toHaveLength(1);
+    expect(issues[0].rule).toBe('L012');
+    expect(issues[0].message).toContain('philosophy');
+    expect(issues[0].message).toContain('哲學');
+  });
+
+  it('compareTaxonomyTitles：标题与基线一致则无告警', () => {
+    const nodes = [{ id: 'history', title: '历史' }] as never;
+    expect(compareTaxonomyTitles(nodes, { history: '历史' })).toHaveLength(0);
   });
 });

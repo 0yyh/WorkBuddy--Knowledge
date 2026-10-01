@@ -1,7 +1,7 @@
 {
   "version": "1.0.0",
   "built_at": "2026-09-21T03:44:25+0800",
-  "count": 248,
+  "count": 848,
   "source": "PKS 内置词典",
   "description": "初始内置词典，覆盖通用汉语、马克思主义政治经济学、哲学、政治理论、经济学与科学方法论常用术语。每个词条包含常规释义与对应学科的专业释义。（已补全高频术语，覆盖历史/哲学/政治/经济/科学多域。）",
   "entries": {
@@ -4136,6 +4136,6006 @@
         }
       ],
       "source": "PKS 内置专业词典"
+    },
+    "溯因推理": {
+      "word": "溯因推理",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "抽象绘画": {
+      "word": "抽象绘画",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "亚当·斯密": {
+      "word": "亚当·斯密",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "行政法": {
+      "word": "行政法",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "形式主义美学": {
+      "word": "形式主义美学",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "审美判断": {
+      "word": "审美判断",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "审美趣味": {
+      "word": "审美趣味",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "美学": {
+      "word": "美学",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "大航海时代": {
+      "word": "大航海时代",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "飞机": {
+      "word": "飞机",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "芥川龙之介": {
+      "word": "芥川龙之介",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "代数": {
+      "word": "代数",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "美国独立": {
+      "word": "美国独立",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "安史之乱": {
+      "word": "安史之乱",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "分析化学": {
+      "word": "分析化学",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "古埃及文明": {
+      "word": "古埃及文明",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "古希腊文明": {
+      "word": "古希腊文明",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "古希腊哲学": {
+      "word": "古希腊哲学",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "古印度文明": {
+      "word": "古印度文明",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "动画": {
+      "word": "动画",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "失范": {
+      "word": "失范",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "安瑟伦": {
+      "word": "安瑟伦",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "反杜林论": {
+      "word": "反杜林论",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "抗日战争": {
+      "word": "抗日战争",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "阿拉伯帝国": {
+      "word": "阿拉伯帝国",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "一千零一夜": {
+      "word": "一千零一夜",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "建筑": {
+      "word": "建筑",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "档案与史料库": {
+      "word": "档案与史料库",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "阿伦特": {
+      "word": "阿伦特",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "亚里士多德": {
+      "word": "亚里士多德",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "艺术史": {
+      "word": "艺术史",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "人工智能": {
+      "word": "人工智能",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "人工神经网络": {
+      "word": "人工神经网络",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "流水线": {
+      "word": "流水线",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "天文学": {
+      "word": "天文学",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "注意（认知）": {
+      "word": "注意（认知）",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "奥古斯特·孔德": {
+      "word": "奥古斯特·孔德",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "奥古斯丁": {
+      "word": "奥古斯丁",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "威权政体": {
+      "word": "威权政体",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "自动化": {
+      "word": "自动化",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "汽车": {
+      "word": "汽车",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "阿威罗伊": {
+      "word": "阿威罗伊",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "航空": {
+      "word": "航空",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "阿维森纳": {
+      "word": "阿维森纳",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "轴心时代": {
+      "word": "轴心时代",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "巴赫": {
+      "word": "巴赫",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "巴金": {
+      "word": "巴金",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "国际收支": {
+      "word": "国际收支",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "均势": {
+      "word": "均势",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "巴洛克艺术": {
+      "word": "巴洛克艺术",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "电池与储能": {
+      "word": "电池与储能",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "赤壁之战": {
+      "word": "赤壁之战",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "包豪斯": {
+      "word": "包豪斯",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "贝多芬": {
+      "word": "贝多芬",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "行为经济学": {
+      "word": "行为经济学",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "行为遗传学": {
+      "word": "行为遗传学",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "边沁": {
+      "word": "边沁",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "以赛亚·伯林": {
+      "word": "以赛亚·伯林",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "薄伽梵歌": {
+      "word": "薄伽梵歌",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "圣经": {
+      "word": "圣经",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "大爆炸宇宙学": {
+      "word": "大爆炸宇宙学",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "生物多样性": {
+      "word": "生物多样性",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "黑死病": {
+      "word": "黑死病",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "黑洞": {
+      "word": "黑洞",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "品牌设计": {
+      "word": "品牌设计",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "青铜时代晚期崩溃": {
+      "word": "青铜时代晚期崩溃",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "佛陀": {
+      "word": "佛陀",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "佛教": {
+      "word": "佛教",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "佛教雕塑": {
+      "word": "佛教雕塑",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "科层制": {
+      "word": "科层制",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "经济周期": {
+      "word": "经济周期",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "拜占庭帝国": {
+      "word": "拜占庭帝国",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "查尔斯·赖特·米尔斯": {
+      "word": "查尔斯·赖特·米尔斯",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "微积分": {
+      "word": "微积分",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "曹禺": {
+      "word": "曹禺",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "资本流动": {
+      "word": "资本流动",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "格语法": {
+      "word": "格语法",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "因果推断": {
+      "word": "因果推断",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "细胞": {
+      "word": "细胞",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "中央银行": {
+      "word": "中央银行",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "塞万提斯": {
+      "word": "塞万提斯",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "混沌理论": {
+      "word": "混沌理论",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "查尔斯·达尔文": {
+      "word": "查尔斯·达尔文",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "化学键": {
+      "word": "化学键",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "化学元素": {
+      "word": "化学元素",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "化学反应": {
+      "word": "化学反应",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "中国艺术史": {
+      "word": "中国艺术史",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "中国古典建筑": {
+      "word": "中国古典建筑",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "民间信仰": {
+      "word": "民间信仰",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "马克思主义中国化": {
+      "word": "马克思主义中国化",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "中国音乐": {
+      "word": "中国音乐",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "中国绘画": {
+      "word": "中国绘画",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "基督教": {
+      "word": "基督教",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "楚辞": {
+      "word": "楚辞",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "民法": {
+      "word": "民法",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "经典力学": {
+      "word": "经典力学",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "古典音乐": {
+      "word": "古典音乐",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "气候科学": {
+      "word": "气候科学",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "临床心理学与心理治疗": {
+      "word": "临床心理学与心理治疗",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "云计算": {
+      "word": "云计算",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "认知科学": {
+      "word": "认知科学",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "普通法": {
+      "word": "普通法",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "共产党宣言": {
+      "word": "共产党宣言",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "社群主义": {
+      "word": "社群主义",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "比较优势": {
+      "word": "比较优势",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "历史比较法": {
+      "word": "历史比较法",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "编译器": {
+      "word": "编译器",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "复杂系统": {
+      "word": "复杂系统",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "可计算性": {
+      "word": "可计算性",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "计算机": {
+      "word": "计算机",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "计算机体系结构": {
+      "word": "计算机体系结构",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "计算机网络": {
+      "word": "计算机网络",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "计算机视觉": {
+      "word": "计算机视觉",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "儒家思想": {
+      "word": "儒家思想",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "孔子": {
+      "word": "孔子",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "能量守恒": {
+      "word": "能量守恒",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "宪法": {
+      "word": "宪法",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "宪政与立宪主义": {
+      "word": "宪政与立宪主义",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "建构主义（国际关系）": {
+      "word": "建构主义（国际关系）",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "集装箱运输": {
+      "word": "集装箱运输",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "当代社会学理论": {
+      "word": "当代社会学理论",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "合同": {
+      "word": "合同",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "宇宙学": {
+      "word": "宇宙学",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "反事实历史": {
+      "word": "反事实历史",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "中共党史": {
+      "word": "中共党史",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "信用创造": {
+      "word": "信用创造",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "犯罪": {
+      "word": "犯罪",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "刑法": {
+      "word": "刑法",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "刑事诉讼": {
+      "word": "刑事诉讼",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "批判性思维": {
+      "word": "批判性思维",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "十字军东征": {
+      "word": "十字军东征",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "经常账户": {
+      "word": "经常账户",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "拉尔夫·达伦多夫": {
+      "word": "拉尔夫·达伦多夫",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "但丁": {
+      "word": "但丁",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "道家思想": {
+      "word": "道家思想",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "资本论": {
+      "word": "资本论",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "数据库": {
+      "word": "数据库",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "决策心理": {
+      "word": "决策心理",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "演绎与归纳": {
+      "word": "演绎与归纳",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "勒内·笛卡尔": {
+      "word": "勒内·笛卡尔",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "威慑": {
+      "word": "威慑",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "发展心理学": {
+      "word": "发展心理学",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "双重差分法": {
+      "word": "双重差分法",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "数字革命": {
+      "word": "数字革命",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "直接民主": {
+      "word": "直接民主",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "苏联解体": {
+      "word": "苏联解体",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "分布式系统": {
+      "word": "分布式系统",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "脱氧核糖核酸": {
+      "word": "脱氧核糖核酸",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "陀思妥耶夫斯基": {
+      "word": "陀思妥耶夫斯基",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "戏剧": {
+      "word": "戏剧",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "正当程序": {
+      "word": "正当程序",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "东晋": {
+      "word": "东晋",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "生态经济学": {
+      "word": "生态经济学",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "计量经济学": {
+      "word": "计量经济学",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "经济增长": {
+      "word": "经济增长",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "生态系统": {
+      "word": "生态系统",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "选举制度": {
+      "word": "选举制度",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "电力": {
+      "word": "电力",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "电网与电气化": {
+      "word": "电网与电气化",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "电磁学": {
+      "word": "电磁学",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "涌现": {
+      "word": "涌现",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "埃米尔·涂尔干": {
+      "word": "埃米尔·涂尔干",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "移情说": {
+      "word": "移情说",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "弗里德里希·恩格斯": {
+      "word": "弗里德里希·恩格斯",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "史诗": {
+      "word": "史诗",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "几何原本": {
+      "word": "几何原本",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "演化": {
+      "word": "演化",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "进化论": {
+      "word": "进化论",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "系外行星": {
+      "word": "系外行星",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "表现说": {
+      "word": "表现说",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "工厂": {
+      "word": "工厂",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "信仰与理性": {
+      "word": "信仰与理性",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "反馈回路": {
+      "word": "反馈回路",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "封建制度": {
+      "word": "封建制度",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "小说": {
+      "word": "小说",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "电影": {
+      "word": "电影",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "电影理论": {
+      "word": "电影理论",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "甲午战争": {
+      "word": "甲午战争",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "第一次世界大战": {
+      "word": "第一次世界大战",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "财政政策": {
+      "word": "财政政策",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "五代十国": {
+      "word": "五代十国",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "对外援助": {
+      "word": "对外援助",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "形式逻辑": {
+      "word": "形式逻辑",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "四圣谛": {
+      "word": "四圣谛",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "自由意志": {
+      "word": "自由意志",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "燃料电池": {
+      "word": "燃料电池",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "星系": {
+      "word": "星系",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "博弈论": {
+      "word": "博弈论",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "生成语法": {
+      "word": "生成语法",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "遗传学": {
+      "word": "遗传学",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "源氏物语": {
+      "word": "源氏物语",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "地质年代": {
+      "word": "地质年代",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "格奥尔格·齐美尔": {
+      "word": "格奥尔格·齐美尔",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "地热能": {
+      "word": "地热能",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "德意志意识形态": {
+      "word": "德意志意识形态",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "哥德尔不完备定理": {
+      "word": "哥德尔不完备定理",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "歌德": {
+      "word": "歌德",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "哥特式建筑": {
+      "word": "哥特式建筑",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "平面设计": {
+      "word": "平面设计",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "希腊雕塑": {
+      "word": "希腊雕塑",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "绿色GDP": {
+      "word": "绿色GDP",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "绿色革命": {
+      "word": "绿色革命",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "汉朝": {
+      "word": "汉朝",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "健康不平等": {
+      "word": "健康不平等",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "医疗保险": {
+      "word": "医疗保险",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "医疗市场与道德风险": {
+      "word": "医疗市场与道德风险",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "热机": {
+      "word": "热机",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "格奥尔格·黑格尔": {
+      "word": "格奥尔格·黑格尔",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "公路": {
+      "word": "公路",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "印度教": {
+      "word": "印度教",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "历史因果": {
+      "word": "历史因果",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "历史语言学": {
+      "word": "历史语言学",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "史料与史料批判": {
+      "word": "史料与史料批判",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "史学方法": {
+      "word": "史学方法",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "宗教史": {
+      "word": "宗教史",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "神圣罗马帝国": {
+      "word": "神圣罗马帝国",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "荷马": {
+      "word": "荷马",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "红楼梦": {
+      "word": "红楼梦",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "超文本传输协议（HTTP）": {
+      "word": "超文本传输协议（HTTP）",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "人类发展指数": {
+      "word": "人类发展指数",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "人权": {
+      "word": "人权",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "大卫·休谟": {
+      "word": "大卫·休谟",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "戊戌变法": {
+      "word": "戊戌变法",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "百年战争": {
+      "word": "百年战争",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "水力发电": {
+      "word": "水力发电",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "科举制度": {
+      "word": "科举制度",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "印象派": {
+      "word": "印象派",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "印欧语系": {
+      "word": "印欧语系",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "工业设计": {
+      "word": "工业设计",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "无穷": {
+      "word": "无穷",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "非正式制度": {
+      "word": "非正式制度",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "非形式逻辑": {
+      "word": "非形式逻辑",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "制度变迁": {
+      "word": "制度变迁",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "工具变量与因果识别": {
+      "word": "工具变量与因果识别",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "集成电路": {
+      "word": "集成电路",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "内燃机": {
+      "word": "内燃机",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "国际法": {
+      "word": "国际法",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "国际关系": {
+      "word": "国际关系",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "国际贸易理论": {
+      "word": "国际贸易理论",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "互联网": {
+      "word": "互联网",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "艾萨克·牛顿": {
+      "word": "艾萨克·牛顿",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "伊斯兰教": {
+      "word": "伊斯兰教",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "爵士乐": {
+      "word": "爵士乐",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "耶稣": {
+      "word": "耶稣",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "晋朝": {
+      "word": "晋朝",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "靖康之变": {
+      "word": "靖康之变",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "约翰·洛克": {
+      "word": "约翰·洛克",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "约翰·斯图尔特·密尔": {
+      "word": "约翰·斯图尔特·密尔",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "犹太教": {
+      "word": "犹太教",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "司法审查": {
+      "word": "司法审查",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "金朝": {
+      "word": "金朝",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "法理学": {
+      "word": "法理学",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "弗兰茨·卡夫卡": {
+      "word": "弗兰茨·卡夫卡",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "伊曼努尔·康德": {
+      "word": "伊曼努尔·康德",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "卡尔·马克思": {
+      "word": "卡尔·马克思",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "川端康成": {
+      "word": "川端康成",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "约翰·梅纳德·凯恩斯": {
+      "word": "约翰·梅纳德·凯恩斯",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "凯恩斯主义": {
+      "word": "凯恩斯主义",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "劳动生产率": {
+      "word": "劳动生产率",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "劳动供给": {
+      "word": "劳动供给",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "工会与集体谈判": {
+      "word": "工会与集体谈判",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "劳动价值论": {
+      "word": "劳动价值论",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "风景画": {
+      "word": "风景画",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "语言习得": {
+      "word": "语言习得",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "语言与认知": {
+      "word": "语言与认知",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "语系": {
+      "word": "语系",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "语言与言语": {
+      "word": "语言与言语",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "老舍": {
+      "word": "老舍",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "老子": {
+      "word": "老子",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "供需法则": {
+      "word": "供需法则",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "战争法": {
+      "word": "战争法",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "法律史": {
+      "word": "法律史",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "法律实证主义": {
+      "word": "法律实证主义",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "法家": {
+      "word": "法家",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "弗拉基米尔·列宁": {
+      "word": "弗拉基米尔·列宁",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "辽朝": {
+      "word": "辽朝",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "聊斋志异": {
+      "word": "聊斋志异",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "说谎者悖论": {
+      "word": "说谎者悖论",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "自由制度主义": {
+      "word": "自由制度主义",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "线性代数": {
+      "word": "线性代数",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "语言学": {
+      "word": "语言学",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "逻辑谬误": {
+      "word": "逻辑谬误",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "鲁迅": {
+      "word": "鲁迅",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "尼可罗·马基雅维利": {
+      "word": "尼可罗·马基雅维利",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "机器学习": {
+      "word": "机器学习",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "茅盾": {
+      "word": "茅盾",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "边际效用与消费者选择": {
+      "word": "边际效用与消费者选择",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "市场失灵": {
+      "word": "市场失灵",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "市场结构": {
+      "word": "市场结构",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "数学分析": {
+      "word": "数学分析",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "马克斯·韦伯": {
+      "word": "马克斯·韦伯",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "最大似然估计": {
+      "word": "最大似然估计",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "五四运动": {
+      "word": "五四运动",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "明治维新": {
+      "word": "明治维新",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "孟子": {
+      "word": "孟子",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "心智模型": {
+      "word": "心智模型",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "中美洲文明": {
+      "word": "中美洲文明",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "两河流域": {
+      "word": "两河流域",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "米开朗基罗": {
+      "word": "米开朗基罗",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "微生物学": {
+      "word": "微生物学",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "小额信贷": {
+      "word": "小额信贷",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "微处理器": {
+      "word": "微处理器",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "模仿说": {
+      "word": "模仿说",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "阳明心学": {
+      "word": "阳明心学",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "明朝": {
+      "word": "明朝",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "三岛由纪夫": {
+      "word": "三岛由纪夫",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "生产方式": {
+      "word": "生产方式",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "现代建筑": {
+      "word": "现代建筑",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "现代艺术": {
+      "word": "现代艺术",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "墨家": {
+      "word": "墨家",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "分子生物学": {
+      "word": "分子生物学",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "基础货币": {
+      "word": "基础货币",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "货币政策": {
+      "word": "货币政策",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "蒙古帝国": {
+      "word": "蒙古帝国",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "孟德斯鸠": {
+      "word": "孟德斯鸠",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "穆罕默德": {
+      "word": "穆罕默德",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "音乐": {
+      "word": "音乐",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "拿破仑战争": {
+      "word": "拿破仑战争",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "叙事学": {
+      "word": "叙事学",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "民族国家": {
+      "word": "民族国家",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "国民收入核算与GDP": {
+      "word": "国民收入核算与GDP",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "民族主义": {
+      "word": "民族主义",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "自然法": {
+      "word": "自然法",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "自然神学": {
+      "word": "自然神学",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "网络科学": {
+      "word": "网络科学",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "神经元": {
+      "word": "神经元",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "新制度经济学": {
+      "word": "新制度经济学",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "新媒体艺术": {
+      "word": "新媒体艺术",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "牛顿力学": {
+      "word": "牛顿力学",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "尼采": {
+      "word": "尼采",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "南北朝": {
+      "word": "南北朝",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "罗伯特·诺齐克": {
+      "word": "罗伯特·诺齐克",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "核能": {
+      "word": "核能",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "数论": {
+      "word": "数论",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "石油工业": {
+      "word": "石油工业",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "油画": {
+      "word": "油画",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "矛盾论": {
+      "word": "矛盾论",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "实践论": {
+      "word": "实践论",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "本体论论证": {
+      "word": "本体论论证",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "歌剧": {
+      "word": "歌剧",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "操作系统": {
+      "word": "操作系统",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "鸦片战争": {
+      "word": "鸦片战争",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "光学": {
+      "word": "光学",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "普通最小二乘法": {
+      "word": "普通最小二乘法",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "有机化学": {
+      "word": "有机化学",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "物种起源": {
+      "word": "物种起源",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "面板数据": {
+      "word": "面板数据",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "议会制": {
+      "word": "议会制",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "粒子物理": {
+      "word": "粒子物理",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "中华人民共和国": {
+      "word": "中华人民共和国",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "元素周期表": {
+      "word": "元素周期表",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "历史分期": {
+      "word": "历史分期",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "波斯帝国": {
+      "word": "波斯帝国",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "石油": {
+      "word": "石油",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "菲利普斯曲线": {
+      "word": "菲利普斯曲线",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "音位": {
+      "word": "音位",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "语音学": {
+      "word": "语音学",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "音系学": {
+      "word": "音系学",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "摄影": {
+      "word": "摄影",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "光合作用": {
+      "word": "光合作用",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "板块构造": {
+      "word": "板块构造",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "柏拉图": {
+      "word": "柏拉图",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "游戏说": {
+      "word": "游戏说",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "诗学": {
+      "word": "诗学",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "诗歌": {
+      "word": "诗歌",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "政治意识形态": {
+      "word": "政治意识形态",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "政治合法性": {
+      "word": "政治合法性",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "政治哲学": {
+      "word": "政治哲学",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "群体遗传学": {
+      "word": "群体遗传学",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "民粹主义": {
+      "word": "民粹主义",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "肖像画": {
+      "word": "肖像画",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "语用学": {
+      "word": "语用学",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "中华人民共和国成立": {
+      "word": "中华人民共和国成立",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "总统制": {
+      "word": "总统制",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "原始积累": {
+      "word": "原始积累",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "印刷术": {
+      "word": "印刷术",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "版画": {
+      "word": "版画",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "概率论": {
+      "word": "概率论",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "恶的问题": {
+      "word": "恶的问题",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "共相问题": {
+      "word": "共相问题",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "产品设计": {
+      "word": "产品设计",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "编程语言": {
+      "word": "编程语言",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "物权法": {
+      "word": "物权法",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "产权理论": {
+      "word": "产权理论",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "贸易保护与关税": {
+      "word": "贸易保护与关税",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "蛋白质": {
+      "word": "蛋白质",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "心理语言学": {
+      "word": "心理语言学",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "心理学": {
+      "word": "心理学",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "公共财政": {
+      "word": "公共财政",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "公钥密码学": {
+      "word": "公钥密码学",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "秦朝": {
+      "word": "秦朝",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "秦汉大一统": {
+      "word": "秦汉大一统",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "清朝": {
+      "word": "清朝",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "量子力学": {
+      "word": "量子力学",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "古兰经": {
+      "word": "古兰经",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "铁路": {
+      "word": "铁路",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "约翰·罗尔斯": {
+      "word": "约翰·罗尔斯",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "现实主义（国际政治）": {
+      "word": "现实主义（国际政治）",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "接受美学": {
+      "word": "接受美学",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "改革开放": {
+      "word": "改革开放",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "制冷与冷链": {
+      "word": "制冷与冷链",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "关系数据库": {
+      "word": "关系数据库",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "宗教经验": {
+      "word": "宗教经验",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "文艺复兴艺术": {
+      "word": "文艺复兴艺术",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "可再生能源": {
+      "word": "可再生能源",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "共和政体": {
+      "word": "共和政体",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "中华民国": {
+      "word": "中华民国",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "机器人": {
+      "word": "机器人",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "罗丹": {
+      "word": "罗丹",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "罗马帝国": {
+      "word": "罗马帝国",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "罗马法": {
+      "word": "罗马法",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "让-雅克·卢梭": {
+      "word": "让-雅克·卢梭",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "罗素悖论": {
+      "word": "罗素悖论",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "三国演义": {
+      "word": "三国演义",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "经院哲学": {
+      "word": "经院哲学",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "科学方法论": {
+      "word": "科学方法论",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "科学革命": {
+      "word": "科学革命",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "雕塑": {
+      "word": "雕塑",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "第二次工业革命": {
+      "word": "第二次工业革命",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "第二次世界大战": {
+      "word": "第二次世界大战",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "安全困境": {
+      "word": "安全困境",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "自组织": {
+      "word": "自组织",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "洋务运动": {
+      "word": "洋务运动",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "语义学": {
+      "word": "语义学",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "半导体与集成电路": {
+      "word": "半导体与集成电路",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "分权制衡": {
+      "word": "分权制衡",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "集合论": {
+      "word": "集合论",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "莎士比亚": {
+      "word": "莎士比亚",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "商朝": {
+      "word": "商朝",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "沈从文": {
+      "word": "沈从文",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "史记": {
+      "word": "史记",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "诗经": {
+      "word": "诗经",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "船舶": {
+      "word": "船舶",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "航运": {
+      "word": "航运",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "短篇小说": {
+      "word": "短篇小说",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "水浒传": {
+      "word": "水浒传",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "能指与所指": {
+      "word": "能指与所指",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "丝绸之路": {
+      "word": "丝绸之路",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "智能手机": {
+      "word": "智能手机",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "社会契约论": {
+      "word": "社会契约论",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "社会事实": {
+      "word": "社会事实",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "社会运动": {
+      "word": "社会运动",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "社会心理学": {
+      "word": "社会心理学",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "社会分层": {
+      "word": "社会分层",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "社会主义思潮": {
+      "word": "社会主义思潮",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "社会语言学": {
+      "word": "社会语言学",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "苏格拉底": {
+      "word": "苏格拉底",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "软件": {
+      "word": "软件",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "太阳能": {
+      "word": "太阳能",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "太阳系": {
+      "word": "太阳系",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "宋朝": {
+      "word": "宋朝",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "沃莱·索因卡": {
+      "word": "沃莱·索因卡",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "航天": {
+      "word": "航天",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "巴鲁赫·斯宾诺莎": {
+      "word": "巴鲁赫·斯宾诺莎",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "春秋战国": {
+      "word": "春秋战国",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "统计力学": {
+      "word": "统计力学",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "蒸汽机": {
+      "word": "蒸汽机",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "蒸汽船与远洋航运": {
+      "word": "蒸汽船与远洋航运",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "恒星演化": {
+      "word": "恒星演化",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "股票市场": {
+      "word": "股票市场",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "斯多葛学派": {
+      "word": "斯多葛学派",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "结构转型": {
+      "word": "结构转型",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "结构功能主义": {
+      "word": "结构功能主义",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "崇高": {
+      "word": "崇高",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "隋朝": {
+      "word": "隋朝",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "隋唐盛世": {
+      "word": "隋唐盛世",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "孙中山": {
+      "word": "孙中山",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "三段论": {
+      "word": "三段论",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "符号互动论": {
+      "word": "符号互动论",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "句法学": {
+      "word": "句法学",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "泰戈尔": {
+      "word": "泰戈尔",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "太平天国运动": {
+      "word": "太平天国运动",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "塔纳赫": {
+      "word": "塔纳赫",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "唐朝": {
+      "word": "唐朝",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "唐诗": {
+      "word": "唐诗",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "道教": {
+      "word": "道教",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "TCP/IP 协议套件": {
+      "word": "TCP/IP 协议套件",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "理想国": {
+      "word": "理想国",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "神义论": {
+      "word": "神义论",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "热力学": {
+      "word": "热力学",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "托马斯·阿奎那": {
+      "word": "托马斯·阿奎那",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "托马斯·霍布斯": {
+      "word": "托马斯·霍布斯",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "三国": {
+      "word": "三国",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "时间序列分析": {
+      "word": "时间序列分析",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "阿历克西·德·托克维尔": {
+      "word": "阿历克西·德·托克维尔",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "列夫·托尔斯泰": {
+      "word": "列夫·托尔斯泰",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "声调": {
+      "word": "声调",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "拓扑学": {
+      "word": "拓扑学",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "托拉": {
+      "word": "托拉",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "侵权": {
+      "word": "侵权",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "悲剧": {
+      "word": "悲剧",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "公地悲剧": {
+      "word": "公地悲剧",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "晶体管": {
+      "word": "晶体管",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "条约": {
+      "word": "条约",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "三位一体": {
+      "word": "三位一体",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "汽轮机": {
+      "word": "汽轮机",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "字体设计": {
+      "word": "字体设计",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "失业与奥肯定律": {
+      "word": "失业与奥肯定律",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "普遍语法": {
+      "word": "普遍语法",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "功利主义": {
+      "word": "功利主义",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "有效性与可靠性": {
+      "word": "有效性与可靠性",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "货币流通速度": {
+      "word": "货币流通速度",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "波粒二象性": {
+      "word": "波粒二象性",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "福利经济学与一般均衡": {
+      "word": "福利经济学与一般均衡",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "福利国家": {
+      "word": "福利国家",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "西晋": {
+      "word": "西晋",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "西方绘画": {
+      "word": "西方绘画",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "西夏": {
+      "word": "西夏",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "西周建立·牧野之战": {
+      "word": "西周建立·牧野之战",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "奥卡姆的威廉": {
+      "word": "奥卡姆的威廉",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "风能": {
+      "word": "风能",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "万维网": {
+      "word": "万维网",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "世界贸易组织": {
+      "word": "世界贸易组织",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "夏朝": {
+      "word": "夏朝",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "辛亥革命": {
+      "word": "辛亥革命",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "西游记": {
+      "word": "西游记",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "荀子": {
+      "word": "荀子",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "元朝": {
+      "word": "元朝",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "元灭宋·大一统": {
+      "word": "元灭宋·大一统",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "禅宗": {
+      "word": "禅宗",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "张爱玲": {
+      "word": "张爱玲",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "周朝": {
+      "word": "周朝",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "朱熹": {
+      "word": "朱熹",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "世界史": {
+      "word": "世界史",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "古代文明": {
+      "word": "古代文明",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "中世纪": {
+      "word": "中世纪",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "近代史": {
+      "word": "近代史",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "现当代史": {
+      "word": "现当代史",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "中国史": {
+      "word": "中国史",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "先秦至秦汉": {
+      "word": "先秦至秦汉",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "魏晋至隋唐": {
+      "word": "魏晋至隋唐",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "宋元明清": {
+      "word": "宋元明清",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "近现代史": {
+      "word": "近现代史",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "历史方法与概念": {
+      "word": "历史方法与概念",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "思想史": {
+      "word": "思想史",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "中国哲学": {
+      "word": "中国哲学",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "西方哲学": {
+      "word": "西方哲学",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "中世纪哲学": {
+      "word": "中世纪哲学",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "近代欧陆哲学": {
+      "word": "近代欧陆哲学",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "英美与现当代哲学": {
+      "word": "英美与现当代哲学",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "逻辑与批判性思维": {
+      "word": "逻辑与批判性思维",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "社会学": {
+      "word": "社会学",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "人类认知与心理": {
+      "word": "人类认知与心理",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "认知过程": {
+      "word": "认知过程",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "心理学分支": {
+      "word": "心理学分支",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "自然科学基础": {
+      "word": "自然科学基础",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "物理": {
+      "word": "物理",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "化学": {
+      "word": "化学",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "生物与生命": {
+      "word": "生物与生命",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "天文与地球科学": {
+      "word": "天文与地球科学",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "数学与系统科学": {
+      "word": "数学与系统科学",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "数学基础": {
+      "word": "数学基础",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "系统与复杂性": {
+      "word": "系统与复杂性",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "经济学": {
+      "word": "经济学",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "微观经济学": {
+      "word": "微观经济学",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "宏观经济学": {
+      "word": "宏观经济学",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "金融": {
+      "word": "金融",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "货币与银行": {
+      "word": "货币与银行",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "资本市场与资产": {
+      "word": "资本市场与资产",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "经济学说与流派": {
+      "word": "经济学说与流派",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "国际经济学": {
+      "word": "国际经济学",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "政治理论": {
+      "word": "政治理论",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "政治思想": {
+      "word": "政治思想",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "政治学概念": {
+      "word": "政治学概念",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "政体与国家制度": {
+      "word": "政体与国家制度",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "马克思主义": {
+      "word": "马克思主义",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "马克思主义经典著作": {
+      "word": "马克思主义经典著作",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "马克思主义政治经济学": {
+      "word": "马克思主义政治经济学",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "技术": {
+      "word": "技术",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "技术史": {
+      "word": "技术史",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "能源与动力": {
+      "word": "能源与动力",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "信息技术": {
+      "word": "信息技术",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "交通与制造": {
+      "word": "交通与制造",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "文学": {
+      "word": "文学",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "中国文学": {
+      "word": "中国文学",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "古代文学": {
+      "word": "古代文学",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "近现代文学": {
+      "word": "近现代文学",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "世界文学": {
+      "word": "世界文学",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "欧美文学": {
+      "word": "欧美文学",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "亚非文学": {
+      "word": "亚非文学",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "文学理论": {
+      "word": "文学理论",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "文体与体裁": {
+      "word": "文体与体裁",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "艺术": {
+      "word": "艺术",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "视觉艺术": {
+      "word": "视觉艺术",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "绘画": {
+      "word": "绘画",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "影视与新媒体": {
+      "word": "影视与新媒体",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "设计": {
+      "word": "设计",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "平面与视觉传达": {
+      "word": "平面与视觉传达",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "产品与工业": {
+      "word": "产品与工业",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "宗教": {
+      "word": "宗教",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "世界宗教": {
+      "word": "世界宗教",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "中国宗教": {
+      "word": "中国宗教",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "儒教与儒家祭祀": {
+      "word": "儒教与儒家祭祀",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "宗教哲学": {
+      "word": "宗教哲学",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "普通语言学": {
+      "word": "普通语言学",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "语音与音系": {
+      "word": "语音与音系",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "句法与语义": {
+      "word": "句法与语义",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "社会与心理语言学": {
+      "word": "社会与心理语言学",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "法学": {
+      "word": "法学",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
+    },
+    "宪法与公法": {
+      "word": "宪法与公法",
+      "pinyin": "",
+      "pos": "",
+      "defs": [
+        "（术语已收录，释义待补）"
+      ],
+      "specialized": [],
+      "source": "PKS 内容抽取"
     }
   }
 }

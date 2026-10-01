@@ -13,6 +13,8 @@ import { browseGenCmd } from './commands/browse-gen.js';
 import { searchCmd } from './commands/search.js';
 import { buildCharDictCmd } from './commands/build-chardict.js';
 import { genCmd } from './commands/gen.js';
+import { taxonomyBaselineCmd } from './commands/taxonomyBaseline.js';
+import { dictExpandCmd } from './commands/dictExpand.js';
 
 interface Flags {
   content: string | boolean;
@@ -35,6 +37,8 @@ function parse(argv: string[]): { cmd: string; positional: string[]; flags: Flag
     'build:chardict',
     'search',
     'gen',
+    'taxonomy:baseline',
+    'dict:expand',
   ]);
   let cmd = '';
   let idx = -1;
@@ -102,7 +106,7 @@ function printHelp(): void {
 用法：pks <命令> [--content <dir>]
 
   build:index [--full]  内容目录 → .index/ 分片索引（默认增量，--full 强制全量）
-  lint [--citations] [--interlink]  内容规范校验（--interlink 开互链覆盖率软告警）
+  lint [--citations] [--interlink] [--thin]  内容规范校验（--interlink 互链覆盖率软告警；--thin 开薄章下限核查）
   bundle [--level seed|digest|full] [--category X] [--out <dir>]
                      导出数据包 zip
   rename <old> <new>  slug 改名级联
@@ -110,6 +114,8 @@ function printHelp(): void {
   build:chardict    字符词典（character）合并为单个 index.json
   search <query> [--level l1|l2]   在已构建索引上检索
   gen               批量生成管线（run/resume/promote/status）
+  taxonomy:baseline   生成 taxonomy 标题冻结基线（CT-1）
+  dict:expand        从内容抽取术语扩容离线词典（CT-4）
 `);
 }
 
@@ -123,6 +129,7 @@ async function main(): Promise<void> {
       const { errorCount } = lintCmd(contentDir(flags), {
         citations: flags.citations === true,
         interlink: flags.interlink === true,
+        thin: flags.thin === true,
       });
       // 非零退出：让 CI（A2 `pnpm run ci` 的 lint 步骤）在规范 error 时真正失败，
       // 而非静默通过。L010 为 warn 级，不计入 errorCount，不会误伤基线。
@@ -152,6 +159,12 @@ async function main(): Promise<void> {
       break;
     case 'gen':
       genCmd(positional, flags);
+      break;
+    case 'taxonomy:baseline':
+      taxonomyBaselineCmd(contentDir(flags));
+      break;
+    case 'dict:expand':
+      dictExpandCmd(contentDir(flags));
       break;
     default:
       printHelp();

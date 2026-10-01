@@ -50,6 +50,64 @@ export function buildInterlinkIndex(entries: Entry[]): Map<string, number> {
   return idx;
 }
 
+// —— CT-2 L013 薄章下限 / CT-1 L012 标题稳定性：纯函数（便于单测） ——
+
+/** 纯汉字计数（CJK 统一表意 + 扩展 A + 兼容表意），不含中文标点/全角符号。 */
+const CJK_RE = /[㐀-䶿一-鿿豈-﫿]/g;
+export function countCjkChars(text: string): number {
+  const m = text.match(CJK_RE);
+  return m ? m.length : 0;
+}
+
+/** 去掉 frontmatter 与末行 PKS_EXPANDED 标记，得到正文用于字数统计。 */
+function stripFrontmatterAndMarker(raw: string): string {
+  const fmEnd = raw.indexOf('\n---', 3);
+  let body = fmEnd >= 0 ? raw.slice(fmEnd + 4) : raw;
+  body = body.replace(/<!--\s*PKS_EXPANDED_V5\s*-->\s*$/u, '');
+  return body;
+}
+
+/** CT-2 薄章新下限（纯汉字）。原规格 ≥1200 清零；评审建议抬至下限 1300。 */
+export const THIN_CHAPTER_FLOOR = 1300;
+
+/**
+ * L013 —— 薄章下限软告警（CT-2）。统计章节正文纯汉字数，低于 `floor` 即告警。
+ * 纯函数（不依赖 vfs），便于单测；默认关（--thin 开启），避免对既有 corpus 海量告警。
+ */
+export function lintThinChapterText(text: string, label: string, floor = THIN_CHAPTER_FLOOR): string[] {
+  const cjk = countCjkChars(stripFrontmatterAndMarker(text));
+  if (cjk < floor) return [`${label} 正文纯汉字 ${cjk} 字，低于下限 ${floor}（CT-2 目标：中位 1600–2400）`];
+  return [];
+}
+
+/**
+ * L012 —— taxonomy 标题稳定性（CT-1 冻结护栏）。对比当前 taxonomy 节点标题与冻结基线
+ * （content/taxonomy.titles.json 的 {id: title}），标题被改即告警——因为词条 categories
+ * 以标题路径引用节点，改名会破坏所有旧引用。纯函数，便于单测。
+ */
+export function compareTaxonomyTitles(nodes: TaxonomyNode[], baseline: Record<string, string>): Issue[] {
+  const issues: Issue[] = [];
+  const flat: TaxonomyNode[] = [];
+  const walk = (ns: TaxonomyNode[]): void => {
+    for (const n of ns) {
+      flat.push(n);
+      if (n.children) walk(n.children);
+    }
+  };
+  walk(nodes);
+  for (const n of flat) {
+    const old = baseline[n.id];
+    if (old !== undefined && old !== n.title) {
+      issues.push({
+        rule: 'L012',
+        severity: 'warn',
+        message: `taxonomy 节点「${n.id}」标题已从「${old}」改为「${n.title}」，破坏旧词条引用（CT-1 冻结规范）`,
+      });
+    }
+  }
+  return issues;
+}
+
 /**
  * 单条词条的 8 规则校验（L002/L003/L004/L005/L006/L008）。
  * 供 lintCmd 全量与 lintEntryDir 单条目复用。
@@ -190,7 +248,7 @@ export function lintEntryRules(
   return issues;
 }
 
-export function lintCmd(contentDir: string, opts: { citations?: boolean; interlink?: boolean } = {}): { issues: Issue[]; errorCount: number } {
+export function lintCmd(contentDir: string, opts: { citations?: boolean; interlink?: boolean; thin?: boolean } = {}): { issues: Issue[]; errorCount: number } {
   const vfs = new NodeFsVfs(contentDir);
   const { snapshot, errors, warnings } = loadSnapshot(vfs);
   const issues: Issue[] = [];
@@ -203,9 +261,32 @@ export function lintCmd(contentDir: string, opts: { citations?: boolean; interli
   const allSlugs = new Set(snapshot.entries.map((e) => e.slug));
   const interlinkIndex = opts.interlink ? buildInterlinkIndex(snapshot.entries) : undefined;
 
+  // L012 —— taxonomy 标题稳定性（CT-1 冻结护栏）。基线缺失则提示生成，不告警。
+  if (vfs.exists('taxonomy.titles.json')) {
+    try {
+      const baseline = JSON.parse(vfs.readText('taxonomy.titles.json')) as Record<string, string>;
+      issues.push(...compareTaxonomyTitles(snapshot.taxonomy, baseline));
+    } catch {
+      /* 基线损坏不阻断 lint */
+    }
+  } else {
+    console.log('ℹ️ 未找到 taxonomy.titles.json 冻结基线，建议运行 `taxonomy:baseline` 生成（CT-1）');
+  }
+
   for (const e of snapshot.entries) {
     issues.push(...lintEntryRules(e, snapshot.sections[e.slug] ?? [], validPaths, allSlugs, snapshot.tracks, opts.citations ?? false, opts.interlink ?? false, interlinkIndex));
     issues.push(...lintMarkerRule(vfs, e.slug));
+    // L013 —— 薄章下限（CT-2，--thin 开启）。逐章读原文数纯汉字。
+    if (opts.thin) {
+      for (const sec of snapshot.sections[e.slug] ?? []) {
+        if (sec.kind === 'container') continue; // 卷（container）无正文
+        const chPath = `entries/${e.slug}/chapters/${sec.key}.md`;
+        if (!vfs.exists(chPath)) continue;
+        for (const p of lintThinChapterText(vfs.readText(chPath), `词条 ${e.slug} 章节 ${sec.key}`)) {
+          issues.push({ rule: 'L013', severity: 'warn', message: p });
+        }
+      }
+    }
   }
 
   // L001 / L007 唯一性（全局）
@@ -236,7 +317,7 @@ export function lintCmd(contentDir: string, opts: { citations?: boolean; interli
  * L002/L003/L004/L005/L006/L008 以及 validateEntryMeta/validateSectionMeta 的致命错误
  * （loadSnapshot 的 errors 已含这些致命错误）。返回 { issues, errorCount }。
  */
-export function lintEntryDir(vfs: Vfs, slug: string, opts: { citations?: boolean; interlink?: boolean } = {}): { issues: Issue[]; errorCount: number } {
+export function lintEntryDir(vfs: Vfs, slug: string, opts: { citations?: boolean; interlink?: boolean; thin?: boolean } = {}): { issues: Issue[]; errorCount: number } {
   const { snapshot, errors } = loadSnapshot(vfs);
   const issues: Issue[] = [];
 
