@@ -6,7 +6,7 @@
  * 直接测 `lintEntryRules`（被 lintCmd 全量与 lintEntryDir 单条目共用），避免触碰真实 content/。
  */
 import { describe, expect, it } from 'vitest';
-import { lintEntryRules } from '../src/commands/lint.js';
+import { lintEntryRules, buildInterlinkIndex } from '../src/commands/lint.js';
 import type { ContentSnapshot, Entry, SectionMeta, SourceRef } from '@pks/core';
 
 const VALID_PATH = '根/概念';
@@ -94,5 +94,48 @@ describe('lint L010 citations (R4)', () => {
     const l010 = issues.find((i) => i.rule === 'L010');
     expect(l010).toBeDefined();
     expect(l010?.message).toContain('1 条 sources');
+  });
+});
+
+describe('lint L011 interlink (CT-3)', () => {
+  it('默认关闭 interlink：不产生 L011', () => {
+    const entry = makeEntry([]);
+    const issues = lintEntryRules(entry, emptySecs, validPaths, allSlugs, tracks, false);
+    expect(issues.find((i) => i.rule === 'L011')).toBeUndefined();
+  });
+
+  it('开启 interlink 且 in-degree=0：产生 L011 warn', () => {
+    const entry = makeEntry([]);
+    const issues = lintEntryRules(entry, emptySecs, validPaths, allSlugs, tracks, false, true, new Map());
+    const l011 = issues.find((i) => i.rule === 'L011');
+    expect(l011).toBeDefined();
+    expect(l011?.severity).toBe('warn');
+    expect(l011?.message).toContain('仅被 0 个其它词条');
+  });
+
+  it('开启 interlink 且被 ≥1 个词条引用：不产生 L011', () => {
+    const entry = makeEntry([]);
+    const issues = lintEntryRules(
+      entry,
+      emptySecs,
+      validPaths,
+      allSlugs,
+      tracks,
+      false,
+      true,
+      new Map([['sample-entry', 2]]),
+    );
+    expect(issues.find((i) => i.rule === 'L011')).toBeUndefined();
+  });
+
+  it('buildInterlinkIndex：统计被其它词条引用次数，自引用不计入', () => {
+    const entries: Entry[] = [
+      { ...makeEntry([]), slug: 'a', see_also: ['b', 'a'] } as Entry, // a 自引用 + 引 b
+      { ...makeEntry([]), slug: 'b', see_also: ['a'] } as Entry, // b 引 a
+    ];
+    const idx = buildInterlinkIndex(entries);
+    expect(idx.get('a')).toBe(1); // 仅 b 引 a；a 自引用不计
+    expect(idx.get('b')).toBe(1); // a 引 b
+    expect(idx.get('missing') ?? 0).toBe(0);
   });
 });

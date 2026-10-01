@@ -4,6 +4,7 @@
  * L005 cross_timeline 双维度 · L006 see_also 目标存在 · L007 section slug 唯一 · L008 published 有摘要
  * L009 每文件单一 PKS_EXPANDED_V5 标记（约定层，全局双标记审计收口后强制）
  * L010 sources 可核验引用（R4，warn，--citations 开启）：每条 source 应带 url/doi/isbn/ref 之一
+ * L011 互链覆盖率（CT-3，warn，--interlink 开启）：词条应被 ≥N 个其它词条 see_also 引用，孤岛告警
  *
  * 复用：核心规则抽成 `lintEntryRules`，被 `lintCmd`（全量）与 `lintEntryDir`（单条目，T03 生成回路）共用，
  * 不重复造轮子。
@@ -24,6 +25,29 @@ function collectPaths(nodes: TaxonomyNode[], acc: Set<string>): void {
     acc.add(n.path);
     if (n.children) collectPaths(n.children, acc);
   }
+}
+
+/**
+ * L011 —— 互链覆盖率软告警（CT-3，P3）。
+ *
+ * 统计每个词条被多少「其它」词条在 `see_also` 中引用（in-degree）。in-degree 越低，
+ * 该词条在知识网络里越孤立（孤岛），不利于导航与关联阅读。
+ *
+ * 与 L010 同策略：**默认关闭**（--interlink 开启），避免对 2000+ 既有 corpus 造成海量告警；
+ * 典型用途是生成新词条后跑一次，挑出无人引用的新词条补 see_also。
+ */
+export const MIN_INTERLINK_REFS = 1;
+
+/** 计算每个 slug 被多少「其它」词条引用（自引用不计入）。 */
+export function buildInterlinkIndex(entries: Entry[]): Map<string, number> {
+  const idx = new Map<string, number>();
+  for (const e of entries) {
+    for (const sa of e.see_also ?? []) {
+      if (sa === e.slug) continue; // 自引用不计
+      idx.set(sa, (idx.get(sa) ?? 0) + 1);
+    }
+  }
+  return idx;
 }
 
 /**
@@ -96,6 +120,8 @@ export function lintEntryRules(
   allSlugs: Set<string>,
   tracks: ContentSnapshot['tracks'],
   citations = false,
+  interlink = false,
+  interlinkIndex?: Map<string, number>,
 ): Issue[] {
   const issues: Issue[] = [];
   for (const c of entry.categories) {
@@ -148,10 +174,23 @@ export function lintEntryRules(
       });
     }
   }
+
+  // L011 —— 互链覆盖率（CT-3）。默认关闭（--interlink 开启），避免对既有 corpus 海量告警。
+  // in-degree = 被多少「其它」词条在 see_also 中引用；低于阈值即视为知识网络孤岛。
+  if (interlink && interlinkIndex) {
+    const deg = interlinkIndex.get(entry.slug) ?? 0;
+    if (deg < MIN_INTERLINK_REFS) {
+      issues.push({
+        rule: 'L011',
+        severity: 'warn',
+        message: `词条 ${entry.slug} 互链覆盖率低：仅被 ${deg} 个其它词条在 see_also 中引用（建议 ≥${MIN_INTERLINK_REFS}）`,
+      });
+    }
+  }
   return issues;
 }
 
-export function lintCmd(contentDir: string, opts: { citations?: boolean } = {}): { issues: Issue[]; errorCount: number } {
+export function lintCmd(contentDir: string, opts: { citations?: boolean; interlink?: boolean } = {}): { issues: Issue[]; errorCount: number } {
   const vfs = new NodeFsVfs(contentDir);
   const { snapshot, errors, warnings } = loadSnapshot(vfs);
   const issues: Issue[] = [];
@@ -162,9 +201,10 @@ export function lintCmd(contentDir: string, opts: { citations?: boolean } = {}):
   const validPaths = new Set<string>();
   collectPaths(snapshot.taxonomy, validPaths);
   const allSlugs = new Set(snapshot.entries.map((e) => e.slug));
+  const interlinkIndex = opts.interlink ? buildInterlinkIndex(snapshot.entries) : undefined;
 
   for (const e of snapshot.entries) {
-    issues.push(...lintEntryRules(e, snapshot.sections[e.slug] ?? [], validPaths, allSlugs, snapshot.tracks, opts.citations ?? false));
+    issues.push(...lintEntryRules(e, snapshot.sections[e.slug] ?? [], validPaths, allSlugs, snapshot.tracks, opts.citations ?? false, opts.interlink ?? false, interlinkIndex));
     issues.push(...lintMarkerRule(vfs, e.slug));
   }
 
@@ -196,7 +236,7 @@ export function lintCmd(contentDir: string, opts: { citations?: boolean } = {}):
  * L002/L003/L004/L005/L006/L008 以及 validateEntryMeta/validateSectionMeta 的致命错误
  * （loadSnapshot 的 errors 已含这些致命错误）。返回 { issues, errorCount }。
  */
-export function lintEntryDir(vfs: Vfs, slug: string, opts: { citations?: boolean } = {}): { issues: Issue[]; errorCount: number } {
+export function lintEntryDir(vfs: Vfs, slug: string, opts: { citations?: boolean; interlink?: boolean } = {}): { issues: Issue[]; errorCount: number } {
   const { snapshot, errors } = loadSnapshot(vfs);
   const issues: Issue[] = [];
 
@@ -216,7 +256,8 @@ export function lintEntryDir(vfs: Vfs, slug: string, opts: { citations?: boolean
   const validPaths = new Set<string>();
   collectPaths(snapshot.taxonomy, validPaths);
   const allSlugs = new Set(snapshot.entries.map((e) => e.slug));
-  issues.push(...lintEntryRules(entry, snapshot.sections[slug] ?? [], validPaths, allSlugs, snapshot.tracks, opts.citations ?? false));
+  const interlinkIndex = opts.interlink ? buildInterlinkIndex(snapshot.entries) : undefined;
+  issues.push(...lintEntryRules(entry, snapshot.sections[slug] ?? [], validPaths, allSlugs, snapshot.tracks, opts.citations ?? false, opts.interlink ?? false, interlinkIndex));
   issues.push(...lintMarkerRule(vfs, slug));
 
   const errorCount = issues.filter((i) => i.severity === 'error').length;
