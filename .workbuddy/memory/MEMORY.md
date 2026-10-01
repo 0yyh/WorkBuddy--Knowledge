@@ -11,6 +11,7 @@
 - `@pks/core/search` 子路径: 19 value+5 type(覆盖检索调用链); 主 barrel index.ts 改为从 search.js 聚合 re-export 兼容。web 3 文件 value import 走子路径。
 - SW cache v2: install 预缓存首屏三件套, stale-while-revalidate; 注册时机 load→DOMContentLoaded。warmSearchShards 默认预热前 8 分片(WARM_SHARD_CAP), 余懒加载。
 - AppContext 拆 Data/Status/Actions 三 context + selector hooks(`useStationData/Status/Actions`), 保留 `useStation()` 兼容层。
+- **Sprint 3 (首屏/启动资源与预取):** ① `lib/routeChunks.ts` 路由 chunk 单一来源(thunk 供 `React.lazy`+`prefetchRoute` 复用, 动态 import 自带去重); ② 空闲(`requestIdleCallback`, Safari 回退 setTimeout)预取轻量路由(browse/search/timeline/history/me), 进入 entry-cover 预取 entryReader chunk, 首屏后导航瞬时且不抢带宽; ③ `PageSkeleton` 微光骨架(替代 Suspense 原「加载中…」兜底, 消费 token, 深浅自适应, 尊重 reduced-motion)。**注意: 站内无自定义 webfont(font-family 全系统字体)、L1 图标为内联 CJK 字符 → 字体子集化/图标内联 SVG 不适用**, S3 仅做上述三项。
 
 ## 内容规格与脚本
 - 结构: `content/entries/<slug>/entry.md`(封面四段式)+`chapters/ch-NN.md`(frontmatter: slug/work/key/title/order/depth/sources/summary.tldr/keyPoints)。规格 PHILO_SPEC.md+AUTHORING_BRIEF.md。
