@@ -363,6 +363,13 @@
     - id: ling-socio-psy
       title: 社会与心理语言学
       order: 5
+      children:
+        - id: ling-sociology
+          title: 社会语言学
+          order: 1
+        - id: ling-psychology
+          title: 心理语言学
+          order: 2
 - id: law
   title: 法学
   order: 11
@@ -370,18 +377,72 @@
     - id: law-juris
       title: 法理学
       order: 1
+      children:
+        - id: law-juris-positivism
+          title: 法律实证主义
+          order: 1
+        - id: law-juris-natural
+          title: 自然法理论
+          order: 2
+        - id: law-juris-socio
+          title: 法社会学
+          order: 3
     - id: law-constitutional
       title: 宪法与公法
       order: 2
+      children:
+        - id: law-constitutional-rights
+          title: 基本权利与人权
+          order: 1
+        - id: law-constitutional-admin
+          title: 行政法学
+          order: 2
     - id: law-civil
       title: 民法
       order: 3
+      children:
+        - id: law-civil-property
+          title: 物权
+          order: 1
+        - id: law-civil-obligations
+          title: 债权与合同
+          order: 2
+        - id: law-civil-tort
+          title: 侵权与人格权
+          order: 3
+        - id: law-civil-family
+          title: 婚姻家庭与继承
+          order: 4
     - id: law-criminal
       title: 刑法
       order: 4
+      children:
+        - id: law-criminal-general
+          title: 犯罪与刑罚总论
+          order: 1
+        - id: law-criminal-offenses
+          title: 具体犯罪
+          order: 2
     - id: law-international
       title: 国际法
       order: 5
+      children:
+        - id: law-intl-public
+          title: 国际公法
+          order: 1
+        - id: law-intl-private
+          title: 国际私法
+          order: 2
+        - id: law-intl-org
+          title: 国际组织与条约
+          order: 3
     - id: law-history
       title: 法律史
       order: 6
+      children:
+        - id: law-history-china
+          title: 中国法律史
+          order: 1
+        - id: law-history-west
+          title: 西方法律史
+          order: 2
