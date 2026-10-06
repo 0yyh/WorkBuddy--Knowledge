@@ -1,6 +1,6 @@
 # PKS 项目长期记忆 · 个人知识学习站
 
-纯本地离线优先知识站。Web(React18+Vite5+TS strict, 纯CSS零UI框架)+Android(Capacitor7 同套代码)。monorepo: packages/core(@pks/core)/packages/cli/apps/web。git master @ gitee SSH。现状(2026-09-30): 598 词条 / 2947 章 / 509 万字；薄章清零(正文≥1200 纯汉字)；lint 0/0；C2/C3 内容域均衡收官(文学40/艺术40/科学90/技术64/宗教25/语言学20/法学20)。
+纯本地离线优先知识站。Web(React18+Vite5+TS strict, 纯CSS零UI框架)+Android(Capacitor7 同套代码)。monorepo: packages/core(@pks/core)/packages/cli/apps/web。git master @ gitee SSH。现状(2026-10-06): 795 词条（弱 L1 六域均衡 B1–B11 收官, 598→795）；薄章清零(正文≥1500 纯汉字)；lint 全仓 0/0。C2/C3 内容域均衡此前已收官(文学40/艺术40/科学90/技术64/宗教25/语言学20/法学20)。
 
 ## 首页 L1 类目(11 个)
 历史/哲学/科学/经济学/政治理论/技术/文学/艺术/宗教/语言学/法学。每 L1 在 Home.tsx `L1_VISUAL` 与 tokens.css `--l1-color-*-{fg,soft}` 有独立图标字+色板。**新增 L1 须两处同步登记**；配色"色相分散+与暖底和谐"，不复用 fg 色。
@@ -18,6 +18,12 @@
 - lint: `node node_modules/.pnpm/tsx@4.23.13/.../cli.mjs packages/cli/src/index.ts lint` → 基线 0/0。L004 tldr≤120 指**字符串总长**(按≤115 最稳); L009 entry 与每章末行须 `<!-- PKS_EXPANDED_V5 -->`; `order` 为数组且**须等于章号**(写后必回验 frontmatter); see_also slug 须存在; categories 用 taxonomy.yaml 标题路径; sources.title 双引号; 文体体裁路径 `文学/文体与体裁`(L2 直属)。
 - **字数口径**: 1200 中文字=**纯汉字≥1200**(不含标点)。译名: 密尔(非穆勒)/休谟/贝克莱/斯宾诺莎/阿奎那/罗尔斯; 引号「」外""内。
 - 脚本(仓库根): scripts_lint / scripts_build(build:index+copy:content) / scripts_census_overall / scripts_census_thin(薄章普查,纯汉字口径) / scripts_plan_batches(薄章分批) / scripts_full_audit。词典 content/dict/dictionary.json(248 条, copy-content 投递)。
+
+## 弱 L1 六域均衡收官（2026-10-06 完成）
+- 目标：把法学/语言学/宗教/文学/艺术/技术六弱域补齐到大体量。方案：B1–B11 共 197 条新词条（法学70/语言学65/宗教65/文学70/艺术65/技术70），仓库 598 → 795 词条。
+- 提交：法学+语言学+宗教+文学 域各自整批提交；艺术 B10 = `98e415e`(13条)+`d35ac66`(音乐4+影视设计8)；技术 B11 = `2a74539`(6条)，全部 push 到 Gitee master。
+- **终局全仓 lint 0 error / 0 warn**；所有新章正文纯汉字 ≥1500（薄章清零口径已上调到 ≥1500 以适应本批体量）。
+- 关键坑：agent 429 前常已落盘→重派前必 `git status`+实地核查；子代理自报通过不可信→独立 body-CJK 复验（设计 4 条初交薄章，已扩写补救）；`summary: >-` 块标量会让粗陋正则误报，直接 Read 确认。详见 2026-10-06.md。
 
 ## 批次派发经验
 - 派发前**全量 slug 查重**; brief 必含 L009 末行标记+ sources.title 引号+ 历史 see_also 白名单。
