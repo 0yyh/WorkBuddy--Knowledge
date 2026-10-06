@@ -2,7 +2,7 @@
  * 设置页 = 两栏分组：
  *  - 系统设置（pks_pref_sys_*）：全 App 字号 / 字体 / 背景 / 页面动画
  *  - 阅读区设置（pks_pref_read_*）：仅详情页 + 正文阅读（.prose 场景）
- * 底部：轻量 OTA「检查更新」+ 数据管理。
+ * 底部：应用版本号（由 vite define 注入，与 package.json 同步）。
  */
 import { useState } from 'react';
 import {
@@ -29,8 +29,6 @@ import {
   type SysPrefs,
 } from '../lib/preferences';
 import { clearHistory, clearLastReadSlug } from '../lib/history';
-
-const APP_VERSION = '0.1.0';
 
 // 系统字号：4 档枚举（系统那套，保持不变）
 const FONT_OPTIONS: Array<SegOption<FontSizePref>> = [
@@ -178,7 +176,7 @@ export function SettingsPage(): JSX.Element {
 
       {toast ? <div className="toast">{toast}</div> : null}
 
-      <p className="settings-version">v{APP_VERSION} · 内容由 @pks/core 校验</p>
+      <p className="settings-version">v{__PKS_APP_VERSION__} · 内容由 @pks/core 校验</p>
 
       <ConfirmDialog
         visible={confirmKind !== null}

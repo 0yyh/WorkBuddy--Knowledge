@@ -3,6 +3,9 @@ import react from '@vitejs/plugin-react';
 import { resolve } from 'node:path';
 import { readFileSync } from 'node:fs';
 
+// 注入应用版本号（取自 package.json），供「关于 / 设置」页展示；改一处即全站同步。
+const appVersion = JSON.parse(readFileSync(new URL('./package.json', import.meta.url), 'utf-8')).version as string;
+
 /**
  * P0-perf：把 tokens.css 在编译期直接 inject 到 index.html <head>，
  * 首屏不再多一次 CSS HTTP 请求（省一个 RTT）。styles.css 已不再 @import tokens.css，
@@ -36,6 +39,9 @@ function inlineTokensPlugin(): Plugin {
  */
 export default defineConfig({
   base: './',
+  define: {
+    __PKS_APP_VERSION__: JSON.stringify(appVersion),
+  },
   plugins: [react(), inlineTokensPlugin()],
   publicDir: 'public',
   server: {

@@ -12,6 +12,8 @@ declare global {
   interface ImportMeta {
     readonly env: ImportMetaEnvOverride;
   }
+  /** vite define 注入的应用版本号（package.json version），构建期替换为字面量 */
+  declare const __PKS_APP_VERSION__: string;
 }
 
 export {};

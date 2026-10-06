@@ -31,7 +31,7 @@
  *   160bit 摘要对这类错误的检出率与 SHA-256 等价。切勿把它当身份验证用。
  */
 
-import { sha1 } from '@pks/core';
+import { sha1, zipVfsFromBytes } from '@pks/core';
 import {
   ACTIVATED_KEY,
   BUILT_AT_KEY,
@@ -423,6 +423,74 @@ export async function resetContentCache(): Promise<void> {
 /* --------------------------- 本机文件导入（辅路） --------------------------- */
 
 const IMPORT_ACCEPT = /^(entries|index|tracks|dict)\//;
+const TEXT_DECODER = new TextDecoder('utf-8');
+
+/** 从路径推导缓存相对路径：剥掉前面的 `content/` 前缀 */
+function stripContentPrefix(p: string): string {
+  const normalized = p.replace(/\\/g, '/').replace(/^\/+/, '');
+  const idx = normalized.lastIndexOf('content/');
+  return idx >= 0 ? normalized.slice(idx + 'content/'.length) : normalized;
+}
+
+/** 判断文件是否为 zip/pks 容器（按扩展名 + 前 4 字节 magic: PK\x03\x04 / PK\x05\x06） */
+async function looksLikeZip(file: File): Promise<boolean> {
+  const name = file.name.toLowerCase();
+  if (name.endsWith('.zip') || name.endsWith('.pks')) return true;
+  try {
+    const head = new Uint8Array(await file.slice(0, 4).arrayBuffer());
+    return (
+      head.length === 4 &&
+      head[0] === 0x50 &&
+      head[1] === 0x4b &&
+      ((head[2] === 0x03 && head[3] === 0x04) || (head[2] === 0x05 && head[3] === 0x06))
+    );
+  } catch {
+    return false;
+  }
+}
+
+/** zip/pks 导入累加器 */
+interface ZipImportAcc {
+  imported: number;
+  skipped: number;
+  paths: string[];
+  builtAt: string | null;
+}
+
+/** 展开一个 zip/pks 容器，把命中白名单的条目写入本机内容层 */
+async function importFromZip(bytes: Uint8Array, acc: ZipImportAcc): Promise<void> {
+  const vfs = zipVfsFromBytes(bytes);
+  for (const top of ['entries', 'index', 'tracks', 'dict'] as const) {
+    for (const name of vfs.walk(top)) {
+      const rel = stripContentPrefix(name);
+      if (!IMPORT_ACCEPT.test(rel)) {
+        acc.skipped += 1;
+        continue;
+      }
+      try {
+        const data = vfs.readBytes(name);
+        const text = TEXT_DECODER.decode(data);
+        const ok = await putCached(rel, text);
+        if (ok) {
+          acc.imported += 1;
+          acc.paths.push(rel);
+        } else {
+          acc.skipped += 1;
+        }
+        if (rel === 'index/manifest.json') {
+          try {
+            const m = JSON.parse(text) as { built_at?: unknown };
+            if (typeof m.built_at === 'string' && m.built_at) acc.builtAt = m.built_at;
+          } catch {
+            /* 清单解析失败不影响文件导入 */
+          }
+        }
+      } catch {
+        acc.skipped += 1;
+      }
+    }
+  }
+}
 
 /** 从 File 推导缓存相对路径：优先 webkitRelativePath 中 `content/` 之后的部分 */
 export function relPathOfFile(file: File): string {
@@ -437,45 +505,66 @@ export interface LocalImportResult {
   imported: number;
   skipped: number;
   paths: string[];
+  /** 若导入包内含 index/manifest.json，取其 built_at 刷新「本机内容版本」显示 */
+  builtAt: string | null;
 }
 
 /**
  * 导入本机选中的文件（索引 / 正文 / 序列 / 词典）。
  *
- * 说明：zip 容器无法在零依赖前提下解压，zip 包请走「局域网更新」通道；
- * 这里支持的是解压后的散文件（或多选文件）。
+ * 支持两种来源：
+ *  - 已解压的散文件（多选文件，沿用原逻辑）；
+ *  - 单个 .zip / .pks 内容包（用 @pks/core 的 zipVfsFromBytes 在零依赖前提下解压）。
+ * 命中 IMPORT_ACCEPT 白名单才写入本机内容层（IndexedDB）；包内若带
+ * index/manifest.json 则同步刷新内容版本号。
  */
 export async function importLocalFiles(files: readonly File[]): Promise<LocalImportResult> {
-  let imported = 0;
-  let skipped = 0;
-  const paths: string[] = [];
+  const acc: ZipImportAcc = { imported: 0, skipped: 0, paths: [], builtAt: null };
 
   for (const file of files) {
+    if (await looksLikeZip(file)) {
+      try {
+        const bytes = new Uint8Array(await file.arrayBuffer());
+        await importFromZip(bytes, acc);
+      } catch {
+        acc.skipped += 1;
+      }
+      continue;
+    }
     const path = relPathOfFile(file);
     if (!IMPORT_ACCEPT.test(path)) {
-      skipped += 1;
+      acc.skipped += 1;
       continue;
     }
     try {
       const text = await file.text();
       const ok = await putCached(path, text);
       if (ok) {
-        imported += 1;
-        paths.push(path);
+        acc.imported += 1;
+        acc.paths.push(path);
       } else {
-        skipped += 1;
+        acc.skipped += 1;
+      }
+      if (path === 'index/manifest.json') {
+        try {
+          const m = JSON.parse(text) as { built_at?: unknown };
+          if (typeof m.built_at === 'string' && m.built_at) acc.builtAt = m.built_at;
+        } catch {
+          /* 清单解析失败不影响文件导入 */
+        }
       }
     } catch {
-      skipped += 1;
+      acc.skipped += 1;
     }
   }
 
-  if (imported > 0) {
+  if (acc.imported > 0) {
     await setMeta(ACTIVATED_KEY, true);
     // P0-perf：明确下一态 = true，同步让 loader 走缓存优先。
     invalidateContentCacheFlag(true);
+    if (acc.builtAt) await setMeta(BUILT_AT_KEY, acc.builtAt);
   }
-  return { imported, skipped, paths };
+  return { imported: acc.imported, skipped: acc.skipped, paths: acc.paths, builtAt: acc.builtAt };
 }
 
 /** 供 UI 展示：本机缓存是否已激活 */

@@ -179,9 +179,11 @@ export function MePage(): JSX.Element {
     try {
       const list = Array.from(files);
       const result = await importLocalFiles(list);
+      const verNote = result.builtAt ? `（内容版本 ${formatBuiltAt(result.builtAt)}）` : '';
       setStatus(
-        `导入完成：${result.imported} 个文件已写入本机内容层${result.skipped > 0 ? `，跳过 ${result.skipped} 个（需位于 entries/ index/ tracks/ dict/ 下）` : ''}。请点「重新加载」生效。`,
+        `导入完成：${result.imported} 个文件已写入本机内容层${result.skipped > 0 ? `，跳过 ${result.skipped} 个（需位于 entries/ index/ tracks/ dict/ 下）` : ''}${verNote}。请点「重新加载」生效。`,
       );
+      setLocalBuilt(await getCurrentContentBuiltAt());
     } catch (e) {
       setStatus(`导入失败：${e instanceof Error ? e.message : String(e)}`);
     } finally {
@@ -222,7 +224,9 @@ export function MePage(): JSX.Element {
 
         {/* 导入内容包：用 label 包住隐藏 input，点击即唤起文件选择，无需新样式。
             存在必要性：局域网更新需要「电脑跑 serve-lan 做服务端」，本机导入是其离线互补——
-            没有电脑/局域网时（如把内容包经 USB、微信、云盘传到手机），可直接选文件写入本机内容层。 */}
+            没有电脑/局域网时（如把内容包经 USB、微信、云盘传到手机），可直接选文件写入本机内容层。
+            现已支持单个 .zip / .pks 内容包（用 @pks/core 的 zipVfsFromBytes 零依赖解压），
+            也可继续多选已解压的散文件。 */}
         <label className="me-row" htmlFor="pks-import-files" style={{ cursor: 'pointer' }}>
           <span className="me-row-icon" aria-hidden="true">
             📥
@@ -230,7 +234,7 @@ export function MePage(): JSX.Element {
           <span className="me-row-main">
             <span className="me-row-label">导入内容包</span>
             <span className="me-row-desc">
-              本机离线导入（无需电脑/局域网）：把内容包经 USB、微信、云盘传到手机后直接选文件导入
+              本机离线导入（无需电脑/局域网）：选 .zip/.pks 内容包或多选散文件，写入本机内容层
             </span>
           </span>
           <span className="me-row-arrow" aria-hidden="true">
@@ -242,7 +246,7 @@ export function MePage(): JSX.Element {
           id="pks-import-files"
           type="file"
           multiple
-          accept=".json,.md,.markdown,.yaml,.yml,.txt"
+          accept=".zip,.pks,.json,.md,.markdown,.yaml,.yml,.txt"
           style={{ display: 'none' }}
           onChange={(e) => {
             void handleImportPick(e.target.files);
@@ -276,7 +280,7 @@ export function MePage(): JSX.Element {
 
         <div className="row-actions">
           <button type="button" className="btn btn-primary" disabled={busy} onClick={() => void handleCheck()}>
-            检查更新
+            检查内容更新
           </button>
           <button type="button" className="btn" disabled={busy || !pending} onClick={() => void handleApply()}>
             立即更新
@@ -314,7 +318,7 @@ export function MePage(): JSX.Element {
           <li>
             <span>版本</span>
             <span>
-              v0.1.0
+              v{__PKS_APP_VERSION__}
               <button
                 type="button"
                 className="btn btn-ghost"
@@ -322,7 +326,7 @@ export function MePage(): JSX.Element {
                 onClick={() => void handleCheck()}
                 style={{ marginLeft: 8, padding: '4px 10px', fontSize: '0.75rem' }}
               >
-                检查更新
+                检查内容更新
               </button>
             </span>
           </li>
