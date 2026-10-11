@@ -418,6 +418,10 @@ body[data-sys-anim='fade'] .page {
   }
 }
 
+
+
+
+
 @keyframes fade-in {
   from {
     opacity: 0;
@@ -428,6 +432,10 @@ body[data-sys-anim='fade'] .page {
     transform: none;
   }
 }
+
+
+
+
 
 .page-title {
   font-size: 1.625rem;
@@ -476,21 +484,6 @@ body[data-sys-anim='fade'] .page {
 .track-card-link > .card-title {
   display: block;
   margin-bottom: 4px;
-}
-
-.tl-item {
-  position: relative;
-}
-.tl-item.has-link {
-  cursor: pointer;
-}
-.tl-item.has-link:hover {
-  background: rgba(207, 95, 43, 0.06);
-}
-.tl-card-link {
-  display: contents;
-  color: inherit;
-  text-decoration: none;
 }
 
 .card-label {
@@ -1718,135 +1711,6 @@ html[data-pagemargin='custom'] .reader-doc { padding: 1.25rem max(1.25rem, env(s
   border-radius: 10px;
 }
 
-/* ------------------------------- 时间线 ------------------------------- */
-
-.timeline-head {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 14px;
-  margin-bottom: 18px;
-}
-
-.timeline {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  position: relative;
-}
-
-.tl-item {
-  display: grid;
-  grid-template-columns: 24px 96px 1fr;
-  gap: 14px;
-  padding: 2px 0 20px;
-}
-
-.tl-rail {
-  position: relative;
-  display: flex;
-  justify-content: center;
-}
-
-.tl-rail::before {
-  content: '';
-  position: absolute;
-  top: 8px;
-  bottom: -20px;
-  width: 2px;
-  background: var(--border);
-}
-
-.tl-item:last-child .tl-rail::before {
-  display: none;
-}
-
-.tl-dot {
-  width: 11px;
-  height: 11px;
-  border-radius: 50%;
-  background: var(--surface);
-  border: 2.5px solid var(--brand);
-  margin-top: 7px;
-  z-index: 1;
-}
-
-.tl-item.is-cross .tl-dot {
-  border-color: #6b3fd4;
-}
-
-.tl-date {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-  padding-top: 2px;
-}
-
-.tl-order {
-  font-size: 0.75rem;
-  color: var(--text-dim);
-}
-
-.tl-year {
-  font-weight: 700;
-  font-size: 0.9375rem;
-  color: var(--text);
-}
-
-.tl-sort {
-  font-size: 0.75rem;
-  color: var(--text-dim);
-}
-
-.tl-body {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 12px 16px;
-  box-shadow: var(--shadow-sm);
-  transition: box-shadow 0.2s var(--ease), transform 0.2s var(--ease);
-}
-
-.tl-body:hover {
-  box-shadow: var(--shadow-md);
-  transform: translateY(-1px);
-}
-
-.tl-item.is-cross .tl-body {
-  border-color: #e2d8fa;
-  background: linear-gradient(180deg, #fdfcff, #f8f5ff);
-}
-
-.tl-title-row {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  flex-wrap: wrap;
-}
-
-.tl-title {
-  font-size: 1.0313rem;
-  font-weight: 600;
-}
-
-.tl-title.is-missing {
-  color: var(--text-dim);
-  font-weight: 500;
-}
-
-.tl-summary {
-  margin: 6px 0 0;
-  color: var(--text-soft);
-  font-size: 0.875rem;
-  line-height: 1.75;
-}
-
-.tl-note {
-  margin: 6px 0 0;
-  color: var(--text-dim);
-  font-size: 0.8125rem;
-}
-
 /* ------------------------------- 搜索结果 ------------------------------- */
 
 .result-list {
@@ -2172,6 +2036,10 @@ html[data-pagemargin='custom'] .reader-doc { padding: 1.25rem max(1.25rem, env(s
   }
 }
 
+
+
+
+
 @media (prefers-reduced-motion: reduce) {
   .sk-thumb::after,
   .sk-line::after,
@@ -2224,6 +2092,10 @@ html[data-pagemargin='custom'] .reader-doc { padding: 1.25rem max(1.25rem, env(s
     transform: rotate(360deg);
   }
 }
+
+
+
+
 
 .error-card {
   background: var(--surface);
@@ -2310,22 +2182,12 @@ html[data-pagemargin='custom'] .reader-doc { padding: 1.25rem max(1.25rem, env(s
   .entry-layout .entry-side {
     position: static;
   }
-  .tl-item {
-    grid-template-columns: 18px 72px 1fr;
-    gap: 10px;
-  }
-  .tl-title {
-    font-size: 0.9688rem;
-  }
   .toast {
     bottom: calc(var(--tabbar-h) + env(safe-area-inset-bottom, 0px) + 14px);
   }
 }
 
 @media (max-width: 420px) {
-  .tl-item {
-    grid-template-columns: 16px 64px 1fr;
-  }
   .brand-text strong {
     font-size: 0.875rem;
   }
@@ -2581,6 +2443,10 @@ html[data-pagemargin='custom'] .reader-doc { padding: 1.25rem max(1.25rem, env(s
   }
 }
 
+
+
+
+
 .reader-root.reading-bg-dark,
 .reader-root.reading-bg-gray {
   color-scheme: dark;
@@ -2779,14 +2645,28 @@ body.reader-no-statusbar {
   60%  { transform: perspective(800px) rotateY(2deg); opacity: 1; }
   100% { transform: perspective(800px) rotateY(0); opacity: 1; }
 }
+
+
+
+
+
 @keyframes doc-cover-in {
   0%   { transform: translate3d(0, 8px, 0) scale(0.985); opacity: 0; filter: brightness(1.05); }
   100% { transform: translate3d(0, 0, 0) scale(1); opacity: 1; filter: brightness(1); }
 }
+
+
+
+
+
 @keyframes doc-vertical-in {
   0%   { transform: translate3d(0, 100%, 0); opacity: 0; }
   100% { transform: translate3d(0, 0, 0); opacity: 1; }
 }
+
+
+
+
 
 @keyframes doc-slide-in {
   from {
@@ -2799,6 +2679,10 @@ body.reader-no-statusbar {
   }
 }
 
+
+
+
+
 @keyframes doc-fade-in {
   from {
     opacity: 0;
@@ -2807,6 +2691,10 @@ body.reader-no-statusbar {
     opacity: 1;
   }
 }
+
+
+
+
 
 /* 上/下浮层：淡入淡出（opacity + pointer-events）。
  * 整体去磨砂：上下两条浅色半透明带，内部用胶囊容器装控件（参考 7.png 番茄小说）。 */
@@ -2880,101 +2768,38 @@ body.reader-no-statusbar {
   color: var(--reading-fg, #d4cdb7);
 }
 
-/* 顶部胶囊容器：← ←  [ 1/3 ]  目录 → */
-.reader-top-bar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 8px;
-  width: 100%;
-  max-width: 380px;
-  margin: 0 auto;
-}
 
-/* 新稿：顶栏仅剩左侧返回「<」→ 取消居中窄栏，让返回键贴左 */
-.reader-top-bar-solo {
-  max-width: none;
-}
+
+
 
 /* 大字标题不再渲染（参考番茄阅读页：顶部仅 ← / 进度 / 目录） */
 .reader-top-title {
   display: none;
 }
 
-/* 圆形 icon 按钮（顶 ←/目录用小号，底部三工具用大号） */
-.reader-circle-btn {
-  flex: 0 0 auto;
-  border: 0;
-  background: transparent;
-  color: inherit;
-  border-radius: 999px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: background 0.18s var(--ease), transform 0.18s var(--ease);
-}
 
-.reader-circle-btn-sm {
-  width: 38px;
-  height: 38px;
-}
 
-.reader-circle-btn:not(.reader-circle-btn-sm) {
-  width: 48px;
-  height: 48px;
-}
 
-.reader-circle-btn:hover {
-  background: rgba(0, 0, 0, 0.06);
-}
 
-.reader-root.reading-bg-dark .reader-circle-btn:hover {
-  background: rgba(255, 255, 255, 0.1);
-}
 
-.reader-circle-btn:active {
-  transform: scale(0.94);
-}
 
-/* 上一章/下一章胶囊按钮（参考 7.png 两端胶囊） */
-.reader-pill-btn {
-  flex: 0 0 auto;
-  border: 0;
-  background: rgba(0, 0, 0, 0.05);
-  color: inherit;
-  border-radius: 999px;
-  padding: 10px 18px;
-  font-size: 0.875rem;
-  line-height: 1;
-  cursor: pointer;
-  transition: background 0.18s var(--ease), opacity 0.18s var(--ease);
-}
 
-.reader-pill-btn:hover {
-  background: rgba(0, 0, 0, 0.1);
-}
 
-.reader-root.reading-bg-dark .reader-pill-btn {
-  background: rgba(255, 255, 255, 0.1);
-}
 
-.reader-root.reading-bg-dark .reader-pill-btn:hover {
-  background: rgba(255, 255, 255, 0.18);
-}
 
-.reader-pill-btn:disabled {
-  opacity: 0.32;
-  cursor: default;
-}
 
-/* 底部上行：上一章 / 章节进度滑杆 / 下一章 */
-.reader-bottom-nav {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  width: 100%;
-}
+
+
+
+
+
+
+
+
+
+
+
+
 
 /* —— 底部 3 等分导航栏（目录 / 夜间 / 设置）——
    沉浸规范（reader-ui-spec §一.1 / 指南 §3.3）：**禁止常驻**——默认隐藏，
@@ -3021,41 +2846,13 @@ body.reader-no-statusbar {
   transform: translateY(8px);
 }
 
-.reader-tab {
-  flex: 1 1 0;
-  min-width: 0;
-  box-sizing: border-box; /* 保证内部分隔线不改变三者等宽 */
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 3px;
-  padding: 8px 4px;
-  border: 0;
-  background: transparent;
-  /* 番茄风：图标/文字用阅读主题柔和色，避免硬编码 #333 */
-  color: var(--rp-soft, var(--text-soft));
-  font-size: 0.6875rem;
-  line-height: 1;
-  cursor: pointer;
-  transition: background 0.16s var(--ease), transform 0.12s var(--ease);
-}
 
-.reader-tab svg {
-  width: 22px;
-  height: 22px;
-  display: block;
-}
 
-.reader-tab-label {
-  font-size: 0.6875rem;
-  line-height: 1;
-}
 
-.reader-tab:active {
-  background: rgba(127, 127, 127, 0.12);
-  transform: scale(0.97);
-}
+
+
+
+
 
 /* 深色系主题：导航栏现在随 --reading-bg/--rp-border 自动适配，无需硬编码覆写 */
 
@@ -3095,11 +2892,7 @@ body.reader-no-statusbar {
   color: var(--rp-soft, #d0d0d0);
 }
 
-.reader-statusbar-right {
-  display: inline-flex;
-  align-items: center;
-  gap: 12px;
-}
+
 
 .reader-chapter-slider {
   -webkit-appearance: none;
@@ -3152,11 +2945,7 @@ body.reader-no-statusbar {
   cursor: default;
 }
 
-/* 圆形工具按钮下方小标签（参考 14.jpg：目录/夜间/设置） */
-.reader-circle-btn {
-  flex-direction: column;
-  gap: 2px;
-}
+
 
 /* ------------------------------- 阅读设置浮层（底部弹出） ------------------------------- */
 
@@ -3271,50 +3060,6 @@ body.reader-no-statusbar {
   --brand-soft: var(--t-accent-soft);
 }
 
-/* 各背景下面板内控件底色协调：浅色用浅灰、深色用更深一档 */
-.reader-sheet-bg-white .reader-pill,
-.reader-sheet-bg-sepia .reader-pill,
-.reader-sheet-bg-green .reader-pill,
-.reader-sheet-bg-blue .reader-pill {
-  background: rgba(0, 0, 0, 0.06);
-}
-.reader-sheet-bg-black .reader-pill,
-.reader-sheet-bg-gray .reader-pill,
-.reader-sheet-bg-dark .reader-pill {
-  background: rgba(255, 255, 255, 0.1);
-  color: #d4cdb7;
-}
-
-.reader-sheet-bg-white .reader-pill.is-on,
-.reader-sheet-bg-sepia .reader-pill.is-on,
-.reader-sheet-bg-green .reader-pill.is-on,
-.reader-sheet-bg-blue .reader-pill.is-on,
-.reader-sheet-bg-black .reader-pill.is-on,
-.reader-sheet-bg-gray .reader-pill.is-on,
-.reader-sheet-bg-dark .reader-pill.is-on {
-  background: var(--brand);
-  color: #fff;
-}
-/* 深色主题下 --brand 已被映射为浅色（#d4cdb7），白字看不清 → 改为深色字 */
-.reader-sheet-bg-dark .reader-pill.is-on {
-  color: #1b1a18;
-}
-
-.reader-sheet-bg-sepia .reader-font-size,
-.reader-sheet-bg-green .reader-font-size,
-.reader-sheet-bg-blue .reader-font-size,
-.reader-sheet-bg-white .reader-font-size {
-  background: rgba(0, 0, 0, 0.06);
-}
-.reader-sheet-bg-black .reader-font-size,
-.reader-sheet-bg-gray .reader-font-size,
-.reader-sheet-bg-dark .reader-font-size {
-  background: rgba(255, 255, 255, 0.1);
-}
-
-.reader-sheet-bg-dark .reader-row {
-  border-bottom-color: rgba(255, 255, 255, 0.1);
-}
 .reader-sheet-bg-dark .reader-sheet-title {
   border-bottom-color: rgba(255, 255, 255, 0.12);
 }
@@ -3351,181 +3096,6 @@ body.reader-no-statusbar {
   padding: 2px 0 10px;
 }
 
-/* 设置行（左标签 + 右控件，参考 3.jpg） */
-.reader-row {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  padding: 14px 0;
-  border-bottom: 1px solid var(--border);
-}
-
-.reader-row:last-of-type {
-  border-bottom: 0;
-}
-
-.reader-row-label {
-  flex: 0 0 38px;
-  color: var(--text-soft);
-  font-size: 0.875rem;
-}
-
-.reader-row-control {
-  flex: 1 1 auto;
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  gap: 10px;
-  min-width: 0;
-}
-
-.reader-row-control-grow {
-  flex: 1 1 auto;
-}
-
-/* 字号 A-/数字/A+ 控件（参考 3.jpg） */
-.reader-font-size {
-  display: inline-flex;
-  align-items: center;
-  gap: 12px;
-  padding: 4px 8px;
-  border-radius: 12px;
-  background: var(--bg-soft);
-}
-
-.reader-font-step {
-  border: 0;
-  background: transparent;
-  color: inherit;
-  font-weight: 700;
-  font-size: 0.875rem;
-  cursor: pointer;
-  padding: 4px 6px;
-  border-radius: 6px;
-}
-
-.reader-font-step:disabled {
-  opacity: 0.35;
-  cursor: default;
-}
-
-.reader-font-num {
-  font-variant-numeric: tabular-nums;
-  font-weight: 600;
-  font-size: 0.9375rem;
-  min-width: 1.4em;
-  text-align: center;
-}
-
-/* 字号行右侧「字体名 ›」入口按钮（进入字体子层） */
-.reader-enter-btn {
-  flex: 0 0 auto;
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  border: 0;
-  background: transparent;
-  color: var(--text-soft);
-  font-size: 0.8125rem;
-  padding: 6px 4px;
-  cursor: pointer;
-}
-.reader-enter-text {
-  color: var(--text);
-}
-.reader-enter-arrow {
-  color: var(--text-dim);
-  font-size: 1rem;
-  line-height: 1;
-}
-
-/* 面板内胶囊配色（只作用于带 .reader-pills-tone 的组，不改全局 .reader-pill 语义）。
-   未选中统一：底 #F0F0F0 / 字 #666666。 */
-.reader-sheet .reader-pills-tone .reader-pill {
-  background: #f0f0f0;
-  color: #666666;
-  border: 1px solid transparent;
-}
-/* 翻页组：选中 = 白底 + 黑字 + 番茄橙描边（第 3 轮） */
-.reader-sheet .reader-pills-tone-page .reader-pill.is-on {
-  background: #ffffff;
-  color: #000000;
-  border: 1px solid #ff6a00;
-}
-/* 间距 / 对齐组：选中 = 番茄橙底 + 白字（第 3 轮：替换原白底黑字） */
-.reader-sheet .reader-pills-tone-orange .reader-pill.is-on {
-  background: #ff6a00;
-  color: #ffffff;
-  border: 1px solid #ff6a00;
-}
-
-/* 字号 A−/A+ 与「字体 ›」入口：hover/active 用番茄橙（弱强调，不喧宾夺主） */
-.reader-sheet .reader-font-step,
-.reader-sheet .reader-enter-btn {
-  transition: color 0.16s var(--ease), transform 0.12s var(--ease);
-}
-.reader-sheet .reader-font-step:hover,
-.reader-sheet .reader-enter-btn:hover {
-  color: #ff6a00;
-}
-.reader-sheet .reader-font-step:active,
-.reader-sheet .reader-enter-btn:active {
-  color: #e05f00;
-  transform: scale(0.96);
-}
-.reader-sheet .reader-enter-btn:hover .reader-enter-text {
-  color: #ff6a00;
-}
-
-/* 主层底部：间距设置（主按钮）+ 更多（文本入口） */
-.reader-sheet-actions {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 16px 0 4px;
-}
-.reader-action-primary {
-  flex: 1 1 auto;
-  border: 1px solid var(--border);
-  background: transparent;
-  color: var(--text);
-  border-radius: 12px;
-  padding: 12px 16px;
-  font-size: 0.9375rem;
-  text-align: center;
-  cursor: pointer;
-}
-.reader-action-more {
-  flex: 0 0 auto;
-  border: 0;
-  background: transparent;
-  color: var(--text-soft);
-  font-size: 0.875rem;
-  padding: 12px 8px;
-  cursor: pointer;
-  white-space: nowrap;
-}
-
-/* 指南 §3.1：按钮按下反馈（缩放 + 颜色，spring 回弹） */
-.reader-action-primary,
-.reader-action-more {
-  transition: background var(--duration-fast) var(--ease-out-expo),
-    color var(--duration-fast) var(--ease-out-expo), transform var(--duration-fast) var(--ease-out-expo);
-}
-.reader-action-primary:active,
-.reader-action-more:active {
-  transform: scale(0.97);
-}
-
-
-/* 通用胶囊组（用于字体/字号/翻页/其他） */
-.reader-pill-group {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  flex-wrap: wrap;
-}
-
 .reader-pill-group-scroll {
   overflow-x: auto;
   scrollbar-width: none;
@@ -3536,41 +3106,6 @@ body.reader-no-statusbar {
 
 .reader-pill-group-scroll::-webkit-scrollbar {
   display: none;
-}
-
-.reader-pill {
-  border: 0;
-  background: var(--bg-soft);
-  color: inherit;
-  border-radius: 999px;
-  padding: 8px 14px;
-  font-size: 0.8125rem;
-  line-height: 1;
-  white-space: nowrap;
-  cursor: pointer;
-  transition: background 0.16s var(--ease), color 0.16s var(--ease), transform 0.12s var(--ease);
-}
-
-.reader-pill:active {
-  transform: scale(0.96);
-}
-
-.reader-pill.is-on {
-  background: var(--brand);
-  color: #fff;
-  /* 指南 §3.1：胶囊选中滑块从左滑入（缩放 + 淡入） */
-  animation: capsule-in var(--duration-fast) var(--ease-out-expo);
-}
-
-@keyframes capsule-in {
-  from {
-    transform: scale(0.92);
-    opacity: 0.6;
-  }
-  to {
-    transform: scale(1);
-    opacity: 1;
-  }
 }
 
 .reader-pill-select {
@@ -3592,149 +3127,12 @@ body.reader-no-statusbar {
   cursor: pointer;
 }
 
-/* 颜色：7 个圆形色板 */
-.reader-color-row {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  padding: 4px 0;
-}
-
-.reader-color-dot {
-  width: 28px;
-  height: 28px;
-  border-radius: 999px;
-  border: 2px solid var(--border);
-  cursor: pointer;
-  padding: 0;
-  position: relative;
-  transition: transform 0.18s var(--ease), border-color 0.18s var(--ease);
-}
-
-.reader-color-dot.is-on {
-  /* 第 2 步规范：选中加黑色细边框（浅色主题；深色主题另有高亮描边，见下） */
-  border: 2px solid #000;
-  transform: scale(1.12);
-  /* 指南 §3.1：色点选中内圈缩放脉冲（放大 1.2 → 缩回 1.12，spring） */
-  animation: dot-pulse var(--duration-base) var(--ease-spring);
-}
-
-/* 纯黑主题选中态：黑底上黑色描边不可见，改用白边 + 内阴影保持清晰 */
-.reader-color-dot[data-value='black'].is-on {
-  border-color: #ffffff;
-  box-shadow: inset 0 0 0 1.5px rgba(255, 255, 255, 0.25);
-}
-
-@keyframes dot-pulse {
-  0% {
-    transform: scale(1);
-  }
-  45% {
-    transform: scale(1.2);
-  }
-  100% {
-    transform: scale(1.12);
-  }
-}
-
-.reader-color-dot:active {
-  transform: scale(0.9);
-}
-
 /* 背景：5 个方形缩略图 + 自定义 */
 .reader-bg-row {
   display: inline-flex;
   align-items: center;
   gap: 8px;
   padding: 4px 0;
-}
-
-/* 翻页行：5 胶囊并排（参考 11.jpg） */
-.reader-pill-group-5 {
-  display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
-  gap: 6px;
-  width: 100%;
-}
-
-.reader-pill-group-5 .reader-pill {
-  padding: 8px 0;
-  text-align: center;
-  width: 100%;
-  font-size: 0.7813rem;
-}
-
-/* 翻页行 4 档（间距设置子层的"页面边距"使用） */
-.reader-pill-group-4 {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 6px;
-  width: 100%;
-}
-
-.reader-pill-group-4 .reader-pill {
-  padding: 8px 0;
-  text-align: center;
-  width: 100%;
-  font-size: 0.8125rem;
-}
-
-/* 亮度滑杆：单根 iOS-like 原生 range（参考 11.jpg） */
-.reader-brightness-slider {
-  -webkit-appearance: none;
-  appearance: none;
-  flex: 1 1 auto;
-  width: 100%;
-  height: 24px;
-  background: transparent;
-  margin: 0;
-  padding: 0;
-  cursor: pointer;
-}
-
-.reader-brightness-slider::-webkit-slider-runnable-track {
-  height: 6px;
-  border-radius: 3px;
-  /* 第 2 步：改为中性灰轨道（去掉旧蓝→黄渐变），纯轨道 + 圆滑块 */
-  background: #d4d4d4;
-  border: 0;
-}
-
-.reader-brightness-slider::-moz-range-track {
-  height: 6px;
-  border-radius: 3px;
-  /* 第 2 步：改为中性灰轨道（去掉旧蓝→黄渐变），纯轨道 + 圆滑块 */
-  background: #d4d4d4;
-  border: 0;
-}
-
-.reader-brightness-slider::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  appearance: none;
-  width: 22px;
-  height: 22px;
-  border-radius: 999px;
-  background: #ffffff;
-  /* 去投影（阅读器扁平化规范）：改用 1px 描边分层 */
-  margin-top: -8px;
-  border: 1px solid #cfcfcf;
-}
-
-.reader-brightness-slider::-moz-range-thumb {
-  width: 22px;
-  height: 22px;
-  border-radius: 999px;
-  background: #ffffff;
-  /* 去投影（阅读器扁平化规范） */
-  border: 1px solid #cfcfcf;
-}
-
-.reader-sheet-bg-dark .reader-brightness-slider::-webkit-slider-runnable-track {
-  background: #555555;
-}
-
-.reader-sheet-bg-dark .reader-brightness-slider::-moz-range-track {
-  background: #555555;
 }
 
 /* 更多设置子层（参考 13.jpg）。
@@ -3810,168 +3208,20 @@ body.reader-no-statusbar {
   border-radius: 8px;
 }
 
-.reader-more-body {
-  padding: 4px 0 4px;
-}
+.reader-sheet-bg-dark .reader-more-head {
 
-.reader-more-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  padding: 12px 0;
-  border-bottom: 1px solid var(--border);
-}
-
-.reader-more-row:last-child {
-  border-bottom: 0;
-}
-
-.reader-more-text {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  min-width: 0;
-  flex: 1 1 auto;
-}
-
-.reader-more-label {
-  font-size: 0.9375rem;
-  color: var(--text);
-}
-
-.reader-more-hint {
-  font-size: 0.75rem;
-  color: var(--text-dim);
-}
-
-/* 间距设置子层（参考 12.jpg）：行段间距 + 页面边距 + 行距三组胶囊 */
-.reader-spacing-body {
-  display: flex;
-  flex-direction: column;
-  gap: 18px;
-  padding: 14px 0 4px;
-}
-
-.reader-spacing-group {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.reader-spacing-label {
-  font-size: 0.8125rem;
-  color: var(--text-soft);
-}
-
-/* 圆形开关（iOS-like 拨片）：开 = #FF6A00、关 = #E0E0E0（第 2 步规范） */
-.reader-switch {
-  flex: 0 0 auto;
-  width: 44px;
-  height: 26px;
-  border-radius: 999px;
-  background: #e0e0e0;
-  border: 0;
-  padding: 0;
-  position: relative;
-  cursor: pointer;
-  /* 指南 §3.1：滑块滑动 + 背景色渐变（duration-base / ease-out-expo） */
-  transition: background var(--duration-base) var(--ease-out-expo), transform var(--duration-fast) var(--ease-out-expo);
-}
-
-.reader-switch::after {
-  content: '';
-  position: absolute;
-  top: 3px;
-  left: 3px;
-  width: 20px;
-  height: 20px;
-  background: #fff;
-  border-radius: 999px;
-  /* 去投影（阅读器扁平化规范）：拨片改用 1px 描边分层 */
-  border: 1px solid rgba(0, 0, 0, 0.08);
-  transition: transform var(--duration-base) var(--ease-out-expo);
-}
-
-.reader-switch.is-on {
-  background: #ff6a00; /* 第 2 步：番茄橙（原 #f0a23a 停用） */
-}
-
-.reader-switch.is-on::after {
-  transform: translateX(18px);
-}
-
-.reader-switch:active {
-  transform: scale(0.96);
-}
-
-.reader-sheet-bg-dark .reader-switch {
-  background: #3a3a3a;
-}
-
-.reader-sheet-bg-dark .reader-more-head,
-.reader-sheet-bg-dark .reader-more-row {
   border-color: var(--t-line, rgba(255, 255, 255, 0.1));
 }
 
-.reader-chapter-sheet .reader-chapter-body {
-  display: flex;
-  flex-direction: column;
-  gap: 0;
-  padding: 0 0 6px;
-}
 
-/* 目录搜索框 + 搜索结果列表 */
-.toc-search {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  margin: 0 4px 8px;
-  padding: 6px 12px;
-  border: 1px solid var(--border);
-  border-radius: 999px;
-  background: var(--bg-soft);
-  color: var(--text-dim);
-  flex: 0 0 auto;
-}
-.toc-search svg {
-  flex: 0 0 auto;
-}
-.toc-search-input {
-  flex: 1 1 auto;
-  min-width: 0;
-  border: 0;
-  outline: none;
-  background: transparent;
-  color: var(--text);
-  font-size: 0.875rem;
-  padding: 2px 0;
-}
-.toc-search-input::-webkit-search-cancel-button {
-  display: none;
-}
-.toc-search-clear {
-  border: 0;
-  background: transparent;
-  color: var(--text-dim);
-  font-size: 1.125rem;
-  line-height: 1;
-  padding: 2px 6px;
-  cursor: pointer;
-  flex: 0 0 auto;
-}
-.toc-search-list {
-  overflow-y: auto;
-  max-height: 60vh;
-  /* 目录为长列表：隔离其绘制范围，滚动时不牵动外部 */
-  contain: content;
-}
-.toc-search-empty {
-  color: var(--text-dim);
-  font-size: 0.875rem;
-  text-align: center;
-  padding: 24px 0;
-}
+
+
+
+
+
+
+
+
 
 /* 顶部 tabs：详情 / 目录 / 笔记（参考 10.jpg 番茄小说目录） */
 .chapter-tabs {
@@ -4045,19 +3295,9 @@ body.reader-no-statusbar {
   background: rgba(0, 0, 0, 0.04);
 }
 
-/* 章节目录行（参考 10.jpg：章节标题 + 读至N% + 字数/评论数） */
-.chapter-group {
-  border-bottom: 1px solid var(--border);
-  /* 长目录（数百章）性能：视口外的章节组跳过布局与绘制，滚动到附近才渲染。
-     contain-intrinsic-size 为未渲染的组预留占位高度，避免滚动条长度与位置跳动。
-     不支持的旧 WebView 会整条声明忽略，行为回退为普通渲染，无副作用。 */
-  content-visibility: auto;
-  contain-intrinsic-size: auto 52px;
-}
 
-.chapter-group:last-child {
-  border-bottom: 0;
-}
+
+
 
 .chapter-row {
   padding: 10px 4px;
@@ -4065,10 +3305,7 @@ body.reader-no-statusbar {
   border-radius: var(--radius-sm);
 }
 
-.chapter-group.is-active .chapter-row {
-  background: var(--brand-soft, rgba(122, 162, 255, 0.08));
-  border-radius: 10px;
-}
+
 
 .chapter-row:active {
   background: var(--brand-soft, rgba(122, 162, 255, 0.12));
@@ -4079,33 +3316,11 @@ body.reader-no-statusbar {
   outline-offset: 2px;
 }
 
-/* 目录二级小节：缩进显示在对应章节下方 */
-.chapter-sublist {
-  list-style: none;
-  margin: 0;
-  padding: 0 0 8px 26px;
-}
 
-.chapter-subitem {
-  display: block;
-  width: 100%;
-  text-align: left;
-  border: 0;
-  background: transparent;
-  color: var(--text-soft);
-  font-size: 0.8125rem;
-  line-height: 1.5;
-  padding: 5px 6px;
-  border-radius: 6px;
-  cursor: pointer;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
 
-.chapter-subitem:active {
-  background: var(--brand-soft, rgba(122, 162, 255, 0.12));
-}
+
+
+
 
 /* 详情 tab 内容（参考 4.jpg：详情内容就是详情页的简介） */
 .chapter-detail {
@@ -4124,42 +3339,13 @@ body.reader-no-statusbar {
   border-radius: 10px;
 }
 
-.chapter-row-main {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  width: 100%;
-  border: 0;
-  background: transparent;
-  text-align: left;
-  padding: 0;
-  color: inherit;
-  cursor: pointer;
-}
 
-.chapter-no {
-  flex: 0 0 auto;
-  font-size: 0.8125rem;
-  font-weight: 600;
-  color: var(--brand);
-}
 
-.chapter-name {
-  flex: 1 1 auto;
-  font-size: 0.9375rem;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
 
-.chapter-read {
-  flex: 0 0 auto;
-  font-size: 0.75rem;
-  color: var(--brand);
-  background: var(--brand-soft, rgba(122, 162, 255, 0.16));
-  padding: 2px 8px;
-  border-radius: 999px;
-}
+
+
+
+
 
 .chapter-sub {
   display: flex;
@@ -4366,6 +3552,10 @@ body.reader-no-statusbar {
   }
 }
 
+
+
+
+
 /* 阅读页沉浸时无标签栏：浮层贴得更低 */
 .app-shell.is-reader .exit-toast {
   bottom: calc(env(safe-area-inset-bottom, 0px) + 26px);
@@ -4392,6 +3582,10 @@ body.reader-no-statusbar {
   }
 }
 
+
+
+
+
 @keyframes chromeFade {
   from {
     opacity: 0;
@@ -4400,6 +3594,10 @@ body.reader-no-statusbar {
     opacity: 1;
   }
 }
+
+
+
+
 
 /* ------------------------- M3 移动端视觉打磨（稳的一版 · 纯 CSS） -------------------------
  * 源自 Material Design 3 思路，但保持本项目「不引 MUI/Tailwind、包体积红线」的约束。
@@ -4448,9 +3646,7 @@ textarea,
   min-height: 44px;
 }
 
-.chapter-subitem {
-  min-height: 34px;
-}
+
 
 /* 4) 卡片与可点条目 hover 轻反馈（桌面端），移动端基本无感不影响 */
 .entry-card-link,
@@ -4765,7 +3961,16 @@ body:not([data-sys-anim='none']) .l1-card {
 .confirm-actions { display: flex; gap: 12px; }
 .confirm-actions .btn { flex: 1 1 0; }
 @keyframes sheet-up { from { transform: translateY(100%); } to { transform: none; } }
+
+
+
+
+
 @keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
+
+
+
+
 
 /* —— 看过页：分组 + 进度条 —— */
 .history-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
@@ -4844,17 +4049,7 @@ mark.hl { background: var(--brand-soft); color: var(--brand-strong); padding: 0 
   vertical-align: middle;
 }
 
-/* —— 阅读目录：读到这里标记 —— */
-.chapter-here {
-  flex: 0 0 auto;
-  font-size: 0.6875rem;
-  font-weight: 600;
-  color: var(--brand-strong);
-  background: var(--brand-soft);
-  padding: 1px 7px;
-  border-radius: 999px;
-  margin-left: 8px;
-}
+
 
 /* —— 我的页 —— */
 .me-page { padding-bottom: 20px; }
@@ -4889,447 +4084,6 @@ mark.hl { background: var(--brand-soft); color: var(--brand-strong); padding: 0 
    因此不受 .reader-root 的 onSurfaceClick / 左右滑切章影响。
    释义卡背景/文字复用 .reader-sheet-bg-* 的主题 token（--t-*）。
    ========================================================================== */
-
-/* —— 浮动工具条：番茄小说风「深色实色圆角胶囊条」+ 小三角指向选区 ——
-   去掉 backdrop-filter（WebView 上每帧模糊会掉帧），改用近乎不透明的实色。 */
-.dict-menu {
-  position: fixed;
-  z-index: 160;
-  display: flex;
-  align-items: stretch;
-  justify-content: center;
-  gap: 6px;
-  padding: 7px;
-  /* 第 2 步：固定深色 #333333、圆角 8px，不随阅读主题 */
-  border-radius: 8px;
-  background: #333333;
-  color: #ffffff;
-  animation: pop-in 0.22s var(--ease-spring);
-  will-change: transform, opacity;
-  /* 去投影（阅读器扁平化规范）：深色实色块自身已足够分层 */
-}
-
-.dict-menu::after {
-  content: '';
-  position: absolute;
-  left: 50%;
-  width: 10px;
-  height: 10px;
-  background: #333333;
-  transform: translateX(-50%) rotate(45deg);
-  pointer-events: none;
-}
-
-/* data-arrow=up：工具条在选区上方，三角向下指向选区 */
-.dict-menu[data-arrow='up']::after {
-  bottom: -4px;
-}
-
-/* data-arrow=down：工具条翻到选区下方，三角向上指向选区 */
-.dict-menu[data-arrow='down']::after {
-  top: -4px;
-}
-
-/* 图标在上、文字在下的横向等距项（番茄：min-width 56-64 / min-height ~54 / gap 4-8） */
-.dict-menu-btn {
-  display: inline-flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 5px;
-  min-width: 60px;
-  min-height: 54px;
-  border: 0;
-  background: transparent;
-  color: #ffffff;
-  border-radius: 10px;
-  cursor: pointer;
-  transition: background 0.16s var(--ease), transform 0.12s var(--ease);
-}
-
-.dict-menu-btn svg {
-  width: 23px;
-  height: 23px;
-}
-
-.dict-menu-btn:hover {
-  background: rgba(255, 255, 255, 0.14);
-}
-
-.dict-menu-btn:active {
-  background: rgba(255, 255, 255, 0.18);
-  transform: scale(0.96);
-}
-
-.dict-menu-label {
-  font-size: 0.75rem; /* 12px */
-  line-height: 1;
-  color: #aaaaaa; /* 第 2 步：按钮下标签统一浅灰 */
-}
-
-/* —— 释义卡（第 4 轮：由底部 sheet 改为浮动卡片，带三角指向选区）——
-   卡片固定深色面 #333333，不随阅读底色变化。 */
-.dict-card {
-  position: fixed;
-  z-index: 155;
-  width: var(--dict-card-w, 300px);
-  max-width: calc(100vw - 20px);
-  max-height: var(--dict-card-max-h, 260px);
-  border-radius: 12px;
-  padding: 14px 16px 16px;
-  background: #333333;
-  color: #ffffff;
-  display: flex;
-  flex-direction: column;
-  /* 滚动由 .dict-card-body 负责；卡片自身不可滚动，避免与 body 出现双滚动条，
-     同时保证 ::after 三角箭头不被裁剪或顶出滚动区域 */
-  overflow: visible;
-  animation: pop-in 0.24s var(--ease-spring);
-  will-change: transform, opacity;
-  /* 去投影（阅读器扁平化规范）：用实色深色面自身分层 */
-}
-
-.dict-card::after {
-  content: '';
-  position: absolute;
-  left: 50%;
-  width: 10px;
-  height: 10px;
-  background: #333333;
-  transform: translateX(-50%) rotate(45deg);
-  pointer-events: none;
-}
-
-.dict-card[data-arrow='up']::after {
-  bottom: -4px;
-}
-.dict-card[data-arrow='down']::after {
-  top: -4px;
-}
-
-/* 深色卡主题 token（固定，不随阅读背景） */
-.dict-card {
-  --t-text: #ffffff;
-  --t-soft: #cccccc;
-  --t-dim: #aaaaaa;
-  --t-line: rgba(255, 255, 255, 0.1);
-  --t-accent: #ff6a00;
-  --t-accent-soft: rgba(255, 106, 0, 0.16);
-  --text: #ffffff;
-  --text-soft: #cccccc;
-  --text-dim: #aaaaaa;
-  --border: rgba(255, 255, 255, 0.1);
-  --border-strong: rgba(255, 255, 255, 0.16);
-  --brand: #ff6a00;
-  --brand-soft: rgba(255, 106, 0, 0.16);
-}
-
-@keyframes pop-in {
-  from {
-    opacity: 0;
-    transform: scale(0.92) translate3d(0, 10px, 0);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1) translate3d(0, 0, 0);
-  }
-}
-
-/* 头部：左侧竖向信息（拼音 → 词头 [+ 词性]），右侧关闭按钮 */
-.dict-card-head {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 10px;
-  padding: 2px 0 10px;
-}
-
-.dict-head-main {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 3px;
-  min-width: 0;
-}
-
-/* 词头行：汉字 + 词性并排 */
-.dict-head-word {
-  display: flex;
-  align-items: baseline;
-  flex-wrap: wrap;
-  gap: 3px 8px;
-  min-width: 0;
-}
-
-/* 1) 拼音（小字、灰）—— 位于词头之上 */
-.dict-phonetic {
-  color: #aaaaaa;
-  font-size: 0.8125rem; /* 13px */
-  line-height: 1.3;
-  letter-spacing: 0.02em;
-}
-
-/* 2) 词头（汉字，加粗近白） */
-.dict-word {
-  margin: 0;
-  font-size: 1.375rem; /* 22px */
-  font-weight: 700;
-  color: #ffffff;
-  letter-spacing: 0.01em;
-  line-height: 1.25;
-}
-
-.dict-word-miss {
-  font-size: 1.0625rem;
-}
-
-.dict-pos {
-  /* 第 2 步：词性渲染为浅灰方框（仅 entry 级 pos，无 per-def 标签） */
-  color: #aaaaaa;
-  font-size: 0.75rem;
-  background: rgba(255, 255, 255, 0.12);
-  padding: 1px 6px;
-  border-radius: 4px;
-}
-
-.dict-close {
-  flex: 0 0 auto;
-  border: 0;
-  background: transparent;
-  color: #9aa0a6;
-  width: 34px;
-  height: 34px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  border-radius: 10px;
-  transition: background 0.16s var(--ease);
-}
-
-.dict-close:hover {
-  background: rgba(255, 255, 255, 0.1);
-}
-
-.dict-card-body {
-  flex: 1 1 auto;
-  min-height: 0;
-  overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
-  padding: 6px 2px 4px 0;
-
-  /* Firefox：默认隐藏滚动条，滚动过程中 .scrolling 类控制浮现 */
-  scrollbar-width: thin;
-  scrollbar-color: transparent transparent;
-}
-
-/* Firefox：滚动过程中 .scrolling 类控制浮现 */
-.dict-card-body.scrolling {
-  scrollbar-color: rgba(255, 255, 255, 0.22) rgba(255, 255, 255, 0.06);
-}
-
-/* WebKit 滚动条：默认隐藏，滚动时（.scrolling）浮现；移除上下箭头按钮 */
-.dict-card-body::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
-}
-
-.dict-card-body::-webkit-scrollbar-button {
-  display: none;
-}
-
-.dict-card-body::-webkit-scrollbar-track {
-  background: transparent;
-  border-radius: 3px;
-  margin: 4px 0;
-}
-
-.dict-card-body.scrolling::-webkit-scrollbar-track {
-  background: rgba(255, 255, 255, 0.06);
-}
-
-.dict-card-body::-webkit-scrollbar-thumb {
-  background: transparent;
-  border-radius: 3px;
-  border: 1px solid transparent;
-  background-clip: padding-box;
-  transition: background 0.2s var(--ease, ease);
-}
-
-.dict-card-body.scrolling::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.22);
-}
-
-.dict-card-body.scrolling::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.36);
-}
-
-.dict-card-body.scrolling::-webkit-scrollbar-thumb:active {
-  background: var(--t-accent, var(--brand));
-}
-
-.dict-card-body::-webkit-scrollbar-corner {
-  background: transparent;
-}
-
-.dict-card-body-loading {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
-  min-height: 130px;
-}
-
-.dict-loading-spin {
-  width: 24px;
-  height: 24px;
-  border-radius: 50%;
-  border: 2px solid var(--border);
-  border-top-color: var(--t-accent, var(--brand));
-  animation: dict-spin 0.8s linear infinite;
-}
-
-@keyframes dict-spin {
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-.dict-loading-text {
-  margin: 0;
-  color: var(--text-soft);
-  font-size: 0.8438rem;
-}
-
-/* 常规义与专业义共用条目列表 */
-.dict-defs {
-  list-style: none;
-  margin: 6px 0 0;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.dict-def {
-  display: flex;
-  gap: 8px;
-  color: #dcdcdc;
-  font-size: 0.9375rem; /* 15px */
-  line-height: 1.6;
-  text-align: justify;
-}
-
-.dict-def-no {
-  flex: 0 0 auto;
-  color: #ff6a00; /* 第 2 步：强调色统一为番茄橙 */
-  font-weight: 600;
-  font-size: 0.75rem;
-  line-height: 1.9;
-}
-
-.dict-def-text {
-  min-width: 0;
-}
-
-.dict-specialized {
-  margin-top: 16px;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.dict-spec-group {
-  padding-top: 12px;
-  border-top: 1px solid var(--border);
-}
-
-.dict-spec-group .dict-def {
-  font-size: 0.875rem;
-}
-
-.dict-spec-field {
-  margin: 0 0 2px;
-  font-size: 0.7813rem;
-  font-weight: 600;
-  color: var(--t-accent, var(--brand));
-}
-
-/* 4) 来源/出处：右下角小字、灰、右对齐（形如「来自 XXX ›」） */
-.dict-source {
-  margin: 16px 0 2px;
-  font-size: 0.75rem;
-  color: #aaaaaa;
-  text-align: right;
-}
-
-.dict-miss-text {
-  margin: 4px 0 4px;
-  font-size: 0.9375rem;
-  color: var(--text);
-}
-
-.dict-miss-hint {
-  margin: 0 0 6px;
-  font-size: 0.7813rem;
-  color: var(--text-dim);
-}
-
-/* 汉字词典卡：笔画 / 部首 / 结构 元信息行 */
-.dict-char-meta {
-  margin: 4px 0 8px;
-  font-size: 0.8125rem;
-  color: #aaaaaa;
-  letter-spacing: 0.02em;
-}
-
-/* 汉字词典卡：近义 / 反义 */
-.dict-char-rel {
-  margin-top: 14px;
-  padding-top: 12px;
-  border-top: 1px solid var(--border);
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-
-.dict-rel-line {
-  margin: 0;
-  font-size: 0.8438rem;
-  color: #dcdcdc;
-  line-height: 1.6;
-}
-
-.dict-rel-key {
-  display: inline-block;
-  min-width: 2.4em;
-  margin-right: 8px;
-  color: var(--t-accent, var(--brand));
-  font-weight: 600;
-}
-
-/* 复制成功提示（比阅读页 chrome 更高层级） */
-.dict-toast {
-  position: fixed;
-  left: 50%;
-  bottom: 130px;
-  transform: translateX(-50%);
-  z-index: 170;
-  /* 划词浮层家族统一固定深色 #333333（不再用旧 rgba(46,46,48,.96)） */
-  background: #333333;
-  color: #fff;
-  border-radius: 999px;
-  padding: 9px 20px;
-  font-size: 0.8438rem;
-  animation: fade-in 0.2s var(--ease);
-  pointer-events: none;
-}
-
-/* 深色阅读背景下释义卡内可点元素 hover 亮度略低，避免刺眼 */
-.reader-sheet-bg-dark .dict-close:hover {
-  background: rgba(255, 255, 255, 0.1);
-}
 
 /* ==========================================================================
    文本选区高亮（::selection）

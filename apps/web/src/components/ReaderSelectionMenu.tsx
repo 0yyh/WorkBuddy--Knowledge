@@ -18,6 +18,7 @@
  */
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
+import styles from './ReaderSelectionMenu.module.css';
 import type { DictEntry, CharInfo } from '@pks/core/dict';
 import { lookupWord, lookupChar } from '../lib/dict';
 import type { BgColorPref } from '../lib/preferences';
@@ -394,7 +395,7 @@ export function ReaderSelectionMenu({
       {/* 浮动工具条 */}
       {menu ? (
         <div
-          className="dict-menu"
+          className={styles['dict-menu']}
           data-control="dict"
           data-arrow={menu.arrow}
           style={{ left: menu.x, top: menu.y }}
@@ -403,19 +404,19 @@ export function ReaderSelectionMenu({
           onPointerDown={prevent}
           onMouseDown={prevent}
         >
-          <button type="button" className="dict-menu-btn" aria-label="复制选中文本" onClick={onCopy}>
+          <button type="button" className={styles['dict-menu-btn']} aria-label="复制选中文本" onClick={onCopy}>
             <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
               <rect x="9" y="9" width="11" height="11" rx="2" fill="none" stroke="currentColor" strokeWidth="1.8" />
               <path d="M5 15V5a2 2 0 0 1 2-2h10" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
             </svg>
-            <span className="dict-menu-label">复制</span>
+            <span className={styles['dict-menu-label']}>复制</span>
           </button>
-          <button type="button" className="dict-menu-btn" aria-label="查询释义" onClick={onQuery}>
+          <button type="button" className={styles['dict-menu-btn']} aria-label="查询释义" onClick={onQuery}>
             <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
               <circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" strokeWidth="1.8" />
               <line x1="16.5" y1="16.5" x2="21" y2="21" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
             </svg>
-            <span className="dict-menu-label">查询</span>
+            <span className={styles['dict-menu-label']}>查询</span>
           </button>
         </div>
       ) : null}
@@ -424,7 +425,7 @@ export function ReaderSelectionMenu({
       {query.status !== 'closed' && cardPos ? (
         <div
           ref={cardRef}
-          className="dict-card"
+          className={styles['dict-card']}
           data-control="dict"
           data-arrow={cardPos.arrow}
           style={{ left: cardPos.x, top: cardPos.y }}
@@ -436,30 +437,30 @@ export function ReaderSelectionMenu({
           onTouchEnd={onCardTouchEnd}
         >
           {query.status === 'loading' ? (
-              <div className="dict-card-body dict-card-body-loading">
-                <span className="dict-loading-spin" aria-hidden="true" />
-                <p className="dict-loading-text">正在查询「{query.queried}」…</p>
+              <div className={`${styles['dict-card-body']} ${styles['dict-card-body-loading']}`}>
+                <span className={styles['dict-loading-spin']} aria-hidden="true" />
+                <p className={styles['dict-loading-text']}>正在查询「{query.queried}」…</p>
               </div>
             ) : query.charInfo ? (
               <>
-                <header className="dict-card-head">
-                  <div className="dict-head-main">
+                <header className={styles['dict-card-head']}>
+                  <div className={styles['dict-head-main']}>
                     {query.charInfo.pinyin.length ? (
-                      <span className="dict-phonetic">{query.charInfo.pinyin.join(' / ')}</span>
+                      <span className={styles['dict-phonetic']}>{query.charInfo.pinyin.join(' / ')}</span>
                     ) : null}
-                    <div className="dict-head-word">
-                      <h3 className="dict-word">{query.charInfo.char}</h3>
+                    <div className={styles['dict-head-word']}>
+                      <h3 className={styles['dict-word']}>{query.charInfo.char}</h3>
                     </div>
                   </div>
-                  <button type="button" className="dict-close" aria-label="关闭释义" onClick={closeCard}>
+                  <button type="button" className={styles['dict-close']} aria-label="关闭释义" onClick={closeCard}>
                     <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
                       <path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                     </svg>
                   </button>
                 </header>
 
-                <div className="dict-card-body" onScroll={handleDictBodyScroll}>
-                  <p className="dict-char-meta">
+                <div className={styles['dict-card-body']} onScroll={handleDictBodyScroll}>
+                  <p className={styles['dict-char-meta']}>
                     {[
                       query.charInfo.strokes !== undefined ? `笔画 ${query.charInfo.strokes}` : null,
                       query.charInfo.radicals ? `部首 ${query.charInfo.radicals}` : null,
@@ -467,22 +468,22 @@ export function ReaderSelectionMenu({
                     ].filter(Boolean).join(' · ')}
                   </p>
                   {query.charInfo.explanations.length > 0 ? (
-                    <ol className="dict-defs">
+                    <ol className={styles['dict-defs']}>
                       {query.charInfo.explanations.map((d, i) => (
-                        <li key={i} className="dict-def">
-                          <span className="dict-def-no">{i + 1}</span>
-                          <span className="dict-def-text">{d}</span>
+                        <li key={i} className={styles['dict-def']}>
+                          <span className={styles['dict-def-no']}>{i + 1}</span>
+                          <span className={styles['dict-def-text']}>{d}</span>
                         </li>
                       ))}
                     </ol>
                   ) : null}
                   {(query.charInfo.synonyms.length > 0 || query.charInfo.antonyms.length > 0) ? (
-                    <div className="dict-char-rel">
+                    <div className={styles['dict-char-rel']}>
                       {query.charInfo.synonyms.length > 0 ? (
-                        <p className="dict-rel-line"><span className="dict-rel-key">近义</span>{query.charInfo.synonyms.join('、')}</p>
+                        <p className={styles['dict-rel-line']}><span className={styles['dict-rel-key']}>近义</span>{query.charInfo.synonyms.join('、')}</p>
                       ) : null}
                       {query.charInfo.antonyms.length > 0 ? (
-                        <p className="dict-rel-line"><span className="dict-rel-key">反义</span>{query.charInfo.antonyms.join('、')}</p>
+                        <p className={styles['dict-rel-line']}><span className={styles['dict-rel-key']}>反义</span>{query.charInfo.antonyms.join('、')}</p>
                       ) : null}
                     </div>
                   ) : null}
@@ -490,44 +491,44 @@ export function ReaderSelectionMenu({
               </>
             ) : entry ? (
               <>
-                <header className="dict-card-head">
-                  <div className="dict-head-main">
+                <header className={styles['dict-card-head']}>
+                  <div className={styles['dict-head-main']}>
                     {/* 竖向层级：拼音 → 词头(+词性)（番茄小说释义卡） */}
-                    {phonetics ? <span className="dict-phonetic">{phonetics}</span> : null}
-                    <div className="dict-head-word">
-                      <h3 className="dict-word">{entry.word}</h3>
-                      {entry.pos ? <span className="dict-pos">{entry.pos}</span> : null}
+                    {phonetics ? <span className={styles['dict-phonetic']}>{phonetics}</span> : null}
+                    <div className={styles['dict-head-word']}>
+                      <h3 className={styles['dict-word']}>{entry.word}</h3>
+                      {entry.pos ? <span className={styles['dict-pos']}>{entry.pos}</span> : null}
                     </div>
                   </div>
-                  <button type="button" className="dict-close" aria-label="关闭释义" onClick={closeCard}>
+                  <button type="button" className={styles['dict-close']} aria-label="关闭释义" onClick={closeCard}>
                     <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
                       <path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                     </svg>
                   </button>
                 </header>
 
-                <div className="dict-card-body" onScroll={handleDictBodyScroll}>
+                <div className={styles['dict-card-body']} onScroll={handleDictBodyScroll}>
                   {entry.defs.length > 0 ? (
-                    <ol className="dict-defs">
+                    <ol className={styles['dict-defs']}>
                       {entry.defs.map((d, i) => (
-                        <li key={i} className="dict-def">
-                          <span className="dict-def-no">{i + 1}</span>
-                          <span className="dict-def-text">{d}</span>
+                        <li key={i} className={styles['dict-def']}>
+                          <span className={styles['dict-def-no']}>{i + 1}</span>
+                          <span className={styles['dict-def-text']}>{d}</span>
                         </li>
                       ))}
                     </ol>
                   ) : null}
 
                   {entry.specialized.length > 0 ? (
-                    <div className="dict-specialized">
+                    <div className={styles['dict-specialized']}>
                       {entry.specialized.map((sp, i) => (
-                        <section key={i} className="dict-spec-group">
-                          <h4 className="dict-spec-field">{sp.field}</h4>
-                          <ol className="dict-defs">
+                        <section key={i} className={styles['dict-spec-group']}>
+                          <h4 className={styles['dict-spec-field']}>{sp.field}</h4>
+                          <ol className={styles['dict-defs']}>
                             {sp.defs.map((d, j) => (
-                              <li key={j} className="dict-def">
-                                <span className="dict-def-no">{j + 1}</span>
-                                <span className="dict-def-text">{d}</span>
+                              <li key={j} className={styles['dict-def']}>
+                                <span className={styles['dict-def-no']}>{j + 1}</span>
+                                <span className={styles['dict-def-text']}>{d}</span>
                               </li>
                             ))}
                           </ol>
@@ -537,27 +538,27 @@ export function ReaderSelectionMenu({
                   ) : null}
 
                   {entry.source ? (
-                    <p className="dict-source">来自 {entry.source} ›</p>
+                    <p className={styles['dict-source']}>来自 {entry.source} ›</p>
                   ) : null}
                 </div>
               </>
             ) : (
               <>
-                <header className="dict-card-head">
-                  <div className="dict-head-main">
-                    <h3 className="dict-word dict-word-miss">未收录该词</h3>
+                <header className={styles['dict-card-head']}>
+                  <div className={styles['dict-head-main']}>
+                    <h3 className={`${styles['dict-word']} ${styles['dict-word-miss']}`}>未收录该词</h3>
                   </div>
-                  <button type="button" className="dict-close" aria-label="关闭释义" onClick={closeCard}>
+                  <button type="button" className={styles['dict-close']} aria-label="关闭释义" onClick={closeCard}>
                     <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
                       <path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                     </svg>
                   </button>
                 </header>
-                <div className="dict-card-body" onScroll={handleDictBodyScroll}>
-                  <p className="dict-miss-text">
+                <div className={styles['dict-card-body']} onScroll={handleDictBodyScroll}>
+                  <p className={styles['dict-miss-text']}>
                     「{query.queried}」不在离线词表中
                   </p>
-                  <p className="dict-miss-hint">换个词试试，或先复制到外部词典查询</p>
+                  <p className={styles['dict-miss-hint']}>换个词试试，或先复制到外部词典查询</p>
                 </div>
               </>
             )}
@@ -566,7 +567,7 @@ export function ReaderSelectionMenu({
 
       {/* 复制结果提示 */}
       {toast ? (
-        <div className="dict-toast" role="status" aria-live="polite">
+        <div className={styles['dict-toast']} role="status" aria-live="polite">
           {toast}
         </div>
       ) : null}

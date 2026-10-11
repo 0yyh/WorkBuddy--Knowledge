@@ -18,6 +18,7 @@
  *   （白底在深色阅读背景上刺眼，属必要偏离）。全部只作用于阅读区；离开阅读页即销毁。
  */
 import { useEffect, useState } from 'react';
+import styles from './ReaderSettingsSheet.module.css';
 import { BaseSheet } from './sheet/BaseSheet';
 import { SubSheet } from './sheet/SubSheet';
 import type {
@@ -121,15 +122,15 @@ export function ReaderSettingsSheet({
     <BaseSheet open={open} onClose={onClose} title="阅读设置" bg={bg}>
       <div className="reader-sheet-body">
           {/* 亮度：纯灰轨道 + 圆滑块（第 4 轮：移除右侧「护眼模式」按钮，颜色行已包含 sepia，避免冗余）。 */}
-          <div className="reader-row">
-            <span className="reader-row-label">亮度</span>
-            <div className="reader-row-control reader-row-control-grow">
+          <div className={styles['reader-row']}>
+            <span className={styles['reader-row-label']}>亮度</span>
+            <div className={`${styles['reader-row-control']} ${styles['reader-row-control-grow']}`}>
               <input
                 type="range"
                 min={0}
                 max={100}
                 step={1}
-                className="reader-brightness-slider"
+                className={styles['reader-brightness-slider']}
                 value={level}
                 aria-label="App 显示亮度（不影响系统亮度）"
                 onChange={(e) => onChange('brightnessLevel', Number(e.target.value))}
@@ -138,23 +139,23 @@ export function ReaderSettingsSheet({
           </div>
 
           {/* 字号：A− [当前 px] A+；右侧「字体名 ›」入口。 */}
-          <div className="reader-row">
-            <span className="reader-row-label">字号</span>
-            <div className="reader-row-control reader-row-control-grow">
-              <div className="reader-font-size">
+          <div className={styles['reader-row']}>
+            <span className={styles['reader-row-label']}>字号</span>
+            <div className={`${styles['reader-row-control']} ${styles['reader-row-control-grow']}`}>
+              <div className={styles['reader-font-size']}>
                 <button
                   type="button"
-                  className="reader-font-step"
+                  className={styles['reader-font-step']}
                   aria-label="缩小字号"
                   disabled={!canFontDown}
                   onClick={() => canFontDown && onChange('fontSize', Math.max(READ_FONT_MIN, prefs.fontSize - 1))}
                 >
                   A−
                 </button>
-                <span className="reader-font-num">{prefs.fontSize}</span>
+                <span className={styles['reader-font-num']}>{prefs.fontSize}</span>
                 <button
                   type="button"
-                  className="reader-font-step"
+                  className={styles['reader-font-step']}
                   aria-label="放大字号"
                   disabled={!canFontUp}
                   onClick={() => canFontUp && onChange('fontSize', Math.min(READ_FONT_MAX, prefs.fontSize + 1))}
@@ -164,12 +165,12 @@ export function ReaderSettingsSheet({
               </div>
               <button
                 type="button"
-                className="reader-enter-btn"
+                className={styles['reader-enter-btn']}
                 aria-label="选择字体"
                 onClick={onOpenFont}
               >
-                <span className="reader-enter-text">{FAMILY_LABEL[prefs.fontFamily]}</span>
-                <span className="reader-enter-arrow" aria-hidden="true">
+                <span className={styles['reader-enter-text']}>{FAMILY_LABEL[prefs.fontFamily]}</span>
+                <span className={styles['reader-enter-arrow']} aria-hidden="true">
                   ›
                 </span>
               </button>
@@ -177,15 +178,15 @@ export function ReaderSettingsSheet({
           </div>
 
           {/* 颜色：7 个圆色块 = 主题（背景 + 前景统一）。 */}
-          <div className="reader-row">
-            <span className="reader-row-label">颜色</span>
-            <div className="reader-row-control">
-              <div className="reader-color-row">
+          <div className={styles['reader-row']}>
+            <span className={styles['reader-row-label']}>颜色</span>
+            <div className={styles['reader-row-control']}>
+              <div className={styles['reader-color-row']}>
                 {COLOR_SWATCH.map((c) => (
                   <button
                     key={c.value}
                     type="button"
-                    className={`reader-color-dot${prefs.bgColor === c.value ? ' is-on' : ''}`}
+                    className={`${styles['reader-color-dot']}${prefs.bgColor === c.value ? ' is-on' : ''}`}
                     data-value={c.value}
                     style={{ background: c.color }}
                     aria-label={`${c.label}主题`}
@@ -198,16 +199,16 @@ export function ReaderSettingsSheet({
           </div>
 
           {/* 翻页：5 胶囊并排（面板内专属配色，不动全局 .reader-pill）。 */}
-          <div className="reader-row">
-            <span className="reader-row-label">翻页</span>
-            <div className="reader-row-control">
+          <div className={styles['reader-row']}>
+            <span className={styles['reader-row-label']}>翻页</span>
+            <div className={styles['reader-row-control']}>
               {/* 第 3 轮：翻页选中态 = 白底黑字 + 番茄橙描边 */}
-              <div className="reader-pill-group reader-pill-group-5 reader-pills-tone reader-pills-tone-page">
+              <div className={`${styles['reader-pill-group']} ${styles['reader-pill-group-5']} ${styles['reader-pills-tone']} ${styles['reader-pills-tone-page']}`}>
                 {ANIM_OPTIONS.map((o) => (
                   <button
                     key={o.value}
                     type="button"
-                    className={`reader-pill${prefs.animation === o.value ? ' is-on' : ''}`}
+                    className={`${styles['reader-pill']}${prefs.animation === o.value ? ' is-on' : ''}`}
                     onClick={() => onChange('animation', o.value)}
                   >
                     {o.label}
@@ -218,11 +219,11 @@ export function ReaderSettingsSheet({
           </div>
 
           {/* 底部：间距设置（主按钮）+ 更多（文本入口）。 */}
-          <div className="reader-sheet-actions">
-            <button type="button" className="reader-action-primary" onClick={onOpenSpacing}>
+          <div className={styles['reader-sheet-actions']}>
+            <button type="button" className={styles['reader-action-primary']} onClick={onOpenSpacing}>
               间距设置
             </button>
-            <button type="button" className="reader-action-more" onClick={onOpenMore}>
+            <button type="button" className={styles['reader-action-more']} onClick={onOpenMore}>
               更多 ›
             </button>
           </div>
@@ -247,13 +248,13 @@ interface ReaderFontSheetProps {
 export function ReaderFontSheet({ open, bg, fontFamily, onPick, onClose }: ReaderFontSheetProps): JSX.Element {
   return (
     <SubSheet open={open} onClose={onClose} title="字体" bg={bg}>
-      <div className="reader-spacing-body">
-        <div className="reader-pill-group reader-pill-group-4">
+      <div className={styles['reader-spacing-body']}>
+        <div className={`${styles['reader-pill-group']} ${styles['reader-pill-group-4']}`}>
           {FAMILY_OPTIONS.map((o) => (
             <button
               key={o.value}
               type="button"
-              className={`reader-pill${fontFamily === o.value ? ' is-on' : ''}`}
+              className={`${styles['reader-pill']}${fontFamily === o.value ? ' is-on' : ''}`}
               onClick={() => onPick(o.value)}
             >
               {o.label}
@@ -297,16 +298,16 @@ export function ReaderSpacingSheet({ open, bg, align, onAlignChange, onClose }: 
 
   return (
     <SubSheet open={open} onClose={onClose} title="间距设置" bg={bg}>
-      <div className="reader-spacing-body">
+      <div className={styles['reader-spacing-body']}>
           {/* 行段间距：4 档（第 3 轮：删「自定义」及其滑块），选中橙底白字 */}
-          <div className="reader-spacing-group">
-            <div className="reader-spacing-label">行段间距</div>
-            <div className="reader-pill-group reader-pill-group-4 reader-pills-tone reader-pills-tone-orange">
+          <div className={styles['reader-spacing-group']}>
+            <div className={styles['reader-spacing-label']}>行段间距</div>
+            <div className={`${styles['reader-pill-group']} ${styles['reader-pill-group-4']} ${styles['reader-pills-tone']} ${styles['reader-pills-tone-orange']}`}>
               {PARA_SPACING_OPTIONS.map((o) => (
                 <button
                   key={o.value}
                   type="button"
-                  className={`reader-pill${paraSpacing === o.value ? ' is-on' : ''}`}
+                  className={`${styles['reader-pill']}${paraSpacing === o.value ? ' is-on' : ''}`}
                   onClick={() => setParaSpacing(o.value)}
                 >
                   {o.label}
@@ -316,14 +317,14 @@ export function ReaderSpacingSheet({ open, bg, align, onAlignChange, onClose }: 
           </div>
 
           {/* 页面边距：4 档（第 3 轮：删「智能匹配」，默认「适中」） */}
-          <div className="reader-spacing-group">
-            <div className="reader-spacing-label">页面边距</div>
-            <div className="reader-pill-group reader-pill-group-4 reader-pills-tone reader-pills-tone-orange">
+          <div className={styles['reader-spacing-group']}>
+            <div className={styles['reader-spacing-label']}>页面边距</div>
+            <div className={`${styles['reader-pill-group']} ${styles['reader-pill-group-4']} ${styles['reader-pills-tone']} ${styles['reader-pills-tone-orange']}`}>
               {PAGE_MARGIN_OPTIONS.map((o) => (
                 <button
                   key={o.value}
                   type="button"
-                  className={`reader-pill${pageMargin === o.value ? ' is-on' : ''}`}
+                  className={`${styles['reader-pill']}${pageMargin === o.value ? ' is-on' : ''}`}
                   onClick={() => setPageMargin(o.value)}
                 >
                   {o.label}
@@ -333,14 +334,14 @@ export function ReaderSpacingSheet({ open, bg, align, onAlignChange, onClose }: 
           </div>
 
           {/* 对齐：两端对齐 / 左对齐（自第 2 步从主层迁入），选中橙底白字 */}
-          <div className="reader-spacing-group">
-            <div className="reader-spacing-label">对齐</div>
-            <div className="reader-pill-group reader-pills-tone reader-pills-tone-orange">
+          <div className={styles['reader-spacing-group']}>
+            <div className={styles['reader-spacing-label']}>对齐</div>
+            <div className={`${styles['reader-pill-group']} ${styles['reader-pills-tone']} ${styles['reader-pills-tone-orange']}`}>
               {ALIGN_OPTIONS.map((o) => (
                 <button
                   key={o.value}
                   type="button"
-                  className={`reader-pill${align === o.value ? ' is-on' : ''}`}
+                  className={`${styles['reader-pill']}${align === o.value ? ' is-on' : ''}`}
                   onClick={() => onAlignChange(o.value)}
                 >
                   {o.label}
@@ -396,16 +397,16 @@ export function ReaderMoreSheet({ open, bg, prefs, onChange, onClose }: ReaderMo
 
   return (
     <SubSheet open={open} onClose={onClose} title="更多设置" bg={bg}>
-      <div className="reader-more-body">
+      <div className={styles['reader-more-body']}>
         {MORE_TOGGLE_KEYS.map((k) => (
-          <div key={k} className="reader-more-row">
-            <div className="reader-more-text">
-              <span className="reader-more-label">{MORE_TOGGLE_LABELS[k].label}</span>
-              <span className="reader-more-hint">{MORE_TOGGLE_LABELS[k].hint}</span>
+          <div key={k} className={styles['reader-more-row']}>
+            <div className={styles['reader-more-text']}>
+              <span className={styles['reader-more-label']}>{MORE_TOGGLE_LABELS[k].label}</span>
+              <span className={styles['reader-more-hint']}>{MORE_TOGGLE_LABELS[k].hint}</span>
             </div>
             <button
               type="button"
-              className={`reader-switch${flags[k] ? ' is-on' : ''}`}
+              className={`${styles['reader-switch']}${flags[k] ? ' is-on' : ''}`}
               aria-pressed={flags[k]}
               aria-label={MORE_TOGGLE_LABELS[k].label}
               onClick={() => toggle(k)}

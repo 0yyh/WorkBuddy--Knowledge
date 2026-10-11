@@ -1,0 +1,165 @@
+/* ReaderToc 局部作用域样式（从全局 styles.css 迁入，A-6）。
+   - 本文件只承载目录面板的「内容」专用 class；
+   - 共享/通用 class 仍留全局 styles.css：
+       .reader-sheet-body（主层内容容器，多组件共用）、
+       .reader-chapter-sheet（目录外壳，由 EntryReaderPage 提供）、
+       .chapter-row 及其 :active / :focus-visible / .is-active（与 EntryCoverPage 共享）；
+   - 主题祖先 .reader-chapter-sheet / 动态修饰类 is-active 用 :global() 保留；
+   - token 仍消费全局 var(--xxx)。 */
+
+/* —— 目录搜索框 + 搜索结果列表 —— */
+.toc-search {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0 4px 8px;
+  padding: 6px 12px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--bg-soft);
+  color: var(--text-dim);
+  flex: 0 0 auto;
+}
+.toc-search svg {
+  flex: 0 0 auto;
+}
+.toc-search-input {
+  flex: 1 1 auto;
+  min-width: 0;
+  border: 0;
+  outline: none;
+  background: transparent;
+  color: var(--text);
+  font-size: 0.875rem;
+  padding: 2px 0;
+}
+.toc-search-input::-webkit-search-cancel-button {
+  display: none;
+}
+.toc-search-clear {
+  border: 0;
+  background: transparent;
+  color: var(--text-dim);
+  font-size: 1.125rem;
+  line-height: 1;
+  padding: 2px 6px;
+  cursor: pointer;
+  flex: 0 0 auto;
+}
+.toc-search-list {
+  overflow-y: auto;
+  max-height: 60vh;
+  /* 目录为长列表：隔离其绘制范围，滚动时不牵动外部 */
+  contain: content;
+}
+.toc-search-empty {
+  color: var(--text-dim);
+  font-size: 0.875rem;
+  text-align: center;
+  padding: 24px 0;
+}
+
+/* 目录外壳内联布局（祖先 .reader-chapter-sheet 为全局壳层） */
+:global(.reader-chapter-sheet) .reader-chapter-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  padding: 0 0 6px;
+}
+
+/* —— 章节组 / 行 / 小节 —— */
+.chapter-group {
+  border-bottom: 1px solid var(--border);
+  /* 长目录（数百章）性能：视口外的章节组跳过布局与绘制，滚动到附近才渲染。
+     contain-intrinsic-size 为未渲染的组预留占位高度，避免滚动条长度与位置跳动。
+     不支持的旧 WebView 会整条声明忽略，行为回退为普通渲染，无副作用。 */
+  content-visibility: auto;
+  contain-intrinsic-size: auto 52px;
+}
+.chapter-group:last-child {
+  border-bottom: 0;
+}
+/* 活动章高亮：is-active 由 TSX 以字面量拼接到 chapter-group 上 */
+.chapter-group:global(.is-active) .chapter-row {
+  background: var(--brand-soft, rgba(122, 162, 255, 0.08));
+  border-radius: 10px;
+}
+
+.chapter-sublist {
+  list-style: none;
+  margin: 0;
+  padding: 0 0 8px 26px;
+}
+
+.chapter-subitem {
+  display: block;
+  width: 100%;
+  text-align: left;
+  border: 0;
+  background: transparent;
+  color: var(--text-soft);
+  font-size: 0.8125rem;
+  line-height: 1.5;
+  padding: 5px 6px;
+  border-radius: 6px;
+  cursor: pointer;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.chapter-subitem:active {
+  background: var(--brand-soft, rgba(122, 162, 255, 0.12));
+}
+/* 阅读页目录行：保证整行点击目标达标 */
+.chapter-subitem {
+  min-height: 34px;
+}
+
+.chapter-row-main {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  border: 0;
+  background: transparent;
+  text-align: left;
+  padding: 0;
+  color: inherit;
+  cursor: pointer;
+}
+
+.chapter-no {
+  flex: 0 0 auto;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--brand);
+}
+
+.chapter-name {
+  flex: 1 1 auto;
+  font-size: 0.9375rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.chapter-read {
+  flex: 0 0 auto;
+  font-size: 0.75rem;
+  color: var(--brand);
+  background: var(--brand-soft, rgba(122, 162, 255, 0.16));
+  padding: 2px 8px;
+  border-radius: 999px;
+}
+
+/* 阅读目录：读到这里标记 */
+.chapter-here {
+  flex: 0 0 auto;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  color: var(--brand-strong);
+  background: var(--brand-soft);
+  padding: 1px 7px;
+  border-radius: 999px;
+  margin-left: 8px;
+}

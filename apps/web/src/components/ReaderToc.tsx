@@ -6,6 +6,7 @@
  * 逻辑与重构前一致：卷/container 不计入章节序号、活动章高亮、小节点击触发跳章+滚动到标题。
  */
 import { useMemo, useState } from 'react';
+import styles from './ReaderToc.module.css';
 import type { HeadingView } from '../types';
 
 /** 扁平化后的文档清单行（导读 + 各章）。与 EntryReaderPage 共用。 */
@@ -58,7 +59,7 @@ export function ReaderToc({
         return (
           <div
             key={`${d.kind}:${d.key}`}
-            className={`chapter-group${isActive ? ' is-active' : ''}`}
+            className={`${styles['chapter-group']}${isActive ? ' is-active' : ''}`}
           >
             <div
               className="chapter-row"
@@ -72,20 +73,20 @@ export function ReaderToc({
                 }
               }}
             >
-              <div className="chapter-row-main">
-                <span className="chapter-no">{isMain ? '序' : `第${chapterNo}章`}</span>
-                <span className="chapter-name">{isMain ? entryTitle : d.title}</span>
-                {isActive ? <span className="chapter-here">读到这里</span> : null}
-                {readPercent > 0 ? <span className="chapter-read">读至{readPercent}%</span> : null}
+              <div className={styles['chapter-row-main']}>
+                <span className={styles['chapter-no']}>{isMain ? '序' : `第${chapterNo}章`}</span>
+                <span className={styles['chapter-name']}>{isMain ? entryTitle : d.title}</span>
+                {isActive ? <span className={styles['chapter-here']}>读到这里</span> : null}
+                {readPercent > 0 ? <span className={styles['chapter-read']}>读至{readPercent}%</span> : null}
               </div>
             </div>
             {shownSubs.length > 0 ? (
-              <ul className="chapter-sublist">
+              <ul className={styles['chapter-sublist']}>
                 {shownSubs.map((s, si) => (
                   <li key={`${d.key}:${si}`}>
                     <button
                       type="button"
-                      className="chapter-subitem"
+                      className={styles['chapter-subitem']}
                       onClick={() => onJumpToHeading(i, s.text)}
                     >
                       {s.text}
@@ -99,21 +100,21 @@ export function ReaderToc({
       })
       .filter((r): r is JSX.Element => r !== null);
     if (list.length === 0) {
-      return <div className="toc-search-empty">未找到「{tocQuery}」相关章节</div>;
+      return <div className={styles['toc-search-empty']}>未找到「{tocQuery}」相关章节</div>;
     }
     return list;
   }, [docs, headingsMap, cur, tocQuery, entryTitle, onJumpToChapter, onJumpToHeading]);
 
   return (
-    <div className="reader-sheet-body reader-chapter-body">
+    <div className={`reader-sheet-body ${styles['reader-chapter-body']}`}>
       {/* 目录搜索：按章节名 / 二级小节标题过滤 */}
-      <div className="toc-search">
+      <div className={styles['toc-search']}>
         <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true">
           <circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" strokeWidth="2" />
           <line x1="16.5" y1="16.5" x2="21" y2="21" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
         </svg>
         <input
-          className="toc-search-input"
+          className={styles['toc-search-input']}
           type="search"
           placeholder="搜索章节 / 小节"
           value={tocQuery}
@@ -123,7 +124,7 @@ export function ReaderToc({
         {tocQuery ? (
           <button
             type="button"
-            className="toc-search-clear"
+            className={styles['toc-search-clear']}
             aria-label="清空搜索"
             onClick={() => setTocQuery('')}
           >
@@ -131,7 +132,7 @@ export function ReaderToc({
           </button>
         ) : null}
       </div>
-      <div className="toc-search-list">{rows}</div>
+      <div className={styles['toc-search-list']}>{rows}</div>
     </div>
   );
 }

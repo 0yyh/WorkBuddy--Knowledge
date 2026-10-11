@@ -1,0 +1,504 @@
+/* ReaderSettingsSheet 局部作用域样式（从全局 styles.css 迁入，A-6）。
+   - 本文件只承载阅读设置主层 + 字体/间距/更多子层的「内容」专用 class；
+   - 共享壳层 class（.reader-sheet / .reader-sheet-bg-* / .reader-sheet-title /
+     .reader-sheet-body / .reader-more-* 等）仍由 BaseSheet / SubSheet 在全局
+     styles.css 提供，不搬（它们是跨组件共享的弹层外壳与主题 token 载体）；
+   - 主题覆写规则（各阅读背景下控件底色 / 选中态）的祖先 .reader-sheet-bg-* /
+     .reader-sheet 为全局，用 :global() 包裹；
+   - 动态修饰类 is-on 由 TSX 以字面量拼接，用 :global(.is-on) 保留全局语义；
+   - keyframes capsule-in / dot-pulse 仅本组件使用，随模块局部化；
+   - token 仍消费全局 var(--xxx)。 */
+
+/* —— 主题覆写（祖先为全局 .reader-sheet-bg-* / .reader-sheet） —— */
+:global(.reader-sheet-bg-white) .reader-pill,
+:global(.reader-sheet-bg-sepia) .reader-pill,
+:global(.reader-sheet-bg-green) .reader-pill,
+:global(.reader-sheet-bg-blue) .reader-pill {
+  background: rgba(0, 0, 0, 0.06);
+}
+:global(.reader-sheet-bg-black) .reader-pill,
+:global(.reader-sheet-bg-gray) .reader-pill,
+:global(.reader-sheet-bg-dark) .reader-pill {
+  background: rgba(255, 255, 255, 0.1);
+  color: #d4cdb7;
+}
+
+:global(.reader-sheet-bg-white) .reader-pill:global(.is-on),
+:global(.reader-sheet-bg-sepia) .reader-pill:global(.is-on),
+:global(.reader-sheet-bg-green) .reader-pill:global(.is-on),
+:global(.reader-sheet-bg-blue) .reader-pill:global(.is-on),
+:global(.reader-sheet-bg-black) .reader-pill:global(.is-on),
+:global(.reader-sheet-bg-gray) .reader-pill:global(.is-on),
+:global(.reader-sheet-bg-dark) .reader-pill:global(.is-on) {
+  background: var(--brand);
+  color: #fff;
+}
+/* 深色主题下 --brand 已被映射为浅色（#d4cdb7），白字看不清 → 改为深色字 */
+:global(.reader-sheet-bg-dark) .reader-pill:global(.is-on) {
+  color: #1b1a18;
+}
+
+:global(.reader-sheet-bg-sepia) .reader-font-size,
+:global(.reader-sheet-bg-green) .reader-font-size,
+:global(.reader-sheet-bg-blue) .reader-font-size,
+:global(.reader-sheet-bg-white) .reader-font-size {
+  background: rgba(0, 0, 0, 0.06);
+}
+:global(.reader-sheet-bg-black) .reader-font-size,
+:global(.reader-sheet-bg-gray) .reader-font-size,
+:global(.reader-sheet-bg-dark) .reader-font-size {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+:global(.reader-sheet-bg-dark) .reader-row {
+  border-bottom-color: rgba(255, 255, 255, 0.1);
+}
+
+/* 面板内胶囊配色（只作用于带 .reader-pills-tone 的组，不改全局 .reader-pill 语义）。
+   未选中统一：底 #F0F0F0 / 字 #666666。 */
+:global(.reader-sheet) .reader-pills-tone .reader-pill {
+  background: #f0f0f0;
+  color: #666666;
+  border: 1px solid transparent;
+}
+/* 翻页组：选中 = 白底 + 黑字 + 番茄橙描边（第 3 轮） */
+:global(.reader-sheet) .reader-pills-tone-page .reader-pill:global(.is-on) {
+  background: #ffffff;
+  color: #000000;
+  border: 1px solid #ff6a00;
+}
+/* 间距 / 对齐组：选中 = 番茄橙底 + 白字（第 3 轮：替换原白底黑字） */
+:global(.reader-sheet) .reader-pills-tone-orange .reader-pill:global(.is-on) {
+  background: #ff6a00;
+  color: #ffffff;
+  border: 1px solid #ff6a00;
+}
+
+/* 字号 A−/A+ 与「字体 ›」入口：hover/active 用番茄橙（弱强调，不喧宾夺主） */
+:global(.reader-sheet) .reader-font-step,
+:global(.reader-sheet) .reader-enter-btn {
+  transition: color 0.16s var(--ease), transform 0.12s var(--ease);
+}
+:global(.reader-sheet) .reader-font-step:hover,
+:global(.reader-sheet) .reader-enter-btn:hover {
+  color: #ff6a00;
+}
+:global(.reader-sheet) .reader-font-step:active,
+:global(.reader-sheet) .reader-enter-btn:active {
+  color: #e05f00;
+  transform: scale(0.96);
+}
+:global(.reader-sheet) .reader-enter-btn:hover .reader-enter-text {
+  color: #ff6a00;
+}
+
+:global(.reader-sheet-bg-dark) .reader-switch {
+  background: #3a3a3a;
+}
+
+:global(.reader-sheet-bg-dark) .reader-more-row {
+  border-color: var(--t-line, rgba(255, 255, 255, 0.1));
+}
+
+/* —— 设置行（左标签 + 右控件，参考 3.jpg） —— */
+.reader-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.reader-row:last-of-type {
+  border-bottom: 0;
+}
+
+.reader-row-label {
+  flex: 0 0 38px;
+  color: var(--text-soft);
+  font-size: 0.875rem;
+}
+
+.reader-row-control {
+  flex: 1 1 auto;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  min-width: 0;
+}
+
+.reader-row-control-grow {
+  flex: 1 1 auto;
+}
+
+/* 字号 A-/数字/A+ 控件（参考 3.jpg） */
+.reader-font-size {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 4px 8px;
+  border-radius: 12px;
+  background: var(--bg-soft);
+}
+
+.reader-font-step {
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font-weight: 700;
+  font-size: 0.875rem;
+  cursor: pointer;
+  padding: 4px 6px;
+  border-radius: 6px;
+}
+
+.reader-font-step:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+
+.reader-font-num {
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+  font-size: 0.9375rem;
+  min-width: 1.4em;
+  text-align: center;
+}
+
+/* 字号行右侧「字体名 ›」入口按钮（进入字体子层） */
+.reader-enter-btn {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  border: 0;
+  background: transparent;
+  color: var(--text-soft);
+  font-size: 0.8125rem;
+  padding: 6px 4px;
+  cursor: pointer;
+}
+.reader-enter-text {
+  color: var(--text);
+}
+.reader-enter-arrow {
+  color: var(--text-dim);
+  font-size: 1rem;
+  line-height: 1;
+}
+
+/* 主层底部：间距设置（主按钮）+ 更多（文本入口） */
+.reader-sheet-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 0 4px;
+}
+.reader-action-primary {
+  flex: 1 1 auto;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text);
+  border-radius: 12px;
+  padding: 12px 16px;
+  font-size: 0.9375rem;
+  text-align: center;
+  cursor: pointer;
+}
+.reader-action-more {
+  flex: 0 0 auto;
+  border: 0;
+  background: transparent;
+  color: var(--text-soft);
+  font-size: 0.875rem;
+  padding: 12px 8px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+/* 指南 §3.1：按钮按下反馈（缩放 + 颜色，spring 回弹） */
+.reader-action-primary,
+.reader-action-more {
+  transition: background var(--duration-fast) var(--ease-out-expo),
+    color var(--duration-fast) var(--ease-out-expo), transform var(--duration-fast) var(--ease-out-expo);
+}
+.reader-action-primary:active,
+.reader-action-more:active {
+  transform: scale(0.97);
+}
+
+/* 通用胶囊组（用于字体/字号/翻页/其他） */
+.reader-pill-group {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.reader-pill {
+  border: 0;
+  background: var(--bg-soft);
+  color: inherit;
+  border-radius: 999px;
+  padding: 8px 14px;
+  font-size: 0.8125rem;
+  line-height: 1;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background 0.16s var(--ease), color 0.16s var(--ease), transform 0.12s var(--ease);
+}
+
+.reader-pill:active {
+  transform: scale(0.96);
+}
+
+.reader-pill:global(.is-on) {
+  background: var(--brand);
+  color: #fff;
+  /* 指南 §3.1：胶囊选中滑块从左滑入（缩放 + 淡入） */
+  animation: capsule-in var(--duration-fast) var(--ease-out-expo);
+}
+
+@keyframes capsule-in {
+  from {
+    transform: scale(0.92);
+    opacity: 0.6;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.reader-pill-group-5 {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 6px;
+  width: 100%;
+}
+
+.reader-pill-group-5 .reader-pill {
+  padding: 8px 0;
+  text-align: center;
+  width: 100%;
+  font-size: 0.7813rem;
+}
+
+/* 翻页行 4 档（间距设置子层的"页面边距"使用） */
+.reader-pill-group-4 {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 6px;
+  width: 100%;
+}
+
+.reader-pill-group-4 .reader-pill {
+  padding: 8px 0;
+  text-align: center;
+  width: 100%;
+  font-size: 0.8125rem;
+}
+
+/* 颜色：7 个圆形色板 */
+.reader-color-row {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 4px 0;
+}
+
+.reader-color-dot {
+  width: 28px;
+  height: 28px;
+  border-radius: 999px;
+  border: 2px solid var(--border);
+  cursor: pointer;
+  padding: 0;
+  position: relative;
+  transition: transform 0.18s var(--ease), border-color 0.18s var(--ease);
+}
+
+.reader-color-dot:global(.is-on) {
+  /* 第 2 步规范：选中加黑色细边框（浅色主题；深色主题另有高亮描边，见下） */
+  border: 2px solid #000;
+  transform: scale(1.12);
+  /* 指南 §3.1：色点选中内圈缩放脉冲（放大 1.2 → 缩回 1.12，spring） */
+  animation: dot-pulse var(--duration-base) var(--ease-spring);
+}
+
+/* 纯黑主题选中态：黑底上黑色描边不可见，改用白边 + 内阴影保持清晰 */
+.reader-color-dot[data-value='black']:global(.is-on) {
+  border-color: #ffffff;
+  box-shadow: inset 0 0 0 1.5px rgba(255, 255, 255, 0.25);
+}
+
+@keyframes dot-pulse {
+  0% {
+    transform: scale(1);
+  }
+  45% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1.12);
+  }
+}
+
+.reader-color-dot:active {
+  transform: scale(0.9);
+}
+
+/* 亮度滑杆：单根 iOS-like 原生 range（参考 11.jpg） */
+.reader-brightness-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  flex: 1 1 auto;
+  width: 100%;
+  height: 24px;
+  background: transparent;
+  margin: 0;
+  padding: 0;
+  cursor: pointer;
+}
+
+.reader-brightness-slider::-webkit-slider-runnable-track {
+  height: 6px;
+  border-radius: 3px;
+  /* 第 2 步：改为中性灰轨道（去掉旧蓝→黄渐变），纯轨道 + 圆滑块 */
+  background: #d4d4d4;
+  border: 0;
+}
+
+.reader-brightness-slider::-moz-range-track {
+  height: 6px;
+  border-radius: 3px;
+  /* 第 2 步：改为中性灰轨道（去掉旧蓝→黄渐变），纯轨道 + 圆滑块 */
+  background: #d4d4d4;
+  border: 0;
+}
+
+.reader-brightness-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 22px;
+  height: 22px;
+  border-radius: 999px;
+  background: #ffffff;
+  /* 去投影（阅读器扁平化规范）：改用 1px 描边分层 */
+  margin-top: -8px;
+  border: 1px solid #cfcfcf;
+}
+
+.reader-brightness-slider::-moz-range-thumb {
+  width: 22px;
+  height: 22px;
+  border-radius: 999px;
+  background: #ffffff;
+  /* 去投影（阅读器扁平化规范） */
+  border: 1px solid #cfcfcf;
+}
+
+:global(.reader-sheet-bg-dark) .reader-brightness-slider::-webkit-slider-runnable-track {
+  background: #555555;
+}
+
+:global(.reader-sheet-bg-dark) .reader-brightness-slider::-moz-range-track {
+  background: #555555;
+}
+
+/* 间距设置子层（参考 12.jpg）：行段间距 + 页面边距 + 行距三组胶囊 */
+.reader-spacing-body {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  padding: 14px 0 4px;
+}
+
+.reader-spacing-group {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.reader-spacing-label {
+  font-size: 0.8125rem;
+  color: var(--text-soft);
+}
+
+/* 更多设置子层（参考 13.jpg） */
+.reader-more-body {
+  padding: 4px 0 4px;
+}
+
+.reader-more-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.reader-more-row:last-child {
+  border-bottom: 0;
+}
+
+.reader-more-text {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+  flex: 1 1 auto;
+}
+
+.reader-more-label {
+  font-size: 0.9375rem;
+  color: var(--text);
+}
+
+.reader-more-hint {
+  font-size: 0.75rem;
+  color: var(--text-dim);
+}
+
+/* 圆形开关（iOS-like 拨片）：开 = #FF6A00、关 = #E0E0E0（第 2 步规范） */
+.reader-switch {
+  flex: 0 0 auto;
+  width: 44px;
+  height: 26px;
+  border-radius: 999px;
+  background: #e0e0e0;
+  border: 0;
+  padding: 0;
+  position: relative;
+  cursor: pointer;
+  /* 指南 §3.1：滑块滑动 + 背景色渐变（duration-base / ease-out-expo） */
+  transition: background var(--duration-base) var(--ease-out-expo), transform var(--duration-fast) var(--ease-out-expo);
+}
+
+.reader-switch::after {
+  content: '';
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 20px;
+  height: 20px;
+  background: #fff;
+  border-radius: 999px;
+  /* 去投影（阅读器扁平化规范）：拨片改用 1px 描边分层 */
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  transition: transform var(--duration-base) var(--ease-out-expo);
+}
+
+.reader-switch:global(.is-on) {
+  background: #ff6a00; /* 第 2 步：番茄橙（原 #f0a23a 停用） */
+}
+
+.reader-switch:global(.is-on)::after {
+  transform: translateX(18px);
+}
+
+.reader-switch:active {
+  transform: scale(0.96);
+}

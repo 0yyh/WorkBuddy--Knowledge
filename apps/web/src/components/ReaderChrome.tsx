@@ -11,6 +11,7 @@
  *  - 信息条显隐仅由 showProgress 控制；滑杆 ref 由 useReaderScroll 直写 DOM 联动进度。
  */
 import type { FormEvent, MutableRefObject } from 'react';
+import styles from './ReaderChrome.module.css';
 
 interface ReaderChromeProps {
   index: number;
@@ -50,10 +51,10 @@ export function ReaderChrome({
     <>
       <header className="reader-top">
         {/* 顶部：左侧返回「<」；右侧竖排「⋮」= 打开章节目录 */}
-        <div className="reader-top-bar reader-top-bar-solo">
+        <div className={`${styles['reader-top-bar']} ${styles['reader-top-bar-solo']}`}>
           <button
             type="button"
-            className="reader-circle-btn reader-circle-btn-sm"
+            className={`${styles['reader-circle-btn']} ${styles['reader-circle-btn-sm']}`}
             aria-label="返回详情"
             onClick={onBack}
           >
@@ -63,7 +64,7 @@ export function ReaderChrome({
           </button>
           <button
             type="button"
-            className="reader-circle-btn reader-circle-btn-sm"
+            className={`${styles['reader-circle-btn']} ${styles['reader-circle-btn-sm']}`}
             aria-label="章节目录"
             onClick={onOpenChapter}
           >
@@ -79,10 +80,10 @@ export function ReaderChrome({
       {/* 章节条：随 overlay 显隐（滚隐亦作用于此）；常驻导航栏已抽离为下方 <nav> */}
       <footer className="reader-bottom">
         {/* 上一章 + 章节进度条（可拖动跳章） + 下一章 */}
-        <div className="reader-bottom-nav">
+        <div className={styles['reader-bottom-nav']}>
           <button
             type="button"
-            className="reader-pill-btn"
+            className={styles['reader-pill-btn']}
             disabled={index <= 0}
             onClick={() => go(-1)}
             aria-label="上一章"
@@ -102,7 +103,7 @@ export function ReaderChrome({
           />
           <button
             type="button"
-            className="reader-pill-btn"
+            className={styles['reader-pill-btn']}
             disabled={index >= total - 1}
             onClick={() => go(1)}
             aria-label="下一章"
@@ -114,7 +115,7 @@ export function ReaderChrome({
 
       {/* 常驻 3 等分导航栏（目录 / 夜间 / 设置），始终可见可点 */}
       <nav className="reader-bottom-tabs">
-        <button type="button" className="reader-tab" aria-label="章节目录" onClick={onOpenChapter}>
+        <button type="button" className={styles['reader-tab']} aria-label="章节目录" onClick={onOpenChapter}>
           <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
             <g fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
               <line x1="4" y1="6" x2="20" y2="6" />
@@ -122,11 +123,11 @@ export function ReaderChrome({
               <line x1="4" y1="18" x2="20" y2="18" />
             </g>
           </svg>
-          <span className="reader-tab-label">目录</span>
+          <span className={styles['reader-tab-label']}>目录</span>
         </button>
         <button
           type="button"
-          className="reader-tab"
+          className={styles['reader-tab']}
           aria-label={isNight ? '日间模式' : '夜间模式'}
           onClick={onToggleNight}
         >
@@ -143,11 +144,11 @@ export function ReaderChrome({
               <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
             )}
           </svg>
-          <span className="reader-tab-label">{isNight ? '日间' : '夜间'}</span>
+          <span className={styles['reader-tab-label']}>{isNight ? '日间' : '夜间'}</span>
         </button>
         <button
           type="button"
-          className="reader-tab"
+          className={styles['reader-tab']}
           aria-label="阅读区设置"
           onClick={onOpenSettings}
         >
@@ -157,7 +158,7 @@ export function ReaderChrome({
               <circle cx="12" cy="12" r="2.5" />
             </g>
           </svg>
-          <span className="reader-tab-label">设置</span>
+          <span className={styles['reader-tab-label']}>设置</span>
         </button>
       </nav>
 
@@ -165,7 +166,7 @@ export function ReaderChrome({
       {showProgress ? (
         <div className="reader-statusbar" aria-live="off">
           <span className="reader-statusbar-progress">{`${currentPos}/${total}`}</span>
-          <span className="reader-statusbar-right">
+          <span className={styles['reader-statusbar-right']}>
             <span className="reader-statusbar-time">{clock}</span>
             {battery !== null ? <span className="reader-statusbar-battery">{`${battery}%`}</span> : null}
           </span>

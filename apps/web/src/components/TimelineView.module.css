@@ -1,0 +1,169 @@
+/* TimelineView 局部作用域样式（从全局 styles.css 迁入，A-6）。
+   - 本文件只承载 TimelineView 组件专用 class；
+   - 与全站共享的通用 class（page-title / page-sub / empty / chip / chip-era）
+     仍留在全局 styles.css，不搬；
+   - 动态修饰类 has-link / is-missing / is-cross 由 TSX 以字面量拼接，
+     故用 :global() 保留其全局语义，仅把组件自有基类局部化。 */
+
+.timeline-view {
+  /* 容器级别：沿用全局 page 容器即可，这里只保证自身块级 */
+  display: block;
+}
+
+.timeline-head {
+  margin-bottom: 16px;
+}
+
+/* 整卡可点容器：内层 <a> 占满卡片（与全局 .track-card-link 同语义，但本组件独立） */
+.tl-card-link {
+  display: contents;
+  color: inherit;
+  text-decoration: none;
+}
+
+.timeline {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  position: relative;
+}
+
+.tl-item {
+  position: relative;
+  display: grid;
+  grid-template-columns: 24px 96px 1fr;
+  gap: 14px;
+  padding: 2px 0 20px;
+}
+
+/* 动态修饰类：由 TSX 字面量拼接，须保留全局 */
+.tl-item:global(.has-link) {
+  cursor: pointer;
+}
+.tl-item:global(.has-link):hover {
+  background: rgba(207, 95, 43, 0.06);
+}
+
+.tl-rail {
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+
+.tl-rail::before {
+  content: '';
+  position: absolute;
+  top: 8px;
+  bottom: -20px;
+  width: 2px;
+  background: var(--border);
+}
+
+.tl-item:last-child .tl-rail::before {
+  display: none;
+}
+
+.tl-dot {
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background: var(--surface);
+  border: 2.5px solid var(--brand);
+  margin-top: 7px;
+  z-index: 1;
+}
+
+/* 跨双轨条目（P0-3：世界史 = 跨线紫点，与 .tl-item.is-cross .tl-dot 同一语义） */
+.tl-item:global(.is-cross) .tl-dot {
+  border-color: #6b3fd4;
+}
+
+.tl-date {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding-top: 2px;
+}
+
+.tl-order {
+  font-size: 0.75rem;
+  color: var(--text-dim);
+}
+
+.tl-year {
+  font-weight: 700;
+  font-size: 0.9375rem;
+  color: var(--text);
+}
+
+.tl-sort {
+  font-size: 0.75rem;
+  color: var(--text-dim);
+}
+
+.tl-body {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 12px 16px;
+  box-shadow: var(--shadow-sm);
+  transition: box-shadow 0.2s var(--ease), transform 0.2s var(--ease);
+}
+
+.tl-body:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-1px);
+}
+
+.tl-item:global(.is-cross) .tl-body {
+  border-color: #e2d8fa;
+  background: linear-gradient(180deg, #fdfcff, #f8f5ff);
+}
+
+.tl-title-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.tl-title {
+  font-size: 1.0313rem;
+  font-weight: 600;
+}
+
+/* 未录入条目（动态修饰类，TSX 字面量拼接） */
+.tl-title:global(.is-missing) {
+  color: var(--text-dim);
+  font-weight: 500;
+}
+
+.tl-summary {
+  margin: 6px 0 0;
+  color: var(--text-soft);
+  font-size: 0.875rem;
+  line-height: 1.75;
+}
+
+.tl-note {
+  margin: 6px 0 0;
+  color: var(--text-dim);
+  font-size: 0.8125rem;
+}
+
+/* 窄屏适配（原全局 @media，迁移到组件内以保持视觉一致） */
+@media (max-width: 900px) {
+  .tl-item {
+    grid-template-columns: 18px 72px 1fr;
+    gap: 10px;
+  }
+  .tl-title {
+    font-size: 0.9688rem;
+  }
+}
+
+@media (max-width: 420px) {
+  .tl-item {
+    grid-template-columns: 16px 64px 1fr;
+  }
+}
