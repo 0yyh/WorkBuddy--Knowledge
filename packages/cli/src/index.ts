@@ -106,7 +106,7 @@ function printHelp(): void {
 用法：pks <命令> [--content <dir>]
 
   build:index [--full]  内容目录 → .index/ 分片索引（默认增量，--full 强制全量）
-  lint [--citations] [--interlink] [--thin]  内容规范校验（--interlink 互链覆盖率软告警；--thin 开薄章下限核查）
+  lint [--citations] [--interlink] [--thin] [--c3] [--c5] [--c6]  内容规范校验（--thin 薄章下限<1500硬错/1450-1499软告警；--c3 章H1↔order；--c5 rev>1；--c6 taxonomy零引用叶子）
   bundle [--level seed|digest|full] [--category X] [--out <dir>]
                      导出数据包 zip
   rename <old> <new>  slug 改名级联
@@ -130,6 +130,9 @@ async function main(): Promise<void> {
         citations: flags.citations === true,
         interlink: flags.interlink === true,
         thin: flags.thin === true,
+        c3: flags.c3 === true,
+        c5: flags.c5 === true,
+        c6: flags.c6 === true,
       });
       // 非零退出：让 CI（A2 `pnpm run ci` 的 lint 步骤）在规范 error 时真正失败，
       // 而非静默通过。L010 为 warn 级，不计入 errorCount，不会误伤基线。

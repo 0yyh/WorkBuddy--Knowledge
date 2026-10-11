@@ -5,6 +5,9 @@
  * L009 每文件单一 PKS_EXPANDED_V5 标记（约定层，全局双标记审计收口后强制）
  * L010 sources 可核验引用（R4，warn，--citations 开启）：每条 source 应带 url/doi/isbn/ref 之一
  * L011 互链覆盖率（CT-3，warn，--interlink 开启）：词条应被 ≥N 个其它词条 see_also 引用，孤岛告警
+ * L013 薄章下限（CT-2，error/warn，--thin 开启）：正文纯汉字 <1500 硬错误、1450–1499 软告警
+ * C-3 章节 H1 与 frontmatter order 不一致（warn，--c3 开启）· C-5 frontmatter rev>1（warn，--c5 开启）
+ * C-6 taxonomy 零引用叶子节点（warn，--c6 开启）
  *
  * 复用：核心规则抽成 `lintEntryRules`，被 `lintCmd`（全量）与 `lintEntryDir`（单条目，T03 生成回路）共用，
  * 不重复造轮子。
@@ -67,17 +70,37 @@ function stripFrontmatterAndMarker(raw: string): string {
   return body;
 }
 
-/** CT-2 薄章新下限（纯汉字）。原规格 ≥1200 清零；评审建议抬至下限 1300。 */
-export const THIN_CHAPTER_FLOOR = 1300;
+/**
+ * CT-2 薄章下限（纯汉字）。报告裁定：统一口径为**下限 ≥1500**。
+ * - `< 1500`：硬错误（阻断构建，L013 error）
+ * - `1450–1499`：软告警（warn，不阻断，L013 warn）
+ * 旧口径（≥1200 / 1300）已废弃。
+ */
+export const THIN_CHAPTER_FLOOR = 1500;
+/** 软告警临界：1450–1499 为 warn 带；<1450（且 <floor）为硬错误。 */
+export const THIN_CHAPTER_WARN_FLOOR = 1450;
 
 /**
- * L013 —— 薄章下限软告警（CT-2）。统计章节正文纯汉字数，低于 `floor` 即告警。
+ * L013 —— 薄章下限（CT-2）。统计章节正文纯汉字数，按口径分级：
+ * `< THIN_CHAPTER_WARN_FLOOR` 为硬错误，warn 带内为软告警，达标不报。
  * 纯函数（不依赖 vfs），便于单测；默认关（--thin 开启），避免对既有 corpus 海量告警。
  */
-export function lintThinChapterText(text: string, label: string, floor = THIN_CHAPTER_FLOOR): string[] {
+export function lintThinChapterText(
+  text: string,
+  label: string,
+  floor = THIN_CHAPTER_FLOOR,
+  warnFloor = THIN_CHAPTER_WARN_FLOOR,
+): Issue[] {
   const cjk = countCjkChars(stripFrontmatterAndMarker(text));
-  if (cjk < floor) return [`${label} 正文纯汉字 ${cjk} 字，低于下限 ${floor}（CT-2 目标：中位 1600–2400）`];
-  return [];
+  if (cjk >= floor) return [];
+  const warnBand = cjk >= warnFloor;
+  return [
+    {
+      rule: 'L013',
+      severity: warnBand ? 'warn' : 'error',
+      message: `${label} 正文纯汉字 ${cjk} 字，${warnBand ? `接近下限（${warnFloor}–${floor - 1} 软告警）` : '低于下限'} ${floor}（CT-2 目标：中位 1600–2400）`,
+    },
+  ];
 }
 
 /**
@@ -105,6 +128,99 @@ export function compareTaxonomyTitles(nodes: TaxonomyNode[], baseline: Record<st
       });
     }
   }
+  return issues;
+}
+
+// —— C-3 / C-5 / C-6 软告警（warn，非 error，不阻断构建）纯函数 ——
+
+const CN_NUM: Record<string, number> = { 零: 0, 一: 1, 二: 2, 三: 3, 四: 4, 五: 5, 六: 6, 七: 7, 八: 8, 九: 9 };
+
+/** 中文数字（十/百 组合，覆盖 1–999）转阿拉伯数字；非法返回 NaN。 */
+function cnToNumber(s: string): number {
+  if (/^\d+$/.test(s)) return parseInt(s, 10);
+  if (s.includes('百')) {
+    const [a, b] = s.split('百');
+    const hundreds = a === '' ? 1 : CN_NUM[a] ?? NaN;
+    if (Number.isNaN(hundreds)) return NaN;
+    const rest = b ? cnToNumber(b) : 0;
+    return hundreds * 100 + rest;
+  }
+  if (s.includes('十')) {
+    const [a, b] = s.split('十');
+    const tens = a === '' ? 1 : CN_NUM[a] ?? NaN;
+    if (Number.isNaN(tens)) return NaN;
+    const ones = b ? CN_NUM[b] ?? 0 : 0;
+    return tens * 10 + ones;
+  }
+  return CN_NUM[s] ?? NaN;
+}
+
+/** 提取 frontmatter 文本（首两个 --- 之间，含闭合 ---）。 */
+function frontmatterOf(raw: string): string {
+  const fmEnd = raw.indexOf('\n---', 3);
+  return fmEnd >= 0 ? raw.slice(0, fmEnd + 4) : raw;
+}
+
+/**
+ * C-3 —— 章节首个 H1 标题与 frontmatter `order` 不一致 → warn。
+ * 例：ch-02（order=[2]）但 H1 写「第一章」。仅当 H1 含明确「第N章」序号且与 order 不符才告警，
+ * 无序号标题不误报。纯函数，便于单测。
+ */
+export function lintChapterTitleOrderText(raw: string, label: string, order: number[]): Issue[] {
+  const body = raw.slice(raw.indexOf('\n---', 3) + 4);
+  const h1 = body.match(/^\s*#\s+(.+?)\s*$/m);
+  if (!h1) return [];
+  const m = h1[1].match(/第\s*([0-9零一二三四五六七八九十百]+)\s*章/);
+  if (!m) return [];
+  const spoken = cnToNumber(m[1]);
+  const expected = order[0];
+  if (!Number.isNaN(spoken) && expected !== undefined && spoken !== expected) {
+    return [
+      {
+        rule: 'C-3',
+        severity: 'warn',
+        message: `${label} 首个 H1「${h1[1].trim()}」写第${spoken}章，但 frontmatter order=${JSON.stringify(order)}（应为第${expected}章）`,
+      },
+    ];
+  }
+  return [];
+}
+
+/**
+ * C-5 —— entry/chapter frontmatter `rev` 字段 > 1 → warn（提示可随大版本归零）。
+ * 纯函数，便于单测。
+ */
+export function lintRevText(raw: string, label: string): Issue[] {
+  const fm = frontmatterOf(raw);
+  const m = fm.match(/^\s*rev\s*:\s*(\d+)\s*$/m);
+  if (m && Number(m[1]) > 1) {
+    return [{ rule: 'C-5', severity: 'warn', message: `${label} frontmatter rev=${m[1]} > 1（可随大版本归零）` }];
+  }
+  return [];
+}
+
+/**
+ * C-6 —— taxonomy 零引用叶子节点（无 children 且未被任何 entry.categories 引用）→ warn。
+ * 提示删除该分类或补词条。纯函数，便于单测。
+ */
+export function lintTaxonomyOrphanLeaves(nodes: TaxonomyNode[], referenced: Set<string>): Issue[] {
+  const issues: Issue[] = [];
+  const walk = (ns: TaxonomyNode[]): void => {
+    for (const n of ns) {
+      if (!n.children || n.children.length === 0) {
+        if (!referenced.has(n.path)) {
+          issues.push({
+            rule: 'C-6',
+            severity: 'warn',
+            message: `taxonomy 叶子节点「${n.path}」零引用（无词条 categories 指向，建议删除或补词条）`,
+          });
+        }
+      } else {
+        walk(n.children);
+      }
+    }
+  };
+  walk(nodes);
   return issues;
 }
 
@@ -248,7 +364,10 @@ export function lintEntryRules(
   return issues;
 }
 
-export function lintCmd(contentDir: string, opts: { citations?: boolean; interlink?: boolean; thin?: boolean } = {}): { issues: Issue[]; errorCount: number } {
+export function lintCmd(
+  contentDir: string,
+  opts: { citations?: boolean; interlink?: boolean; thin?: boolean; c3?: boolean; c5?: boolean; c6?: boolean } = {},
+): { issues: Issue[]; errorCount: number } {
   const vfs = new NodeFsVfs(contentDir);
   const { snapshot, errors, warnings } = loadSnapshot(vfs);
   const issues: Issue[] = [];
@@ -276,17 +395,32 @@ export function lintCmd(contentDir: string, opts: { citations?: boolean; interli
   for (const e of snapshot.entries) {
     issues.push(...lintEntryRules(e, snapshot.sections[e.slug] ?? [], validPaths, allSlugs, snapshot.tracks, opts.citations ?? false, opts.interlink ?? false, interlinkIndex));
     issues.push(...lintMarkerRule(vfs, e.slug));
-    // L013 —— 薄章下限（CT-2，--thin 开启）。逐章读原文数纯汉字。
+    // L013 —— 薄章下限（CT-2，--thin 开启）。逐章读原文数纯汉字，<1500 硬错误、1450–1499 软告警。
     if (opts.thin) {
       for (const sec of snapshot.sections[e.slug] ?? []) {
         if (sec.kind === 'container') continue; // 卷（container）无正文
         const chPath = `entries/${e.slug}/chapters/${sec.key}.md`;
         if (!vfs.exists(chPath)) continue;
-        for (const p of lintThinChapterText(vfs.readText(chPath), `词条 ${e.slug} 章节 ${sec.key}`)) {
-          issues.push({ rule: 'L013', severity: 'warn', message: p });
-        }
+        const raw = vfs.readText(chPath);
+        const label = `词条 ${e.slug} 章节 ${sec.key}`;
+        for (const i of lintThinChapterText(raw, label)) issues.push(i);
+        // C-3 —— 章节 H1 与 frontmatter order 不一致（--c3 开启）
+        if (opts.c3) for (const i of lintChapterTitleOrderText(raw, label, sec.order)) issues.push(i);
+        // C-5 —— 章节 frontmatter rev > 1（--c5 开启）
+        if (opts.c5) for (const i of lintRevText(raw, label)) issues.push(i);
       }
     }
+    // C-5 —— entry.md frontmatter rev > 1（--c5 开启）
+    if (opts.c5 && e.rev > 1) {
+      issues.push({ rule: 'C-5', severity: 'warn', message: `词条 ${e.slug} entry.md rev=${e.rev} > 1（可随大版本归零）` });
+    }
+  }
+
+  // C-6 —— taxonomy 零引用叶子节点（--c6 开启）。统计被 entry.categories 引用的路径。
+  if (opts.c6) {
+    const referenced = new Set<string>();
+    for (const e of snapshot.entries) for (const c of e.categories) referenced.add(c);
+    issues.push(...lintTaxonomyOrphanLeaves(snapshot.taxonomy, referenced));
   }
 
   // L001 / L007 唯一性（全局）
@@ -317,7 +451,11 @@ export function lintCmd(contentDir: string, opts: { citations?: boolean; interli
  * L002/L003/L004/L005/L006/L008 以及 validateEntryMeta/validateSectionMeta 的致命错误
  * （loadSnapshot 的 errors 已含这些致命错误）。返回 { issues, errorCount }。
  */
-export function lintEntryDir(vfs: Vfs, slug: string, opts: { citations?: boolean; interlink?: boolean; thin?: boolean } = {}): { issues: Issue[]; errorCount: number } {
+export function lintEntryDir(
+  vfs: Vfs,
+  slug: string,
+  opts: { citations?: boolean; interlink?: boolean; thin?: boolean; c3?: boolean; c5?: boolean; c6?: boolean } = {},
+): { issues: Issue[]; errorCount: number } {
   const { snapshot, errors } = loadSnapshot(vfs);
   const issues: Issue[] = [];
 
@@ -340,6 +478,23 @@ export function lintEntryDir(vfs: Vfs, slug: string, opts: { citations?: boolean
   const interlinkIndex = opts.interlink ? buildInterlinkIndex(snapshot.entries) : undefined;
   issues.push(...lintEntryRules(entry, snapshot.sections[slug] ?? [], validPaths, allSlugs, snapshot.tracks, opts.citations ?? false, opts.interlink ?? false, interlinkIndex));
   issues.push(...lintMarkerRule(vfs, slug));
+
+  // C-5 —— entry.md frontmatter rev > 1（--c5 开启）
+  if (opts.c5 && entry.rev > 1) {
+    issues.push({ rule: 'C-5', severity: 'warn', message: `词条 ${slug} entry.md rev=${entry.rev} > 1（可随大版本归零）` });
+  }
+  // C-3 / C-5 —— 逐章扫描（--c3 / --c5 开启）
+  if (opts.c3 || opts.c5) {
+    for (const sec of snapshot.sections[slug] ?? []) {
+      if (sec.kind === 'container') continue;
+      const chPath = `entries/${slug}/chapters/${sec.key}.md`;
+      if (!vfs.exists(chPath)) continue;
+      const raw = vfs.readText(chPath);
+      const label = `词条 ${slug} 章节 ${sec.key}`;
+      if (opts.c3) for (const i of lintChapterTitleOrderText(raw, label, sec.order)) issues.push(i);
+      if (opts.c5) for (const i of lintRevText(raw, label)) issues.push(i);
+    }
+  }
 
   const errorCount = issues.filter((i) => i.severity === 'error').length;
   if (errorCount > 0) {
