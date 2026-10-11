@@ -29,7 +29,16 @@
     "android:sync": "npm --prefix apps/web run android:sync",
     "android:build": "npm --prefix apps/web run android:build",
     "apk": "node scripts/build-apk.mjs",
-    "version:bump": "node scripts/bump-version.mjs"
+    "version:bump": "node scripts/bump-version.mjs",
+    "build:scripts": "node scripts/build.mjs",
+    "census:overall": "node scripts/census/scripts_census_overall.mjs",
+    "census:thin": "node scripts/census/scripts_census_thin.mjs",
+    "census:balance": "node scripts/census/scripts_census_balance.mjs",
+    "census:eval": "node scripts/census/scripts_eval_census.mjs",
+    "audit:full": "node scripts/audit/scripts_full_audit.mjs",
+    "lint:scripts": "node scripts/lint/scripts_lint.mjs",
+    "android:sync:assets": "node scripts/android/scripts_sync_android_assets.mjs",
+    "plan:batches": "node scripts/plan-batches.mjs"
   },
   "devDependencies": {
     "tsx": "^4.19.2",

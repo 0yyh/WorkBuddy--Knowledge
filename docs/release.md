@@ -8,7 +8,7 @@
 ① pnpm build:index        # 构建索引束 .index/（core 预编译）
 ② pnpm -F @pks/web copy:content   # 投递 content → apps/web/public/content
 ③ pnpm -F @pks/web build   # vite 把 public/content 打进 dist/
-④ node scripts_sync_android_assets.mjs  # 把 dist/** 同步进 android/app/src/main/assets/public/
+④ node scripts/android/scripts_sync_android_assets.mjs  # 把 dist/** 同步进 android/app/src/main/assets/public/
 ⑤ gradle assembleRelease  # 产出签名 release APK
 ```
 

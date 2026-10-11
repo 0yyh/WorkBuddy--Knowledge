@@ -123,9 +123,9 @@ npm run apk
 
 内部编排（见 `scripts/build-apk.mjs`）：
 
-1. `build:index` + `copy-content`（`scripts_build.mjs`，需 `CODEBUDDY_SAFE_DELETE_ENABLED=0`）
+1. `build:index` + `copy-content`（`scripts/build.mjs`，需 `CODEBUDDY_SAFE_DELETE_ENABLED=0`）
 2. `vite build`（`apps/web`，需 `CODEBUDDY_SAFE_DELETE_ENABLED=0`）
-3. 同步 `dist` → `android` public（`scripts_sync_android_assets.mjs`）
+3. 同步 `dist` → `android` public（`scripts/android/scripts_sync_android_assets.mjs`）
 4. `gradle assembleDebug`（**必须走 PowerShell**，原生 `*> ` 重定向，绝不用管道）
 
 ### ⚠️ 沙箱 / 平台注意事项

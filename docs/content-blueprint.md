@@ -1,7 +1,7 @@
 # 内容域均衡蓝图（C2 / C3 落地）
 
 > 依据 `docs/project-evaluation-2026-09-23.md` C2/C3 项。本文件是「内容蓝图与配额」交付物，
-> 并作为后续代理作者批次的派发依据。数据来自 `scripts_census_balance.mjs` 实测（2026-09-26）。
+> 并作为后续代理作者批次的派发依据。数据来自 `scripts/census/scripts_census_balance.mjs` 实测（2026-09-26）。
 
 ## 1. 现状（写实，非评估时旧数）
 
@@ -72,6 +72,6 @@
 
 ## 5. 验收
 
-- `node scripts_census_balance.mjs` 复测：技术≥60、文学/艺术各≥36、宗教/语言学/法学各≥18；
-- `node scripts_lint.mjs`（或 cli lint）全站 0 error；
+- `node scripts/census/scripts_census_balance.mjs` 复测：技术≥60、文学/艺术各≥36、宗教/语言学/法学各≥18；
+- `node scripts/lint/scripts_lint.mjs`（或 cli lint）全站 0 error；
 - 新词条 `see_also` 互链率（抽查）≥ 60%。

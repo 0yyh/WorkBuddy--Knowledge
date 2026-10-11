@@ -1,5 +1,6 @@
 // 全站薄章普查：按章中文字数扫描，找出深度不足的章节。
-// 标准：每章正文（不含 frontmatter / 末行标记）CJK 字符应 ≥ 1200。
+// 标准（与 lint L013 / PHILO_SPEC 统一）：每章正文（不含 frontmatter / 末行标记）纯汉字应 ≥ 1500。
+// 1450–1499 为软告警临界带（warn，不阻断）；<1500 计为薄章。
 // 输出：按 slug 分组的薄章清单 + 汇总统计。
 import fs from 'node:fs';
 import path from 'node:path';
@@ -30,7 +31,8 @@ const entries = fs.readdirSync(ROOT).filter(d => {
   return fs.statSync(p).isDirectory() && d !== '_drafts';
 });
 
-const THIN = 1200;
+const THIN = 1500; // 硬下限：正文纯汉字 <1500 计为薄章（与 lint L013 一致）
+const THIN_WARN = 1450; // 软告警临界带：1450–1499 为 warn（与 lint L013 一致）
 const records = []; // {slug, ch, file, cjk, bodyLen}
 for (const slug of entries) {
   const chDir = path.join(ROOT, slug, 'chapters');
@@ -45,9 +47,9 @@ for (const slug of entries) {
   }
 }
 
-// 薄章
+// 薄章（<1500）与软告警临界带（1450–1499）
 const thin = records.filter(r => r.cjk < THIN).sort((a, b) => a.cjk - b.cjk);
-const borderline = records.filter(r => r.cjk >= THIN && r.cjk < 1300);
+const borderline = records.filter(r => r.cjk >= THIN_WARN && r.cjk < THIN);
 
 // 按 slug 聚合
 const bySlug = new Map();
@@ -60,7 +62,7 @@ console.log('=== 全站薄章普查 ===');
 console.log('词条总数:', entries.length);
 console.log('章节总数:', records.length);
 console.log(`薄章(<${THIN} 中文字):`, thin.length, ` (占 ${(100 * thin.length / records.length).toFixed(1)}%)`);
-console.log(`临界章(1200-1299):`, borderline.length);
+console.log(`临界章(${THIN_WARN}-${THIN - 1} 软告警):`, borderline.length);
 console.log('涉及词条数(薄章):', bySlug.size);
 console.log('');
 
@@ -85,6 +87,7 @@ for (const r of thin.slice(0, 40)) {
 // 导出 JSON 供后续批次规划
 const out = {
   threshold: THIN,
+  warnThreshold: THIN_WARN,
   totalEntries: entries.length,
   totalChapters: records.length,
   thinCount: thin.length,

@@ -4,7 +4,7 @@ import { readFileSync, readdirSync, existsSync, statSync } from 'node:fs';
 import { resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-const ROOT = resolve(dirname(fileURLToPath(import.meta.url)));
+const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..', '..'); // 仓库根（脚本位于 scripts/census/）
 const ENTRIES = resolve(ROOT, 'content/entries');
 const TAX = resolve(ROOT, 'content/taxonomy.yaml');
 

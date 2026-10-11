@@ -52,7 +52,7 @@
 - **解决方案**：在 `scripts/build-apk.mjs`（已串成 `npm run apk`）中把 JDK/SDK 改为**读环境变量，缺省回退约定路径并告警**（复用 `setup-env.mjs` 的检测逻辑）；`gradle.properties` 经 `local.properties`（`sdk.dir`）注入而非硬编码；把 `cp -r` 同步做成幂等 + 校验 `assets/public/content/manifest.json` 存在（`packages/cli/test` 已有 apkanalyzer 思路可补）。优先级 **P1**。预期收益：任意装好 JDK/SDK 的机器可一键出 APK；APK 构建纳入可复现流程。
 
 #### AR-3　构建/治理脚本散落（B4 续）
-- **问题**：根目录 `scripts_*.mjs`（`scripts_build`/`scripts_census_*`/`scripts_eval_census`/`scripts_full_audit`/`scripts_lint`/`scripts_plan_batches`/`scripts_sync_android_assets`）与 `scripts/`（build-apk/build-update/serve-lan/check-links/bump-version/copy-content/setup-env/bench_scale）并存，命名风格不一、职责重叠。
+- **问题**：根目录 `scripts_*.mjs`（`scripts/build.mjs`/`scripts/census/*`/`scripts/eval_census`/`scripts/audit/*`/`scripts/lint/*`/`scripts/plan-batches.mjs`/`scripts/android/*`）已收口进 `scripts/` 分组；此前与 `scripts/`（build-apk/build-update/serve-lan/check-links/bump-version/copy-content/setup-env/bench_scale）并存，命名风格不一、职责重叠。
 - **影响**：维护心智负担；新人不知跑哪个；`package.json` scripts 只暴露了 `scripts/` 部分，根 `scripts_*.mjs` 易成孤儿。
 - **解决方案**：把根 `scripts_*.mjs` 收口进 `scripts/`（去 `scripts_` 前缀，按 `census/`、`audit/`、`lint/`、`android/` 分组），统一在根 `package.json` `scripts` 暴露并补 README 索引。优先级 **P2**。预期收益：维护心智负担下降；命令可发现性提升；零功能风险。
 

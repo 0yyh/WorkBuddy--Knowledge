@@ -2,9 +2,9 @@
  * build-apk.mjs —— 一键 APK 构建脚本
  *
  * 把零散、易错的 Android 打包流程固化为单条命令，按顺序编排 4 步：
- *   1. build:index + copy:content  （node scripts_build.mjs，需 CODEBUDDY_SAFE_DELETE_ENABLED=0）
+ *   1. build:index + copy:content  （node scripts/build.mjs，需 CODEBUDDY_SAFE_DELETE_ENABLED=0）
  *   2. vite build                  （apps/web，需 CODEBUDDY_SAFE_DELETE_ENABLED=0）
- *   3. 同步 dist → android public   （node scripts_sync_android_assets.mjs，保留 capacitor.config.json）
+ *   3. 同步 dist → android public   （node scripts/android/scripts_sync_android_assets.mjs，保留 capacitor.config.json）
  *   4. Gradle assembleDebug         （PowerShell 调 gradle.bat，*> 重定向到日志，绝不管道）
  *
  * 设计要点（见任务约束）：
@@ -57,8 +57,8 @@ async function main() {
   const safeEnv = { ...process.env, CODEBUDDY_SAFE_DELETE_ENABLED: '0' };
 
   // ---- Step 1: build:index + copy:content ----
-  step('1/4  build:index + copy:content  (node scripts_build.mjs)');
-  const c1 = await runProc('node', ['scripts_build.mjs'], { cwd: ROOT, env: safeEnv });
+  step('1/4  build:index + copy:content  (node scripts/build.mjs)');
+  const c1 = await runProc('node', ['scripts/build.mjs'], { cwd: ROOT, env: safeEnv });
   if (c1 !== 0) {
     console.error('\n✗ 步骤 1 失败（exit ' + c1 + '）：build:index / copy-content 未通过。');
     process.exit(1);
@@ -79,8 +79,8 @@ async function main() {
   console.log('✓ 步骤 2 完成');
 
   // ---- Step 3: sync dist -> android public ----
-  step('3/4  同步 dist → android public  (node scripts_sync_android_assets.mjs)');
-  const c3 = await runProc('node', ['scripts_sync_android_assets.mjs'], { cwd: ROOT });
+  step('3/4  同步 dist → android public  (node scripts/android/scripts_sync_android_assets.mjs)');
+  const c3 = await runProc('node', ['scripts/android/scripts_sync_android_assets.mjs'], { cwd: ROOT });
   if (c3 !== 0) {
     console.error('\n✗ 步骤 3 失败（exit ' + c3 + '）：android assets 同步未通过。');
     process.exit(1);

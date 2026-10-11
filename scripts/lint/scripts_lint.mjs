@@ -5,7 +5,7 @@ const tsx = root + '/node_modules/.pnpm/tsx@4.23.13/node_modules/tsx/dist/cli.mj
 
 const r = spawnSync(
   'node',
-  [tsx, 'packages/cli/src/index.ts', 'lint'],
+  [tsx, 'packages/cli/src/index.ts', 'lint', '--thin', '--c3', '--c5', '--c6'],
   { cwd: root, encoding: 'utf8', maxBuffer: 1 << 28 }
 );
 
