@@ -6,9 +6,9 @@ original_title: Karl Marx
 aliases: [马克思, Karl Marx, 卡尔马克思]
 type: person
 categories:
-  - 政治理论/马克思主义
-  - 经济学/经济学说与流派
-  - 哲学/思想史
+  - politics/marxism
+  - economics/econ-thought
+  - philosophy/phil-history
 tags: [马克思主义, 马克思, 资本论, 共产党宣言, 唯物史观]
 summary: >-
   卡尔·马克思（1818—1883）是德国哲学家、政治经济学家与革命思想家，马克思主义的创始人。他与恩格斯合著《共产党宣言》，并以《资本论》系统剖析资本主义的生产方式与内在矛盾，用唯物史观与剩余价值学说把社会主义从空想推向「科学」，深刻影响了 19 世纪以来的政治、经济与思想史。

@@ -6,7 +6,7 @@ original_title: Holy Roman Empire
 aliases: [神圣罗马, 德意志第一帝国, 日耳曼神圣罗马帝国]
 type: concept
 categories:
-  - 历史/世界史/中世纪
+  - history/history-world/world-medieval
 tags: [神圣罗马帝国, 奥托王朝, 授职权之争, 选帝侯, 金玺诏书, 德意志]
 timeline: [world]
 summary: >-

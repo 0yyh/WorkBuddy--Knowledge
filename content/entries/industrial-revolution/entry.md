@@ -5,8 +5,8 @@ title: 工业革命
 aliases: [第一次工业革命, 英国工业革命, Industrial Revolution]
 type: event
 categories:
-  - 历史/世界史
-  - 技术/技术史
+  - history/history-world
+  - technology/tech-history
 tags: [工业革命, 棉纺织, 煤铁, 城市化, 英国]
 timeline: [world]
 date: 1760-1840

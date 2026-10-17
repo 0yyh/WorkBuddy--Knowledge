@@ -6,8 +6,8 @@ original_title: Printing
 aliases: [印刷术, 活字印刷, 古腾堡印刷机]
 type: concept
 categories:
-  - 技术/技术史
-  - 历史/世界史/近代史
+  - technology/tech-history
+  - history/history-world/world-modern
 tags: [印刷术, 古腾堡, 活字, 信息技术, 知识传播]
 summary: >-
   印刷术是以批量复制文字与图像为核心的技术，也是人类最早的"信息技术"之一。中国唐代已有雕版印刷、北宋毕昇发明活字印刷；15世纪中叶古腾堡在欧洲完善金属活字与压印机，使书籍廉价量产，深刻推动了文艺复兴、宗教改革与科学革命。

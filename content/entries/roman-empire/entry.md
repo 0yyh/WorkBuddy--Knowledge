@@ -5,7 +5,7 @@ title: 罗马帝国
 aliases: [罗马, 古罗马, 罗马帝国史, Roman Empire]
 type: concept
 categories:
-  - 历史/世界史/古代文明
+  - history/history-world/world-ancient
 tags: [罗马, 世界史, 帝国, 罗马法, 古代文明]
 timeline: [world]
 summary: >-

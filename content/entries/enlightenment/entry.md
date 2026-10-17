@@ -5,8 +5,8 @@ title: 启蒙运动
 aliases: [启蒙时代, 理性时代, Age of Enlightenment]
 type: concept
 categories:
-  - 历史/世界史/近代史
-  - 哲学/西方哲学/近代欧陆哲学
+  - history/history-world/world-modern
+  - philosophy/western-philosophy/west-modern
 tags: [启蒙, 理性, 近代史, 法国大革命, 社会契约, 思想史]
 timeline: [world]
 summary: >-

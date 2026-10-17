@@ -6,7 +6,7 @@ original_title: Green GDP
 aliases: [Green GDP, 绿色国内生产总值, 环境调整后的GDP]
 type: concept
 categories:
-  - 经济学/环境经济学
+  - economics/environmental-economics
 tags: [GDP, 环境核算, SEEA, 可持续发展]
 summary: >-
   绿色 GDP 是在传统国内生产总值基础上，对资源耗减与环境退化进行扣减后得到的调整后的经济总量，旨在纠正 GDP「只计产出、不计代价」的缺陷。其核算以联合国 SEEA（环境经济综合核算体系）为框架，将自然资本变化纳入国民账户。中国曾在 2004 年启动绿色 GDP 试点，但因统计难度与部门阻力一度停滞，2015 年后以 SEEA 试验重启。绿色 GDP 在方法论估值、口径选择与政治可接受性上仍存重大争议。

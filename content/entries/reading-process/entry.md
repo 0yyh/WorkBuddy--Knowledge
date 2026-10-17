@@ -6,7 +6,7 @@ original_title: Reading Psychology
 aliases: [阅读认知, 阅读过程, 书面语言理解]
 type: concept
 categories:
-  - 语言学/社会与心理语言学/心理语言学
+  - linguistics/ling-socio-psy/ling-psychology
 tags: [阅读心理, 字词识别, 眼动, 双通道模型, 阅读发展, 阅读障碍]
 summary: >-
   阅读心理研究读者如何把视觉字形转化为语音与意义，是心理语言学中心理词典、注意与眼动的交汇。字词识别可在词典通路与规则通路间选择，即科尔思哈特提出的双通道模型；阅读过程中的眼动以注视、眼跳与回视刻画实时加工。阅读作为后天习得的技能，其发展与阅读障碍揭示文字与认知系统的互动。

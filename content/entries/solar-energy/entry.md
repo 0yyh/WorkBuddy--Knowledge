@@ -5,7 +5,7 @@ title: 太阳能
 aliases: [太阳能, 光伏发电, Solar Energy]
 type: concept
 categories:
-  - 技术/能源与动力
+  - technology/energy-power
 tags: [太阳能, 光伏, 半导体, 可再生能源, 清洁能源]
 summary: >-
   太阳能是利用太阳辐射能的技术总称，主要分光伏发电与光热发电两路。光伏靠半导体PN结的光生伏特效应把光直接变电，是近二十年成本下降最快的能源之一。它清洁、分布广，却受间歇与夜间限制，须与储能及电网协同，方能成为主力电源。

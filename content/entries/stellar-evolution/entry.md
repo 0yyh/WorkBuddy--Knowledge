@@ -6,7 +6,7 @@ original_title: Stellar Evolution
 aliases: [恒星生命周期, 恒星的一生, stellar evolution]
 type: concept
 categories:
-  - 科学/自然科学基础/天文与地球科学
+  - science/nat-science/astronomy-earth
 tags: [恒星, 天文, 核聚变, 赫罗图, 超新星]
 summary: >-
   恒星演化描述恒星从星云中诞生、经主序阶段的氢燃烧，到红巨星、超新星爆发，最终归于白矮星、中子星或黑洞的完整生命周期。本词条介绍恒星一生的物理进程：引力收缩与核聚变的平衡、赫罗图对恒星类型的诊断、轻重元素如何在恒星内部合成并在爆发中散布宇宙，以及不同质量恒星截然不同的结局。恒星演化把「我们是星尘」从诗语变成科学事实，是 20 世纪天体物理学的核心成就。

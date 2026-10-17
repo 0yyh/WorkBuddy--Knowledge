@@ -6,7 +6,7 @@ original_title: Political Parties
 aliases: [政党, 党派, 党]
 type: concept
 categories:
-  - 政治理论/政治学概念
+  - politics/political-concepts
 tags: [政党, 代表性, 选举, 民主, 政党制度]
 summary: >-
   政党是现代代议民主中制度化地聚合利益、提名候选人、组织政府与塑造公共议程的组织。它既是「人民」与「国家」之间的中介，也常被批评为寡头化与脱离群众的官僚机器。理解政党，是理解当代政治如何从「社会分裂」转化为「可治理选择」的钥匙。

@@ -5,7 +5,7 @@ title: 辽朝
 aliases: [辽, 辽代, Liao dynasty, 契丹, 契丹国]
 type: concept
 categories:
-  - 历史/中国史/宋元明清
+  - history/history-china/china-songming
 tags: [辽朝, 契丹, 耶律阿保机, 萧太后, 澶渊之盟, 南北面官]
 timeline: [china]
 summary: >-

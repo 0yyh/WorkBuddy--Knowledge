@@ -5,7 +5,7 @@ title: 人工神经网络
 aliases: [人工神经网络, 神经网络, Artificial Neural Network, ANN]
 type: concept
 categories:
-  - 技术/信息技术
+  - technology/info-tech
 tags: [神经网络, 深度学习, 机器学习, 反向传播, 感知机]
 summary: >-
   人工神经网络是一类受生物神经元启发、由大量简单计算单元分层连接而成的数学模型，通过调整连接权重从数据中学习映射。多层网络配合反向传播，构成了当代深度学习的基础，在视觉、语音与语言任务上取得了突破性进展，却也带来可解释性与可靠性的深层挑战。

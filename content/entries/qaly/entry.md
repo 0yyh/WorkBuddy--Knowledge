@@ -6,7 +6,7 @@ original_title: Quality-Adjusted Life Year (QALY)
 aliases: [QALY, 质量调整寿命年]
 type: concept
 categories:
-  - 经济学/卫生经济学
+  - economics/health-economics
 tags: [QALY, 成本效用分析, 健康测量, 卫生技术评估]
 summary: >-
   质量调整生命年（QALY）把生存时间与生活质量压缩为单一指标：完全健康状态下的一年计为 1，死亡计为 0，带病或残疾状态按效用权重折算。它使不同疾病、不同干预的健康收益可以相加比较，从而支撑成本效用比与资助阈值的计算。效用的测量依赖 EQ-5D 等量表与时间权衡法、标准博弈法等技术；而年龄权重、残疾折价与「一个 QALY 就是一个 QALY」的分配假设，则使它始终处于伦理争议的中心。

@@ -6,8 +6,8 @@ original_title: Plato
 aliases: [柏拉图, Plato, 柏氏]
 type: person
 categories:
-  - 哲学/西方哲学/古希腊哲学
-  - 政治理论/政治思想
+  - philosophy/western-philosophy/west-ancient
+  - politics/political-thought
 tags: [柏拉图, 理念论, 理想国, 古希腊哲学, 苏格拉底]
 summary: >-
   柏拉图（前427—前347）是古希腊哲学家、苏格拉底的学生与亚里士多德的老师，西方哲学史上承前启后的枢纽人物。他创立学园，提出理念论，以对话录形式探讨正义、知识、灵魂与城邦，其《理想国》与洞穴喻奠定了西方形而上学与政治哲学的根基。

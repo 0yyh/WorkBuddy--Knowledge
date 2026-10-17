@@ -6,7 +6,7 @@ original_title: Deterrence
 aliases: [威慑理论, 核威慑, Deterrence]
 type: concept
 categories:
-  - 政治理论/国际关系
+  - politics/international-relations
 tags: [威慑, 核战略, 相互确保摧毁, 冷战, 信号]
 summary: >-
   威慑是国际政治中「以威胁阻止行动」的战略逻辑，其成立依赖能力、意志与信号三要素的乘积。核革命把威慑推向极致：相互确保摧毁使大国间大战从可能变为不可想象，也让联盟担保与危机管理成为系统工程。本词条梳理威慑的基本逻辑、核时代的形态、扩展威慑的难题与古巴导弹危机的经典启示，并讨论其在常规与网络时代的边界。

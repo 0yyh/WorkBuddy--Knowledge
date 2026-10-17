@@ -6,8 +6,8 @@ original_title: logical fallacy
 aliases: [谬误, 推理谬误, logical fallacies]
 type: concept
 categories:
-  - 哲学/逻辑与批判性思维
-  - 哲学/认识论
+  - philosophy/logic-critical
+  - philosophy/epistemology
 tags: [谬误, 论证, 批判性思维, 修辞, 非形式逻辑]
 summary: >-
   逻辑谬误指看起来有效、实则不能为其结论提供充分支持的推理模式。传统上分为形式谬误与非形式谬误：前者如肯定后件、否定前件，其缺陷可用纯形式方式证明；后者如人身攻击、稻草人、诉诸权威、滑坡、虚假两难，其缺陷取决于论证的内容与语境。本词条讨论谬误为什么难以定义、两大类的判准差异、若干高频谬误的论证结构拆解，以及谬误清单在理论上的困境与在实践中的常见误用。

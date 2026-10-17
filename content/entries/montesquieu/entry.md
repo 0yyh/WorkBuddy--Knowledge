@@ -6,8 +6,8 @@ original_title: Montesquieu
 aliases: [孟德斯鸠, 查理·德·孟德斯鸠, Charles de Secondat]
 type: person
 categories:
-  - 哲学/政治哲学
-  - 政治理论/政体与国家制度
+  - philosophy/political-philosophy
+  - politics/govt-systems
 tags: [孟德斯鸠, 论法的精神, 三权分立, 政体, 商业社会]
 summary: >-
   孟德斯鸠（Charles de Secondat, baron de Montesquieu，1689—1755）是法国启蒙时期的政治哲学家与法学家，以《论法的精神》（1748）奠定了近代政体分类与权力分立的分析范式。他不满足于道德劝说，而把法律、政体与气候、土壤、商业、宗教等社会条件并置，追问「法的精神」为何因时因地而异；并由此提出以立法、行政、司法相互制衡来防止专断的宪政方案。他对英格兰宪政的观察经由美国制宪实践，使「三权分立」成为现代有限政府的核心语汇。

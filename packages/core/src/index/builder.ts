@@ -63,15 +63,23 @@ function countNodes(nodes: TaxonomyNode[]): number {
   return nodes.reduce((acc, n) => acc + 1 + (n.children ? countNodes(n.children) : 0), 0);
 }
 
+/**
+ * 建「类目引用键 → id」映射。B-1 双集合兼容：key 同时含标题路径（现状）与 id 路径
+ * （迁移后），二者都映射到节点 id。这样 categories 无论仍是标题路径还是已迁移为 id 路径，
+ * 构建期都能解析出一致的 categoryIds，且 assignSlugs 都能命中。
+ * idPath 由 taxonomy 派生：根节点 = n.id，子节点 = 父idPath + '/' + n.id（与迁移脚本一致）。
+ */
 function buildCategoryIdMap(taxonomy: TaxonomyNode[]): Map<string, string> {
   const map = new Map<string, string>();
-  const walk = (nodes: TaxonomyNode[]) => {
+  const walk = (nodes: TaxonomyNode[], parentIdPath: string) => {
     for (const n of nodes) {
-      map.set(n.path, n.id);
-      if (n.children) walk(n.children);
+      const idPath = parentIdPath ? `${parentIdPath}/${n.id}` : n.id;
+      map.set(n.path, n.id); // 标题路径 → id（既有）
+      map.set(idPath, n.id); // id 路径 → id（B-1 双集合兼容）
+      if (n.children) walk(n.children, idPath);
     }
   };
-  walk(taxonomy);
+  walk(taxonomy, '');
   return map;
 }
 
@@ -203,13 +211,18 @@ export function buildIndex(vfs: Vfs, opts: BuildIndexOptions = {}): BuildResult 
 
   // 给 taxonomy 节点回填 entrySlugs
   const taxonomyWithSlugs: TaxonomyNode[] = JSON.parse(JSON.stringify(taxonomy));
-  const assignSlugs = (nodes: TaxonomyNode[]) => {
+  // B-1 双集合兼容：回填 entrySlugs 时同时匹配标题路径(n.path)与 id 路径(idPath)，
+  // 迁移前后（部分词条已改 id 路径、部分仍是标题路径）都能正确聚合。
+  const assignSlugs = (nodes: TaxonomyNode[], parentIdPath: string) => {
     for (const n of nodes) {
-      n.entrySlugs = entries.filter((e) => e.categories.includes(n.path)).map((e) => e.slug);
-      if (n.children) assignSlugs(n.children);
+      const idPath = parentIdPath ? `${parentIdPath}/${n.id}` : n.id;
+      n.entrySlugs = entries
+        .filter((e) => e.categories.includes(n.path) || e.categories.includes(idPath))
+        .map((e) => e.slug);
+      if (n.children) assignSlugs(n.children, idPath);
     }
   };
-  assignSlugs(taxonomyWithSlugs);
+  assignSlugs(taxonomyWithSlugs, '');
 
   // 构建 entries 索引分片 + IndexingDoc
   const entryItems: EntryIndexItem[] = [];

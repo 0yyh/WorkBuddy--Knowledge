@@ -6,8 +6,8 @@ original_title: John Stuart Mill
 aliases: [密尔, John Stuart Mill]
 type: person
 categories:
-  - 哲学/政治哲学
-  - 政治理论/政治思想
+  - philosophy/political-philosophy
+  - politics/political-thought
 tags: [密尔, 功利主义, 论自由, 自由, 代议制政府, 女性平等]
 summary: >-
   约翰·斯图尔特·密尔（1806—1873）是英国哲学家、经济学家与自由主义的旗手。作为边沁功利主义的继承人，他并未止步于「最大幸福」的计数，而是以「高级快乐」修正功利标准，把个性、思想自由与自主列为幸福的核心成分。在《论自由》（1859）中，他提出「伤害原则」，主张只要不伤害他人，国家与舆论都无权干涉个人；在《代议制政府》与《妇女的屈从地位》里，他又把自由原则推进到政体设计与性别平等，成为古典自由主义通往现代平等主义的关键一环。

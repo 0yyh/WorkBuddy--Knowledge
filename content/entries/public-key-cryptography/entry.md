@@ -6,7 +6,7 @@ original_title: Public-key cryptography
 aliases: [公钥密码学, 非对称加密, 公开密钥密码体系, 公钥加密]
 type: concept
 categories:
-  - 技术/信息技术
+  - technology/info-tech
 tags: [公钥密码学, 非对称加密, RSA, Diffie-Hellman, 数字签名, TLS, 密钥交换]
 summary: >-
   公钥密码学（非对称加密）使用一对数学相关但不同的密钥：公钥可公开，用于加密或验证；私钥须保密，用于解密或签名。其安全性建立在"从公钥推算私钥在计算上不可行"的数学难题上。1976 年 Diffie 与 Hellman 首次提出该思想并给出密钥交换协议，1978 年 Rivest、Shamir 与 Adleman 提出首个实用算法 RSA（基于大整数分解）。它与数字证书、PKI 共同构成 TLS/HTTPS、SSH 等现代网络安全的基础。

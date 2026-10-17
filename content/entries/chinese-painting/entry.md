@@ -6,7 +6,7 @@ original_title: Chinese Painting
 aliases: [国画, 丹青]
 type: concept
 categories:
-  - 艺术/视觉艺术/绘画
+  - art/art-visual/art-painting
 tags: [中国绘画, 笔墨, 写意, 山水画, 文人画]
 summary: >-
   中国绘画是以毛笔、水墨与绢纸为核心的东方造型传统，重「写意」而非「写实」，以笔墨传达气韵与意境。其山水、人物、花鸟三大门类在宋元达到范式高度，文人画则将诗书画印融为人格表达，近现代经徐悲鸿、林风眠等人开启中西融合的转型。

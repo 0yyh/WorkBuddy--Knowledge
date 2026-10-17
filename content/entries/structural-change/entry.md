@@ -6,7 +6,7 @@ original_title: Structural Change
 aliases: [结构变迁, 结构转变, 经济结构转型, Structural Transformation]
 type: concept
 categories:
-  - 经济学/发展经济学
+  - economics/development-economics
 tags: [结构转型, 二元经济, 刘易斯模型, 库兹涅茨, 去工业化, 产业结构]
 summary: >-
   结构转型（Structural Change）指经济发展过程中劳动、资本与产出在农业、工业、服务业之间的大规模再配置：农业份额持续下降，工业与服务业份额相继上升，人均产出随之跃升。它由刘易斯的二元经济模型与库兹涅茨的现代增长研究奠基，被视为现代增长最典型的「风格化事实」。结构转型的路径与速度直接决定一个经济体能否摆脱低收入均衡；而当代过早去工业化现象，正在挑战「农业→工业→服务业」的传统追赶路径，使这一概念成为发展经济学的核心议题。

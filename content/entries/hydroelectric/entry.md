@@ -5,7 +5,7 @@ title: 水力发电
 aliases: [水电, 水力发电, Hydroelectric Power]
 type: concept
 categories:
-  - 技术/能源与动力
+  - technology/energy-power
 tags: [水力发电, 水坝, 水轮机, 可再生能源, 水库]
 summary: >-
   水力发电是利用水流的位能与动能驱动水轮机、再带动发电机发电的技术。从古老的水车到现代高坝大库，水电把江河的重力势能转化为清洁稳定的电力，是全球最大的可再生能源电源。它兼具调峰与储能价值，却也因淹没土地、阻断鱼类与移民安置而争议不断。

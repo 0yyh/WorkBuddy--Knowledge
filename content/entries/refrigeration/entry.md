@@ -6,7 +6,7 @@ original_title: Refrigeration and the Cold Chain
 aliases: [制冷技术, 冷链, 制冷机, Refrigeration]
 type: concept
 categories:
-  - 技术/能源与动力
+  - technology/energy-power
 tags: [技术, 制冷, 冷链, 热力学, 食品保存, 空调]
 summary: >-
   制冷是通过做功把热量从低温物体转移到高温环境的技术，其理论基础是十九世纪建立的热力学。机械制冷自十九世纪后期成熟后，重塑了食品保存、城市供给、医疗疫苗、热带开发与人居环境；冷链则将制冷环节连成从产地到餐桌的低温链条。制冷也带来能耗与制冷剂的环境代价，成为当代能效与气候政策的重要议题。

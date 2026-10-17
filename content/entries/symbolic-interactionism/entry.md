@@ -6,7 +6,7 @@ original_title: symbolic interactionism
 aliases: [符号互动论, 符号互动主义]
 type: concept
 categories:
-  - 哲学/社会学
+  - philosophy/sociology
 tags: [符号互动论, 米德, 布鲁默, 戈夫曼, 自我, 意义建构]
 summary: >-
   符号互动论（symbolic interactionism）是二十世纪美国社会学的微观取向，主张社会现实由行动者在互动中通过符号「意义建构」而成。米德奠定自我理论（主我/客我、通用他人），布鲁默概括三项前提（行动基于事物对行动者的意义、意义来自社会互动、意义经解释性使用而修正），戈夫曼以拟剧理论揭示日常表演与印象管理。它把社会从「外在结构」拉回「当下互动」，强调人不是被规则推着的零件，而是解释情境、赋予意义的能动者。

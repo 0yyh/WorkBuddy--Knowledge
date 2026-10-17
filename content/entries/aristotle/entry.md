@@ -6,8 +6,8 @@ original_title: Aristotle
 aliases: [亚里士多德, Aristotle, 亚里斯多德]
 type: person
 categories:
-  - 哲学/西方哲学/古希腊哲学
-  - 科学/科学方法论
+  - philosophy/western-philosophy/west-ancient
+  - science/sci-method
 tags: [亚里士多德, 逻辑学, 四因说, 古希腊哲学, 经验科学]
 summary: >-
   亚里士多德（前384—前322）是古希腊哲学的集大成者，柏拉图的学生与亚历山大大帝的老师。他创立形式逻辑（三段论），系统研究物理、生物、伦理与政治，主张知识始于经验并以四因说解释事物，其体系主宰西方学术近两千年。

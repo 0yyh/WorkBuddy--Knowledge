@@ -6,8 +6,8 @@ original_title: informal logic
 aliases: [非形式逻辑学, 论证理论, informal logic, argumentation theory]
 type: concept
 categories:
-  - 哲学/逻辑与批判性思维
-  - 哲学/西方哲学/英美与现当代哲学
+  - philosophy/logic-critical
+  - philosophy/western-philosophy/west-analytic
 tags: [非形式逻辑, 论证, 图尔敏模型, 谬误, 批判性思维]
 summary: >-
   非形式逻辑是二十世纪六七十年代在北美兴起的一场逻辑学运动，主张逻辑学不应只研究形式系统中的演绎有效性，还应发展评估自然语言论证（政治辩论、法律论证、报纸社论、日常讨论）的方法。它的标志性成果包括图尔敏的论证模型（主张、资料、正当理由、支持、限定、反驳）、论证图与论证重构技术、以及约翰逊与布莱尔提出的 ARG 条件（相干、充分、可接受）。本词条介绍这场运动的起因、图尔敏模型、论证图方法、评估标准，以及它与形式逻辑的关系和所受到的批评。

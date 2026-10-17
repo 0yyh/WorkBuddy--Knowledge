@@ -6,7 +6,7 @@ original_title: Daoist Practice
 aliases: [道教修炼法, 内丹外丹, 斋醮科仪, 道教养生, 全真修炼]
 type: concept
 categories:
-  - 宗教/中国宗教/道教
+  - religion/rel-chinese/rel-daoism
 tags: [道教, 内丹, 外丹, 炼养, 斋醮, 符箓, 道藏, 葛洪, 抱朴子, 存思, 全真教, 养生]
 summary: >-
   道教修炼（Daoist cultivation）是中国道教为追求长生、成仙与超越生死而建立的

@@ -5,7 +5,7 @@ title: 元朝
 aliases: [元, 元朝, Yuan dynasty, 大元, 蒙古]
 type: concept
 categories:
-  - 历史/中国史/宋元明清
+  - history/history-china/china-songming
 tags: [元朝, 成吉思汗, 忽必烈, 行省制, 蒙古帝国, 元曲]
 timeline: [china]
 summary: >-

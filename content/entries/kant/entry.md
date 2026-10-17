@@ -6,9 +6,9 @@ original_title: Immanuel Kant
 aliases: [康德, Immanuel Kant, 伊曼努尔·康德]
 type: person
 categories:
-  - 哲学/西方哲学/近代欧陆哲学
-  - 哲学/形而上学
-  - 哲学/伦理学
+  - philosophy/western-philosophy/west-modern
+  - philosophy/metaphysics
+  - philosophy/ethics
 tags: [康德, 批判哲学, 物自体, 先天综合判断, 定言命令, 自律, 永久和平]
 summary: >-
   伊曼努尔·康德（1724—1804）是德国启蒙与近代哲学的分水岭，以「批判哲学」重建被休谟怀疑论撼动的知识与道德根基。他提出「哥白尼式革命」：不是心灵符合对象，而是对象符合心灵的先天结构；以「先天综合判断」解释数学与自然科学的客观必然性，以「物自体」划出可知与不可知的界限。在实践领域，他以「定言命令」与「自律」把道德建立在理性自身立法之上，主张自由是道德的必要预设。其《永久和平论》则以共和制、世界公民与联邦构想，成为现代国际伦理的先声。

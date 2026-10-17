@@ -6,7 +6,7 @@ original_title: structural functionalism
 aliases: [结构功能主义, 功能主义]
 type: concept
 categories:
-  - 哲学/社会学
+  - philosophy/sociology
 tags: [结构功能主义, 帕森斯, 默顿, AGIL, 功能分析, 社会整合]
 summary: >-
   结构功能主义（structural functionalism）是把社会比作有机体的理论传统：社会由相互关联的部分组成，各部分的「功能」是维持整体的生存与稳定。斯宾塞以社会有机体开篇，涂尔干首开功能解释；帕森斯以 AGIL 图式（适应/目标达成/整合/潜在模式维持）把行动系统形式化；默顿区分显功能与潜功能、提出中程理论以纠其空泛。它偏保守、重秩序与整合，在二十世纪中叶鼎盛，后因忽视权力与变迁遭冲突论猛批，但其「系统思维」已沉淀为社会学底色。

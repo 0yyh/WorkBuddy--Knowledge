@@ -6,8 +6,8 @@ original_title: Manifest der Kommunistischen Partei
 aliases: [共产主义宣言, 共党宣言]
 type: work
 categories:
-  - 政治理论/马克思主义/马克思主义经典著作
-  - 政治理论/马克思主义
+  - politics/marxism/marx-classics
+  - politics/marxism
 tags: [马克思, 恩格斯, 科学社会主义, 阶级斗争, 无产阶级]
 summary: >-
   《共产党宣言》是马克思与恩格斯为共产主义者同盟起草的纲领，1848年2月于伦敦出版，

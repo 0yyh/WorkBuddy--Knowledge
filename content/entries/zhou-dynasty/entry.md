@@ -5,7 +5,7 @@ title: 周朝
 aliases: [周, 周代, Zhou dynasty, 西周, 东周]
 type: concept
 categories:
-  - 历史/中国史/先秦至秦汉
+  - history/history-china/china-ancient
 tags: [周朝, 分封制, 宗法制, 礼乐制度, 武王伐纣, 春秋战国, 周公]
 timeline: [china]
 summary: >-

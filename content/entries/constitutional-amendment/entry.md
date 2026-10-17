@@ -6,7 +6,7 @@ original_title: Constitutional Amendment
 aliases: [修宪, 宪法修正, Constitutional Amendment, 宪法变迁]
 type: concept
 categories:
-  - 法学/宪法与公法
+  - law/law-constitutional
 tags: [宪法修改, 修宪程序, 刚性宪法, 宪法变迁, 不可修改条款]
 summary: >-
   宪法修改（Constitutional Amendment）指以正式法律程序变更宪法文本的机制，是连接宪法「稳定性」与「适应性」的核心装置。它要解决的根本张力是：宪法既需足够稳固以约束日常政治、守护基本价值，又需能随社会变迁而更新，否则将因僵化而被暴力推翻。现代宪法普遍设立远高于普通立法的修宪门槛——特别多数、层级批准、乃至公民复决——以过滤轻率改动；但同时，宪法惯例、司法解释与事实实践也在文本之外推动着「非正式变迁」。修宪权的边界（是否存在不可修改条款、谁来守护宪法）则是宪法理论最艰深的议题之一，直接关系到政体自身能否被民意合法地重塑。

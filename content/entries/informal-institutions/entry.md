@@ -6,7 +6,7 @@ original_title: Informal Institutions
 aliases: [非正式制度, 非正式约束, Informal Institutions]
 type: concept
 categories:
-  - 经济学/制度经济学
+  - economics/institutional-economics
 tags: [习俗, 规范, 信任, 社会资本, 治理]
 summary: >-
   非正式制度指未由官方强制、却深刻约束人们行为的习俗、规范、惯例与信任，与正式的法律、规章相对。它们通过重复博弈中的声誉、内化与社会化机制自我执行，既能降低交易成本、填补正式制度空白（如商帮信任替代薄弱法治），也可能与正式规则冲突（如宗族法挑战国法），甚至在发展中经济体中演化为庇护网络与腐败温床。理解非正式制度，是解释发展中国家治理绩效、社会资本存量与制度互补性的关键一环。

@@ -6,7 +6,7 @@ original_title: On the Origin of Species
 aliases: [物种起源, 通过自然选择的物种起源]
 type: work
 categories:
-  - 科学/自然科学基础/生物与生命
+  - science/nat-science/biology
 tags: [达尔文, 进化论, 自然选择, 生物学, 经典]
 summary: >-
   《物种起源》（全称《通过自然选择的物种起源》，1859）是达尔文的代表作，也是现代生物学最重要的奠基文献之一。它以人工选择类比自然选择，再用地理分布、化石、比较解剖与胚胎四类证据，论证一切生物源自共同祖先，物种是可变的谱系而非固定类型。

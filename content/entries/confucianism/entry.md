@@ -5,7 +5,7 @@ title: 儒家思想
 aliases: [儒学, 儒家, 孔孟之道, Confucianism]
 type: concept
 categories:
-  - 哲学/中国哲学
+  - philosophy/chinese-philosophy
 tags: [儒家, 孔子, 中国哲学, 伦理, 修身, 仁]
 summary: >-
   儒家思想是以孔子为宗、经孟子荀子及历代儒者发展而成的中国主流思想体系，核心在仁、礼、义、忠恕与修身齐家治国平天下的秩序构想。它塑造了中国两千余年的人伦观念、政治制度与社会伦理，直到今天仍是理解中国文化与东亚价值的钥匙。

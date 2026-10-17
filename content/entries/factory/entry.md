@@ -6,8 +6,8 @@ original_title: Factory
 aliases: [制造厂, 工场, 厂房]
 type: concept
 categories:
-  - 技术/交通与制造
-  - 技术/技术史
+  - technology/transport-manufacturing
+  - technology/tech-history
 tags: [制造业, 工业革命, 流水线, 自动化, 生产组织]
 summary: >-
   工厂是把原材料集中转化为产品的固定生产场所，以分工、动力机械与流水线组织大规模制造。它诞生于工业革命，以蒸汽动力与水力机械替代家庭手工业，使产量与效率发生阶跃，也重塑了城市、劳动与资本的关系。从福特流水线到今天的智能制造，工厂始终是生产方式变革的核心载体，也是观察技术、经济与社会互动的绝佳窗口。

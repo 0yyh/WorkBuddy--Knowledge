@@ -6,8 +6,8 @@ original_title: Shipping
 aliases: [海运, 海上运输, 远洋运输]
 type: concept
 categories:
-  - 技术/交通与制造
-  - 经济学/国际经济学
+  - technology/transport-manufacturing
+  - economics/international-economics
 tags: [航运, 海运, 集装箱, 国际贸易, 全球化]
 summary: >-
   航运是以船舶在海洋上运送客货的运输方式，凭借巨大的单次运量与低廉的单位成本，承担了全球国际贸易约九成的货运量，是经济全球化的物理血脉。从风帆贸易到集装箱班轮，航运把生产与消费在空间上分离又在成本上连接。它既受运费周期与地缘要冲的牵动，也因排放问题站在绿色转型的关口。

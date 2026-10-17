@@ -5,7 +5,7 @@ title: 三国
 aliases: [三国, 三国时代, Three Kingdoms, 魏蜀吴]
 type: concept
 categories:
-  - 历史/中国史/魏晋至隋唐
+  - history/history-china/china-mid
 tags: [三国, 赤壁之战, 曹操, 诸葛亮, 魏蜀吴, 鼎立]
 timeline: [china]
 summary: >-

@@ -6,7 +6,7 @@ original_title: Liberal Institutionalism
 aliases: [新自由制度主义, 新自由主义（国际关系）, 自由主义国际关系理论, Liberal Institutionalism]
 type: concept
 categories:
-  - 政治理论/国际关系
+  - politics/international-relations
 tags: [自由制度主义, 制度, 相互依存, 民主和平论, 康德]
 summary: >-
   自由制度主义是国际关系理论中与现实主义分庭抗礼的范式：它接受无政府与理性国家的现实主义前提，却论证合作不仅可能而且普遍。其思想源头是康德的共和制、邦联与商业精神；基欧汉与奈的复合相互依存揭示了跨国联系的密度；基欧汉的《霸权之后》证明国际制度通过降低交易成本、提供信息而稳定合作。民主和平论与贸易和平为其提供经验支柱，对现实主义的回应则围绕相对收益展开。

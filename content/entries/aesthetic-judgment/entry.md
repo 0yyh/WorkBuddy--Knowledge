@@ -6,8 +6,8 @@ original_title: Aesthetic Judgment
 aliases: [鉴赏判断, 审美判断力, Aesthetic Judgment, 趣味判断]
 type: concept
 categories:
-  - 哲学/美学
-  - 哲学/西方哲学/近代欧陆哲学
+  - philosophy/aesthetics
+  - philosophy/western-philosophy/west-modern
 tags: [审美判断, 康德, 判断力批判, 共通感, 无利害, 合目的性, 布尔迪厄]
 summary: >-
   审美判断是康德《判断力批判》的核心问题：当我们说「这朵花美」时，判断既是主观的（基于我的愉悦）又要求人人都同意，这种特殊有效性如何可能？康德以四个契机回答——无利害的愉悦、无概念的普遍性、主观的合目的性、共通感的必然性。本词条逐契机展开这一论证，并考察布尔迪厄等人从社会学与经验研究角度提出的根本批评。

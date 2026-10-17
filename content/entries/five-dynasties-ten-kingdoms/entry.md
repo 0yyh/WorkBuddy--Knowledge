@@ -5,7 +5,7 @@ title: 五代十国
 aliases: [五代十国, Five Dynasties and Ten Kingdoms, 五代, 十国]
 type: concept
 categories:
-  - 历史/中国史/宋元明清
+  - history/history-china/china-songming
 tags: [五代十国, 藩镇, 朱温, 契丹, 分裂, 政权更迭]
 timeline: [china]
 summary: >-

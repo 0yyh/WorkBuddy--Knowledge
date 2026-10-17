@@ -6,7 +6,7 @@ original_title: Geologic Time
 aliases: [地质时间, 地史年代, geologic time]
 type: concept
 categories:
-  - 科学/自然科学基础/天文与地球科学
+  - science/nat-science/astronomy-earth
 tags: [地质年代, 放射性测年, 地层, 大灭绝, 深时]
 summary: >-
   地质年代指地球四十六亿年历史的划分与度量体系。本词条梳理均变论与灾变论之争如何塑造地质学的方法论、放射性测年如何把「深时」变成可量化的钟表、以宙代纪世为层级的地层年代表如何建立，以及寒武纪大爆发与五次大灭绝这些生命史坐标的确立。「深时」概念颠覆了人类的直觉时间感，也为演化论、板块构造与气候变化研究提供了必需的时间框架。

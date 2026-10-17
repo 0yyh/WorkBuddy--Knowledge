@@ -5,7 +5,7 @@ title: 西夏
 aliases: [西夏, Western Xia, 夏, 党项, 李元昊]
 type: concept
 categories:
-  - 历史/中国史/宋元明清
+  - history/history-china/china-songming
 tags: [西夏, 党项, 李元昊, 凉州, 河西, 夏宋和战]
 timeline: [china]
 summary: >-

@@ -6,7 +6,7 @@ original_title: Hundred Years' War
 aliases: [英法百年战争, 百年战争 (1337-1453)]
 type: event
 categories:
-  - 历史/世界史/中世纪
+  - history/history-world/world-medieval
 tags: [百年战争, 英法关系, 长弓, 圣女贞德, 中世纪, 民族认同]
 timeline: [world]
 summary: >-

@@ -5,7 +5,7 @@ title: 最大似然估计
 aliases: [极大似然估计, 最大似然法, Maximum Likelihood, MLE]
 type: concept
 categories:
-  - 经济学/计量经济学
+  - economics/econometrics
 tags: [最大似然估计, 似然函数, Probit, Logit, 渐近理论]
 summary: >-
   最大似然估计（Maximum Likelihood Estimation，MLE）是统计学与计量经济学最通用的估计原理：选定一个概率模型，寻找使「已观测数据出现概率最大」的参数值。其力量在于几乎普适的渐近理论——在正则条件下，MLE 一致、渐近正态且渐近有效，并自带标准误推断框架（费希尔信息）。离散选择模型 Probit 与 Logit 是其经济学招牌应用，因变量受限、计数、久期等非线性模型皆以 MLE 为标准引擎。它与普通最小二乘在正态误差下等价，更广设定中则分化：OLS 依赖矩条件、对分布设定稳健，MLE 依赖完全分布设定、更有效率但对误设更敏感，准最大似然（QMLE）是两者间的实用折中。

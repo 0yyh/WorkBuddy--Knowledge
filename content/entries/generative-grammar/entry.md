@@ -5,7 +5,7 @@ title: 生成语法
 aliases: [生成语法学, Generative Grammar, 转换生成语法]
 type: concept
 categories:
-  - 语言学/句法与语义
+  - linguistics/ling-syntax-sem
 tags: [生成语法, 乔姆斯基, 转换, 管约论, 最简方案]
 summary: >-
   生成语法（generative grammar）是乔姆斯基自二十世纪五十年代创立的形式句法纲领，主张语法是一套能「生成」该语言所有合格句子、且不生成不合格句子的形式规则系统。它先以短语结构规则刻画句子底层，再以「转换」规则推导表层语序，从而统一解释疑问、被动、话题等现象（见本批 syntax、universal-grammar）。其后演进出管约论与最简方案，追求用更少、更普遍的抽象原则刻画人类语言共性。生成语法把语言学转化为可计算、可证伪的形式科学，并深刻影响了心理学、计算机科学与神经科学。

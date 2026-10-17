@@ -6,7 +6,7 @@ original_title: Hypertext Transfer Protocol
 aliases: [HTTP, 超文本传输协议, HTTP 协议]
 type: concept
 categories:
-  - 技术/信息技术
+  - technology/info-tech
 tags: [HTTP, 万维网, Web, 应用层协议, REST, URL]
 summary: >-
   超文本传输协议（HTTP）是万维网的应用层协议，采用无状态请求/响应模型：客户端发出请求（方法、URL、首部），服务器返回响应（状态码、首部、主体）。2022 年 IETF 将规范整体重写为 RFC 9110（语义）、RFC 9112（HTTP/1.1）、RFC 9113（HTTP/2，基于 TCP 的二进制多路复用）与 RFC 9114（HTTP/3，基于 QUIC/UDP），并以 HTTPS 叠加 TLS 提供加密与认证，构成现代 Web 的安全底座。

@@ -6,9 +6,9 @@ original_title: Mencius
 aliases: [孟轲, 孟子集, Mencius]
 type: person
 categories:
-  - 哲学/中国哲学
-  - 哲学/伦理学
-  - 哲学/政治哲学
+  - philosophy/chinese-philosophy
+  - philosophy/ethics
+  - philosophy/political-philosophy
 tags: [孟子, 儒家, 性善论, 仁政, 民本, 四端, 养气]
 summary: >-
   孟子（约前372—前289）是战国儒家宗师，后世尊为「亚圣」。他首倡性善论，以「四端」论证仁义内在于人心而非外铄；政治上主张「制民之产」的仁政与「民为贵」的民本思想，并以「养气」「大丈夫」树立儒家理想人格。其书升入四书、跻身经部，使儒家由礼制转向心性，深刻塑造了宋明理学与东亚政治文化。

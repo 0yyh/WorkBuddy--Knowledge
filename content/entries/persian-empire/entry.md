@@ -5,7 +5,7 @@ title: 波斯帝国
 aliases: [阿契美尼德帝国, Achaemenid Empire, 波斯]
 type: concept
 categories:
-  - 历史/世界史/古代文明
+  - history/history-world/world-ancient
 tags: [波斯帝国, 阿契美尼德, 居鲁士, 大流士, 行省制度, 御道, 希波战争]
 timeline: [world]
 summary: >-

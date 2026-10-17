@@ -6,7 +6,7 @@ original_title: 魯迅
 aliases: [周树人, 豫才, 周樟寿]
 type: person
 categories:
-  - 文学/中国文学/近现代文学
+  - literature/lit-china/lit-china-modern
 tags: [鲁迅, 周树人, 狂人日记, 阿Q正传, 呐喊, 彷徨, 杂文, 国民性, 启蒙]
 summary: >-
   鲁迅（一八八一年—一九三六年），原名周树人，字豫才，浙江绍兴人，是中国现代文学的奠基人。他早年留学日本学医，

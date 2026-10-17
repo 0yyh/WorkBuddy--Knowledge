@@ -6,8 +6,8 @@ original_title: Tragedy
 aliases: [悲剧理论, 净化说, Tragedy, 悲剧的诞生]
 type: concept
 categories:
-  - 哲学/美学
-  - 哲学/西方哲学/古希腊哲学
+  - philosophy/aesthetics
+  - philosophy/western-philosophy/west-ancient
 tags: [悲剧, 亚里士多德, 诗学, 净化, 黑格尔, 尼采, 酒神精神]
 summary: >-
   悲剧既是戏剧体裁也是哲学问题：为什么看人受苦会带来愉悦？亚里士多德在《诗学》以卡塔西斯（净化）回答，黑格尔把悲剧改写为两种同样合理的伦理力量相冲突并在更高的和解中消解，尼采《悲剧的诞生》则把悲剧追溯为酒神智慧的显现，并宣布它在苏格拉底主义手中死去。本词条沿这条线索追溯悲剧如何从体裁变成世界观。

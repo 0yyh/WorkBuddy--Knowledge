@@ -6,7 +6,7 @@ original_title: Clinical psychology and psychotherapy
 aliases: [临床心理学, 心理治疗学]
 type: concept
 categories:
-  - 科学/人类认知与心理/心理学分支
+  - science/cog-psych/psych-fields
 tags: [DSM, 认知行为疗法, 精神分析, 循证治疗, 心身问题]
 summary: >-
   临床心理学把心理科学用于评估、诊断与治疗心理痛苦，心理治疗是其核心工具箱。本词条沿五条线索展开：从收容所改革到科学家—实践者模型的历史；DSM 诊断体系的确立与其「医学化」争议；精神分析、CBT 与人本主义三大流派的机理分野；循证治疗的兴起与「渡渡鸟裁决」之争；以及贯穿始终的心身问题——心理痛苦在何种意义上是身体的病，在何种意义上需要另一种回答。

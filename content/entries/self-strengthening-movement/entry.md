@@ -5,7 +5,7 @@ title: 洋务运动
 aliases: [同光新政, 自强运动, 洋务]
 type: event
 categories:
-  - 历史/中国史/近现代史
+  - history/history-china/china-modern
 timeline: [china]
 tags: [洋务运动, 晚清, 近代化, 中体西用, 江南制造总局, 北洋水师]
 date: 1861-1895

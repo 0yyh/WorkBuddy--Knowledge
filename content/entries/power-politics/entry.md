@@ -6,7 +6,7 @@ original_title: Political Power
 aliases: [政治权力, Power, 权力政治]
 type: concept
 categories:
-  - 政治理论/政治学概念
+  - politics/political-concepts
 tags: [权力, 权威, 合法性, 精英, 卢克斯]
 summary: >-
   权力是政治学的核心概念，指一方促使他方按自己意志行动的能力。韦伯以「正当物理强制的垄断」界定国家权力的边界，达尔以「甲让乙做其本不愿做的事」给出关系性定义，卢克斯则揭示权力还有「不引人注目地塑造欲望」的第三维度。理解权力，是理解统治、制度与不平等的前提。

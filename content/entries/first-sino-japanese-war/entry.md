@@ -5,7 +5,7 @@ title: 甲午战争
 aliases: [甲午中日战争, 中日甲午战争]
 type: event
 categories:
-  - 历史/中国史/近现代史
+  - history/history-china/china-modern
 timeline: [china]
 tags: [甲午战争, 近代史, 北洋水师, 马关条约, 中日关系]
 summary: >-

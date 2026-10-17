@@ -6,7 +6,7 @@ original_title: State Confucianism
 aliases: [儒教, 国家儒学, 礼制国家, 官方意识形态, 政教关系]
 type: concept
 categories:
-  - 宗教/中国宗教/儒教与儒家祭祀
+  - religion/rel-chinese/rel-ruism
 tags: [国家儒学, 儒教, 礼制国家, 政教关系, 郊祀, 宗庙, 文庙, 科举, 经学, 祭孔, 社稷]
 summary: >-
   国家儒学（State Confucianism）指儒学在汉代以后被国家政权吸纳为统治意识形态

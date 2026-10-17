@@ -5,7 +5,7 @@ title: 计算机网络
 aliases: [计算机网络, 网络, Computer Network]
 type: concept
 categories:
-  - 技术/信息技术
+  - technology/info-tech
 tags: [网络, 协议, TCP/IP, 路由, 互联网]
 summary: >-
   计算机网络是把分散的计算设备通过链路与交换节点互联、按共同规则（协议）交换数据的系统。分层协议栈把复杂的通信拆成可管理的层次，分组交换取代独占电路，使全球设备得以低成本互连。理解网络，是理解互联网、云与一切联机服务的前提。

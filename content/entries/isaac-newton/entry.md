@@ -6,9 +6,9 @@ original_title: Isaac Newton
 aliases: [牛顿, Isaac Newton, 艾萨克牛顿]
 type: person
 categories:
-  - 科学/自然科学基础/物理
-  - 科学/科学方法论
-  - 历史/世界史/近代史
+  - science/nat-science/physics
+  - science/sci-method
+  - history/history-world/world-modern
 tags: [物理学, 牛顿, 万有引力, 经典力学, 科学革命]
 summary: >-
   艾萨克·牛顿（1643—1727）是近代科学革命的集大成者，以万有引力定律与运动三定律统一天上与地上的力学，奠定经典力学体系；他同时发明微积分（流数法），并以《自然哲学的数学原理》确立了公理化、数学化的自然研究范式，深刻塑造了此后两百余年的科学图景。

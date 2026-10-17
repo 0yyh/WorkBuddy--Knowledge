@@ -6,7 +6,7 @@ original_title: Network science
 aliases: [复杂网络研究, 网络理论, network science]
 type: concept
 categories:
-  - 科学/数学与系统科学/系统与复杂性
+  - science/math-systems/complex-systems
 tags: [网络科学, 随机图, 小世界, 无标度, 枢纽节点, 优先连接]
 summary: >-
   网络科学研究由节点与连边构成的复杂连接结构，是一门 1990 年代末定型的交叉学科。本词条从图论的起源讲起，依次介绍随机图（ER 模型）的相变与失败、小世界网络（Watts-Strogatz）与无标度网络（Barabási-Albert）两大里程碑、枢纽节点带来的「鲁棒又脆弱」特性，最后梳理网络科学在流行病学、神经科学与金融系统性风险中的应用，以及对幂律滥用的批评。

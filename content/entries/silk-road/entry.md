@@ -5,8 +5,8 @@ title: 丝绸之路
 aliases: [丝绸之路经济带, 丝路, Silk Road]
 type: concept
 categories:
-  - 历史/中国史/先秦至秦汉
-  - 历史/世界史/中世纪
+  - history/history-china/china-ancient
+  - history/history-world/world-medieval
 tags: [丝绸之路, 贸易, 文化交流, 欧亚大陆, 张骞]
 timeline: [china, world]
 summary: >-

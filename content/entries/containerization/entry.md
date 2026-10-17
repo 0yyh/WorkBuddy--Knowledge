@@ -6,7 +6,7 @@ original_title: Containerization
 aliases: [货柜运输, 集装箱化, Containerization]
 type: concept
 categories:
-  - 技术/交通与制造
+  - technology/transport-manufacturing
 tags: [集装箱, 航运, 全球供应链, 物流, 技术史]
 summary: >-
   集装箱运输是以标准尺寸钢箱为载体、以专用吊具与船舶实现海陆联运的货运组织方式。它通过把「货」标准化为「箱」，将装卸效率提升一个数量级，使海运成本大幅下降。马尔科姆·麦克莱恩 1956 年首航开启商业化，标准化与港口机械化在 1960—1970 年代确立其地位。集装箱把运输成本压到近乎可忽略，是全球供应链与制造业大分工的物理前提；其当代挑战是疫情期的供应链拥堵、地缘政治与减排压力。

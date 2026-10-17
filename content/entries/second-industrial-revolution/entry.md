@@ -5,7 +5,7 @@ title: 第二次工业革命
 aliases: [第二次工业革命, Second Industrial Revolution, 技术革命]
 type: concept
 categories:
-  - 技术/技术史
+  - technology/tech-history
 tags: [第二次工业革命, 钢铁, 电力, 化学工业, 大规模生产]
 summary: >-
   第二次工业革命指1870年前后至一战期间以钢铁、电力、内燃机与化学工业为支柱的技术—经济转型。它的新颖之处在于发明本身的组织化：工业实验室把科学变成生产线。经理资本主义、大规模生产与寡头市场随之成型，德美两国借此赶超英国，现代大企业的形态由此奠定。

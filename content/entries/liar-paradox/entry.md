@@ -6,8 +6,8 @@ original_title: the Liar paradox
 aliases: [谎言悖论, 说谎者, liar paradox]
 type: concept
 categories:
-  - 哲学/逻辑与批判性思维
-  - 哲学/形而上学
+  - philosophy/logic-critical
+  - philosophy/metaphysics
 tags: [悖论, 自指, 真, 塔斯基, 克里普克]
 summary: >-
   说谎者悖论是围绕「这句话是假的」这一自指句展开的悖论：若它为真则它为假，若它为假则它为真。它从古希腊的埃庇米尼得斯悖论演变而来，在中世纪被反复讨论，二十世纪成为真理论与形式语义学的核心难题。本词条介绍悖论的各版本与变形、它由以成立的两个前提（自指与二值原则）、塔斯基的语言层级与真不可定义定理、克里普克《真理论纲要》的三值不动点方案，以及若干替代方案与这一悖论的哲学意义。

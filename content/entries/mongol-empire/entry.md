@@ -6,7 +6,7 @@ original_title: Mongol Empire
 aliases: [蒙古汗国, 大蒙古国, 成吉思汗帝国]
 type: event
 categories:
-  - 历史/世界史/中世纪
+  - history/history-world/world-medieval
 tags: [蒙古帝国, 成吉思汗, 驿站, 四大汗国, 丝绸之路, 欧亚贸易]
 timeline: [world]
 summary: >-

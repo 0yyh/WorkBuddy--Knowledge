@@ -6,8 +6,8 @@ original_title: Petroleum
 aliases: [原油, 煤油, 石油烃]
 type: concept
 categories:
-  - 技术/能源与动力
-  - 历史/世界史/近代史
+  - technology/energy-power
+  - history/history-world/world-modern
 tags: [能源, 化石燃料, 地缘政治, 石油化工, 钻井]
 summary: >-
   石油是由远古海洋生物遗骸经漫长地质作用形成的可燃有机矿产，主要成分为碳氢化合物。它既是现代交通运输、化工与发电的支柱能源，也是二十世纪以来国际政治与经济博弈的核心资源。从宾夕法尼亚第一口油井到中东超级油田，石油重塑了工业文明的面貌，而其燃烧带来的碳排放也正倒逼能源转型。

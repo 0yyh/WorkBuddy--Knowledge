@@ -5,7 +5,7 @@ title: 古埃及文明
 aliases: [古埃及, 古埃及史, Ancient Egypt]
 type: concept
 categories:
-  - 历史/世界史/古代文明
+  - history/history-world/world-ancient
 tags: [古埃及, 世界史, 尼罗河, 法老, 象形文字]
 timeline: [world]
 summary: >-

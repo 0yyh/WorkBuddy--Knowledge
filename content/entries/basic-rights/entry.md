@@ -6,7 +6,7 @@ original_title: Grundrechte
 aliases: [基本权, 宪法权利, 基本人权]
 type: concept
 categories:
-  - 法学/宪法与公法/基本权利与人权
+  - law/law-constitutional/law-constitutional-rights
 tags: [基本权利, 宪法权利, 主观权利, 客观价值秩序, 比例原则]
 summary: >-
   **基本权利**是由宪法确认的、公民对抗国家权力的根本性权利，兼具「主观权利」（个人可主张）与「客观价值秩序」（约束所有公权力）双重属性。它源于近代宪法权利清单，涵盖自由权、平等权、社会权与参政权等类型，并受比例原则约束其限制。基本权利是现代宪政的支柱，其救济通常通过宪法诉讼实现。

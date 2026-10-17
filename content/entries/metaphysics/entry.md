@@ -6,8 +6,8 @@ original_title: Metaphysics
 aliases: [形而上学, Metaphysics, 第一哲学, 存在论]
 type: concept
 categories:
-  - 哲学/形而上学
-  - 哲学/西方哲学/古希腊哲学
+  - philosophy/metaphysics
+  - philosophy/western-philosophy/west-ancient
 tags: [形而上学, 第一哲学, 存在论, 可能世界, 因果性]
 summary: >-
   形而上学（Metaphysics）是哲学中最古老也最基础的分支，研究存在之为存在——事物要成为某个东西，必须满足哪些最一般的条件。

@@ -6,7 +6,7 @@ original_title: Petroleum Industry
 aliases: [石油产业, 原油工业, Oil Industry]
 type: concept
 categories:
-  - 技术/能源与动力
+  - technology/energy-power
 tags: [石油, 炼化, 油气, 地缘政治, 能源]
 summary: >-
   石油工业涵盖原油的勘探、开采、储运与炼化，并把成品油与化工原料送入经济各环节的完整产业链。它自十九世纪末随煤油照明与内燃机兴起而壮大，在二十世纪成为最大的单一商品行业与战略资源：石油危机、OPEC、石油美元皆由此而生。进入二十一世纪，气候政策与能源转型使其面临需求见顶的结构性挑战。理解石油工业，是理解现代能源体系与地缘政治的钥匙。

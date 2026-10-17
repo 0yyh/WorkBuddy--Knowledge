@@ -6,7 +6,7 @@ original_title: Balance of Power
 aliases: [势力均衡, 均势论, 权力平衡]
 type: concept
 categories:
-  - 政治理论/国际关系
+  - politics/international-relations
 tags: [均势, 现实主义, 联盟, 多极化, 稳定]
 summary: >-
   均势是现实主义国际政治中的核心运作机制：当一国权力过度膨胀威胁他国生存时，其他国家会通过内部扩充、组建外部联盟或分化对手来抵消其优势，从而维持体系稳定。它既是描述性规律，也是被刻意经营的政策。欧洲「古典均势」与冷战两极是其典型形态。均势能否带来稳定，以及它在多极化与中美竞争中的适用性，至今争议未决。

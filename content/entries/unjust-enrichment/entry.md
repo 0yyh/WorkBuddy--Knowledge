@@ -6,7 +6,7 @@ original_title: Unjust Enrichment
 aliases: [不当得利返还, 无因受益, Unjust Enrichment, 利得返还]
 type: concept
 categories:
-  - 法学/民法/债权与合同
+  - law/law-civil/law-civil-obligations
 tags: [不当得利, 债权, 返还请求权, 衡平, 民法典]
 summary: >-
   不当得利（Unjust Enrichment）是民法中一项以「无法律上原因而受利益，致他人受损害」为要件、旨在回复公平财产变动的请求权基础。它要解决的问题是：当一个人没有合法依据却增加了财产，而另一人相应减少，法律应否、又如何强制前者把利益交还？这一制度起源于罗马法与自然法上的衡平观念，近代被大陆法系提炼为独立债因，英美法则由准合同（quasi-contract）演化而来。其核心功能不是惩罚，而是矫正「不该有的财富转移」，填补合同与侵权之外的财产保护缝隙。现代民法典多以「没有合法根据，取得不当利益」概括其构成，并通过返还范围的善意恶意区分实现精细衡平。

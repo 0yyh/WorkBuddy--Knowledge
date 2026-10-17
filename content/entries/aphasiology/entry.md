@@ -6,7 +6,7 @@ original_title: Aphasiology
 aliases: [失语, 获得性语言障碍, 语言障碍学]
 type: concept
 categories:
-  - 语言学/社会与心理语言学/心理语言学
+  - linguistics/ling-socio-psy/ling-psychology
 tags: [失语症, 布洛卡失语, 韦尼克失语, 语言定位, 脑损伤, 神经语言学]
 summary: >-
   失语症是因脑损伤（多为中风）导致的语言能力丧失或受损，而非智力或发音器官问题。经典类型如布洛卡失语表达费力、语法缺失，韦尼克失语流利却语义错乱，二者对应额叶与颞叶的不同损伤。失语症研究把语言功能定位到脑区，并为神经语言学与语言模块论提供临床证据，也支撑评估与康复实践。

@@ -6,8 +6,8 @@ original_title: Epistemology
 aliases: [认识论, Epistemology, 知识论, 知识学]
 type: concept
 categories:
-  - 哲学/认识论
-  - 哲学/西方哲学/古希腊哲学
+  - philosophy/epistemology
+  - philosophy/western-philosophy/west-ancient
 tags: [认识论, 知识, 确证, 怀疑论, 德性认识论]
 summary: >-
   认识论（Epistemology）是研究知识与确证的哲学分支，核心问题是：什么是知识？我们能否获得知识？若能，凭什么？

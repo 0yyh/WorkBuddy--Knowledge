@@ -5,7 +5,7 @@ title: 历史语言学
 aliases: [历史比较语言学, Historical Linguistics, 语言演变]
 type: concept
 categories:
-  - 语言学/历史语言学
+  - linguistics/ling-historical
 tags: [历史语言学, 语言演变, 语音规律, 语言接触, 谱系]
 summary: >-
   历史语言学（historical linguistics）研究语言随时间的演变规律，以及语言之间的亲缘关系。它的核心成就包括：证明语音演变具有可发现的规律（新语法学派的「语音规律无例外」）、建立历史比较法（见本批 comparative-method）以重构无文献的祖语、并勾勒世界语言的谱系树（见本批 language-family、indo-european）。历史语言学因此把语言放进时间轴，使语言学从共时描写走向演化科学，与生物学共享了「谱系、分支、演变」的研究范式，也为理解语言接触、濒危与复兴提供框架。

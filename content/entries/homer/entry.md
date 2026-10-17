@@ -6,7 +6,7 @@ original_title: Homer
 aliases: [荷马史诗]
 type: person
 categories:
-  - 文学/世界文学/欧美文学
+  - literature/lit-world/lit-europe
 tags: [荷马, 伊利亚特, 奥德赛, 口头史诗, 荷马问题, 英雄史诗]
 summary: >-
   荷马是传说中创作《伊利亚特》与《奥德赛》的古希腊诗人，其人是否实存至今成谜，但两部史诗奠定了西方叙事文学的根基。本词条考察荷马问题的源流、两部史诗的文本与英雄观、口头史诗的成法，以及它们在后世的接受与当代意义。

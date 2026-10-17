@@ -6,7 +6,7 @@ original_title: Relational database
 aliases: [关系数据库, 关系型数据库, RDBMS, 关系数据模型]
 type: concept
 categories:
-  - 技术/信息技术
+  - technology/info-tech
 tags: [关系数据库, SQL, 关系模型, ACID, 规范化, 事务]
 summary: >-
   关系数据库是基于埃德加·科德（E. F. Codd）1970 年提出的关系模型的数据管理系统：数据以二维表（关系）组织，行是元组、列是属性，靠主键唯一标识、外键关联表间关系，用 SQL 以声明方式查询。事务以 ACID（原子性、一致性、隔离性、持久性）保证可靠，规范化（1NF–5NF）消除冗余。它自 1980 年代商业化以来，仍是业务数据的默认底座。

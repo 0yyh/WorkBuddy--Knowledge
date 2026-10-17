@@ -6,7 +6,7 @@ original_title: World Trade Organization
 aliases: [WTO, 世贸组织, World Trade Organization]
 type: concept
 categories:
-  - 经济学/国际经济学
+  - economics/international-economics
 tags: [世界贸易组织, 最惠国待遇, 国民待遇, 争端解决, 多哈回合]
 summary: >-
   世界贸易组织（WTO）于1995年取代1947年的《关税与贸易总协定》（GATT），成为管理全球贸易规则的永久性国际组织。它以最惠国待遇、国民待遇与关税约束为核心原则，通过争端解决机制把贸易规则「法治化」，曾推动贸易自由化深入发展。然而，2001年启动的多哈回合长期停滞，上诉机构停摆，加之大国博弈、发展与环保议题的张力，使WTO面临前所未有的合法性与有效性危机。理解WTO，是把握当代贸易治理、全球化走向与保护主义回潮的关键。

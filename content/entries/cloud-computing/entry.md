@@ -6,7 +6,7 @@ original_title: Cloud Computing
 aliases: [云端运算, 云服务, Cloud Computing]
 type: concept
 categories:
-  - 技术/信息技术
+  - technology/info-tech
 tags: [云计算, 云服务, 虚拟化, 数据中心, SaaS]
 summary: >-
   云计算是通过网络按需获取计算、存储与应用资源的模式：资源由超大规模数据中心集中运营，用户以自助、弹性、按量计费的方式使用。虚拟化技术是其技术前提，亚马逊 2006 年推出的 AWS 使其成为产业。云计算把计算从「自建机房」变为「公用事业」，催生 IaaS、PaaS 与 SaaS 三层服务模式，重塑了软件交付与创业成本结构。其核心张力在于规模经济与弹性带来的效率，同数据主权、供应商锁定与安全集中化的风险并存。

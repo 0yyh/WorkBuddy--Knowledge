@@ -6,7 +6,7 @@ original_title: Pure Theory of Law
 aliases: [纯粹法学, Reine Rechtslehre, 凯尔森法学理论]
 type: concept
 categories:
-  - 法学/法理学/法律实证主义
+  - law/law-juris/law-juris-positivism
 tags: [凯尔森, 纯粹法学, 基础规范, 规范层级, 法律实证主义]
 summary: >-
   凯尔森纯粹法学（德文 Reine Rechtslehre，1960 第二版）是汉斯·凯尔森创立的**法律实证主义**方法论纲领，主张法学只研究「法作为规范」的纯粹结构，剔除一切道德、政治、社会学与心理学杂质。它以**基础规范（Grundnorm）**为效力渊源顶端，用「静态/动态规范层级」刻画法律体系，并以「法与国家的同一性」消解国家与法的二元。纯粹法学是二十世纪最系统的法概念建构之一，也是与自然法、社会学法学的根本分野点。

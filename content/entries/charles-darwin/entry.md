@@ -6,8 +6,8 @@ original_title: Charles Darwin
 aliases: [达尔文, Charles Darwin, 查尔斯达尔文]
 type: person
 categories:
-  - 科学/自然科学基础/生物与生命
-  - 科学/科学方法论
+  - science/nat-science/biology
+  - science/sci-method
 tags: [生物学, 达尔文, 进化论, 自然选择, 物种起源]
 summary: >-
   查尔斯·达尔文（1809—1882）是英国博物学家、进化论的奠基人。他随"贝格尔号"环球考察五年，积累海量生物与地质观察，于 1859 年出版《物种起源》，提出以自然选择为核心的进化理论，用"共同祖先加自然选择"解释生物多样性与适应性的由来，根本改变了人类理解生命与自身位置的方式。

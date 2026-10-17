@@ -5,7 +5,7 @@ title: 阿拉伯帝国
 aliases: [阿拉伯帝国, 伊斯兰帝国, 哈里发帝国]
 type: event
 categories:
-  - 历史/世界史/中世纪
+  - history/history-world/world-medieval
 tags: [阿拉伯帝国, 世界史, 中世纪, 哈里发, 伊斯兰文明, 翻译运动]
 timeline: [world]
 summary: >-

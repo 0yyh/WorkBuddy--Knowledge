@@ -6,8 +6,8 @@ original_title: Ethics
 aliases: [道德哲学, 道德学, Ethics]
 type: concept
 categories:
-  - 哲学/伦理学
-  - 哲学/西方哲学/古希腊哲学
+  - philosophy/ethics
+  - philosophy/western-philosophy/west-ancient
 tags: [伦理学, 元伦理学, 规范伦理学, 德性伦理学, 义务论, 后果主义, 应用伦理学]
 summary: >-
   伦理学（Ethics）是哲学中研究「我们应当如何生活、什么行为是正当的」的分支。它可分成三块：规范伦理学给出行动指南，

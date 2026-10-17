@@ -5,7 +5,7 @@ title: 中华人民共和国成立
 aliases: [开国大典, 新中国建立, 1949年建国, 中华人民共和国诞生]
 type: event
 categories:
-  - 历史/中国史/近现代史
+  - history/history-china/china-modern
 tags: [中华人民共和国, 开国大典, 解放战争, 共同纲领, 土地改革, 一边倒, 近现代史]
 timeline: [china]
 summary: >-

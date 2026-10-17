@@ -5,7 +5,7 @@ title: 第一次世界大战
 aliases: [一战, 第一次世界大战, World War I]
 type: concept
 categories:
-  - 历史/世界史/现当代史
+  - history/history-world/world-contemp
 tags: [一战, 世界史, 堑壕战, 同盟体系, 凡尔赛]
 timeline: [world]
 summary: >-

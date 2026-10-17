@@ -6,7 +6,7 @@ original_title: Rabbinic Judaism
 aliases: [拉比犹太教传统, 塔木德传统, 口传律法, 拉比释经]
 type: concept
 categories:
-  - 宗教/世界宗教/犹太教
+  - religion/rel-world/rel-judaism
 tags: [拉比犹太教, 塔木德, 密西拿, 口传律法, 拉比, 革马拉, 释经, 迈蒙尼德, 律法, 应答集]
 summary: >-
   拉比犹太教（Rabbinic Judaism）是犹太教在古典第二圣殿时代之后形成的主流形态，

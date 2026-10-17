@@ -6,8 +6,8 @@ original_title: deduction and induction
 aliases: [演绎推理与归纳推理, 演绎法与归纳法, deduction and induction]
 type: concept
 categories:
-  - 哲学/逻辑与批判性思维
-  - 科学/科学方法论
+  - philosophy/logic-critical
+  - science/sci-method
 tags: [演绎, 归纳, 保真性, 休谟问题, 科学推理]
 summary: >-
   演绎与归纳是两种最基本的推理类型。演绎的特征是保真性：前提真则结论必然真，结论内容不超出前提，因而只具解释力而不具扩展性；归纳的特征是扩展性：结论超出前提所断定的范围，代价是只能给出或然支持，前提真也不能保证结论真。本词条讨论两者的形式判准、亚里士多德到培根与密尔的历史分野、休谟对归纳合理性的质疑、几种辩护方案及其失败，以及演绎与归纳在科学实践中如何互补。

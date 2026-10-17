@@ -6,7 +6,7 @@ original_title: Niccolò Machiavelli
 aliases: [马基雅维利, Machiavelli, 尼可罗·马基雅维利]
 type: person
 categories:
-  - 政治理论/政治思想
+  - politics/political-thought
 tags: [马基雅维利, 君主论, 政治现实主义, 共和主义, 国家理性]
 summary: >-
   尼可罗·马基雅维利（1469—1527）是意大利文艺复兴时期的政治家与政治思想家。他在《君主论》中把政治从道德神学剥离，转向以权力与实效为尺度的现实主义；又在《论李维》中盛赞共和。其名虽沦为「不择手段」的代称，却真正开创了以「事物实际真相」为准的现代政治科学。

@@ -6,7 +6,7 @@ original_title: Thematic Roles
 aliases: [语义角色, 格角色, 题旨角色, 论元角色]
 type: concept
 categories:
-  - 语言学/句法与语义
+  - linguistics/ling-syntax-sem
 tags: [题元角色, 施事, 受事, 工具, 受益, 论元结构, 菲尔莫尔]
 summary: >-
   题元角色是语义层面赋予句子论元（参与者）的抽象关系标签，如施事、受事、工具、受益、处所等，用以刻画名词短语在事件中所充当的角色。它介于词汇意义与句法位置之间，是连接「谁对谁做了什么」与「句子怎样造句」的桥梁，常见于格语法与词汇功能语法。

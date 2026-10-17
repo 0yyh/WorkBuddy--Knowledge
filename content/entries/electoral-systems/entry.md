@@ -6,7 +6,7 @@ original_title: Electoral Systems
 aliases: [选举制度, 选举规则, 选制]
 type: concept
 categories:
-  - 政治理论/政治学概念
+  - politics/political-concepts
 tags: [选举, 投票, 代表, 政党制度, 迪韦尔热定律]
 summary: >-
   选举制度是把选票转化为席位的规则总和，主要分多数制、比例代表制与混合制三类。它远非技术性细节，而是决定「谁能被代表、政党如何分布、政府如何形成」的政治引擎。同一批选民、同一套偏好，换一套选制就可能产出完全不同的议会地图。

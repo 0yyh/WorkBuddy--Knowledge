@@ -6,7 +6,7 @@ original_title: Poetics
 aliases: [诗艺, 诗学理论, 文学哲学]
 type: concept
 categories:
-  - 文学/文学理论/诗学
+  - literature/lit-theory/lit-poetics
 tags: [诗学, 亚里士多德, 摹仿说, 悲剧, 卡塔西斯, 文学理论]
 summary: >-
   《诗学》是亚里士多德对悲剧、史诗等摹仿艺术的系统研究，也是西方文学理论的奠基之作。它提出「诗摹仿行动中的人」，

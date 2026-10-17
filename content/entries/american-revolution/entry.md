@@ -5,7 +5,7 @@ title: 美国独立
 aliases: [美国独立, 美国革命, 独立战争]
 type: event
 categories:
-  - 历史/世界史/近代史
+  - history/history-world/world-modern
 tags: [近代史, 启蒙思想, 独立战争, 共和, 联邦制, 三权分立]
 timeline: [world]
 summary: >-

@@ -6,8 +6,8 @@ original_title: Russell's paradox
 aliases: [罗素佯谬, 集合论悖论, Russell's paradox]
 type: concept
 categories:
-  - 哲学/逻辑与批判性思维
-  - 科学/数学与系统科学/数学基础
+  - philosophy/logic-critical
+  - science/math-systems/math-found
 tags: [悖论, 集合论, 罗素, 弗雷格, 公理化]
 summary: >-
   罗素悖论于 1901 年被伯特兰·罗素发现：考虑「所有不属于自身的集合」所构成的集合，问它是否属于自身，会得出它属于自身当且仅当它不属于自身。这一矛盾直接击中弗雷格《算术基本规律》所依赖的概括公理，引发了二十世纪初的数学基础危机。本词条介绍朴素集合论的背景、悖论的构造与它为何难以回避、罗素致弗雷格的那封信与弗雷格的回应、类型论与 ZF 公理化的两种应对，以及与之相关的悖论家族和这一事件的历史意义。

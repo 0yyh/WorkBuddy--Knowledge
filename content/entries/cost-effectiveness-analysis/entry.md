@@ -5,7 +5,7 @@ title: 成本效果分析
 aliases: [成本效益分析, 费用效果分析, Cost-Effectiveness Analysis]
 type: concept
 categories:
-  - 经济学/卫生经济学
+  - economics/health-economics
 tags: [成本效果分析, QALY, 卫生技术评估]
 summary: >-
   成本效果分析是卫生资源配置的核心工具：以货币成本除以非货币的健康效果，得到每单位健康的成本，供干预间比较与优先排序。本词条梳理其概念基础、质量调整生命年与残疾调整生命年两类效果度量、阈值与预算约束下的决策规则，以及估值争议、公平权重与罕见病等方法论与伦理前沿。

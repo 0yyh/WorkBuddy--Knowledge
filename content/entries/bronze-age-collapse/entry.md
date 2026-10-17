@@ -5,7 +5,7 @@ title: 青铜时代晚期崩溃
 aliases: [青铜时代崩溃, 海上民族, Bronze Age Collapse]
 type: event
 categories:
-  - 历史/世界史/古代文明
+  - history/history-world/world-ancient
 tags: [青铜时代, 海上民族, 赫梯, 东地中海, 系统崩溃, 公元前1200年]
 timeline: [world]
 summary: >-

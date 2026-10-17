@@ -6,7 +6,7 @@ original_title: Sociolinguistic Variation
 aliases: [社会语言学变异, 语言变异, 变异社会语言学]
 type: concept
 categories:
-  - 语言学/社会与心理语言学/社会语言学
+  - linguistics/ling-socio-psy/ling-sociology
 tags: [社会语言学变异, 拉波夫, 语言变量, 社会变量, 有序异质性, r音研究]
 summary: >-
   社会语言学变异研究同一语言社群内部语言形式随社会因素而系统变化的规律。以拉波夫（William Labov）开创的变异社会语言学为代表，该领域将以往被视为「随意偏离」的变体视为有规则、可预测的现象，并揭示语言变量（如某一音素的发音）与社会变量（阶层、性别、年龄、语境）之间的系统关联。它打破了「语言均质」的假设，把变异视为语言变化的活源头，奠定了现代定量社会语言学的基石。

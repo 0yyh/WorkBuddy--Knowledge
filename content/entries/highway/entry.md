@@ -6,7 +6,7 @@ original_title: Highway
 aliases: [道路, 公路网, 高速公路]
 type: concept
 categories:
-  - 技术/交通与制造
+  - technology/transport-manufacturing
 tags: [公路, 道路工程, 高速公路, 交通管理, 汽车]
 summary: >-
   公路是供车辆与行人通行的人工陆上通道，是现代陆地交通网络的基础骨架。从古代的驿道与官道，到以沥青与混凝土铺就、配备互通立交与智能管控的现代高速公路，公路决定了货物与人员流动的便捷度，也深刻影响着城市形态、区域经济与环境影响。它与铁路、水运互补，构成了多式联运的最后一公里。

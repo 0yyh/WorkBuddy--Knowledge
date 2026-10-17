@@ -5,7 +5,7 @@ title: 涌现
 aliases: [突现, 整体大于部分之和, emergent property]
 type: concept
 categories:
-  - 科学/数学与系统科学/系统与复杂性
+  - science/math-systems/complex-systems
 tags: [涌现, 复杂性, 还原论, 自组织, 系统]
 summary: >-
   涌现指系统整体呈现出其组成部分单独存在时所不具备的新性质或新秩序——所谓「整体大于部分之和」。它揭示了还原论的边界：许多宏观现象（蚁群的组织、意识、生命）无法仅由组分规律加总得到。本词条梳理涌现的概念、机制与实例，并说明它在复杂系统中的核心地位。

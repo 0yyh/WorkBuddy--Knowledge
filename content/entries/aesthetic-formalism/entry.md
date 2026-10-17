@@ -6,8 +6,8 @@ original_title: Aesthetic Formalism
 aliases: [形式主义, 有意味的形式, Formalism, 自律论]
 type: concept
 categories:
-  - 哲学/美学
-  - 哲学/西方哲学/英美与现当代哲学
+  - philosophy/aesthetics
+  - philosophy/western-philosophy/west-analytic
 tags: [形式主义, 克莱夫·贝尔, 格林伯格, 有意味的形式, 现代主义, 新批评, 俄国形式主义]
 summary: >-
   形式主义美学主张艺术的本质与价值在于其可感知的形式结构，而非再现内容、情感表现或社会语境。它从康德的自由美与汉斯立克的音乐自律论出发，经克莱夫·贝尔「有意味的形式」成为现代主义绘画的正典理论，又由格林伯格发展为媒介自我批判的历史叙事。本词条展开这条线索，并呈现来自意识形态批评、后现代主义与语境论的三次主要反驳。

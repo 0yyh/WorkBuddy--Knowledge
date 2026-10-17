@@ -10,7 +10,7 @@ aliases:
   - 李唐
 type: concept
 categories:
-  - 历史/中国史/魏晋至隋唐
+  - history/history-china/china-mid
 tags: [唐朝, 唐太宗, 贞观之治, 唐玄宗, 开元盛世, 安史之乱, 科举, 丝绸之路]
 timeline: [china]
 summary: >-

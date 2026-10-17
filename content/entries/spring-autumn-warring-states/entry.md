@@ -5,7 +5,7 @@ title: 春秋战国
 aliases: [东周, 春秋战国时期, 春秋战国时代]
 type: event
 categories:
-  - 历史/中国史/先秦至秦汉
+  - history/history-china/china-ancient
 tags: [春秋, 战国, 霸政, 变法, 兼并, 封建, 帝制, 郡县]
 timeline: [china]
 summary: >-

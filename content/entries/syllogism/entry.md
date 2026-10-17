@@ -6,8 +6,8 @@ original_title: συλλογισμός / syllogismus
 aliases: [定言三段论, 三段推理, syllogism]
 type: concept
 categories:
-  - 哲学/逻辑与批判性思维
-  - 哲学/西方哲学/古希腊哲学
+  - philosophy/logic-critical
+  - philosophy/western-philosophy/west-ancient
 tags: [逻辑, 演绎, 三段论, 亚里士多德, 有效性]
 summary: >-
   三段论是由两个含共同词项的前提必然推出一个结论的演绎推理形式，由亚里士多德在《前分析篇》中首次系统化为人类历史上第一个形式逻辑体系。它以全称肯定、全称否定、特称肯定、特称否定四种命题为材料，按中项在两前提中的位置分为三个格，再按命题类型的组合分为若干式，其中仅一部分是有效式。本词条介绍三段论的结构、格与式、周延规则与文恩图等判定方法、常见无效式与谬误，以及它在弗雷格之后被一阶谓词逻辑吸收与超越的命运。

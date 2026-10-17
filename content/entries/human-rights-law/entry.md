@@ -6,7 +6,7 @@ original_title: Human Rights Law
 aliases: [国际人权法, 人权保障法, 权利法案]
 type: concept
 categories:
-  - 法学/宪法与公法/基本权利与人权
+  - law/law-constitutional/law-constitutional-rights
 tags: [人权法, 世界人权宣言, 公民政治权利, 经济社文权利, 人权机制]
 summary: >-
   **人权法**是以人权保护为内容、以国际与国内文书为载体的法律规范体系，核心是《世界人权宣言》及两项国际公约。它从第一代公民政治权利、第二代经济社会文化权利到第三代集体权利逐步扩展，并通过联合国与区域人权机制实施。人权法处在普遍主义与文化相对主义、人权与主权之间持续张力之中。

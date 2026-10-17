@@ -5,7 +5,7 @@ title: 注意（认知）
 aliases: [选择性注意, 注意力, attention]
 type: concept
 categories:
-  - 科学/人类认知与心理/认知过程
+  - science/cog-psych/cog-process
 tags: [注意, 选择性注意, 认知资源, 自上而下, 自下而上, 认知负荷]
 summary: >-
   注意是认知系统对部分信息进行优先加工、同时抑制其他信息的机制，常被称为「意识的聚光灯」。它的资源有限，须在众多刺激中取舍。本词条区分自上而下（目标驱动）与自下而上（刺激驱动）两条通路，说明注意资源有限性与认知负荷的关系，并联系「cognitive-bias」「heuristics」「memory」「mental-model」等相邻概念。

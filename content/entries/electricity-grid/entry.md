@@ -5,7 +5,7 @@ title: 电网与电气化
 aliases: [电网, 电力系统, Electric Power Grid, Electrification]
 type: concept
 categories:
-  - 技术/能源与动力
+  - technology/energy-power
 tags: [电网, 电气化, 交流输电, 智能电网, 能源转型]
 summary: >-
   电网是把发电、输电、配电与用电连成一体的系统工程。1882年爱迪生珍珠街电站开启商用电力，19世纪90年代交流系统以变压器与远距离输电战胜直流，电气化随后重塑工厂、家庭与城市的时间结构。互联互备与调峰构成电网的工程逻辑；今天分布式电源与储能正在松动百年集中式范式。

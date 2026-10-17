@@ -6,8 +6,8 @@ original_title: Expression Theory of Art
 aliases: [艺术表现论, 情感表现说, Expression Theory, 直觉即表现]
 type: concept
 categories:
-  - 哲学/美学
-  - 哲学/西方哲学/近代欧陆哲学
+  - philosophy/aesthetics
+  - philosophy/western-philosophy/west-modern
 tags: [表现说, 克罗齐, 柯林伍德, 直觉, 情感, 浪漫主义, 托尔斯泰]
 summary: >-
   表现说主张艺术的本质在于表现情感或精神状态，而非模仿外在现实。它在浪漫主义中萌芽，经克罗齐「直觉即表现」获得最彻底的哲学形态，又由柯林伍德《艺术原理》发展为「艺术是情感的表现与澄清」。本词条追溯这一线索，考察托尔斯泰的传染论与杜威的经验论变体，并呈现新批评与分析美学对它的系统批评。

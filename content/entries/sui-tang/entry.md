@@ -5,7 +5,7 @@ title: 隋唐盛世
 aliases: [隋唐, 盛唐气象, 大唐盛世]
 type: concept
 categories:
-  - 历史/中国史/魏晋至隋唐
+  - history/history-china/china-mid
 tags: [中国史, 隋朝, 唐朝, 科举, 长安, 开放]
 timeline: [china]
 summary: >-

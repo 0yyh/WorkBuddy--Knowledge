@@ -5,7 +5,7 @@ title: 货币流通速度
 aliases: [货币流通速度, velocity-of-money]
 type: concept
 categories:
-  - 经济学/宏观经济学
+  - economics/macro
 tags: [velocity-of-money, 货币, 金融]
 summary: >-
   货币流通速度衡量单位货币在一定时期内的周转次数，由交易方程式 MV = PQ 表达。它连接货币存量与名义产出，是古典数量论与货币政策分析的重要变量；其短期的不稳定性也构成对简单货币数量论的挑战。

@@ -6,7 +6,7 @@ original_title: Counterfactual History
 aliases: [反事实史学, 假想历史, 虚拟历史, counterfactual history, what-if history]
 type: concept
 categories:
-  - 历史/历史方法与概念
+  - history/world-history-concepts
 tags: [反事实, 假想史, 计量史学, 因果推断, 弗格森]
 summary: >-
   反事实历史（counterfactual history）是对「假如没有……历史会怎样」问题的严肃运用：它既是一种思想练习，也是历史因果推断的核心工具——设想某因素缺席并保持其余条件不变，以衡量该因素的因果权重。从韦伯的因果归属到福格尔以计量模型评估铁路对美国经济的贡献，反事实推理在史学与社会科学中有严格的纪律（最小改写、避免连锁狂想）。尼尔·弗格森主编的《虚拟的历史》把这一方法引入大众视野，主张用它抵抗历史决定论；而批评者如卡尔与埃文斯则警告其思辨性与意识形态滥用。本词条梳理其定义、价值、经典案例与批评边界。

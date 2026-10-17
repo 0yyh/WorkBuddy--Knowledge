@@ -5,7 +5,7 @@ title: 第二次世界大战
 aliases: [二战, World War II, 世界反法西斯战争]
 type: event
 categories:
-  - 历史/世界史/现当代史
+  - history/history-world/world-contemp
 tags: [二战, 世界史, 法西斯, 反法西斯同盟, 总体战, 大屠杀, 冷战]
 timeline: [world]
 summary: >-

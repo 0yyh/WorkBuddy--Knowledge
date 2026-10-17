@@ -6,7 +6,7 @@ original_title: Digital Revolution
 aliases: [第三次工业革命, 信息革命, Digital Revolution]
 type: concept
 categories:
-  - 技术/技术史
+  - technology/tech-history
 tags: [数字革命, 信息时代, 计算机, 互联网, 技术史]
 summary: >-
   数字革命指二十世纪中叶起，以晶体管、计算机、互联网与数字通信为核心，把信息的生产、存储与传输从模拟转向数字的技术—社会进程，常被称为「第三次工业革命」。它使计算能力持续指数增长、信息复制边际成本趋零，重塑了生产、商业、传播与日常生活方式。其核心张力在于：连接与效率空前提升的同时，也带来数字鸿沟、隐私侵蚀与平台垄断等新问题。

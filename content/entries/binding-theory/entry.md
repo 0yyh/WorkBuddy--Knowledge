@@ -6,7 +6,7 @@ original_title: Binding Theory
 aliases: [绑定理论, 约束条件, 指称约束]
 type: concept
 categories:
-  - 语言学/句法与语义
+  - linguistics/ling-syntax-sem
 tags: [约束理论, 照应语, 代词, 指称, 乔姆斯基, 原则与参数]
 summary: >-
   约束理论是生成语法中处理名词短语指称依赖关系的一组普遍原则，由乔姆斯基在「原则与参数」框架中系统提出。它区分照应语、代词与指称表达式三类名词，并以 A、B、C 三条原则规定它们在局部域内被约束或自由的资格条件，用以解释反身代词、相互代词与代词的分布。

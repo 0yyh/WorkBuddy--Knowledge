@@ -5,7 +5,7 @@ title: 基础货币
 aliases: [基础货币, monetary-base]
 type: concept
 categories:
-  - 经济学/金融/货币与银行
+  - economics/finance/money-banking
 tags: [monetary-base, 货币, 金融]
 summary: >-
   基础货币（monetary base，又称高能货币）是中央银行的负债，由流通于银行体系之外的现金与商业银行存放在中央银行的准备金两部分构成。它是整个货币供应的源头，通过货币乘数放大为广义货币供应量；理解基础货币是理解现代信用货币创造与货币政策传导的逻辑起点。

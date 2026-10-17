@@ -6,7 +6,7 @@ original_title: social stratification
 aliases: [社会分层, 阶级分层, 社会不平等]
 type: concept
 categories:
-  - 哲学/社会学
+  - philosophy/sociology
 tags: [社会分层, 阶级, 身份, 权力, 不平等, 马克思, 韦伯]
 summary: >-
   社会分层（social stratification）指稀缺资源、声望与权力在人群中的不平等分布，并固化为可代际传递的层级位置。马克思把它归因于生产资料占有与剥削，韦伯拆为阶级、身份、政党三维，功能论视其为必要激励，冲突论视其为权力压迫。理解分层就是理解社会秩序的骨架与不平等的根源。

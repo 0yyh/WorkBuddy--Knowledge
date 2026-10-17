@@ -5,8 +5,8 @@ title: 文艺复兴
 aliases: [文艺复兴运动, Renaissance]
 type: concept
 categories:
-  - 历史/世界史
-  - 哲学/思想史
+  - history/history-world
+  - philosophy/phil-history
 tags: [文艺复兴, 欧洲史, 人文主义, 艺术, 思想史]
 timeline: [world]
 summary: >-

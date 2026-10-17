@@ -6,7 +6,7 @@ original_title: Theory of Relativity
 aliases: ["狭义相对论", "广义相对论", "Relativity"]
 type: concept
 categories:
-  - 科学/自然科学基础/物理
+  - science/nat-science/physics
 tags: ["相对论", "爱因斯坦", "时空", "光速不变", "质能方程"]
 summary: "相对论是爱因斯坦在20世纪初创立的物理学理论，包含狭义与广义两部分。狭义相对论以光速不变与相对性原理重构时空，导出时间膨胀、长度收缩与质能等价；广义相对论将引力解释为时空弯曲，革新了人类对宇宙、黑洞与GPS的认识。"
 status: published

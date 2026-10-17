@@ -6,8 +6,8 @@ original_title: Gödel's incompleteness theorems
 aliases: [哥德尔不完全性定理, 不完备定理, Gödel incompleteness theorems]
 type: concept
 categories:
-  - 哲学/逻辑与批判性思维
-  - 科学/数学与系统科学/数学基础
+  - philosophy/logic-critical
+  - science/math-systems/math-found
 tags: [哥德尔, 不完备性, 希尔伯特纲领, 自指, 形式系统]
 summary: >-
   哥德尔不完备定理是 1931 年发表的两条结果：第一，任何一致的、足够强到包含初等算术的形式系统，都存在一个在该系统中既不能证明也不能否证的命题；第二，这样的系统不能在自身内部证明自己的一致性。它们终结了希尔伯特为全部数学寻找完备且一致的形式化基础的纲领。本词条介绍希尔伯特纲领的背景、哥德尔数与自指句的构造技巧、两条定理的直观与证明思路、对数学基础的实际冲击，以及对若干流行误读的澄清。

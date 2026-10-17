@@ -5,7 +5,7 @@ title: 博弈论
 aliases: [对策论, 博弈, game theory]
 type: concept
 categories:
-  - 经济学/微观经济学
+  - economics/micro
 tags: [博弈论, 纳什均衡, 囚徒困境, 策略互动, 微观经济]
 summary: >-
   博弈论（game theory）是研究多个理性决策主体在策略互动中的选择与结果的数学理论。当一个人的

@@ -6,8 +6,8 @@ original_title: Political Philosophy
 aliases: [政治哲学, Political Philosophy, 政治理论哲学, 国家哲学]
 type: concept
 categories:
-  - 哲学/政治哲学
-  - 政治理论/政治思想
+  - philosophy/political-philosophy
+  - politics/political-thought
 tags: [政治哲学, 正当性, 正义, 社会契约, 自由主义, 自由, 平等, 国家]
 summary: >-
   政治哲学是哲学中追问政治权威为何正当、公共生活应如何安排的分支。它区别于政治科学之处，在于不只想解释权力如何运作，

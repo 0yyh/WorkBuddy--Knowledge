@@ -6,8 +6,8 @@ original_title: Isaiah Berlin
 aliases: [伯林, Isaiah Berlin]
 type: person
 categories:
-  - 哲学/政治哲学
-  - 政治理论/政治学概念
+  - philosophy/political-philosophy
+  - politics/political-concepts
 tags: [伯林, 两种自由概念, 消极自由, 积极自由, 价值多元论]
 summary: >-
   以赛亚·伯林（1909—1997）是英籍俄裔自由派政治哲学家与思想史家。他在《两种自由概念》（1958）中区分**消极自由**（免于干涉的自由）与**积极自由**（自我主宰的自由），并警告后者易被篡改为集体主义的压迫工具；其后提出**价值多元论**，主张人类终极价值多元、不可通约且常相冲突，反对一切「唯一正确答案」式的一元论。他的刺猬与狐狸之喻、对浪漫主义与反启蒙的同情，重塑了二十世纪自由主义对理性与多元的理解。

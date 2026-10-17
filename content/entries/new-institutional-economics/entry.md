@@ -6,7 +6,7 @@ original_title: New Institutional Economics
 aliases: [新制度经济学, NIE, New Institutional Economics]
 type: concept
 categories:
-  - 经济学/制度经济学
+  - economics/institutional-economics
 tags: [诺斯, 威廉姆森, 科斯, 交易成本, 制度, 产权]
 summary: >-
   新制度经济学是20世纪后半叶兴起的经济学分支，以科斯、诺斯、威廉姆森等人为代表。它承接新古典的理性选择框架，却把「制度」——正式规则、非正式规范及其实施机制——重新内生化，主张制度通过塑造交易成本与激励结构，决定资源配置与长期增长。相较于旧制度经济学重历史与法律叙事，它力求以可检验命题重建制度分析，涵盖交易成本经济学、产权理论与制度变迁理论，构成连接微观行为与宏观绩效的枢纽。

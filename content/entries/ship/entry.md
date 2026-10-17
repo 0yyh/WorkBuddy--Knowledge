@@ -6,7 +6,7 @@ original_title: Ship
 aliases: [轮船, 舰船, 海船]
 type: concept
 categories:
-  - 技术/交通与制造
+  - technology/transport-manufacturing
 tags: [造船, 航海, 蒸汽轮船, 集装箱, 航运]
 summary: >-
   船舶是利用浮力在水面航行的载运工具，从木帆时代的风帆战舰到以蒸汽与柴油机驱动的现代化巨轮，它一直是人类跨海运输与贸易的主角。船舶单次运量巨大、单位能耗低，是现代全球供应链中最经济的长途货运方式。其演进串联起航海术、造船材料、推进动力与港口设施的进步，是文明互通的古老 yet 常新的技术体系。

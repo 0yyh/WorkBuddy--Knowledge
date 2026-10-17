@@ -6,7 +6,7 @@ original_title: International Criminal Law
 aliases: [国际刑法学, 国际刑事司法, International Criminal Law, 国际犯罪]
 type: concept
 categories:
-  - 法学/国际法/国际公法
+  - law/law-international/law-intl-public
 tags: [国际刑法, 灭绝种族罪, 危害人类罪, 战争罪, 国际刑事法院, 个人刑事责任]
 summary: >-
   国际刑法（International Criminal Law）是规定个人对国际社会整体关切之最严重罪行承担刑事责任、并创设相应追诉机制的法律分支。它要回答的，是二战后人类面对的根本诘问：当一国政府对本国国民实施大规模暴行，国际社会能否、又如何追究「个人」而不仅是国家的责任？其基石性罪行包括灭绝种族罪、危害人类罪、战争罪与侵略罪，经由纽伦堡审判、前南与卢旺达国际刑庭，直至二〇〇二年国际刑事法院（ICC）的成立而体系化。国际刑法以「个人刑事责任」「官方身份不免责」「或起诉或引渡」为支柱，突破了传统国际法「只规范国家」的格局，却也因单边追诉、管辖权冲突与大国不合作而争议不断。

@@ -5,7 +5,7 @@ title: 夏朝
 aliases: [夏, 夏代, Xia dynasty, 二里头]
 type: concept
 categories:
-  - 历史/中国史/先秦至秦汉
+  - history/history-china/china-ancient
 tags: [夏朝, 二里头文化, 世袭制, 大禹, 家天下, 桀]
 timeline: [china]
 summary: >-

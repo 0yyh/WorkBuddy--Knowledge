@@ -5,7 +5,7 @@ title: 古希腊文明
 aliases: [古希腊, 希腊文明, Ancient Greece]
 type: concept
 categories:
-  - 历史/世界史/古代文明
+  - history/history-world/world-ancient
 tags: [古希腊, 城邦, 雅典民主, 哲学, 科学, 奥林匹克, 希腊化]
 summary: >-
   古希腊文明指约公元前八世纪至公元前后以爱琴海周边为核心的希腊语世界，以「城邦」（polis）为政治单元，孕育了雅典民主、苏格拉底—柏拉图—亚里士多德的哲学谱系，以及数学与自然的理性探究传统。它上承「ancient-egypt」与「mesopotamia」的文明遗产，下启「roman-empire」并深刻塑造了后世西方的政法、科学与人文。本词条梳理其政治、思想与科学渊源及历史影响。

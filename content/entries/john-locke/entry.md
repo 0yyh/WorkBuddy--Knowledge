@@ -6,9 +6,9 @@ original_title: John Locke
 aliases: [洛克, John Locke]
 type: person
 categories:
-  - 哲学/西方哲学/英美与现当代哲学
-  - 哲学/认识论
-  - 政治理论/政治思想
+  - philosophy/western-philosophy/west-analytic
+  - philosophy/epistemology
+  - politics/political-thought
 tags: [洛克, 经验主义, 白板说, 自然权利, 社会契约, 财产权]
 summary: >-
   约翰·洛克（1632—1704）是英国哲学家与政治理论家，自由主义传统的奠基者之一。他在《人类理解论》中否定天赋观念，主张心灵初始如白板、一切观念来自感觉与反省，并坦率承认人类知识在实体问题上无法成为科学；又在《政府论》中以财产权、同意与反抗权论证有限政府。两部著作同于 1689 年问世，一条认识论上的谦逊与一条政治上的限权，在他这里出自同一个起点：没有任何权威可以不经审查而自命正确。

@@ -6,7 +6,7 @@ original_title: Verbrechenslehre
 aliases: [犯罪构成, 犯罪论体系, 构成要件理论]
 type: concept
 categories:
-  - 法学/刑法/犯罪与刑罚总论
+  - law/law-criminal/law-criminal-general
 tags: [犯罪构成, 三阶层, 四要件, 违法性, 有责性]
 summary: >-
   **犯罪构成理论**是刑法中用以判断某一行为是否成立犯罪的一整套要件体系，是定罪的逻辑骨架。大陆法系采「构成要件该当性—违法性—有责性」三阶层，中国采「犯罪客体—客观方面—主体—主观方面」四要件。它把事实归入规范，既界定国家刑罚权边界，也保障公民不受任意追诉，是刑法总论的核心。

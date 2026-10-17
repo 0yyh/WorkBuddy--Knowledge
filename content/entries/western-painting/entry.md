@@ -6,7 +6,7 @@ original_title: Western Painting
 aliases: [西洋画, 油画]
 type: concept
 categories:
-  - 艺术/视觉艺术/绘画
+  - art/art-visual/art-painting
 tags: [西方绘画, 油画, 透视, 印象派, 现代主义]
 summary: >-
   西方绘画是以地中海文明为源、以油画与水彩为主要媒介的造型传统，从古希腊的模仿理想经文艺复兴透视科学，到巴洛克的光影戏剧、印象派的外光革命，再到现代主义的抽象与观念转折。其核心线索是对「再现」的不断精进与最终反叛。

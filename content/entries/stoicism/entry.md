@@ -5,7 +5,7 @@ title: 斯多葛学派
 aliases: [斯多亚主义, 斯多葛主义, Stoicism, 廊下派]
 type: concept
 categories:
-  - 哲学/西方哲学/古希腊哲学
+  - philosophy/western-philosophy/west-ancient
 tags: [斯多葛, 古希腊哲学, 美德, 不动心, 伦理学, 罗马哲学]
 summary: >-
   斯多葛学派（斯多亚学派）是希腊化时期在雅典创立的哲学流派，因讲学于彩绘柱廊（Stoa Poikile）而

@@ -6,7 +6,7 @@ original_title: Napoleonic Wars
 aliases: [拿破仑战争, 拿破仑时代]
 type: event
 categories:
-  - 历史/世界史/近代史
+  - history/history-world/world-modern
 tags: [近代史, 民族主义, 拿破仑法典, 大陆封锁, 反法同盟]
 timeline: [world]
 summary: >-

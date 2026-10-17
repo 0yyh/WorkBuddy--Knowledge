@@ -6,8 +6,8 @@ original_title: Legalism
 aliases: [法家学派, 法治, 商鞅, 韩非, 慎到, 申不害, Legalism]
 type: concept
 categories:
-  - 哲学/中国哲学
-  - 政治理论/政治思想
+  - philosophy/chinese-philosophy
+  - politics/political-thought
 tags: [法家, 商鞅, 韩非, 慎到, 申不害, 法, 势, 术, 农战, 耕战, 集权]
 summary: >-
   法家是先秦以「法、势、术」为核心、以富国强兵为目标的务实政治思想集群，由商鞅重「法」、慎到重「势」、申不害重「术」，至韩非集大成。它主张以成文法、赏罚二柄与君主权术整饬乱世，视人性好利，故须以法驭之。其「法治」本质是君主统治工具而非限制君权，与近代 rule of law 判然有别；秦凭法家一统又速亡，使其背负「暴政」标签，却也奠定了郡县、军功、成文法的帝国制度底色。

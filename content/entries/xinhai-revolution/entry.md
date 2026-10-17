@@ -5,7 +5,7 @@ title: 辛亥革命
 aliases: [武昌起义, 辛亥首义, 共和革命, 1911年革命]
 type: event
 categories:
-  - 历史/中国史/近现代史
+  - history/history-china/china-modern
 tags: [辛亥革命, 武昌起义, 中华民国, 清帝退位, 共和, 近现代史, 北洋]
 timeline: [china]
 summary: >-

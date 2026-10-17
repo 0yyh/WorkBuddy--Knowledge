@@ -6,9 +6,9 @@ original_title: René Descartes
 aliases: [笛卡尔, René Descartes, 勒内·笛卡尔, 笛卡儿]
 type: person
 categories:
-  - 哲学/西方哲学/近代欧陆哲学
-  - 哲学/形而上学
-  - 哲学/认识论
+  - philosophy/western-philosophy/west-modern
+  - philosophy/metaphysics
+  - philosophy/epistemology
 tags: [笛卡尔, 我思故我在, 方法论怀疑, 心物二元论, 天赋观念, 理性主义, 机械论, 清楚分明]
 summary: >-
   勒内·笛卡尔（1596—1650）是法国哲学家与数学家，近代哲学公认的奠基人。他以「方法论怀疑」悬置一切可错的知识，从中逼出不可怀疑的「我思故我在」作为第一块基石，再由此推出心灵（res cogitans）、物质（res extensa）、上帝与整个可知世界；在认识论上主张清楚分明的观念即真理标准，在形而上学上立起心物二元论，在自然哲学上以机械论与「动物精气」解释身体。他的体系把知识的根据从权威转移到「自我」与「理性」，开启了近代哲学的主体性转向。

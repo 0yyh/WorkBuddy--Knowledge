@@ -6,8 +6,8 @@ original_title: Ontological Argument
 aliases: [本体论证明, 先天论证, Ontological Argument]
 type: concept
 categories:
-  - 哲学/西方哲学/中世纪哲学
-  - 哲学/形而上学
+  - philosophy/western-philosophy/west-medieval
+  - philosophy/metaphysics
 tags: [本体论论证, 安瑟伦, 笛卡尔, 康德, 模态逻辑, 必然存在, 自然神学]
 summary: >-
   本体论论证是一类试图仅凭概念分析、不依赖任何经验观察来证明上帝存在的论证。其原型是安瑟伦在《宣讲》中提出的形式：设想「无法设想有比之更伟大者」，它若只存在于思想中，就能被设想为也存在于现实而更伟大，因此它必定现实存在。笛卡尔在第五沉思中以「必然存在是一种完善性」重铸它，莱布尼茨指出它缺少「最完善者是可能的」这一关键前提，康德则以「存在不是实在的谓词」给出经典反驳。二十世纪借助可能世界语义学，普兰丁格与哥德尔分别给出模态版本，使其重新成为分析哲学的活跃议题。

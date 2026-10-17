@@ -5,7 +5,7 @@ title: 抗日战争
 aliases: [抗战, 中国抗日战争, Second Sino-Japanese War, 十四年抗战]
 type: event
 categories:
-  - 历史/中国史/近现代史
+  - history/history-china/china-modern
 tags: [抗战, 抗日战争, 民族危亡, 国共合作, 近现代史]
 timeline: [china]
 summary: >-

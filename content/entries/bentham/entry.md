@@ -6,8 +6,8 @@ original_title: Jeremy Bentham
 aliases: [杰里米·边沁, Jeremy Bentham, 功利主义之父]
 type: person
 categories:
-  - 哲学/政治哲学
-  - 政治理论/政治思想
+  - philosophy/political-philosophy
+  - politics/political-thought
 tags: [边沁, 功利主义, 最大幸福, 法典化, 改革]
 summary: >-
   杰里米·边沁（1748—1832）是英国哲学家、法学家与改革家，功利主义的奠基者。他提出「最大幸福原理」：行为的对错取决于其增进或减少当事者幸福的趋向，快乐与痛苦是唯一可被计较的本原。他以此批判自然权利与自然法，推动法典化、监狱改革、女权与同性恋非罪化等激进议程，深刻影响了立法、政策与福利经济学，也招致密尔对「高级快乐」的修正与后世权利话语的回潮。

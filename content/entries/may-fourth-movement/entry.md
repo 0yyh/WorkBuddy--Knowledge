@@ -5,7 +5,7 @@ title: 五四运动
 aliases: [五四, 五四爱国运动]
 type: event
 categories:
-  - 历史/中国史
+  - history/history-china
 tags: [反帝, 新文化, 青年, 1919]
 timeline: [china]
 summary: >-

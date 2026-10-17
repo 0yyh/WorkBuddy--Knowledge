@@ -6,9 +6,9 @@ original_title: Thomas Aquinas
 aliases: [阿奎那, Thomas Aquinas, 托马斯·阿奎那, 托马斯]
 type: person
 categories:
-  - 哲学/西方哲学/中世纪哲学
-  - 哲学/形而上学
-  - 哲学/伦理学
+  - philosophy/western-philosophy/west-medieval
+  - philosophy/metaphysics
+  - philosophy/ethics
 tags: [阿奎那, 托马斯·阿奎那, 经院哲学, 神学大全, 五路证明, 自然法, 类比学说, 自由意志]
 summary: >-
   托马斯·阿奎那（约 1225—1274）是拉丁中世纪哲学的集大成者，道明会士，以《神学大全》与《反异教大全》将亚里士多德的哲学框架纳入基督教神学。他主张「哲学是神学的婢女」，用理性论证上帝存在（五路证明），区分存在与本质，提出自然法的四重法律等级，并在自由意志与神圣预知之间给出一种温和的相容论。其体系此后成为罗马天主教官方哲学，深刻塑造了西方形而上学、伦理学与政治思想。

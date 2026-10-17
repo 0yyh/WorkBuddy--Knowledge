@@ -6,7 +6,7 @@ original_title: 三國演義
 aliases: [三国志通俗演义, 三国志演义]
 type: work
 categories:
-  - 文学/中国文学/古代文学
+  - literature/lit-china/lit-china-classical
 tags: [三国演义, 罗贯中, 历史演义, 诸葛亮, 曹操, 章回小说, 三国文化]
 summary: >-
   《三国演义》是元末明初罗贯中据三国历史与民间说书传统编撰的长篇章回小说，与《水浒传》《西游记》《红楼梦》并称中国古典四大名著。

@@ -5,7 +5,7 @@ title: 苏联解体
 aliases: [苏联解体, 苏东剧变]
 type: event
 categories:
-  - 历史/世界史/现当代史
+  - history/history-world/world-contemp
 tags: [苏联解体, 苏东剧变, 戈尔巴乔夫, 叶利钦, 冷战终结, 现当代史]
 timeline: [world]
 summary: >-

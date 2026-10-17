@@ -6,8 +6,8 @@ original_title: Politeia
 aliases: [理想国, 国家篇, Republic]
 type: work
 categories:
-  - 哲学/西方哲学/古希腊哲学
-  - 政治理论/政治思想
+  - philosophy/western-philosophy/west-ancient
+  - politics/political-thought
 tags: [柏拉图, 理想国, 正义, 哲学王, 洞穴喻]
 summary: >-
   《理想国》是古希腊哲学家柏拉图最负盛名的对话录，约成书于公元前 380 年前后。全书围绕「什么是正义」展开，借苏格拉底之口从个人正义推及城邦正义，构想出一个由哲学王治理的理想城邦，并留下洞穴喻、灵魂三分等影响深远的思想。

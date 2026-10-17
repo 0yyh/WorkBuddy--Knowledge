@@ -5,7 +5,7 @@ title: 戊戌变法
 aliases: [戊戌维新, 百日维新, 维新变法]
 type: event
 categories:
-  - 历史/中国史/近现代史
+  - history/history-china/china-modern
 timeline: [china]
 tags: [戊戌变法, 维新, 康有为, 梁启超, 光绪, 改良主义]
 summary: >-

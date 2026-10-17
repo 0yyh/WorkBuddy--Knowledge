@@ -5,7 +5,7 @@ title: 人工智能
 aliases: [人工智能, AI, Artificial Intelligence]
 type: concept
 categories:
-  - 技术/信息技术
+  - technology/info-tech
 tags: [人工智能, 图灵测试, 深度学习, 大语言模型, AI治理]
 summary: >-
   人工智能是让机器执行通常需要人类智能的任务的技术与研究领域。1950 年图灵提出模仿游戏，1956 年达特茅斯会议命名「人工智能」；符号主义与连接主义交替起伏，2012 年 AlexNet 与 2017 年 Transformer 确立深度学习范式，生成式大模型使其进入大众视野。其能力扩张同时带来对齐、可靠性与就业的持久争论。

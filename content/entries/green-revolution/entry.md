@@ -6,7 +6,7 @@ original_title: Green Revolution
 aliases: [农业革命, 第三次农业革命, Green Revolution]
 type: concept
 categories:
-  - 技术/技术史
+  - technology/tech-history
 tags: [绿色革命, 农业, 良种, 粮食安全, 技术史]
 summary: >-
   绿色革命指二十世纪中叶起，以高产矮秆品种、化肥、农药与灌溉为技术包，在亚洲与拉丁美洲大幅提高粮食单产的农业技术变革，常被视为第三次农业革命。它在数十年间使多国摆脱饥荒威胁、逆转马尔萨斯式悲观预言，但其高度依赖外部投入、加剧生态压力与社会分化，也受到持续批评。理解绿色革命，是讨论粮食安全与可持续农业的起点。

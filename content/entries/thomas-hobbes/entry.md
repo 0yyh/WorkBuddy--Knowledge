@@ -6,8 +6,8 @@ original_title: Thomas Hobbes
 aliases: [霍布斯, Thomas Hobbes]
 type: person
 categories:
-  - 哲学/政治哲学
-  - 政治理论/政治思想
+  - philosophy/political-philosophy
+  - politics/political-thought
 tags: [霍布斯, 利维坦, 社会契约, 绝对主权, 自然状态]
 summary: >-
   托马斯·霍布斯（1588—1679）是英国哲学家，近代第一位系统用机械唯物论重述政治的人。他在《利维坦》（1651）中断言：人天生平等却彼此为敌，无政府的「自然状态」就是「所有人对所有人的战争」；要逃离它，人们必须把全部权利让渡给一个不在契约之内、因而不可反抗的**绝对主权者**。这部著作把政治权威从神授与习俗挪到了「自我保存」与「恐惧」之上，为现代国家提供了最冷峻也最彻底的一种论证。

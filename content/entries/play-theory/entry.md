@@ -6,8 +6,8 @@ original_title: Play Theory of Art
 aliases: [游戏冲动说, 艺术游戏论, Play Theory, 精力过剩说]
 type: concept
 categories:
-  - 哲学/美学
-  - 哲学/西方哲学/近代欧陆哲学
+  - philosophy/aesthetics
+  - philosophy/western-philosophy/west-modern
 tags: [游戏说, 席勒, 美育书简, 斯宾塞, 伽达默尔, 真理与方法, 游戏冲动]
 summary: >-
   游戏说主张艺术的根源与本质应当从「游戏」来理解：它是既非劳作也非认识的自由活动。席勒《美育书简》以游戏冲动统合感性冲动与形式冲动，把它变成人性完整与政治解放的前提；斯宾塞与谷鲁斯从生物学给出精力过剩与本能练习的解释；伽达默尔《真理与方法》则把游戏提升为艺术的存在方式，主张游戏的主体是游戏本身而非玩家。本词条展开这三条路线，并考察当代电子游戏研究与文化研究对它的发展与批评。

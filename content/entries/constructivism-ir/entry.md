@@ -6,7 +6,7 @@ original_title: Constructivism in International Relations
 aliases: [国际关系建构主义, 社会建构主义, Constructivism]
 type: concept
 categories:
-  - 政治理论/国际关系
+  - politics/international-relations
 tags: [建构主义, 温特, 观念, 规范, 身份认同]
 summary: >-
   建构主义是二十世纪九十年代崛起的国际关系理论，其核心命题是社会结构由共有观念构成，身份决定利益，利益塑造行为。温特以「无政府状态是国家造就的」扭转了现实主义的结构宿命论：无政府本身没有单一逻辑，敌友关系是互动实践的产物。规范扩散研究则追踪观念如何改变国家的行为标准。本词条梳理其理论要旨、身份与利益的建构机制、三种无政府文化、规范生命周期，以及与理性主义的辩论。

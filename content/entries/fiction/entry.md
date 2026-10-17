@@ -6,7 +6,7 @@ original_title: Fiction
 aliases: [虚构文学, 散文体叙事, 小说体]
 type: concept
 categories:
-  - 文学/文体与体裁/小说
+  - literature/lit-genre/lit-novel
 tags: [小说, 虚构, 叙事, 散文体, 长篇小说, 短篇小说]
 summary: >-
   「小说」在中文有两层意思：广义指一切虚构的散文体叙事（与诗歌、戏剧并列的文学大类），狭义指现代意义上的长篇小说。

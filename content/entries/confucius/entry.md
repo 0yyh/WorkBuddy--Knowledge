@@ -6,8 +6,8 @@ original_title: Confucius
 aliases: [孔子, 孔丘, 仲尼, Confucius]
 type: person
 categories:
-  - 哲学/中国哲学
-  - 政治理论/政治思想
+  - philosophy/chinese-philosophy
+  - politics/political-thought
 tags: [儒家, 孔子, 论语, 仁, 礼]
 summary: >-
   孔子（前551—前479）是中国春秋时期的思想家、教育家，儒家学派的创始人。他以「仁」与「礼」为核心，主张为政以德、克己复礼，并首开私人讲学之风，其言行由弟子辑录成《论语》，深刻塑造了此后两千余年中国乃至东亚的政治伦理与文化传统。

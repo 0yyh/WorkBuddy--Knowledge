@@ -5,7 +5,7 @@ title: 太平天国运动
 aliases: [太平天国, 洪秀全起义, 金田起义]
 type: event
 categories:
-  - 历史/中国史/近现代史
+  - history/history-china/china-modern
 timeline: [china]
 tags: [太平天国, 晚清, 农民起义, 拜上帝教, 湘军, 内乱]
 date: 1851-1864

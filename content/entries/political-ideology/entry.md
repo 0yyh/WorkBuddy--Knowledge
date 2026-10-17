@@ -6,7 +6,7 @@ original_title: Political Ideology
 aliases: [意识形态, Ideology, 政治思想]
 type: concept
 categories:
-  - 政治理论/政治思想
+  - politics/political-thought
 tags: [意识形态, 政治思想, 政治光谱, 左右, 曼海姆]
 summary: >-
   政治意识形态是一套关于「理想社会应如何安排」的系统化观念体系，它既描述现实、又规划变革方向。从曼海姆的知识社会学到马克思的「虚假意识」说，意识形态既是理解政治动员与制度合法性的钥匙，也常被指责为遮蔽利益的面具。把握意识形态，是读懂现代政党竞争与价值冲突的前提。

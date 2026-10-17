@@ -5,7 +5,7 @@ title: 十字军东征
 aliases: [十字军, 十字军运动, Crusades]
 type: concept
 categories:
-  - 历史/世界史/中世纪
+  - history/history-world/world-medieval
 tags: [十字军, 中世纪, 耶路撒冷, 伊斯兰, 宗教战争]
 timeline: [world]
 summary: >-

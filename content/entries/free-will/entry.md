@@ -6,8 +6,8 @@ original_title: Free Will
 aliases: [自由意志, Free Will, 意志自由]
 type: concept
 categories:
-  - 哲学/形而上学
-  - 哲学/伦理学
+  - philosophy/metaphysics
+  - philosophy/ethics
 tags: [自由意志, 决定论, 相容论, 不相容论, 道德责任, 因果性]
 summary: >-
   自由意志（Free Will）追问人能否在选项之间真正自主地选择、并且本可以做出别种选择。它的核心两难是：若一切事件都已由先前的因果链必然决定（决定论），自由选择似乎无从谈起；若否认决定论，偶然性又难以支撑道德责任。相容论主张决定论与自由意志可以并存，不相容论则否认二者相容。这个问题之所以要紧，是因为赞扬与惩罚都以「人能够选择」为前提。

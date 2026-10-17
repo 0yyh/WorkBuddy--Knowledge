@@ -5,7 +5,7 @@ title: 中华人民共和国
 aliases: [中华人民共和国, 新中国, PRC, 建国]
 type: concept
 categories:
-  - 历史/中国史/近现代史
+  - history/history-china/china-modern
 tags: [中华人民共和国, 新中国成立, 社会主义, 改革开放, 现代化]
 timeline: [china]
 summary: >-

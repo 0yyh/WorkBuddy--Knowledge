@@ -6,9 +6,9 @@ original_title: Baruch Spinoza
 aliases: [斯宾诺莎, Baruch Spinoza, 巴鲁赫·斯宾诺莎]
 type: person
 categories:
-  - 哲学/西方哲学/近代欧陆哲学
-  - 哲学/形而上学
-  - 哲学/伦理学
+  - philosophy/western-philosophy/west-modern
+  - philosophy/metaphysics
+  - philosophy/ethics
 tags: [斯宾诺莎, 实体一元论, 神即自然, 决定论, 理智之爱, 自由意志, 神学政治论, 思想自由]
 summary: >-
   巴鲁赫·斯宾诺莎（1632—1677）是17世纪荷兰哲学家，近现代性主义走得最远的一极。他主张只存在一个自因的、无限的实体，它就是神、也就是自然（Deus sive Natura），万物皆为其样态；由此推出严格的因果决定论——一切必然如此，并无偶然。他干脆取消常识意义上的自由意志，认为人自以为自由只因不知行为的原因；真正的自由不是「本可以另有选择」，而是以理性理解必然性，把被动情感转化为主动行动，并生发出对神的理智之爱。在政治上，他于《神学政治论》主张思想与言论自由、政教分离与民主，是近代自由主义的重要先驱。

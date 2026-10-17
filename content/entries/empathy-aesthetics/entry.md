@@ -6,8 +6,8 @@ original_title: Einfühlung Theory
 aliases: [移情论, 移情作用, Einfühlung, 内模仿说]
 type: concept
 categories:
-  - 哲学/美学
-  - 哲学/西方哲学/近代欧陆哲学
+  - philosophy/aesthetics
+  - philosophy/western-philosophy/west-modern
 tags: [移情, 立普斯, 谷鲁斯, 内模仿, 费肖尔, 共情, 审美心理学]
 summary: >-
   移情说主张审美愉悦来自主体把自己的生命情感「移入」对象，并在对象身上重新感受它。它源自德国心理学美学的「Einfühlung」概念，由立普斯系统化为「我在对象中感受到自己」，谷鲁斯则以「内模仿」给出身体性的竞争解释。本词条展开这两条路线及其争论，考察它与表现说、形式主义的分歧，并呈现现象学与当代共情研究的再评估。

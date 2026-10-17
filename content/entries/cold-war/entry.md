@@ -5,7 +5,7 @@ title: 冷战
 aliases: [冷战时期, cold war]
 type: event
 categories:
-  - 历史/世界史/现当代史
+  - history/history-world/world-contemp
 tags: [冷战, 美苏, 国际关系, 铁幕, 现当代史]
 timeline: [world]
 summary: >-

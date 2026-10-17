@@ -5,7 +5,7 @@ title: 热力学
 aliases: [热学, thermodynamics]
 type: concept
 categories:
-  - 科学/自然科学基础/物理
+  - science/nat-science/physics
 tags: [物理, 热力学, 熵, 能量守恒, 温度]
 summary: >-
   热力学是研究热、能量、温度与宏观系统状态的物理学分支，建立在几个基本定律之上。热力学第零定律

@@ -6,7 +6,7 @@ original_title: Yoga
 aliases: [瑜伽体系, 瑜伽修行, 印度教修炼法, 三昧修法]
 type: concept
 categories:
-  - 宗教/世界宗教/印度教
+  - religion/rel-world/rel-hinduism
 tags: [瑜伽, 奥义书, 薄伽梵歌, 帕坦伽利, 瑜伽经, 八支, 王瑜伽, 业瑜伽, 智瑜伽, 辨喜瑜伽, 哈他瑜伽, 解脱]
 summary: >-
   瑜伽（Yoga，梵语词根 yuj，意为拴束、联结）是印度教中最具实践性的身心训练体系，

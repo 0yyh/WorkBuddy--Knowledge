@@ -4,7 +4,7 @@ slug: chinese-classical-architecture
 title: 中国古典建筑
 type: concept
 categories:
-  - 艺术/建筑
+  - art/art-architecture
 tags: [中国古典建筑, 木构架, 斗拱, 营造法式, 园林]
 summary: >-
   中国古典建筑是以木构架为核心的庞大营造体系，自汉唐成熟、至明清完备，以院落为中轴、以斗拱与举折处理屋顶，讲究等级、方位与天人合一。它涵盖宫殿、坛庙、寺观、民居与园林，在材料、结构与空间上形成区别于西方的独特传统，并深刻影响了东亚建筑圈。

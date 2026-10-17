@@ -5,7 +5,7 @@ title: 秦汉大一统
 aliases: [秦汉帝国, 秦始皇统一, 汉承秦制]
 type: concept
 categories:
-  - 历史/中国史/先秦至秦汉
+  - history/history-china/china-ancient
 tags: [中国史, 秦朝, 汉朝, 郡县制, 大一统, 中央集权]
 timeline: [china]
 summary: >-

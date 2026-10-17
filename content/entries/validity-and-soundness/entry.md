@@ -6,8 +6,8 @@ original_title: validity and soundness
 aliases: [有效与可靠, 论证的有效性, validity and soundness]
 type: concept
 categories:
-  - 哲学/逻辑与批判性思维
-  - 哲学/认识论
+  - philosophy/logic-critical
+  - philosophy/epistemology
 tags: [有效性, 可靠性, 论证, 前提, 修辞]
 summary: >-
   有效性与可靠性是评估演绎论证的两个层级：有效性只问推理的形式——是否不可能出现前提真而结论假；可靠性则要求除此之外前提事实上也全为真。有效不蕴含可靠，可靠必然有效。本词条讨论有效性的语义定义、可靠性的结构、反例法这一通用判定工具、有效性（逻辑性质）与说服力（心理效果）的根本区别，以及评估日常论证的可操作程序与常见混淆。

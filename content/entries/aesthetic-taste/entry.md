@@ -6,8 +6,8 @@ original_title: Taste
 aliases: [趣味, 鉴赏力, 品味, Taste, 论趣味的标准]
 type: concept
 categories:
-  - 哲学/美学
-  - 哲学/西方哲学/英美与现当代哲学
+  - philosophy/aesthetics
+  - philosophy/western-philosophy/west-analytic
 tags: [趣味, 休谟, 康德, 布尔迪厄, 区分, 理想批评家, 文化资本]
 summary: >-
   审美趣味是西方美学的核心难题：趣味判断既人人不同，又被认为有好坏之分。休谟《论趣味的标准》以「理想批评家」调和相对与绝对，康德把趣味提升为要求普遍同意的鉴赏判断，布尔迪厄《区分》则以经验数据指出趣味是阶级习性的产物。本词条沿这三次处理展开，并考察当代关于趣味民主化与相对主义的争论。

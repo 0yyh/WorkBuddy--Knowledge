@@ -6,8 +6,8 @@ original_title: Sublime
 aliases: [崇高感, 壮美, Sublime, 论崇高]
 type: concept
 categories:
-  - 哲学/美学
-  - 哲学/西方哲学/近代欧陆哲学
+  - philosophy/aesthetics
+  - philosophy/western-philosophy/west-modern
 tags: [崇高, 朗吉努斯, 伯克, 康德, 判断力批判, 浪漫主义, 利奥塔]
 summary: >-
   崇高是与「美」并列的另一大审美范畴，指那种超出尺度、令人惊惧却又不真正伤害我们的宏大经验。它从朗吉努斯的修辞术概念出发，经伯克的经验心理学转译为「由恐惧转化的愉悦」，到康德《判断力批判》被提升为想象力失败而理性理念显现的时刻。崇高的现代复活说明审美经验中确有一块无法被形式与愉悦框架吸收的部分。

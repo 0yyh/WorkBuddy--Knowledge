@@ -5,7 +5,7 @@ title: 靖康之变
 aliases: [靖康之耻, 靖康之难, 二帝北狩]
 type: event
 categories:
-  - 历史/中国史/宋元明清
+  - history/history-china/china-songming
 tags: [靖康之变, 北宋, 南宋, 宋金和战, 海上之盟, 岳飞, 经济重心南移]
 timeline: [china]
 summary: >-

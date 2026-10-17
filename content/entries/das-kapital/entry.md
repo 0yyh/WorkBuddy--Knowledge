@@ -6,7 +6,7 @@ original_title: Das Kapital
 aliases: [资本论, 马克思资本论]
 type: work
 categories:
-  - 政治理论/马克思主义/马克思主义经典著作
+  - politics/marxism/marx-classics
 tags: [马克思, 政治经济学, 经典, 剩余价值]
 summary: >-
   《资本论》（全称《资本论：政治经济学批判》）是马克思毕生研究的集大成之作，系统剖析资本主义生产方式及其内在规律。全书以商品为起点，以剩余价值理论为核心，揭示资本积累、剥削与危机的逻辑，共三卷，是科学社会主义的重要文献基础。

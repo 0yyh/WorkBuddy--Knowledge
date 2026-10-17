@@ -6,7 +6,7 @@ original_title: World Wide Web
 aliases: [WWW, Web, 三W网]
 type: concept
 categories:
-  - 技术/信息技术
+  - technology/info-tech
 tags: [万维网, 互联网, 超文本, Tim Berners-Lee, 技术史]
 summary: >-
   万维网（WWW）是运行在互联网之上的超文本信息系统：以 URL 统一定位资源、以 HTTP 传输、以 HTML 呈现，使文档通过链接相互跳转。它由蒂姆·伯纳斯-李于 1989—1991 年在 CERN 发明，1993 年随 Mosaic 浏览器引爆大众互联网。万维网把「上网」从命令行变为点击链接，是互联网大众化的直接推手。从静态网页到 Web 2.0 与移动应用，Web 的演进始终围绕开放与平台化、去中心与垄断的张力展开。

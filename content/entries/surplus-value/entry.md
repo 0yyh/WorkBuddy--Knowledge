@@ -5,8 +5,8 @@ title: 剩余价值
 aliases: [剩余价值论, Mehrwert]
 type: concept
 categories:
-  - 政治理论/马克思主义/马克思主义政治经济学
-  - 经济学/金融
+  - politics/marxism/marx-pe
+  - economics/finance
 tags: [马克思, 资本论, 核心概念, 剥削, 资本积累]
 summary: >-
   剩余价值是雇佣工人创造的、被资本家无偿占有的、超过劳动力价值的价值，是马克思主义政治经济学的核心范畴，它揭示了资本主义生产方式下剥削的秘密，并构成《资本论》分析资本积累、危机与历史趋势的逻辑起点。

@@ -6,7 +6,7 @@ original_title: Short story
 aliases: [短篇, 小小说, 故事]
 type: concept
 categories:
-  - 文学/文体与体裁/小说
+  - literature/lit-genre/lit-novel
 tags: [短篇小说, 篇幅, 统一性, 契诃夫, 欧·亨利, 结构]
 summary: >-
   「短篇小说」是小说家族里篇幅最短、最讲究「一击中的」的支脉。它用一个相对集中的场景、人物或顿悟，

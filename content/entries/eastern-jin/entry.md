@@ -5,7 +5,7 @@ title: 东晋
 aliases: [东晋, 晋, Eastern Jin, 江左, 建康朝廷]
 type: concept
 categories:
-  - 历史/中国史/魏晋至隋唐
+  - history/history-china/china-mid
 tags: [东晋, 司马睿, 衣冠南渡, 门阀政治, 淝水之战, 王与马共天下]
 timeline: [china]
 summary: >-

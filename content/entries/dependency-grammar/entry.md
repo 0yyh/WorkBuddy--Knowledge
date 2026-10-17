@@ -6,7 +6,7 @@ original_title: Dependency Grammar
 aliases: [依存关系语法, 从属语法, 配价语法, 依存句法]
 type: concept
 categories:
-  - 语言学/句法与语义
+  - linguistics/ling-syntax-sem
 tags: [依存语法, 依存关系, 配价, 特斯尼耶尔, 短语结构, 句法表征]
 summary: >-
   依存语法是一种以「词与词之间的依存关系」而非「短语成分」为核心的句法理论，由特斯尼耶尔（Tesnière）在《结构句法基础》中系统提出。它把句子看作由核心词（head）与从属词（dependent）构成的有向树：每个从属词唯一依附于一个核心词，并通过配价规定核心能支配的从属数目与类型。与以名词短语、动词短语等成分为节点的短语结构语法相对，依存语法更贴近词义组合与语义角色，是现代计算语言学与树库标注（如 Universal Dependencies）的事实标准之一。

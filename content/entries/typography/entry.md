@@ -6,7 +6,7 @@ original_title: Typography
 aliases: [字体排印, 字形设计]
 type: concept
 categories:
-  - 艺术/设计/平面与视觉传达
+  - art/art-design/art-design-graphic
 tags: [字体设计, 排版, 衬线体, 无衬线体, 屏幕字体]
 summary: >-
   字体设计是设计字母、汉字等文字符号的形状与系统，使文本既可读又具性格的专门领域。它横跨书法、工艺与工程：既要保证长时间阅读不疲劳，也要让一套字承载品牌或时代的气质。数字时代，屏幕与可变字体把它推向新的技术前沿。

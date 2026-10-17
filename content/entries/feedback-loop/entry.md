@@ -6,7 +6,7 @@ original_title: Feedback loop
 aliases: [反馈环, 回馈回路, feedback]
 type: concept
 categories:
-  - 科学/数学与系统科学/系统与复杂性
+  - science/math-systems/complex-systems
 tags: [反馈, 负反馈, 正反馈, 稳态, 时滞, 系统动力学]
 summary: >-
   反馈回路指系统的输出反过来成为其输入的一部分，从而影响后续行为的回路结构。负反馈抵抗偏差、维持稳态，正反馈放大偏差、驱动增长或崩溃；两者的耦合与时滞则制造振荡。本词条从瓦特调速器讲起，梳理负反馈与稳态、正反馈与增长崩溃、时滞与振荡三大主题，最后介绍福瑞斯特与梅多斯的系统动力学以及《增长的极限》引发的争论。

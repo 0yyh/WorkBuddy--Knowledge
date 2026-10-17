@@ -6,7 +6,7 @@ original_title: Realism in International Relations
 aliases: [政治现实主义, 国际政治现实主义, Realism]
 type: concept
 categories:
-  - 政治理论/国际关系
+  - politics/international-relations
 tags: [现实主义, 无政府状态, 权力政治, 国家利益, 均势]
 summary: >-
   现实主义是国际关系中最具解释力的范式之一，主张在无政府状态下，国家以生存与安全为首要目标，权力是核心货币。它溯源至马基雅维利、霍布斯与修昔底德，二十世纪由沃尔兹重构为「结构现实主义」。现实主义的锋利之处在于：道德与国际政治须分开，理想主义常因忽视权力而失败。它也因低估合作与制度而遭受持续批评。

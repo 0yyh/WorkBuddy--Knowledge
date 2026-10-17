@@ -5,7 +5,7 @@ title: 南北朝
 aliases: [南北朝, Northern and Southern dynasties, 南朝, 北朝]
 type: concept
 categories:
-  - 历史/中国史/魏晋至隋唐
+  - history/history-china/china-mid
 tags: [南北朝, 南朝, 北朝, 北魏, 孝文帝改革, 侯景之乱, 分裂]
 timeline: [china]
 summary: >-

@@ -6,7 +6,7 @@ original_title: John Maynard Keynes
 aliases: ["凯恩斯", "Keynes", "约翰·梅纳德·凯恩斯"]
 type: person
 categories:
-  - 经济学/宏观经济学
+  - economics/macro
 tags: ["凯恩斯", "宏观经济学", "有效需求", "乘数效应", "政府干预"]
 summary: "约翰·梅纳德·凯恩斯是20世纪最具影响力的经济学家，现代宏观经济学奠基人。他在《就业、利息和货币通论》中论证有效需求不足导致长期失业，主张政府通过财政与货币政策主动调节总需求，深刻塑造了战后福利国家与反危机政策。"
 status: published

@@ -5,7 +5,7 @@ title: 赤壁之战
 aliases: [赤壁, 赤壁鏖兵, 乌林之战]
 type: event
 categories:
-  - 历史/中国史/魏晋至隋唐
+  - history/history-china/china-mid
 tags: [中国史, 三国, 赤壁之战, 孙刘联盟, 以少胜多, 火攻, 曹操]
 timeline: [china]
 summary: >-

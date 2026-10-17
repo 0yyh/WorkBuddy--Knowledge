@@ -6,8 +6,8 @@ original_title: Anselm of Canterbury
 aliases: [坎特伯雷的安瑟伦, 圣安瑟伦, Anselm, Anselmus Cantuariensis]
 type: person
 categories:
-  - 哲学/西方哲学/中世纪哲学
-  - 哲学/形而上学
+  - philosophy/western-philosophy/west-medieval
+  - philosophy/metaphysics
 tags: [安瑟伦, 本体论论证, 宣讲, 上帝为何成为人, 满足说, 经院哲学, 信仰寻求理解]
 summary: >-
   安瑟伦（1033—1109）是意大利出生的本笃会士，曾任诺曼底贝克修道院院长，1093 年起任坎特伯雷大主教，被后世称为「经院哲学之父」。他在《宣讲》中提出本体论论证：从「无法设想有比之更伟大者」这一概念出发，先验证明上帝存在；《上帝为何成为人》则以「满足说」重构救赎论——罪是对上帝荣誉的亏欠，人无从偿还，唯有兼具神性与人性的基督才能作出无限偿付。其「信仰寻求理解」（fides quaerens intellectum）的方法论，为整个中世纪神学定下了理性化的基调。

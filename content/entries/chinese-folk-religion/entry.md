@@ -6,7 +6,7 @@ original_title: Chinese Folk Religion
 aliases: [中国民间信仰, 民俗宗教, Folk Religion]
 type: concept
 categories:
-  - 宗教/中国宗教/民间信仰
+  - religion/rel-chinese/rel-folk
 tags: [民间信仰, 祖先崇拜, 神明, 祭祀, 庙会, 风水]
 summary: >-
   中国民间信仰是弥散在民众日常生活中的非正式宗教传统，以敬天法祖、敬畏鬼神为核心，既崇拜自然神与人格神，也重视祖先祭祀与风水择吉，却没有统一的教会、经典与教主。它常与儒教伦理、道教仪式、佛教观念交织混融，构成中国人精神世界的底层语法，并在庙会、年节与生命礼仪中反复现身。理解民间信仰，是理解中国社会差序格局、家族观念与现世取向的关键入口。

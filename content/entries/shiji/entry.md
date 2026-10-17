@@ -6,7 +6,7 @@ original_title: 史記
 aliases: [太史公书, 太史公记]
 type: work
 categories:
-  - 文学/中国文学/古代文学
+  - literature/lit-china/lit-china-classical
 tags: [史记, 司马迁, 纪传体, 通史, 列传, 史家之绝唱]
 summary: >-
   《史记》是西汉司马迁撰写的纪传体通史，记载从黄帝到汉武帝约三千年历史，是中国第一部贯通古今的纪传体史书。

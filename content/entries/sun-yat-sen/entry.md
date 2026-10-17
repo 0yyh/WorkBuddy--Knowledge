@@ -6,8 +6,8 @@ original_title: Sun Yat-sen
 aliases: [孙中山, Sun Yat-sen, 孙文, 国父]
 type: person
 categories:
-  - 政治理论/政治思想
-  - 政治理论/政体与国家制度
+  - politics/political-thought
+  - politics/govt-systems
 tags: [孙中山, 三民主义, 辛亥革命, 建国方略, 联俄容共]
 summary: >-
   孙中山（1866—1925）是近代中国民主革命的先行者，中华民国与中国国民党的缔造者。他提出「三民主义」（民族、民权、民生）作为反帝反封建与建国的纲领，领导辛亥革命推翻帝制，晚年又改组国民党、提出联俄容共与扶助农工。其思想与实践奠定了二十世纪中国政治的基本议程，也留下未竟的事业与持续的争议。

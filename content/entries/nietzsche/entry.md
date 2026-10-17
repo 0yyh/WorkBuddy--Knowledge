@@ -5,7 +5,7 @@ title: 尼采
 aliases: [弗里德里希·尼采, Nietzsche, 权力意志, 超人哲学]
 type: person
 categories:
-  - 哲学/西方哲学/近代欧陆哲学
+  - philosophy/western-philosophy/west-modern
 tags: [尼采, 权力意志, 上帝已死, 超人, 虚无主义, 生命哲学]
 summary: >-
   弗里德里希·尼采（1844—1900）是十九世纪德国极具冲击力与争议的思想家，对西方现代哲学、文学与

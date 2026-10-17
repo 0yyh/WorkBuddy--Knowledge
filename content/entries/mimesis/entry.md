@@ -6,8 +6,8 @@ original_title: Mimesis
 aliases: [摹仿说, 模仿论, Mimesis, 再现论]
 type: concept
 categories:
-  - 哲学/美学
-  - 哲学/西方哲学/古希腊哲学
+  - philosophy/aesthetics
+  - philosophy/western-philosophy/west-ancient
 tags: [模仿, 柏拉图, 亚里士多德, 诗学, 理想国, 现实主义, 再现]
 summary: >-
   模仿说主张艺术的本质是模仿自然或现实。柏拉图在《理想国》第十卷以「三张床」论证模仿者离真理隔着三层，要把诗人逐出城邦；亚里士多德《诗学》则翻案，主张模仿是人的天性、诗描述可然之事因而比历史更富哲学性。此后模仿说历经镜子说、现实主义、浪漫主义的反叛，到二十世纪经奥尔巴赫与阿多诺被重新评估。

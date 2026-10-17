@@ -6,8 +6,8 @@ original_title: Jean-Jacques Rousseau
 aliases: [卢梭, Jean-Jacques Rousseau]
 type: person
 categories:
-  - 哲学/政治哲学
-  - 政治理论/政治思想
+  - philosophy/political-philosophy
+  - politics/political-thought
 tags: [卢梭, 社会契约, 公意, 人民主权, 自然状态, 不平等的起源]
 summary: >-
   让-雅克·卢梭（1712—1778）是启蒙时代最具颠覆性的政治哲学家。他既在《论人类不平等的起源和基础》里批判文明对人的腐化，又以《社会契约论》提出「公意」与人民主权，主张自由只能在共同体中通过服从自定之法来实现；其思想既孕育了法国大革命，也塑造了浪漫主义与现代民主的张力。

@@ -5,7 +5,7 @@ title: 西周建立·牧野之战
 aliases: [西周, 武王克商, 周代封建, 牧野之战]
 type: event
 categories:
-  - 历史/中国史/先秦至秦汉
+  - history/history-china/china-ancient
 tags: [西周, 牧野之战, 分封制, 宗法, 礼乐, 天命, 周公]
 timeline: [china]
 summary: >-

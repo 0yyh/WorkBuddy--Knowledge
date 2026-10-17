@@ -5,7 +5,7 @@ title: 金朝
 aliases: [金, 金朝, Jin dynasty, 女真, 完颜阿骨打]
 type: concept
 categories:
-  - 历史/中国史/宋元明清
+  - history/history-china/china-songming
 tags: [金朝, 女真, 完颜阿骨打, 灭辽灭宋, 靖康之变, 猛安谋克]
 timeline: [china]
 summary: >-

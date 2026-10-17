@@ -6,7 +6,7 @@ original_title: International Court of Justice
 aliases: [国际法院, International Court of Justice, ICJ, 海牙国际法院]
 type: concept
 categories:
-  - 法学/国际法/国际公法
+  - law/law-international/law-intl-public
 tags: [国际法院, 联合国, 诉讼管辖权, 咨询意见, 海牙]
 summary: >-
   国际法院是联合国的主要司法机关，设于荷兰海牙，一九四六年正式开始运作，取代了一九二二年的常设国际法院。它由十五名独立法官组成，依《国际法院规约》对接受其管辖的国家间法律争端作出判决，并应联合国机关请求发表咨询意见。国际法院的权力建立在国家同意之上：若无当事国的特别协定、条约条款或任意任择声明，法院不得强行管辖。它填补了国际社会中「无世界政府却有司法」的独特治理缺口，其判决对国家有法律约束力，但执行依赖安理会与被申请执行国的配合，因而既有确立规则之功，也面临执行力有限的现实约束。

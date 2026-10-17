@@ -5,7 +5,7 @@ title: 心理学
 aliases: [心理学史, psychology, 心理科学]
 type: concept
 categories:
-  - 科学/人类认知与心理/心理学分支
+  - science/cog-psych/psych-fields
 tags: [心理学, 认知, 行为主义, 精神分析, 心理科学]
 summary: >-
   心理学是研究心理现象与行为规律的科学，兼具自然科学与社会科学双重属性。它源于哲学对心灵问题的

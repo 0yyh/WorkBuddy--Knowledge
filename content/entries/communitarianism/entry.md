@@ -6,9 +6,9 @@ original_title: Communitarianism
 aliases: [社群主义, Communitarianism]
 type: concept
 categories:
-  - 哲学/西方哲学/英美与现当代哲学
-  - 哲学/政治哲学
-  - 政治理论/政治思想
+  - philosophy/western-philosophy/west-analytic
+  - philosophy/political-philosophy
+  - politics/political-thought
 tags: [社群主义, 共同体, 镶嵌的自我, 善优先于权利, 桑德尔, 麦金泰尔, 泰勒, 沃尔泽]
 summary: >-
   社群主义是二十世纪七八十年代兴起、以批判罗尔斯式自由主义为契机的思想运动，主张人的身份由共同体、传统与忠诚构成，反对把自我设想为先于目的的「无拘自我」，并质疑「权利优先于善」的自由主义框架。其代表包括麦金泰尔、桑德尔、泰勒与沃尔泽，强调传统、叙事与公共善对政治合法性的根基作用。

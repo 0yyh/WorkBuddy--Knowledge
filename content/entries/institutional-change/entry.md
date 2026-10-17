@@ -6,7 +6,7 @@ original_title: Institutional Change
 aliases: [制度变迁理论, 制度演进, Institutional Change]
 type: concept
 categories:
-  - 经济学/制度经济学
+  - economics/institutional-economics
 tags: [诺斯, 制度变迁, 路径依赖, 正式制度, 非正式制度]
 summary: >-
   制度变迁理论研究制度如何产生、演化与更替，以道格拉斯·诺斯的理论为枢纽。它把制度分为正式规则（法律、产权、组织章程）与非正式规范（习俗、道德、惯例），并将变迁区分为自下而上的「诱致性」与自上而下的「强制性」两类。诺斯强调，相对价格与偏好的变化会打破制度均衡，而报酬递增与路径依赖又使变迁充满惯性，坏制度常被长期锁入。这一框架解释了为何改革难以一蹴而就，也为理解发展中国家的制度错位与改革次序提供了分析工具。

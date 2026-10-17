@@ -6,7 +6,7 @@ original_title: Geothermal Energy
 aliases: [地热, 地热资源, 地下热]
 type: concept
 categories:
-  - 技术/能源与动力
+  - technology/energy-power
 tags: [可再生能源, 地热, 地热发电, 地球内部热, 清洁能源]
 summary: >-
   地热能是来自地球内部的热能，源于放射性衰变与原始吸积余热，通过地热流体或干热岩被人类开采利用。它可提供稳定的基荷电力与采暖，不受日照与风力间歇性的困扰，是少有的「全天候」清洁能源。尽管受地质条件限制、开发成本较高，地热能仍是全球能源结构中对气候友好的重要补充。

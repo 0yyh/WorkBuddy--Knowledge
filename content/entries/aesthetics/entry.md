@@ -6,8 +6,8 @@ original_title: Aesthetics
 aliases: [美的哲学, 审美学, Aesthetics]
 type: concept
 categories:
-  - 哲学/美学
-  - 哲学/西方哲学/近代欧陆哲学
+  - philosophy/aesthetics
+  - philosophy/western-philosophy/west-modern
 tags: [美学, 审美, 艺术哲学, 康德, 模仿说, 表现说, 艺术定义]
 summary: >-
   美学（Aesthetics）是研究美、艺术与审美经验的哲学分支。鲍姆嘉通1735年创词把它定为感性认识的科学，康德则在《判断力批判》中把它摆在连接自然与自由的核心位置。

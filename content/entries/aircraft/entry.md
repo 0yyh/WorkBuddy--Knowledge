@@ -6,8 +6,8 @@ original_title: Aircraft
 aliases: [航空器, 飞行器, 固定翼飞机]
 type: concept
 categories:
-  - 技术/交通与制造
-  - 技术/技术史
+  - technology/transport-manufacturing
+  - technology/tech-history
 tags: [航空, 飞行器, 空气动力学, 喷气发动机, 民航]
 summary: >-
   飞机是依靠空气动力克服重力实现可控飞行的载人载货工具，通常以固定机翼产生升力、由发动机提供推力。从莱特兄弟的首次动力飞行到喷气式客机的全球航线，飞机把人类活动范围从地表扩展至大气层，深刻改变了运输、战争与时空观念。它集空气动力学、材料、推进与控制于一体，是二十世纪工程文明的象征。

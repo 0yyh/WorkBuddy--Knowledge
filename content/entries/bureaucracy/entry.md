@@ -6,8 +6,8 @@ original_title: bureaucracy
 aliases: [科层制, 官僚制, 官僚组织]
 type: concept
 categories:
-  - 哲学/社会学
-  - 政治理论/政治学概念
+  - philosophy/sociology
+  - politics/political-concepts
 tags: [科层制, 韦伯, 理想类型, 理性化, 铁笼, 组织理论]
 summary: >-
   科层制（bureaucracy）是马克斯·韦伯在《经济与社会》(1922) 中借用「理想类型」方法刻画的一种组织形态：以层级节制、成文规则、专职分工、文书档案、按资历与功绩晋升、非人格化运作为特征。它被视为工具理性在现代社会胜利的组织化身，以可预期、有效率著称，却也因僵化、去人格化与「目标置换」而受批。韦伯最著名的忧思是，这种全面理性化会把人关进「铁笼」——手段的精确吞噬了目的与价值。

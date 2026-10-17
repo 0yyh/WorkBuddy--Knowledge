@@ -6,7 +6,7 @@ original_title: The Tragedy of the Commons
 aliases: [Tragedy of the Commons, 共有地悲剧, 公地困境]
 type: concept
 categories:
-  - 经济学/环境经济学
+  - economics/environmental-economics
 tags: [外部性, 公共资源, 产权, 过度使用]
 summary: >-
   公地悲剧由哈丁 1968 年《公地的悲剧》一文系统提出，指当一种资源具有非排他性而使用者竞相取用（竞争性）时，个体理性追求自身收益会导致集体性过度使用与资源耗竭。它揭示了「开放通道」下私人成本与社会成本的背离，并引出产权界定、国家管制与社群自治三条治理路径，同时也面临来自奥斯特罗姆等学者的反例与批评。

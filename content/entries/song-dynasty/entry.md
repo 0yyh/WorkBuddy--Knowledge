@@ -5,7 +5,7 @@ title: 宋朝
 aliases: [宋代, 赵宋, Song Dynasty]
 type: concept
 categories:
-  - 历史/中国史/宋元明清
+  - history/history-china/china-songming
 tags: [宋朝, 两宋, 商品经济, 理学, 重文轻武]
 timeline: [china]
 summary: >-

@@ -5,7 +5,7 @@ title: 明治维新
 aliases: [明治维新, 明治改革]
 type: event
 categories:
-  - 历史/世界史/近代史
+  - history/history-world/world-modern
 tags: [明治维新, 日本近代化, 脱亚入欧, 殖产兴业, 文明开化, 东亚秩序]
 timeline: [world]
 date: 1853-1890

@@ -5,7 +5,7 @@ title: 市场失灵
 aliases: [market failure, 市场失败, 公共品, 外部性]
 type: concept
 categories:
-  - 经济学/微观经济学
+  - economics/micro
 tags: [市场失灵, 外部性, 公共品, 垄断, 信息不对称]
 summary: >-
   市场失灵（market failure）指自由市场在资源配置上不能实现帕累托最优效率的情形，是政府干预经济的

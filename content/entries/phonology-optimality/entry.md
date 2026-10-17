@@ -6,7 +6,7 @@ original_title: Optimality Theory in Phonology
 aliases: [优选论, 制约条件音系学, OT音系学]
 type: concept
 categories:
-  - 语言学/语音与音系
+  - linguistics/ling-phon
 tags: [优选论, 制约条件, 生成器, 评估器, Prince, Smolensky]
 summary: >-
   优选论（Optimality Theory，简称 OT）是普林斯（Prince）与斯莫连斯基（Smolensky）于一九九三年提出的音系学理论框架，后扩展至形态、句法等领域。它抛弃了此前的规则有序推导模式，改由「生成器（Gen）」产出候选的表层形式，再由「评估器（Eval）」依据一组普遍但可违反的制约条件加以筛选，其中最符合制约层级排列的候选获胜。制约条件分为标记性制约（禁止不良结构）与忠实性制约（要求输入与输出对应）两类，二者之间的冲突与层级排序决定了具体语言的音系面貌。优选论的优雅之处在于以统一的制约集合解释跨语言差异，其表层差异仅源于制约条件排列次序的不同。

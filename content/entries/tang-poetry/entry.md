@@ -6,7 +6,7 @@ original_title: 唐詩
 aliases: [唐代诗歌, 全唐诗]
 type: concept
 categories:
-  - 文学/中国文学/古代文学
+  - literature/lit-china/lit-china-classical
 tags: [唐诗, 律诗, 绝句, 盛唐, 李白, 杜甫, 初唐, 中晚唐]
 summary: >-
   「唐诗」指唐代约三百年间创作的诗歌总称，存世逾五万首，是中国古典诗歌的顶峰。它完成了近体诗（律诗、绝句）的格律定型，

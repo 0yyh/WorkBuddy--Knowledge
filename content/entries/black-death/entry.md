@@ -5,7 +5,7 @@ title: 黑死病
 aliases: [黑死病, 鼠疫大流行, 欧洲大瘟疫]
 type: event
 categories:
-  - 历史/世界史/中世纪
+  - history/history-world/world-medieval
 tags: [黑死病, 鼠疫, 耶尔森菌, 中世纪, 瘟疫, 人口]
 timeline: [world]
 summary: >-

@@ -5,8 +5,8 @@ title: 全球化
 aliases: [全球化进程, globalization]
 type: concept
 categories:
-  - 历史/世界史/现当代史
-  - 经济学/宏观经济学
+  - history/history-world/world-contemp
+  - economics/macro
 tags: [全球化, 贸易, 资本流动, 互联互通, 现当代]
 timeline: [world]
 summary: >-

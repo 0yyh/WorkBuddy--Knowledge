@@ -5,7 +5,7 @@ title: 秦朝
 aliases: [秦, 秦代, Qin dynasty, 秦帝国]
 type: concept
 categories:
-  - 历史/中国史/先秦至秦汉
+  - history/history-china/china-ancient
 tags: [秦朝, 秦始皇, 统一, 中央集权, 郡县制, 书同文, 焚书坑儒]
 timeline: [china]
 summary: >-

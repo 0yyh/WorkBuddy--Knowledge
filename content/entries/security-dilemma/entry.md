@@ -6,7 +6,7 @@ original_title: Security Dilemma
 aliases: [安全两难, 安全悖论, Security Dilemma]
 type: concept
 categories:
-  - 政治理论/国际关系
+  - politics/international-relations
 tags: [安全困境, 无政府状态, 攻防平衡, 螺旋模型, 军控]
 summary: >-
   安全困境指无政府状态下的一类结构性悲剧：一国为增加自身安全而采取的措施，会降低他国的安全感，引发对方的反制，最终使各方更不安全——没有一方想要冲突，冲突却在互不信任中自我实现。本词条梳理赫茨与杰维斯的经典表述、防御与进攻武器的模糊性、螺旋模型及其与威慑模型的分野，以及透明度与军控等缓解机制。

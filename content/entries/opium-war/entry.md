@@ -5,8 +5,8 @@ title: 鸦片战争
 aliases: [第一次鸦片战争, 中英战争]
 type: event
 categories:
-  - 历史/中国史
-  - 历史/世界史
+  - history/history-china
+  - history/history-world
 timeline: [china, world]
 tags: [近代史, 殖民, 贸易, 不平等条约]
 summary: >-

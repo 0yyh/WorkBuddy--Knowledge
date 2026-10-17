@@ -6,7 +6,7 @@ original_title: Direct Democracy
 aliases: [直接民主, 参与民主, 公投民主]
 type: concept
 categories:
-  - 政治理论/政治学概念
+  - politics/political-concepts
 tags: [民主, 公投, 参与, 雅典, 人民主权]
 summary: >-
   直接民主指公民不经代表、直接就公共事务投票或决策的政治形式，古典源头在雅典集会。现代以公投、倡议、召回为工具，被视为对代议制「代表性赤字」的补救，却也面临理性无知与多数暴政的质疑。它的当代复兴，与数字技术与参与式预算的兴起密不可分。

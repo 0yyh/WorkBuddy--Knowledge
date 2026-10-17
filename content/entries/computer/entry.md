@@ -6,8 +6,8 @@ original_title: Computer
 aliases: [计算机, 电脑, 图灵机]
 type: concept
 categories:
-  - 技术/信息技术
-  - 科学/数学与系统科学/数学基础
+  - technology/info-tech
+  - science/math-systems/math-found
 tags: [计算机, 图灵机, 冯诺依曼架构, 摩尔定律, 信息技术]
 summary: >-
   计算机是按程序自动执行计算与信息处理的机器。1936年图灵提出图灵机模型，为"可计算"划定理论边界；冯·诺依曼架构确立存储程序原理；1940年代电子计算机问世，此后持续微型化，成为信息时代的基础设施。

@@ -6,7 +6,7 @@ original_title: William Shakespeare
 aliases: [莎士比亚, 威廉·莎士比亚, William Shakespeare]
 type: person
 categories:
-  - 文学/世界文学/欧美文学
+  - literature/lit-world/lit-europe
 tags: [莎士比亚, 戏剧, 四大悲剧, 十四行诗, 环球剧场, 文艺复兴, 人文主义, 翻译]
 summary: >-
   莎士比亚（一五六四年—一六一六年），英国剧作家与诗人，生于斯特拉特福，大半创作生涯在伦敦。

@@ -6,7 +6,7 @@ original_title: Révolution française
 aliases: [法国大革命, 1789年革命]
 type: event
 categories:
-  - 历史/世界史
+  - history/history-world
 tags: [近代史, 启蒙思想, 共和, 人权]
 timeline: [world]
 summary: >-

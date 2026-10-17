@@ -5,7 +5,7 @@ title: 商朝
 aliases: [商, 商代, Shang dynasty, 殷, 殷商]
 type: concept
 categories:
-  - 历史/中国史/先秦至秦汉
+  - history/history-china/china-ancient
 tags: [商朝, 甲骨文, 青铜器, 盘庚迁殷, 分封, 神权]
 timeline: [china]
 summary: >-

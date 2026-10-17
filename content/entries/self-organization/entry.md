@@ -6,7 +6,7 @@ original_title: Self-organization
 aliases: [自组织过程, 自发有序, self organization]
 type: concept
 categories:
-  - 科学/数学与系统科学/系统与复杂性
+  - science/math-systems/complex-systems
 tags: [自组织, 耗散结构, 普里高津, 贝纳德对流, 图灵斑图, 序参量]
 summary: >-
   自组织指系统在没有外部蓝图、指挥者或中央计划的情况下，依靠内部单元之间的局部相互作用，自发产生有序结构或协调行为的过程。本词条从贝纳德对流实验入手，介绍普里高津的耗散结构理论与远离平衡态热力学，梳理 BZ 反应、图灵斑图等经典案例，讲解序参量与役使原理给出的描述语言，最后讨论自组织发生的条件、它与涌现及复杂性概念的关系，以及把「自组织」当作万能解释时的常见滥用。

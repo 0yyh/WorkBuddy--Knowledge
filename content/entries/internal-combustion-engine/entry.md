@@ -6,7 +6,7 @@ original_title: Internal Combustion Engine
 aliases: [内燃引擎, ICE, Internal Combustion Engine]
 type: concept
 categories:
-  - 技术/能源与动力
+  - technology/energy-power
 tags: [内燃机, 四冲程, 汽车工业, 能源, 动力机械]
 summary: >-
   内燃机是把燃料在气缸内燃烧产生的热能直接转化为机械功的动力机械，其主流形式为四冲程汽油机与压燃柴油机。相比需要锅炉的蒸汽机，它功率密度高、启动快、体积小，与汽车、飞机、拖拉机等技术耦合并相互放大，成为二十世纪「能源—交通革命」的心脏。今天它面临电动化与排放规制的双重替代压力，其百年历史正是能量密度、可靠性与清洁性三条主线交织的历史。

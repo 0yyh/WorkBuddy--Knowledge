@@ -5,7 +5,7 @@ title: 安史之乱
 aliases: [安禄山叛乱, 天宝之乱]
 type: event
 categories:
-  - 历史/中国史/魏晋至隋唐
+  - history/history-china/china-mid
 tags: [中国史, 唐朝, 安史之乱, 藩镇割据, 节度使, 两税法, 经济重心南移]
 timeline: [china]
 summary: >-

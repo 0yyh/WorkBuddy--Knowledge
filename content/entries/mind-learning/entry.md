@@ -5,7 +5,7 @@ title: 阳明心学
 aliases: [心学, 王阳明, 陆王心学, School of the Mind]
 type: concept
 categories:
-  - 哲学/中国哲学
+  - philosophy/chinese-philosophy
 tags: [心学, 王阳明, 知行合一, 致良知, 宋明理学]
 summary: >-
   阳明心学指明代思想家王守仁（王阳明）所开创的心学传统，是继程朱理学之后宋明理学的重要一翼，

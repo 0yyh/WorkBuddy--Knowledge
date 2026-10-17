@@ -5,7 +5,7 @@ title: 明朝
 aliases: [明代, 朱明, Ming dynasty]
 type: concept
 categories:
-  - 历史/中国史/宋元明清
+  - history/history-china/china-songming
 tags: [中国史, 明朝, 君主专制, 郑和, 内阁, 长城]
 timeline: [china]
 summary: >-

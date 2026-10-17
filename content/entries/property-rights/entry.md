@@ -5,7 +5,7 @@ title: 产权理论
 aliases: [产权经济学, 产权, Property Rights, Property Rights Theory]
 type: concept
 categories:
-  - 经济学/制度经济学
+  - economics/institutional-economics
 tags: [产权, 权利束, 科斯定理, 德姆塞茨]
 summary: >-
   产权理论把产权理解为一束可分解的权利——使用权、收益权与转让权，而非单一的「所有权」。产权决定行为后果由谁承担，从而塑造储蓄、投资与创新的激励；德姆塞茨论证产权因相对价格变化而产生，科斯定理说明在交易成本为正的现实世界中，权利如何界定直接决定资源配置效率。该理论广泛应用于土地改革、知识产权与转型经济分析，同时也因忽视公平与分配而受到批评。

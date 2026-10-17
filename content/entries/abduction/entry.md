@@ -6,8 +6,8 @@ original_title: abduction / retroduction
 aliases: [溯因法, 回溯推理, 最佳说明推理, abduction, inference to the best explanation]
 type: concept
 categories:
-  - 哲学/逻辑与批判性思维
-  - 科学/科学方法论
+  - philosophy/logic-critical
+  - science/sci-method
 tags: [溯因, 皮尔士, 最佳说明推理, 科学发现, 诊断]
 summary: >-
   溯因推理是美国哲学家皮尔士提出的第三种推理类型：面对令人惊讶的事实，先猜出一个若为真就能解释该事实的假说，再交由演绎与归纳去检验。它与演绎（推出必然后果）和归纳（检验假说）分工不同，是唯一负责生成新假说的推理。二十世纪后半叶，哈曼将其重述为「最佳说明推理」，利普顿发展出「可爱性引导」理论。本词条讨论溯因的形式、它与肯定后件的关系、在科学发现与医学诊断中的应用，以及围绕它能否被规范化的争论。

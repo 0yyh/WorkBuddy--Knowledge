@@ -6,9 +6,9 @@ original_title: David Hume
 aliases: [休谟, David Hume, 大卫·休谟]
 type: person
 categories:
-  - 哲学/西方哲学/近代欧陆哲学
-  - 哲学/认识论
-  - 哲学/伦理学
+  - philosophy/western-philosophy/west-modern
+  - philosophy/epistemology
+  - philosophy/ethics
 tags: [休谟, 经验主义, 观念论, 因果关系, 归纳问题, 人格束, 相容论, 宗教批判]
 summary: >-
   大卫·休谟（1711—1776）是苏格兰启蒙运动中最锐利的哲学家，近代经验主义的集大成者。他在《人性论》与《人类理解研究》中把一切知识还原为「印象」与「观念」，断言因果关系只是反复联想养成的心理习惯、并无逻辑必然性；他把自我拆解为川流不息的知觉束，把自由重定义为「不受外在强制地按己意行动」从而开创相容论；又以其宗教批判与设计论驳议，成为启蒙与自由主义的先声。休谟的工作以「温和的怀疑论」为底色：他不是要推翻常识，而是要划清人类理性的真正地界。

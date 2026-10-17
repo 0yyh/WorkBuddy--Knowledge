@@ -6,7 +6,7 @@ original_title: Etymology
 aliases: [语源学, 词源研究, 字源学]
 type: concept
 categories:
-  - 语言学/历史语言学
+  - linguistics/ling-historical
 tags: [词源学, 同源词, 民间词源, 科学词源, 词义演变]
 summary: >-
   词源学是研究词语形体与意义历史来源的分支学科，它通过文献考据、历史比较与内部构拟，追溯某个词从最早可证形态到现今用法的演变轨迹。它既关注派生与复合等形态理据，也关注借词、词义转移与民间词源造成的讹变，是连接历史语言学与词汇语义学的桥梁。

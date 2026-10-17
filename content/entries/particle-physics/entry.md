@@ -4,7 +4,7 @@ slug: particle-physics
 title: 粒子物理
 type: concept
 categories:
-  - 科学/自然科学基础/物理
+  - science/nat-science/physics
 tags: [粒子物理, 标准模型, 夸克, 轻子, 对撞机, 基本相互作用]
 summary: >-
   粒子物理研究物质最基本的构成单元与它们之间的相互作用，是现代物理学的核心分支。它以「标准模型」统合了强、弱、电三种基本相互作用与已知基本粒子，

@@ -5,7 +5,7 @@ title: 公民社会
 aliases: [市民社会, 公共社会, Civil Society, Civic Society]
 type: concept
 categories:
-  - 政治理论/政治学概念
+  - politics/political-concepts
 tags: [公民社会, 公共领域, 结社]
 summary: >-
   公民社会指独立于国家强制与市场直接生产的社会自组织领域，涵盖结社、社团、公共讨论与志愿行动。概念史从与政治国家混同的「文明社会」出发，经黑格尔体系性的国家与市民社会区分、托克维尔的结社观察，到哈贝马斯的公共领域与20世纪东欧「社会对抗国家」的实践，成为理解民主条件与公共生活质量的枢纽概念。

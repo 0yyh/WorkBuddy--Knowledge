@@ -6,7 +6,7 @@ original_title: 詩經
 aliases: [诗, 诗三百, 毛诗]
 type: work
 categories:
-  - 文学/中国文学/古代文学
+  - literature/lit-china/lit-china-classical
 tags: [诗经, 风雅颂, 赋比兴, 六义, 采诗, 毛诗, 孔子, 比兴]
 summary: >-
   《诗经》是中国现存最早的诗歌总集，收录西周初年至春秋中叶约三百零五篇诗歌，分「风雅颂」三类、用「赋比兴」三法，

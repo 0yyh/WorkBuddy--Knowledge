@@ -6,7 +6,7 @@ original_title: Automation
 aliases: [自动控制系统, 自动控制, 无人化]
 type: concept
 categories:
-  - 技术/交通与制造
+  - technology/transport-manufacturing
 tags: [自动化, 控制理论, 机器人, 工业自动化, 就业]
 summary: >-
   自动化是指利用机械、电子与信息手段，使过程在最少人工干预下按预定目标运行的技术体系，其理论核心是控制论与反馈。从恒温器到无人产线，自动化以反馈回路持续纠正偏差，从而稳定、精确、不知疲倦地完成任务。它极大提升了生产力，也深刻重塑了劳动结构与社会分工，是理解现代产业与智能时代的关键概念。

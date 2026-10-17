@@ -5,7 +5,7 @@ title: 拜占庭帝国
 aliases: [拜占庭, 东罗马, 君士坦丁堡帝国]
 type: event
 categories:
-  - 历史/世界史/中世纪
+  - history/history-world/world-medieval
 tags: [拜占庭, 世界史, 中世纪, 东正教, 罗马法, 君士坦丁堡]
 timeline: [world]
 summary: >-

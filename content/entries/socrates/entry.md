@@ -6,9 +6,9 @@ original_title: Socrates
 aliases: [苏格拉底, Socrates]
 type: person
 categories:
-  - 哲学/西方哲学/古希腊哲学
-  - 哲学/伦理学
-  - 哲学/政治哲学
+  - philosophy/western-philosophy/west-ancient
+  - philosophy/ethics
+  - philosophy/political-philosophy
 tags: [苏格拉底, 助产术, 无知之知, 德性即知识, 申辩, 苏格拉底方法]
 summary: >-
   苏格拉底（约前470—前399）是古希腊哲学的奠基者，一生述而不作。他通过街头「诘问法」暴露对话者关于德性的无知，提出「自知其无知」与「德性即知识」，并因「不敬神、败坏青年」在雅典法庭饮鸩而亡。其形象主要经柏拉图对话传下，成为西方哲学方法论与良知原型的共同源头。

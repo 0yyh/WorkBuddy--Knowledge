@@ -6,7 +6,7 @@ original_title: Human Rights
 aliases: [人权, 基本权利, 自然权利, Human Rights]
 type: concept
 categories:
-  - 政治理论/政治学概念
+  - politics/political-concepts
 tags: [人权, 自然权利, 普遍权利, 尊严, 启蒙]
 summary: >-
   人权（Human Rights）是主张「人仅因其为人即应享有」的基本权利，其思想源头是自然权利与启蒙理性。1948 年《世界人权宣言》将其法典化为跨国的道德与法律底线。人权的哲学基础通常立于「人的尊严」与「普遍可证成性」之上；但它与主权原则存在张力——普世诉求常撞上「文化相对」与「不干涉内政」的现实。理解人权，是理解现代法治、宪政与国际伦理的起点，也是审视全球正义的透镜。

@@ -6,7 +6,7 @@ original_title: Additive Manufacturing
 aliases: [3D打印, 快速成型, 增材制造技术]
 type: concept
 categories:
-  - 技术/交通与制造
+  - technology/transport-manufacturing
 tags: [增材制造, 3D打印, 快速成型, 分层制造, 数字化制造]
 summary: >-
   增材制造又称三维打印，是一种按三维模型逐层堆积材料来制造实体的技术，与切削去除材料的传统减材制造相对。它无需模具即可直接成型复杂结构，特别适合小批量、定制化与轻量化构件。常见工艺覆盖塑料、金属与复合材料，已深入医疗、航空与工业制造。其局限在于速度、成本与材料性能，正随技术发展逐步改善。

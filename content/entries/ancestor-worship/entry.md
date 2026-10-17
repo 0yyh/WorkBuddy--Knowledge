@@ -6,7 +6,7 @@ original_title: Ancestor Worship
 aliases: [祭祖, 慎终追远, 宗祠祭祀, 墓祭, 宗族礼仪]
 type: concept
 categories:
-  - 宗教/中国宗教/民间信仰
+  - religion/rel-chinese/rel-folk
 tags: [祖先崇拜, 祭祖, 慎终追远, 祠堂, 宗族, 清明, 寒食, 族规, 墓祭, 民间信仰]
 summary: >-
   祖先崇拜（Ancestor Worship）是中国汉地社会以已故血缘亲属为对象的祭祀传统，

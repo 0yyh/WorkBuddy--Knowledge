@@ -5,7 +5,7 @@ title: 信用创造
 aliases: [信用创造, credit-creation]
 type: concept
 categories:
-  - 经济学/金融/货币与银行
+  - economics/finance/money-banking
 tags: [credit-creation, 货币, 金融]
 summary: >-
   信用创造指在部分准备金制度下，商业银行通过发放贷款将一笔原始存款转化为数倍广义货币的过程。它是现代信用货币体系的核心机制，也是理解货币供应为何主要由银行贷款而非央行印刷决定的关键。

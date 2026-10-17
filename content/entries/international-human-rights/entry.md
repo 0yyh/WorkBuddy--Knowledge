@@ -6,7 +6,7 @@ original_title: International human rights law
 aliases: [国际人权法, International human rights law]
 type: concept
 categories:
-  - 法学/国际法/国际公法
+  - law/law-international/law-intl-public
 tags: [人权, 国际人权法, 人权公约, 条约机构, 普遍管辖权]
 summary: >-
   国际人权法是关于在各国之间确立、保护与促进人权的国际法分支，核心是一套多边条约与习惯规范，约束国家如何对待其管辖下的个人。它起源于二战后《世界人权宣言》与一九六六年两项国际人权公约，其后发展出区域人权机制与条约监督机构。国际人权法把「人」从国内管辖的纯粹内部事务，部分提升为国际关注的对象，使国家对其国民的义务具有对外维度。它既体现人权普遍主义的理想，也持续面对文化相对主义、主权与不干涉原则的张力，是当代国际法治中最具道德感召也最具争议的前沿领域之一。

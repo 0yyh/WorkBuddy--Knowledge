@@ -6,7 +6,7 @@ original_title: Speech Production
 aliases: [语言产生, 口语产生, 言语产出]
 type: concept
 categories:
-  - 语言学/社会与心理语言学/心理语言学
+  - linguistics/ling-socio-psy/ling-psychology
 tags: [言语产生, 莱韦尔特模型, 言语编码, 发音执行, 言语错误, 自我监控]
 summary: >-
   言语产生指说话人将交际意图转化为可发声语音的全过程，经历概念形成、句法编码、语音编码与发音执行等阶段。莱韦尔特（Willem Levelt）的处理器模型把这一序列系统化为可检验的框架，揭示言语既高度自动化又依赖持续的自我监控。研究言语产生有助于解释言语错误、口吃与失语等语言产出障碍的认知根源。

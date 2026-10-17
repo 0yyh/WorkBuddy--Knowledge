@@ -23,10 +23,17 @@ export interface Issue {
   message: string;
 }
 
-function collectPaths(nodes: TaxonomyNode[], acc: Set<string>): void {
+/**
+ * 收集所有合法类目引用键。B-1 双集合兼容：validPaths 同时含标题路径(n.path)与 id 路径(idPath)，
+ * 使 L002 对「仍是标题路径」与「已迁移为 id 路径」的 categories 都不报错。
+ * idPath 派生：根 = n.id，子 = 父idPath + '/' + n.id（与 builder / 迁移脚本一致）。
+ */
+function collectPaths(nodes: TaxonomyNode[], acc: Set<string>, parentIdPath = ''): void {
   for (const n of nodes) {
+    const idPath = parentIdPath ? `${parentIdPath}/${n.id}` : n.id;
     acc.add(n.path);
-    if (n.children) collectPaths(n.children, acc);
+    acc.add(idPath);
+    if (n.children) collectPaths(n.children, acc, idPath);
   }
 }
 

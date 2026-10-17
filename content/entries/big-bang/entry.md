@@ -6,7 +6,7 @@ original_title: Big Bang Cosmology
 aliases: ["大爆炸", "Big Bang", "宇宙大爆炸"]
 type: concept
 categories:
-  - 科学/自然科学基础/天文与地球科学
+  - science/nat-science/astronomy-earth
 tags: ["大爆炸", "宇宙学", "宇宙微波背景", "膨胀", "奇点"]
 summary: "大爆炸宇宙学是关于宇宙起源与演化的标准模型，认为宇宙始于约138亿年前一次极度高温高密的态，并持续膨胀冷却。其关键证据包括星系红移、宇宙微波背景辐射与轻元素丰度，已被现代观测广泛支持。"
 status: published

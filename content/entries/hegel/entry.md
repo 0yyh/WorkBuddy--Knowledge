@@ -6,8 +6,8 @@ original_title: G. W. F. Hegel
 aliases: [黑格尔, Hegel, 格奥尔格黑格尔]
 type: person
 categories:
-  - 哲学/西方哲学/近代欧陆哲学
-  - 哲学/思想史
+  - philosophy/western-philosophy/west-modern
+  - philosophy/phil-history
 tags: [黑格尔, 辩证法, 绝对精神, 德国古典哲学, 历史哲学]
 summary: >-
   黑格尔（1770—1831）是德国古典哲学的集大成者。他以辩证法构建包罗逻辑、自然与精神的庞大体系，主张绝对精神通过矛盾的运动自我展开，历史是理性自我实现的过程；其思想深刻影响了马克思主义、存在主义与整个现代哲学。

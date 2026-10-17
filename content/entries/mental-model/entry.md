@@ -5,7 +5,7 @@ title: 心智模型
 aliases: [心智模式, mental model, 思维模型]
 type: concept
 categories:
-  - 科学/人类认知与心理
+  - science/cog-psych
 tags: [认知, 思维, 决策, 学习]
 summary: >-
   心智模型是人脑中关于外部世界如何运作的简化表征，用来解释、预测与指导行动。它来自经验与学习，多数时候高效，却也因简化而可能过时失真，是高效思考与决策的重要工具，也是需要不断修正的对象。

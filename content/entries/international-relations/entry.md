@@ -6,7 +6,7 @@ original_title: International Relations
 aliases: [IR, 国际政治, 世界政治]
 type: concept
 categories:
-  - 政治理论/国际关系
+  - politics/international-relations
 tags: [国际关系, 无政府状态, 主权, 范式, 全球治理]
 summary: >-
   国际关系（International Relations，简称 IR）研究国家及其他行为体在「无中央政府」之上的世界政治中如何互动。其核心命题是：在「无政府状态」下，主权国家以权力、利益与安全为轴线展开竞争与合作。学科自二十世纪两次世界大战后制度化，发展出现实主义、自由主义与建构主义等范式。理解国际关系，是理解战争、贸易、气候与全球治理何以可能的钥匙。

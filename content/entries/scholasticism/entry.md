@@ -6,7 +6,7 @@ original_title: Scholasticism
 aliases: [经院哲学, 士林哲学, Scholasticism]
 type: concept
 categories:
-  - 哲学/西方哲学/中世纪哲学
+  - philosophy/western-philosophy/west-medieval
 tags: [经院哲学, 中世纪, 托马斯阿奎那, 共相之争, 信仰与理性]
 summary: >-
   经院哲学（约11—14世纪）是中世纪欧洲以教会学校与大学为阵地、以理性论证信仰的思想运动。它把亚里士多德哲学与基督教神学结合，以严密的逻辑辨析讨论神、共相与信仰问题，代表人物有安瑟尔谟、阿伯拉尔与托马斯·阿奎那。

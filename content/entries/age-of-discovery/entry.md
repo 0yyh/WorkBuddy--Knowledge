@@ -5,7 +5,7 @@ title: 大航海时代
 aliases: [地理大发现, 大航海, Age of Discovery, 航海时代]
 type: concept
 categories:
-  - 历史/世界史/中世纪
+  - history/history-world/world-medieval
 tags: [大航海, 哥伦布, 麦哲伦, 殖民, 地理大发现]
 timeline: [world]
 summary: >-

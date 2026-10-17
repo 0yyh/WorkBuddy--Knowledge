@@ -5,7 +5,7 @@ title: 两河流域
 aliases: [两河, 美索不达米亚,  Mesopotamia]
 type: event
 categories:
-  - 历史/世界史/古代文明
+  - history/history-world/world-ancient
 tags: [两河流域, 苏美尔, 巴比伦, 亚述, 楔形文字, 汉谟拉比法典]
 timeline: [world]
 summary: >-

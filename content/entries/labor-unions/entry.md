@@ -6,7 +6,7 @@ original_title: Labor Unions and Collective Bargaining
 aliases: [工会, 集体合同, 劳方组织]
 type: concept
 categories:
-  - 经济学/劳动经济学
+  - economics/labor-economics
 tags: [工会, 集体谈判, 工资溢价, 罢工, 劳动力市场制度]
 summary: >-
   工会是劳动者为改善就业条件而组织起来的集体力量，集体谈判则是劳方与资方就工资、工时与福利进行协商的制度安排。本词条考察工会的经济效应（工资溢价与就业之间的权衡）、集体谈判的运作机制、罢工的经济逻辑，以及工会在劳动力市场制度中的宏观角色，呈现其如何在效率与公平之间重塑分配格局。

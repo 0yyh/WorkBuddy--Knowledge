@@ -6,8 +6,8 @@ original_title: John Rawls
 aliases: [罗尔斯, John Rawls]
 type: person
 categories:
-  - 哲学/政治哲学
-  - 政治理论/政治学概念
+  - philosophy/political-philosophy
+  - politics/political-concepts
 tags: [罗尔斯, 正义论, 作为公平的正义, 无知之幕, 差异原则]
 summary: >-
   约翰·罗尔斯（John Rawls，1921—2002）是二十世纪最具影响力的政治哲学家，被视为自密尔以来英语世界最重要的自由主义理论家。他在 1971 年出版的《正义论》中以「作为公平的正义」复兴社会契约论，用「原初状态」与「无知之幕」的思想实验取代功利主义对「最大多数最大幸福」的算计，主张正义要求制度首先保障每个人的基本自由，并只允许那些使最不利者受益的不平等。这套框架把政治哲学重新拉回战后哲学的核心议程。

@@ -6,8 +6,8 @@ original_title: Alexis de Tocqueville
 aliases: [托克维尔, Alexis de Tocqueville]
 type: person
 categories:
-  - 政治理论/政治思想
-  - 政治理论/政体与国家制度
+  - politics/political-thought
+  - politics/govt-systems
 tags: [托克维尔, 论美国的民主, 民主, 平等, 多数暴政, 旧制度与大革命]
 summary: >-
   阿历克西·德·托克维尔（1805—1859）是法国贵族出身的政治思想家。他以一八三一年赴美考察为基础写成的《论美国的民主》，敏锐捕捉到「身份平等」取代等级制这一不可逆转的现代趋势，并盛赞乡镇自治与结社对专制的抵御；以《旧制度与大革命》揭示法国革命并非摧毁而是延续并强化了中央集权。他始终在民主的平等许诺与其内在危险——多数暴政与行政集权的夹缝之间，保持一种自由主义者的清醒。

@@ -6,7 +6,7 @@ original_title: Brand Design
 aliases: [品牌识别设计, 视觉识别设计]
 type: concept
 categories:
-  - 艺术/设计/平面与视觉传达
+  - art/art-design/art-design-graphic
 tags: [品牌设计, 品牌识别, 标志, 视觉系统, 叙事]
 summary: >-
   品牌设计是通过标志、色彩、字体与一整套视觉规则，为组织或个人塑造可被识别、被记忆、被信任的形象的专门实践。它不止于画一个图标，而是把抽象的价值主张翻译成连贯可感的系统，让受众在无数接触点上一眼认出「这是谁」。

@@ -6,7 +6,7 @@ original_title: Functional Grammar
 aliases: [功能语法学, 功能主义语法, 功能句型法]
 type: concept
 categories:
-  - 语言学/句法与语义
+  - linguistics/ling-syntax-sem
 tags: [功能语法, 迪克, 马泰修森, 系统功能语法, 类型学, 功能动因]
 summary: >-
   功能语法是一组以交际功能与认知动因解释句法形式的研究取向，强调语法结构服务于信息传递、社会互动与思维表达。代表体系包括迪克（Dik）的「功能语法」、韩礼德的系统功能语法（马泰修森继承发展）等，与生成语法的形式取向相对，常借助跨语言类型学证据论证形式的功能来源。

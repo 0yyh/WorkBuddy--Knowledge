@@ -6,8 +6,8 @@ original_title: User Interface Design
 aliases: [界面设计, 用户界面设计, UI设计]
 type: concept
 categories:
-  - 艺术/设计/产品与工业
-  - 技术/信息技术
+  - art/art-design/art-design-product
+  - technology/info-tech
 tags: [界面设计, UI, 布局, 交互, 组件, 可用性, 智能自适应]
 summary: >-
   界面设计是安排人与数字系统之间接触面的实践，决定用户如何看见信息、发起操作并得到反馈。它以布局与层级组织视觉秩序，以交互与反馈建立可预期的操作感，并以组件与系统保证跨页面的一致。智能与自适应技术正使界面从固定形态走向因人而异的动态呈现。本词条按界面作为中介、布局与层级、交互与反馈、系统与组件、智能与自适应五章展开。

@@ -5,7 +5,7 @@ title: 汉朝
 aliases: [汉, 汉代, Han dynasty, 西汉, 东汉]
 type: concept
 categories:
-  - 历史/中国史/先秦至秦汉
+  - history/history-china/china-ancient
 tags: [汉朝, 汉高祖, 文景之治, 汉武帝, 独尊儒术, 张骞通西域, 丝绸之路]
 timeline: [china]
 summary: >-

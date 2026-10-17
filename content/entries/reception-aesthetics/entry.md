@@ -6,8 +6,8 @@ original_title: Reception Aesthetics
 aliases: [接受理论, 康斯坦茨学派, Rezeptionsästhetik, 读者反应批评]
 type: concept
 categories:
-  - 哲学/美学
-  - 哲学/西方哲学/英美与现当代哲学
+  - philosophy/aesthetics
+  - philosophy/western-philosophy/west-analytic
 tags: [接受美学, 姚斯, 伊瑟尔, 期待视野, 隐含读者, 康斯坦茨学派, 文学史]
 summary: >-
   接受美学主张文学作品的意义不在作者意图中，也不在文本自身，而在读者的接受活动中完成。它兴起于1960年代的康斯坦茨大学：姚斯以「期待视野」重写文学史，主张作品的价值取决于它在历史中被接受的方式；伊瑟尔以「隐含读者」与「空白」分析阅读如何生成意义。本词条展开这两条路线，考察其现象学与解释学前身，并呈现关于文本约束与相对主义的批评。

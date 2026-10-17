@@ -6,7 +6,7 @@ original_title: Speech Perception
 aliases: [语音感知, 言语听辨, 口语理解]
 type: concept
 categories:
-  - 语言学/社会与心理语言学/心理语言学
+  - linguistics/ling-socio-psy/ling-psychology
 tags: [言语感知, 范畴感知, 音位恢复, 麦格克效应, 听觉线索]
 summary: >-
   言语感知研究听者如何把连续的声学信号还原为离散的语言单位与意义。它面临信号高度变异却能被稳定识别的难题，听者借助声学线索、范畴感知与自上而下语境共同完成听辨。音位恢复效应显示语境能填补缺失语音，麦格克效应则表明视觉信息会重塑听觉。这些现象揭示言语感知是听觉、认知与多模态整合的主动建构过程。

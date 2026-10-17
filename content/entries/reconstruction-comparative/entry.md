@@ -6,7 +6,7 @@ original_title: Comparative Reconstruction
 aliases: [历史比较法, 比较重建, 历史语言学重建, 原始语构拟]
 type: concept
 categories:
-  - 语言学/历史语言学
+  - linguistics/ling-historical
 tags: [历史比较法, 同源词, 构拟, 原始形式, 语系]
 summary: >-
   历史比较重建（Comparative Reconstruction）是历史语言学的核心方法，通过对亲属语言中成系统的语音、形态与词汇对应，判定同源词并逆推其共同祖先——原始共同语的形式。它建立于「语音规律无例外」的信念之上，以格里姆定律、维尔纳定律等经典发现为基石，使学者得以在毫无文字记录的境况下，重建数千年前无人亲历的语言。重建法与「语言演变」研究互为表里，其结论又直接支撑「原始语」分化模型与各个具体语系（如「汉藏语系」）的分类与年代学。

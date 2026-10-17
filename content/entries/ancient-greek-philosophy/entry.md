@@ -5,7 +5,7 @@ title: 古希腊哲学
 aliases: [希腊哲学, Greek philosophy, 古希腊思想]
 type: concept
 categories:
-  - 哲学/西方哲学/古希腊哲学
+  - philosophy/western-philosophy/west-ancient
 tags: [哲学, 古希腊, 苏格拉底, 柏拉图, 亚里士多德]
 summary: >-
   古希腊哲学是西方哲学的源头，从前苏格拉底对宇宙本原的追问，到苏格拉底的道德转向，再到柏拉图理念论与亚里士多德体系化的集大成，它首次系统提出本体论、认识论与伦理学的核心问题。其所确立的理性追问传统，塑造了此后两千余年西方思想与科学的基本范式。

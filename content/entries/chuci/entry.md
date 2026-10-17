@@ -6,7 +6,7 @@ original_title: 楚辭
 aliases: [骚体, 楚词]
 type: work
 categories:
-  - 文学/中国文学/古代文学
+  - literature/lit-china/lit-china-classical
 tags: [楚辞, 屈原, 离骚, 九歌, 浪漫主义, 辞赋]
 summary: >-
   《楚辞》是西汉刘向辑集的楚地诗歌总集，以屈原作品为核心，是中国文学史上第一部个人抒情长诗的总汇。

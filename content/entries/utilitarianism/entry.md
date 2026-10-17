@@ -5,7 +5,7 @@ title: 功利主义
 aliases: [功效主义, 最大幸福原则, 效益主义, Utilitarianism]
 type: concept
 categories:
-  - 哲学/西方哲学/英美与现当代哲学
+  - philosophy/western-philosophy/west-analytic
 tags: [伦理学, 功利主义, 边沁, 密尔, 后果主义]
 summary: >-
   功利主义是近代西方最重要的道德理论之一，主张行为的对错取决于其后果能否带来最大多数人的最大幸福。边沁以快乐痛苦的计算开创，密尔修正引入快乐的质之区别。它对公共政策、经济学与法律影响深远，却始终面临"牺牲少数人是否正当"等尖锐批评。

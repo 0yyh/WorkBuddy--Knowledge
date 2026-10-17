@@ -6,9 +6,9 @@ original_title: Robert Nozick
 aliases: [诺齐克, Robert Nozick, 罗伯特·诺齐克]
 type: person
 categories:
-  - 哲学/西方哲学/英美与现当代哲学
-  - 哲学/政治哲学
-  - 政治理论/政治思想
+  - philosophy/western-philosophy/west-analytic
+  - philosophy/political-philosophy
+  - politics/political-thought
 tags: [诺齐克, 无政府国家与乌托邦, 资格理论, 最小国家, 张伯伦论证, 体验机]
 summary: >-
   罗伯特·诺齐克（1938—2002）是美国哲学家，二十世纪自由至上主义最锋利的理论旗手。在罗尔斯《正义论》问世仅三年后，他以 1974 年的《无政府、国家与乌托邦》发起正面反击：不诉诸任何「分配模式」，而用「资格理论」主张正义在于持有是否来路正当——获取公正、转让自愿、对违反者予赔偿。他最著名的「张伯伦论证」直指罗尔斯式再分配：即便初始分配正义，只要人们自愿交易，任何模式都会被打破，而强制恢复模式就是持续侵犯权利。诺齐克由此把政治哲学推回「权利 vs 平等」的硬碰硬，也成为此后所有分配正义讨论都无法绕开的对手。

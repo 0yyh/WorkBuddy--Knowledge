@@ -6,8 +6,8 @@ original_title: Legal Positivism
 aliases: [法律实证论, 实证主义法学, Legal Positivism]
 type: concept
 categories:
-  - 法学/法理学
-  - 哲学/政治哲学
+  - law/law-juris
+  - philosophy/political-philosophy
 tags: [法律实证主义, 分离命题, 恶法亦法, 奥斯丁, 凯尔森, 哈特]
 summary: >-
   法律实证主义主张法律的存在与内容是一经验社会事实，与道德无必然概念联繫；「恶法亦法」是其最著名的推论。它不否认法律应当合乎道德，而是坚持在描述法律是什么时，不应预设它合乎道德。从奥斯丁的主权命令说、凯尔森的纯粹法学，到哈特以规则结合论取代命令模型，实证主义提供了现代法理学的分析骨架。当代 inclusive 与 exclusive 实证主义之争，聚焦道德能否作为效力判准的一部分。它既是澄清法律概念的利器，也因在恶法面前的态度而屡受批评。

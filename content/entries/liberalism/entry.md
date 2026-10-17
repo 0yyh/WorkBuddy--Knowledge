@@ -5,7 +5,7 @@ title: 自由主义
 aliases: [自由主义思想, liberalism]
 type: concept
 categories:
-  - 政治理论/政治思想
+  - politics/political-thought
 tags: [自由主义, 个人权利, 有限政府, 自由, 政治思想]
 summary: >-
   自由主义是西方现代政治哲学中影响深远的思想传统，以个人自由、平等的基本权利与有限政府为核心主张。

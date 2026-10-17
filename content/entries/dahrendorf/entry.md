@@ -6,8 +6,8 @@ original_title: Ralf Dahrendorf
 aliases: [达伦多夫, Ralf Dahrendorf, 拉尔夫·达伦多夫]
 type: person
 categories:
-  - 哲学/社会学
-  - 哲学/思想史
+  - philosophy/sociology
+  - philosophy/phil-history
 tags: [达伦多夫, 冲突理论, 辩证冲突论, 强制协调, 社会分层, 权威, 自由主义, 功能主义批判]
 summary: >-
   拉尔夫·达伦多夫（Ralf Dahrendorf，1929–2009）是德裔英国社会学家与自由派政治思想家，二十世纪冲突社会学的关键人物。他从早年的马克思主义立场转向自由主义，批判帕森斯式功能主义把社会秩序理解为价值共识的均衡，转而主张秩序源于「强制协调」、冲突源于权威关系中的角色利益分歧。其代表作《工业社会中的阶级与阶级冲突》（1959）奠定了辩证冲突论，深刻影响了战后欧洲关于社会分层、公民社会与欧盟一体化的讨论。

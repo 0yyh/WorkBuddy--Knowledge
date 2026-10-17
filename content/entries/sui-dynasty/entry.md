@@ -5,7 +5,7 @@ title: 隋朝
 aliases: [隋, 隋代, Sui dynasty, 隋文帝, 隋炀帝]
 type: concept
 categories:
-  - 历史/中国史/魏晋至隋唐
+  - history/history-china/china-mid
 tags: [隋朝, 隋文帝, 隋炀帝, 开皇之治, 大运河, 科举]
 timeline: [china]
 summary: >-

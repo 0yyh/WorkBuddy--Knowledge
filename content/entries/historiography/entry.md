@@ -5,7 +5,7 @@ title: 史学方法
 aliases: [历史学方法论, 历史方法, historiography, historical method]
 type: concept
 categories:
-  - 历史/历史方法与概念
+  - history/world-history-concepts
 tags: [史学, 史料, 考据, 客观性, 历史编纂]
 summary: >-
   史学方法是历史学家处理史料、重建与解释过去所遵循的原则与技术，是历史学作为一门学科的核心

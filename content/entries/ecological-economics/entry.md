@@ -6,7 +6,7 @@ original_title: Ecological Economics
 aliases: [Ecological Economics, 生态经济, 生物物理经济学]
 type: concept
 categories:
-  - 经济学/环境经济学
+  - economics/environmental-economics
 tags: [自然资本, 稳态经济, 可持续性, 热力学]
 summary: >-
   生态经济学是 1980 年代从环境经济学中分野而出、以生物物理基础为重心的交叉学科，代表学者有戴利与科斯坦扎。它把经济视为嵌入地球生态系统之中的子系统，强调自然资本的不可替代性与「稳态经济」的必要性，认为政策的首要问题是经济体的物质规模而非配置效率。它与主流环境经济学最根本的分歧在于：后者在可替代性假设下为环境失灵定价，前者则以热力学与生态极限质疑该框架本身。

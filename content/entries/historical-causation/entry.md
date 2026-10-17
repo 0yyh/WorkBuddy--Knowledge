@@ -6,7 +6,7 @@ original_title: Historical Causation
 aliases: [历史因果关系, 历史解释, historical causation, historical causality]
 type: concept
 categories:
-  - 历史/历史方法与概念
+  - history/world-history-concepts
 tags: [因果, 历史解释, 长时段, 偶然性, 布罗代尔]
 summary: >-
   历史因果是历史学处理「为什么」问题的核心概念：历史事件几乎总是一因多果、多因一果的交织，研究者须在近因与远因、必然与偶然之间安排解释的层次。年鉴学派以「长时段—局势—事件」的三层时间给出结构优先的因果模型，而叙事史与政治史则更重视个人抉择与偶然契机。韦伯的因果归属、亨佩尔的覆盖律、反事实分析等工具，使历史因果讨论从直觉走向方法。本词条梳理因果层次的构造、结构解释与事件解释之争，以及偶然性在历史中的真实分量，说明历史学如何在不可实验的条件下进行严格的因果推理。

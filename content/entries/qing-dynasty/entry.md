@@ -5,7 +5,7 @@ title: 清朝
 aliases: [清代, 大清, Qing dynasty]
 type: concept
 categories:
-  - 历史/中国史/宋元明清
+  - history/history-china/china-songming
 tags: [中国史, 清朝, 康乾盛世, 多民族统一, 闭关, 晚清]
 timeline: [china]
 summary: >-

@@ -5,7 +5,7 @@ title: 西晋
 aliases: [西晋, 晋, Western Jin, 司马晋, 司马氏]
 type: concept
 categories:
-  - 历史/中国史/魏晋至隋唐
+  - history/history-china/china-mid
 tags: [西晋, 司马炎, 高平陵之变, 八王之乱, 永嘉之乱, 太康之治]
 timeline: [china]
 summary: >-

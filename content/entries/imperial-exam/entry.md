@@ -5,8 +5,8 @@ title: 科举制度
 aliases: [科举, 科举制, 考试取士]
 type: concept
 categories:
-  - 历史/中国史/宋元明清
-  - 政治理论/政体与国家制度
+  - history/history-china/china-songming
+  - politics/govt-systems
 tags: [中国史, 科举, 选官, 社会流动, 制度史]
 timeline: [china]
 summary: >-

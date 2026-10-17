@@ -6,7 +6,7 @@ original_title: Populism
 aliases: [民粹主义, 平民主义, 民粹]
 type: concept
 categories:
-  - 政治理论/政治学概念
+  - politics/political-concepts
 tags: [民粹主义, 人民, 精英, 民主, 身份政治]
 summary: >-
   民粹主义是把政治简化为「纯洁的人民」对抗「腐败的精英」这一道德二元对立的薄意识形态。它可左可右，核心不在具体纲领而在「人民—精英」的对抗框架。它既可能是民主对代表性失灵的健康校正，也可能以多数名义侵蚀少数权利与制度制衡。

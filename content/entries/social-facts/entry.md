@@ -6,7 +6,7 @@ original_title: social facts
 aliases: [社会事实, 社会力, fait social]
 type: concept
 categories:
-  - 哲学/社会学
+  - philosophy/sociology
 tags: [社会事实, 涂尔干, 方法论集体主义, 反还原论, 社会学方法, 社会强制]
 summary: >-
   社会事实（social facts）是涂尔干在《社会学方法的准则》(1895) 中确立的社会学基本研究对象：一类「外在于个人、对个体具有强制力、且普遍分布于社会之中」的「物」。它要求社会学把社会现象当作与自然界同等客观的对象来研究，反对把社会还原为心理或生物个体。这一概念奠定了方法论集体主义，是实证社会学独立成科的基石。

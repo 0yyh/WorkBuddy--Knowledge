@@ -6,7 +6,7 @@ original_title: Internet protocol suite (TCP/IP)
 aliases: [TCP/IP, TCP/IP 协议族, 互联网协议套件]
 type: concept
 categories:
-  - 技术/信息技术
+  - technology/info-tech
 tags: [TCP/IP, 网络, 协议, 互联网, IP, TCP, 分层模型]
 summary: >-
   TCP/IP（互联网协议套件）是互联网的事实标准通信协议族，以传输控制协议（TCP）与网际协议（IP）得名，按 RFC 1122 分为链路层、网际层、传输层、应用层四层。IP 提供无连接、尽力而为的寻址与路由，TCP 在其上提供可靠、有序、带重传与拥塞控制的字节流；UDP 与 QUIC 面向低时延。整套规范由 IETF 以 RFC 文档维护，自 1983 年阿帕网全面切换 TCP/IP 起支撑了全球互联网。

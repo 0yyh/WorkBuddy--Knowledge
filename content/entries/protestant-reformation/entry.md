@@ -5,8 +5,8 @@ title: 宗教改革
 aliases: [宗教改革, 新教改革, 改教]
 type: event
 categories:
-  - 历史/世界史/近代史
-  - 哲学/思想史
+  - history/history-world/world-modern
+  - philosophy/phil-history
 tags: [宗教改革, 新教, 路德, 加尔文, 近代史, 三十年战争]
 timeline: [world]
 summary: >-

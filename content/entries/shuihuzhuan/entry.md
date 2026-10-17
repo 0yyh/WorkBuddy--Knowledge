@@ -6,7 +6,7 @@ original_title: 水滸傳
 aliases: [忠义水浒传, 水浒]
 type: work
 categories:
-  - 文学/中国文学/古代文学
+  - literature/lit-china/lit-china-classical
 tags: [水浒传, 施耐庵, 英雄传奇, 聚义, 章回小说, 侠义]
 summary: >-
   《水浒传》是中国第一部以农民起义为题材的长篇章回小说，一般题署施耐庵撰、罗贯中纂修。它写北宋末年一百零八位好汉在梁山泊聚义，

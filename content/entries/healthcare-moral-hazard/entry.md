@@ -5,7 +5,7 @@ title: 医疗市场与道德风险
 aliases: [医疗道德风险, 医患信息不对称, Moral Hazard in Health Care Markets]
 type: concept
 categories:
-  - 经济学/卫生经济学
+  - economics/health-economics
 tags: [信息不对称, 道德风险, 供给诱导需求]
 summary: >-
   医疗市场是信息不对称最集中的领域：患者不了解病情与疗效，保险切断了价格与成本的联系，医生既是代理人又是供给者。本词条沿着 Arrow 的经典问题展开，依次分析道德风险、逆向选择与供给诱导需求三类核心失灵，并检验支付制度改革、管理式医疗与信息公开等治理方案的有效性与新问题。

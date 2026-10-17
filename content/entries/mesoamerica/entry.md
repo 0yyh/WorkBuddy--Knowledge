@@ -5,7 +5,7 @@ title: 中美洲文明
 aliases: [中美洲, 美索美洲, Mesoamerica]
 type: concept
 categories:
-  - 历史/世界史/古代文明
+  - history/history-world/world-ancient
 tags: [中美洲, 奥尔梅克, 玛雅, 特奥蒂瓦坎, 阿兹特克, 历法, 文字]
 timeline: [world]
 summary: >-

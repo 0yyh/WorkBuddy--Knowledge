@@ -6,9 +6,9 @@ original_title: Zhu Xi
 aliases: [朱子, 晦庵, Zhu Xi]
 type: person
 categories:
-  - 哲学/中国哲学
-  - 哲学/形而上学
-  - 哲学/伦理学
+  - philosophy/chinese-philosophy
+  - philosophy/metaphysics
+  - philosophy/ethics
 tags: [朱熹, 朱子, 理学, 理气论, 格物致知, 四书章句集注, 道统]
 summary: >-
   朱熹（1130—1200）字元晦，号晦庵，南宋理学的集大成者，后世尊为「朱子」。他以「理—气」二元构建精密的形而上学，以「天命之性／气质之性」解释善恶之源，主张「即物穷理」的格物与「居敬涵养」的功夫，并集注《四书》取代《五经》成为此后六百年科举与儒学的正统，其学远播朝鲜、日本与越南。

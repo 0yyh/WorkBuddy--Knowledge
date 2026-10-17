@@ -5,7 +5,7 @@ title: 分权制衡
 aliases: [三权分立, 权力制衡, 分权, checks and balances]
 type: concept
 categories:
-  - 政治理论/政治学概念
+  - politics/political-concepts
 tags: [政治, 分权, 制衡, 三权分立, 宪政]
 summary: >-
   分权制衡是现代宪政的核心原则：主张把国家权力分散到立法、行政、司法等不同机构，使其相互独立又彼此牵制，以防止权力集中被滥用。它源于洛克与孟德斯鸠的思想，在美国宪法中获得经典实践，成为代议制民主国家设计权力结构、保障自由的重要框架。

@@ -5,7 +5,7 @@ title: 古印度文明
 aliases: [印度文明, 古代印度, Ancient India]
 type: concept
 categories:
-  - 历史/世界史/古代文明
+  - history/history-world/world-ancient
 tags: [古印度, 印度河流域文明, 哈拉帕, 摩亨佐-达罗, 种姓制度, 孔雀王朝, 阿育王]
 timeline: [world]
 summary: >-

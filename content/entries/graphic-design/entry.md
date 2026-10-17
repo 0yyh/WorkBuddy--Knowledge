@@ -6,7 +6,7 @@ original_title: Graphic Design
 aliases: [视觉传达设计, 图形设计]
 type: concept
 categories:
-  - 艺术/设计/平面与视觉传达
+  - art/art-design/art-design-graphic
 tags: [平面设计, 视觉传达, 排版, 网格系统, 现代主义]
 summary: >-
   平面设计是在二维平面上组织文字、图像与色彩，以达成信息传播与审美表达的专业实践。它既是印刷时代的海报、书籍与标志，也是数字时代的界面与动态视觉。其核心是把「内容」转译为「可被阅读的形式」，在功能与美感之间寻找平衡。

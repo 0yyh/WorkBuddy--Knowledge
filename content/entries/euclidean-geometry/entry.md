@@ -6,7 +6,7 @@ original_title: Elements
 aliases: [几何原本, 欧几里得几何原本, Elements]
 type: work
 categories:
-  - 科学/数学与系统科学/数学基础
+  - science/math-systems/math-found
 tags: [欧几里得, 几何原本, 公理化, 演绎推理, 数学史]
 summary: >-
   《几何原本》是古希腊数学家欧几里得约于公元前300年编成的数学巨著。它以少数定义、公设与公理为起点，用演绎推理推出数百条定理，第一次建立起公理化的知识体系，成为此后两千年数学与科学论证的范本。

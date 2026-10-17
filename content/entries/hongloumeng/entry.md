@@ -6,7 +6,7 @@ original_title: 紅樓夢
 aliases: [石头记, 情僧录, 风月宝鉴, 金陵十二钗]
 type: work
 categories:
-  - 文学/中国文学/古代文学
+  - literature/lit-china/lit-china-classical
 tags: [红楼梦, 曹雪芹, 脂砚斋, 程高本, 宝黛钗, 红学, 世情小说]
 summary: >-
   《红楼梦》是清代作家曹雪芹创作的章回体长篇小说，一般视为中国古典小说的巅峰。它以贾宝玉、林黛玉、薛宝钗的爱情婚姻悲剧为主线，

@@ -5,7 +5,7 @@ title: 科学革命
 aliases: [近代科学革命, 16-17世纪科学革命, Scientific Revolution]
 type: concept
 categories:
-  - 历史/世界史/近代史
+  - history/history-world/world-modern
 tags: [科学, 哥白尼, 牛顿, 近代史, 科学史]
 timeline: [world]
 summary: >-

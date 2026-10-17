@@ -5,7 +5,7 @@ title: 中华民国
 aliases: [中华民国, 民国, Republic of China, 北洋]
 type: concept
 categories:
-  - 历史/中国史/近现代史
+  - history/history-china/china-modern
 tags: [中华民国, 辛亥革命, 北洋政府, 国民政府, 五四运动, 抗战]
 timeline: [china]
 summary: >-

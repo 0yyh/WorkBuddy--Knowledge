@@ -5,7 +5,7 @@ title: 风能
 aliases: [风能, 风力发电, Wind Energy]
 type: concept
 categories:
-  - 技术/能源与动力
+  - technology/energy-power
 tags: [风能, 风力发电, 涡轮, 可再生能源, 清洁能源]
 summary: >-
   风能是利用风力驱动叶轮发电的技术，本质是把大气运动的动能经风机转为电能。现代风机靠空气动力叶片与变速发电机捕获风能，单机容量与 tower 高度持续增大。风能有零燃料、零排放之利，却受间歇、选址与生态约束，需与电网及储能协同。

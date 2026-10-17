@@ -6,7 +6,7 @@ original_title: Feudalism
 aliases: [封建制, 封建主义, Feudal System]
 type: concept
 categories:
-  - 历史/世界史/中世纪
+  - history/history-world/world-medieval
 tags: [封建制度, 采邑, 附庸, 庄园, 领主, 中世纪, 史学史]
 timeline: [world]
 summary: >-

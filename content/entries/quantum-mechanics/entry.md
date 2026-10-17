@@ -5,7 +5,7 @@ title: 量子力学
 aliases: [量子论, quantum mechanics, 量子理论]
 type: concept
 categories:
-  - 科学/自然科学基础/物理
+  - science/nat-science/physics
 tags: [物理, 量子力学, 波粒二象性, 不确定性, 态叠加]
 summary: >-
   量子力学是二十世纪初为解释原子与亚原子现象而建立的物理学理论，描述微观世界的基本规律，与相对论

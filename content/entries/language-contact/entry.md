@@ -6,7 +6,7 @@ original_title: Language Contact
 aliases: [语言接触学, 接触语言学, 语言借用, 双语接触]
 type: concept
 categories:
-  - 语言学/历史语言学
+  - linguistics/ling-historical
 tags: [语言接触, 借用, 克里奥尔, 洋泾浜, 语言联盟]
 summary: >-
   语言接触（Language Contact）指操不同语言的人群在长期使用中相互影响的语言现象。它既表现为词汇、语音、句法各层面的借用，也能在极端条件下催生洋泾浜（pidgin）与克里奥尔（creole）等混合语，或在地域上形成结构趋同的「语言联盟」（Sprachbund）。接触是「语言演变」最重要的外部动因之一，常与「历史比较重建」所依赖的「纯谱系传承」假设相冲突，因此在判定亲缘关系时须先行排查借用。理解接触，也是解释「语言消亡」与多语社会语言生态的前提。

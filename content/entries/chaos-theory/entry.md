@@ -5,7 +5,7 @@ title: 混沌理论
 aliases: [混沌学, chaos theory, 确定性混沌]
 type: concept
 categories:
-  - 科学/数学与系统科学/系统与复杂性
+  - science/math-systems/complex-systems
 tags: [混沌, 非线性, 蝴蝶效应, 系统科学, 复杂性]
 summary: >-
   混沌理论（chaos theory）研究确定性系统中出现的、貌似随机实则由确定规律支配的复杂行为。它揭示了

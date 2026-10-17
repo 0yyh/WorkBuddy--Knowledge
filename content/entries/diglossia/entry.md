@@ -6,7 +6,7 @@ original_title: Diglossia
 aliases: [双语体, 双层语言, 高变体低变体]
 type: concept
 categories:
-  - 语言学/社会与心理语言学/社会语言学
+  - linguistics/ling-socio-psy/ling-sociology
 tags: [双语体现象, 高低变体, 高变体, 低变体, 弗格森, 菲什曼]
 summary: >-
   双语体现象指某一言语社群在同一语言内部稳定并存两种分化变体，并依功能领域严格分工的社会语言状况。由弗格森（Charles Ferguson）于一九五九年提出，后经菲什曼（Joshua Fishman）拓展至多语社会：高变体（H）用于宗教、文学、正式教育、新闻等庄重场合，低变体（L）用于家庭、日常闲谈等 informal 领域，二者通常不重叠。双语体既不同于双语现象（两种独立语言），也揭示了标准语与口语之间的制度化鸿沟，是理解语言社会分层的关键概念。

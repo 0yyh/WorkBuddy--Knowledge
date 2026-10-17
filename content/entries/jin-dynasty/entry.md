@@ -5,7 +5,7 @@ title: 晋朝
 aliases: [晋, 晋代, Jin dynasty, 西晋, 东晋]
 type: concept
 categories:
-  - 历史/中国史/魏晋至隋唐
+  - history/history-china/china-mid
 tags: [晋朝, 司马炎, 八王之乱, 永嘉之乱, 衣冠南渡, 门阀]
 timeline: [china]
 summary: >-

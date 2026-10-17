@@ -6,8 +6,8 @@ original_title: Rationalism
 aliases: [唯理论, Rationalism]
 type: concept
 categories:
-  - 哲学/西方哲学/近代欧陆哲学
-  - 哲学/认识论
+  - philosophy/western-philosophy/west-modern
+  - philosophy/epistemology
 tags: [理性主义, 笛卡尔, 斯宾诺莎, 莱布尼茨, 天赋观念, 演绎]
 summary: >-
   理性主义是近代知识论的另一条主干：它主张人心带有不依赖经验的天赋观念，真正可靠的知识应当像数学那样，从自明的直观出发、靠演绎传递必然性，感官只能提供机缘而不能提供根据。笛卡尔以「我思」奠基，斯宾诺莎把演绎推到唯一实体，莱布尼茨以单子、充足理由律与可能世界完成这套体系。它与英国经验主义的对立，最终在康德的批判哲学中被同时拒绝与改造。

@@ -5,7 +5,7 @@ title: 货币政策
 aliases: [monetary policy, 货币调节, 央行货币政策]
 type: concept
 categories:
-  - 经济学/宏观经济学
+  - economics/macro
 tags: [货币政策, 利率, 中央银行, 准备金, 通胀]
 summary: >-
   货币政策是一国中央银行运用利率、公开市场操作、存款准备金率与再贴现等工具，调节货币供应量与

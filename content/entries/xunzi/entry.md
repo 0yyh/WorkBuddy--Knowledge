@@ -5,9 +5,9 @@ title: 荀子
 aliases: [荀况, 荀卿, Xunzi]
 type: person
 categories:
-  - 哲学/中国哲学
-  - 哲学/伦理学
-  - 哲学/政治哲学
+  - philosophy/chinese-philosophy
+  - philosophy/ethics
+  - philosophy/political-philosophy
 tags: [荀子, 儒家, 性恶论, 礼论, 天论, 群学, 化性起伪]
 summary: >-
   荀子（约前313—前238）名况，战国末期儒家的集大成者与系统化者，曾三为稷下学宫祭酒。他提出「人之性恶，其善者伪也」的性恶论，以「化性起伪」的礼义教化对抗孟子的性善论；又建构以「礼」为社会秩序原理、以「明分使群」为社会起源的中国古代最系统的社会学说；其「天行有常」「制天命而用之」更将自然客观化、开启戡天思想。弟子韩非、李斯承其法术，使荀学成为由儒入法的枢纽。

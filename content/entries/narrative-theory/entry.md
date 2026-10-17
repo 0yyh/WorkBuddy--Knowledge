@@ -6,7 +6,7 @@ original_title: Narratology
 aliases: [叙事学, 叙事理论, Narratology]
 type: concept
 categories:
-  - 文学/文学理论/叙事学
+  - literature/lit-theory/lit-narratology
 tags: [叙事学, 陌生化, 普罗普, 热奈特, 聚焦, 结构主义, 修辞叙事学, 数字叙事]
 summary: >-
   叙事学是研究「故事如何被讲述」的理论体系。它发端于俄国形式主义的「陌生化」与「情节—故事」之分，

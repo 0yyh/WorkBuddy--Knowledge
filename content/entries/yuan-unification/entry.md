@@ -5,7 +5,7 @@ title: 元灭宋·大一统
 aliases: [元朝, 蒙元, 大元, 崖山海战]
 type: event
 categories:
-  - 历史/中国史/宋元明清
+  - history/history-china/china-songming
 tags: [元朝, 忽必烈, 崖山海战, 行省制, 蒙古和平, 统一, 大一统]
 timeline: [china]
 summary: >-

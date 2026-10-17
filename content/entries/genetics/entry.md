@@ -6,7 +6,7 @@ original_title: Genetics
 aliases: ["基因学", "Genetics"]
 type: concept
 categories:
-  - 科学/自然科学基础/生物与生命
+  - science/nat-science/biology
 tags: ["遗传学", "基因", "DNA", "孟德尔", "遗传"]
 summary: "遗传学是研究基因、遗传与变异的科学。自孟德尔以豌豆实验揭示分离与自由组合定律，到沃森与克里克阐明DNA双螺旋结构，遗传学揭示了生命信息如何存储、复制与传递，并成为现代医学、农业与生物技术的根基。"
 status: published

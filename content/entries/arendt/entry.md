@@ -6,8 +6,8 @@ original_title: Hannah Arendt
 aliases: [汉娜·阿伦特, Hannah Arendt, 阿伦特]
 type: person
 categories:
-  - 哲学/政治哲学
-  - 政治理论/政治学概念
+  - philosophy/political-philosophy
+  - politics/political-concepts
 tags: [阿伦特, 极权主义的起源, 平庸的恶, 公共领域, 行动]
 summary: >-
   汉娜·阿伦特（1906—1975）是二十世纪最具原创性的政治思想家。她从存在主义现象学出发，却把哲学问题重新摆回政治领域，主张「人的多样性」才是政治的起点。代表作《极权主义的起源》把纳粹与大清洗读作一种超越传统暴政的新型统治；《人的条件》区分劳动、工作与行动，把行动与公共领域置于政治生活的核心；「平庸的恶」则指向艾希曼式不加思考的行政之恶。她拒绝把政治还原为道德或历史规律。

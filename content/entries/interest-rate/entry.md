@@ -6,7 +6,7 @@ original_title: Interest Rate
 aliases: [利息率, 利钱率]
 type: concept
 categories:
-  - 经济学/金融
+  - economics/finance
 tags: [货币, 信贷, 央行, 货币政策, 资金价格]
 summary: >-
   利率是一定时期内利息额与借贷本金的比率，衡量资金的使用价格。它由中央银行政策、市场资金供求与通胀预期共同决定，既是资本配置的核心信号，也是宏观调控的关键工具，深刻影响投资、消费与整体经济运行。

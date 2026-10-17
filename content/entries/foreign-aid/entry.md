@@ -6,7 +6,7 @@ original_title: Foreign Aid
 aliases: [国际援助, 发展援助, 官方发展援助, ODA]
 type: concept
 categories:
-  - 经济学/发展经济学
+  - economics/development-economics
 tags: [对外援助, 官方发展援助, 援助依赖, 大推力, 援助有效性]
 summary: >-
   对外援助（Foreign Aid）指官方发展援助（ODA）等以促进发展中国家福利为目的、带让渡或优惠条件的资源转移，渠道涵盖双边政府、多边机构与 NGO。其争论聚焦于三组问题：Sachs 的「大推力」能否一步跨越贫困陷阱，还是如 Easterly 所言缺乏激励与问责的外部计划注定低效；援助依赖如何扭曲财政、问责与政府能力；以及实证证据（宏观效应混杂、健康与微观项目成效显著）究竟支持什么。当代援助政策在巴黎有效性议程、现金转移实验与全球公共品转向中寻找更有效的形态。

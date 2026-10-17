@@ -5,7 +5,7 @@ title: 熵
 aliases: [熵, Entropy]
 type: concept
 categories:
-  - 科学/自然科学基础/物理
+  - science/nat-science/physics
 tags: [热力学, 统计物理, 信息论, 时间之箭, 无序度]
 summary: >-
   熵是刻画系统无序程度与能量可用性的核心物理量。克劳修斯在热力学中将其定义为可逆过程热量与温度之比的积分；玻尔兹曼以 S=k log W 将熵与微观状态数相连；香农则把同一思想引入信息论。熵增原理表明孤立系统的熵不减，成为时间之箭与生命、宇宙演化的关键线索。

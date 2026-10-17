@@ -6,8 +6,8 @@ original_title: Empiricism
 aliases: [经验论, Empiricism]
 type: concept
 categories:
-  - 哲学/西方哲学/英美与现当代哲学
-  - 哲学/认识论
+  - philosophy/western-philosophy/west-analytic
+  - philosophy/epistemology
 tags: [经验主义, 洛克, 贝克莱, 休谟, 知识论, 归纳问题]
 summary: >-
   经验主义主张：人心降生时不是带着现成观念的，一切观念与知识材料都来自经验——感官观察与内省反省。它把「知识的来源」与「知识的检验」两件事都钉在经验上，以此反对天赋观念，也反对仅凭自明公理往下演绎的独断。从洛克经贝克莱到休谟，这条路线每推进一步就更彻底一分，直到把物质实体、因果必然性与自我同一性都解释为心理层面的东西，从而逼出康德的批判哲学。
